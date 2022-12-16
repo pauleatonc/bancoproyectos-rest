@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "projects",
     "testdb",
     'django.contrib.admin',
     'django.contrib.auth',
@@ -117,7 +118,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC-3'
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
