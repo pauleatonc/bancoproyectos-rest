@@ -3,5 +3,4 @@ from django.http import HttpResponse
 
 
 def index(request):
-    return HttpResponse("Banco de proyectos.")
-
+    return HttpResponse("Hello, world. You're at the polls index.")
