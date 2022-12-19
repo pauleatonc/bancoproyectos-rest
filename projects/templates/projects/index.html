@@ -1,3 +1,11 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% include 'projects/head.html' %}
+{% include 'projects/navbar.html' %}
+{% include 'projects/browser.html' %}
+
+<div>
 {% if latest_project_list %}
     <ul>
     {% for project in latest_project_list %}
@@ -7,3 +15,8 @@
 {% else %}
     <p>No project are available.</p>
 {% endif %}
+</div>
+
+
+
+</html>

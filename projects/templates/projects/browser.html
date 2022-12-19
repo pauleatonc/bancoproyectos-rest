@@ -1,0 +1,55 @@
+<div 
+    class="container my-5 py-5 px-5 mx-5" 
+    x-data="{
+        search: '' 
+        items: ['Apple', 'Banana', 'Guava', 'Ape', 'Bands'] 
+    }">
+    
+    <!-- Search input -->
+    <input type="search" class="form-control" placeholder="Enter Keyword here" x-model="search">
+    
+    <!-- List items -->
+    <ul class="list-group mt-3">
+        <template x-for="item in items">
+          <li class="list-group-item" x-text="item"></li>
+        </template>
+      </ul>
+</div>
+
+
+
+<div class=" p-16 bg-gray-100">
+    <div
+        x-data="{
+            search: '',
+            placeholder: 'How can I help you?',
+        }"
+        x-init="$refs.search.textContent = placeholder"
+        x-title="Search"
+        role="search"
+        class="relative max-w-2xl">
+        <h2 id="search-title">Search:</h2>
+        <div
+            id="search"
+            aria-labelledBy="search-title"
+            role="textbox"
+            contenteditable
+            tabindex="0"
+            class="w-full border bg-gray-200 shadow block p-4 pr-16"
+            :class="{
+                'text-gray-500 italic': $refs.search.textContent === placeholder
+            }"
+            @focusin.stop="if ($refs.search.textContent === placeholder) $event.target.textContent = ''"
+            @focusout.stop="if (search === '') $event.target.textContent = placeholder"
+            @keydown.escape.prevent="$event.target.blur()"
+            @keydown.enter.prevent="console.log('Form submitted...')"
+            x-ref="search"
+            @input="search = $event.target.textContent"></div>
+        <button
+            aria-controlls="search"
+            class="font-mono text-2xl absolute right-0 top-1 mt-8 mr-4 text-gray-500"
+            :class="search.length ? '' : 'hidden'"
+            @click="search = '';$refs.search.textContent = placeholder"
+            aria-label="Delete text">x</button>
+    </div>
+</div>
