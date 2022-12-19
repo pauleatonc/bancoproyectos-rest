@@ -14,5 +14,6 @@ def search(request):
     context = {'latest_project_list': latest_project_list}
     return render(request, 'projects/index.html', context)
 
+
 def project(request, project_id):
     return HttpResponse("Proyecto específico: %s." % project_id)
