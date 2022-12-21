@@ -2,22 +2,27 @@
 <html lang="en">
 
 {% include 'projects/modules/head.html' %}
-{% include 'projects/modules/navbar.html' %}
-{% include 'projects/modules/browser.html' %}
 
-<div>
-{% if latest_project_list %}
-    <ul>
-    {% for project in latest_project_list %}
-        <li><a href="{% url 'projects:search' %}">{{ project.id }}</a> - <a href="{% url 'projects:project' project.id %}">{{ project.project_name }}</a>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No project are available.</p>
-{% endif %}
-</div>
+<body class="">
+
+    {% include 'projects/modules/navbar.html' %}
+    {% include 'projects/modules/browser.html' %}
+
+    <div>
+        {% if latest_project_list %}
+            <ul>
+            {% for project in latest_project_list %}
+                <li><a href="{% url 'projects:search' %}">{{ project.id }}</a> - <a href="{% url 'projects:project' project.id %}">{{ project.project_name }}</a>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>No project are available.</p>
+        {% endif %}
+    </div>
+
+
+</body>
 
 {% include 'projects/modules/footer.html' %}
-
 
 </html>
