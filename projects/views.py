@@ -10,9 +10,10 @@ def index(request):
     context = {'latest_project_list': latest_project_list}
     return render(request, 'projects/index.html', context)
 
-def search(request):
 
+def search(request):
     return render(request, 'projects/search.html')
+    
 
 def project(request, project_id):
-    return HttpResponse("Proyecto específico: %s." % project_id)
+    return render(request, 'projects/project_view.html')

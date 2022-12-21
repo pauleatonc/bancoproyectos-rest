@@ -1,0 +1,18 @@
+<div 
+    class="container my-5 py-5 px-5 mx-5" 
+    x-data="{
+        search: '' 
+        items: ['Apple', 'Banana', 'Guava', 'Ape', 'Bands'] 
+    }">
+    
+    <!-- Search input -->
+    <input type="search" class="form-control" placeholder="Enter Keyword here" x-model="search">
+    
+    <!-- List items -->
+    <ul class="list-group mt-3">
+        <template x-for="item in items">
+          <li class="list-group-item" x-text="item"></li>
+        </template>
+      </ul>
+</div>
+
