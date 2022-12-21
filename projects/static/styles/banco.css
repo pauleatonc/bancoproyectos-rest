@@ -5,3 +5,15 @@
 .color-text-1 {
     color: white;
 }
+
+.logohight {
+    max-width: 70px;
+}
+
+.position-left {
+    align-content: start;
+}
+
+.position-center {
+    align-content: center;
+}
