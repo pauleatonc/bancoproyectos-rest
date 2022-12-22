@@ -12,7 +12,9 @@ def index(request):
 
 
 def search(request):
-    return render(request, 'projects/search.html')
+    latest_project_list = Project.objects.order_by('-pub_date')[:9]
+    context = {'latest_project_list': latest_project_list}
+    return render(request, 'projects/search.html', context)
     
 
 def project(request, project_id):
