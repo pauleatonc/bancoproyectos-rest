@@ -40,8 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'django_elasticsearch_dsl',
-
 ]
 
 MIDDLEWARE = [
@@ -141,8 +139,3 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'projects/static'),)
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-ELASTICSEARCH_DSL={
-    'default': {
-        'hosts': 'localhost:9200'
-    },
-}
