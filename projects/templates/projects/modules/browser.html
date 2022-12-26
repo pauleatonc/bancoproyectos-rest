@@ -3,18 +3,16 @@
     <div class="row d-flex justify-content-center"> 
       <div class="col-md-9"> 
         <div class="card p-4 mt-3"> 
-          <h3 class="heading text-center subderecolor">Buscardor de Proyectos</h3> 
-          <div class="d-flex justify-content-center px-5"> 
-            <div class="container clearfix">
-              <form class="input-group rounded">
-                <input type="text" name= "q" class="form-control rounded" placeholder="Buscar" aria-label="Buscar" aria-describedby="search-addon" />
-                <button class="input-group-text border-0" id="search-addon">
-                  <i class="fas fa-search subderecolor"></i>
-                </button>
-              </form>
-            </div>
-          </div> 
+          <h3 class="heading text-center subderecolor">Buscar proyectos según tipo</h3> 
           <div class="row mt-4 g-1 px-4"> 
+            <div class="col-md-2"> 
+              <div class="card-inner p-3 d-flex flex-column align-items-center"> 
+                <i class="fa-brands fa-font-awesome browsericon subderecolor"></i>
+                <div class="text-center mg-text"> 
+                  <span class="mg-text subderecolor">Todos</span> 
+                </div> 
+              </div> 
+            </div> 
             <div class="col-md-2"> 
               <div class="card-inner p-3 d-flex flex-column align-items-center"> 
                 <i class="fa-solid fa-tree-city browsericon subderecolor"></i>
@@ -55,15 +53,21 @@
                 </div> 
               </div> 
             </div> 
-            <div class="col-md-2"> 
-              <div class="card-inner p-3 d-flex flex-column align-items-center"> 
-                <i class="fa-brands fa-font-awesome browsericon subderecolor"></i>
-                <div class="text-center mg-text"> 
-                  <span class="mg-text subderecolor">Filtro</span> 
-                </div> 
-              </div> 
-            </div> 
+            
           </div> 
+
+          <h5 class="heading text-center subderecolor p-3">Buscar proyectos por otras características</h5> 
+          <div class="d-flex justify-content-center px-5"> 
+            <div class="container clearfix">
+              <form class="input-group rounded">
+                <input type="text" name= "q" class="form-control rounded" placeholder="Buscar" aria-label="Buscar" aria-describedby="search-addon" />
+                <button class="input-group-text border-0" id="search-addon">
+                  <i class="fas fa-search subderecolor"></i>
+                </button>
+              </form>
+            </div>
+          </div> 
+
         </div> 
       </div> 
     </div> 
