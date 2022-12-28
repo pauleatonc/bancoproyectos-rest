@@ -1,0 +1,97 @@
+body, h1, h2, h3, h4, h5, h6, footer, nav {
+    font-family: 'Roboto', sans-serif;
+}
+
+.subderegreen {
+    background-color: #25b3c2;
+    border-color: #25b3c2;
+}
+
+.color-text-1 {
+    color: white;
+}
+
+.logohight {
+    max-width: 70px;
+}
+
+.navbardist {
+    padding-bottom: 60px;
+ }
+
+ .browsericon {
+    font-size: 40px;
+}
+
+.landingicon {
+    font-size: 80px;
+    color:white;
+}
+
+.center {
+    display: flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.icondocument {
+    font-size: 30px;
+    margin-right: 15px;
+    margin-top: 5px;
+}
+
+.subderecolor {
+    color: #25b3c2;
+}
+
+.truncate2 {
+    overflow:hidden;
+    line-height: 2rem;
+    max-height: 8rem;
+    -webkit-box-orient: vertical;
+    display: block;
+    display: -webkit-box;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 3;
+  }
+
+  .bannersize {
+    height: 300px;
+  }
+
+
+
+@media (max-width: 767px) {
+   .carousel-inner .carousel-item > div {
+       display: none;
+   }
+   .carousel-inner .carousel-item > div:first-child {
+       display: block;
+   }
+}
+
+.carousel-inner .carousel-item.active,
+.carousel-inner .carousel-item-next,
+.carousel-inner .carousel-item-prev {
+    display: flex;
+}
+
+/* medium and up screens */
+@media (min-width: 768px) {
+
+    .carousel-inner .carousel-item-end.active,
+    .carousel-inner .carousel-item-next {
+        transform: translateX(25%);
+    }
+
+    .carousel-inner .carousel-item-start.active, 
+    .carousel-inner .carousel-item-prev {
+        transform: translateX(-25%);
+    }
+}
+
+.carousel-inner .carousel-item-end,
+.carousel-inner .carousel-item-start { 
+    transform: translateX(0);
+}

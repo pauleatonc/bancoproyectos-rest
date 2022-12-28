@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+{% include 'projects/modules/head.html' %}
+
+<body>
+
+    {% include 'projects/modules/navbar.html' %}
+    {% include 'projects/modules/browser.html' %}
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+            {% if projects %}
+             <p class="text-center"> {{ projects|length }} resultados</p>
+                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                
+                    {% for project in projects %}
+                    <!-- Card Element Init. -->
+                    <div class="col">
+                        <div class="card shadow-sm">
+                            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+
+                            <div class="card-body">
+                                        <h5>{{ project.project_name }}</h5>
+                                        <p class="card-text truncate2">Descripción: {{ project.project_description }}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'projects:project' project.id %}">Ver</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">ID Subdere: {{ project.id_subdere }}</button>
+                                    </div>
+                                    <small class="text-muted">9 mins</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Card Element End. -->
+                    {% endfor %}  
+
+            {% else %}
+                    <p class="text-center">No hay proyectos que coincidan con la búsqueda.</p>                                         
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    {% include 'projects/modules/footer.html' %}
+</body>
+
+
+
+
+
+</html>
