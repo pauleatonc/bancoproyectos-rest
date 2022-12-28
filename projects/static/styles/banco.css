@@ -18,6 +18,12 @@
     font-size: 40px;
 }
 
+.icondocument {
+    font-size: 30px;
+    margin-right: 15px;
+    margin-top: 5px;
+}
+
 .subderecolor {
     color: #25b3c2;
 }
@@ -34,7 +40,11 @@
     -webkit-line-clamp: 3;
   }
 
-  
+  .bannersize {
+    height: 300px;
+  }
+
+
 
 @media (max-width: 767px) {
    .carousel-inner .carousel-item > div {

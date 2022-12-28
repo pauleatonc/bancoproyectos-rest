@@ -6,20 +6,21 @@
 <body class="">
 
     {% include 'projects/modules/navbar.html' %}
-    {% include 'projects/modules/browser.html' %}
+    <div class="container mt-4 navbardist"> 
+        <div class="row d-flex justify-content-center"> 
+          <div class="col-md-9"> 
+            <div class="card p-4 mt-3"> 
+                <h2>Busca un proyecto y descarga</h2>
+                <a href="{% url 'projects:search' %}"><button type="button" class="btn btn-primary btn-lg">Ir al Buscador  <i class="fa-solid fa-magnifying-glass"></i></a>
+                </button>       
+            </div> 
+          </div> 
+        </div> 
+      </div>
+    
 
-    <div>
-        {% if latest_project_list %}
-            <ul>
-            {% for project in latest_project_list %}
-                <li><a href="{% url 'projects:search' %}">{{ project.id }}</a> - <a href="{% url 'projects:project' project.id %}">{{ project.project_name }}</a>
-            {% endfor %}
-            </ul>
-        {% else %}
-            <p>No project are available.</p>
-        {% endif %}
 
-    </div>
+
     
 </body>
 

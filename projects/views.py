@@ -30,4 +30,16 @@ def search(request):
     
 
 def project(request, project_id):
+    
+    project_list = Project.objects.all()
+    context = {'project_list': project_list}
     return render(request, 'projects/project_view.html')
+
+
+def __str__(self):
+    return self.my_field_name
+
+
+def get_absolute_url(self):
+    """Returns the URL to access a particular instance of the model."""
+    return reverse('model-detail-view', args=[str(self.id)])
