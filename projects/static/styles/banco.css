@@ -1,5 +1,10 @@
+body, h1, h2, h3, h4, h5, h6, footer, nav {
+    font-family: 'Roboto', sans-serif;
+}
+
 .subderegreen {
     background-color: #25b3c2;
+    border-color: #25b3c2;
 }
 
 .color-text-1 {
@@ -16,6 +21,17 @@
 
  .browsericon {
     font-size: 40px;
+}
+
+.landingicon {
+    font-size: 80px;
+    color:white;
+}
+
+.center {
+    display: flex;
+    align-items:center;
+    justify-content:center;
 }
 
 .icondocument {
