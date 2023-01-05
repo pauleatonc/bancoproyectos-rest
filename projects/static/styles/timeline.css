@@ -59,7 +59,7 @@
     border: 7px solid #25b3c2;
     border-radius: 100%;
     background-color: #25b3c2;
-    box-shadow: 0 0 5px #25b3c2;
+    
     width: 200px;
     height: 200px;
     margin-left: -100px;
@@ -128,7 +128,7 @@
     -ms-transform: rotate(-44deg); /* IE 9 */
     -webkit-transform: rotate(-44deg); /* Safari */
     transform: rotate(-44deg);
-    box-shadow: 0 0 5px #25b3c2;
+    
 }
 /*Style for odd div.line*/
 .timeline>li:nth-child(even) .line:before  {
@@ -143,7 +143,7 @@
     -ms-transform: rotate(44deg); /* IE 9 */
     -webkit-transform: rotate(44deg); /* Safari */
     transform: rotate(44deg);
-    box-shadow: 0 0 5px #25b3c2;
+    
 }
 /* Medium Devices, .visible-md-* */
 @media (min-width: 992px) and (max-width: 1199px) {

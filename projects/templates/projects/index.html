@@ -8,25 +8,31 @@
     {% include 'projects/modules/navbar.html' %}
     <!-- Botón de búsqueda Init -->
     <div class="container mt-4 navbardist"> 
-        <h1 class="subderecolor center">Busca un proyecto y descarga</h1>
+
         <img src="{% static 'images\aplicacion_web_v2-01_0.png' %}" class="img-fluid">
-        <div class="row d-flex justify-content-center"> 
-          <div class="col-md-9"> 
-            <div class="card p-4 mt-3"> 
-                <a href="{% url 'projects:search' %}"><button type="button" class="btn btn-secondary btn-lg subderegreen">Buscador de Proyectos. <i class="fa-solid fa-magnifying-glass"></i></a>
-                </button>       
-            </div> 
-          </div> 
+        <div class="row d-flex justify-content-center navbardist align-middle"> 
+
+                <a href="{% url 'projects:search' %}" type="button" class="btn btn-secondary btn-lg subdereblue col-3 align-middle searchheight">Buscar Proyectos. <i class="fa-solid fa-magnifying-glass"></i></a>
+
+                
+                          
+                <a href="{% url 'projects:search' %}" type="button" class="btn btn-secondary btn-lg subderegreen col-3 align-middle searchheight">Buscar Ideas. <i class="fa-solid fa-magnifying-glass"></i></a>
+                  
+
+
+                <a href="{% url 'projects:search' %}" type="button" class="btn btn-secondary btn-lg subdereorange col-3 align-middle searchheight">Buscar Documentos. <i class="fa-solid fa-magnifying-glass"></i></a>
+     
+
         </div> 
       </div>
     <!-- Botón de búsqueda end -->
     <!-- Presentación Init -->
-      <div class="container">
-        <div class="row">
+      <div class="container navbardist">
+        <div class="row navbardist">
           <div class="col-lg-12">
-            <h3 class="text-center">Zigzag Timeline Layout (and Cats)</h3>
+            <h3 class="text-center"></h3>
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+              
             </p>
             <ul class="timeline">
               <li>
@@ -34,13 +40,13 @@
                     <i class="fa-solid fa-question landingicon"></i>
                 </div>
                 <div class="timeline-panel">
-                  <div class="timeline-heading">
-                    <h4>Step One</h4>
-                    <h4 class="subheading">¿Que es el Banco de Proyectos de la SUBDERE?</h4>
+                  <div class="d-flex justify-content-end timeline-heading">
+                    <div class="titlelanding">1.</div>
+                    <div class="titlelanding">¿Que es?</div>
                   </div>
                   <div class="timeline-body">
                     <p class="text-muted">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                      El Banco de proyectos de la SUBDERE es un repositorio de proyectos referenciales, que entrega la documentación necesaria para la fomulación de proyectos, para postular al Programa de Mejoramiento Urbano y Programa de Mejoramiento de Barrios de la Subsecretaría de Desarrollo Regional y Administrativo.
                     </p>
                   </div>
                 </div>
@@ -51,13 +57,13 @@
                     <i class="fa-solid fa-code-fork landingicon"></i>
                 </div>
                 <div class="timeline-panel">
-                  <div class="timeline-heading">
-                    <h4>Step Two</h4>
-                    <h4 class="subheading">Subtitle</h4>
+                  <div class="d-flex justify-content-start timeline-heading">
+                    <div class="titlelanding">2.</div>
+                    <div class="titlelanding">¿A quién va dirigido?</div>
                   </div>
                   <div class="timeline-body">
                     <p class="text-muted">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                      A todo profesional municipal encargado de la formulación de proyectos de infraestructura que se enmarquen en los programas PMU y PMB.
                     </p>
                   </div>
                 </div>
@@ -68,13 +74,13 @@
                     <i class="fa-solid fa-file-arrow-down landingicon"></i>
                 </div>
                 <div class="timeline-panel">
-                  <div class="timeline-heading">
-                    <h4>Step Three</h4>
-                    <h4 class="subheading">Subtitle</h4>
+                  <div class="d-flex justify-content-end timeline-heading">
+                    <div class="titlelanding">3.</div>
+                    <div class="titlelanding">¿Cómo funciona?</div>
                   </div>
                   <div class="timeline-body">
                     <p class="text-muted">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                      Filtra y busca el tipo de proyectos que quieres desarrollar para tu comuna. Revisa sus antecedentes y resultados. Descarga documentación tipo y referencial para poder postular un proyecto que se ajuste a la realidad de tu comuna.
                     </p>
                   </div>
                 </div>
@@ -85,13 +91,13 @@
                     <i class="fa-regular fa-paper-plane landingicon"></i>
                 </div>
                 <div class="timeline-panel">
-                  <div class="timeline-heading">
-                    <h4>Step Three</h4>
-                    <h4 class="subheading">Subtitle</h4>
+                  <div class="d-flex justify-content-start timeline-heading">
+                    <div class="titlelanding">4.</div>
+                    <div class="titlelanding">¿Que información entrega?</div>
                   </div>
                   <div class="timeline-body">
                     <p class="text-muted">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                      La información se clasifica en dos secciones: Información específica de los proyectos referenciales (planos, especificaciones técnicas, presupuestos), y la información referencial para la elaboración de proyectos. (planos modulares en DWG, formularios, guías de diseño, presupuestos generales. </br> Esta información podrá variar dependiendo del tipo de proyecto buscado.
                     </p>
                   </div>
                 </div>
@@ -102,13 +108,13 @@
                     <i class="fa-solid fa-landmark landingicon"></i>
                 </div>
                 <div class="timeline-panel">
-                  <div class="timeline-heading">
-                    <h4>Bonus Step</h4>
-                    <h4 class="subheading">Subtitle</h4>
+                  <div class="d-flex justify-content-end timeline-heading">
+                    <div class="titlelanding">5.</div>
+                    <div class="titlelanding">¿Quienes somos?</div>
                   </div>
                   <div class="timeline-body">
                     <p class="text-muted">
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                      El banco de proyectos es una iniciativa directa de la SUBDERE. Siendo permanentemente evaluada y actualizada su información.
                     </p>
                   </div>
                 </div>
@@ -117,9 +123,7 @@
           </div>
         </div>
       </div>
-    <!-- Presentación end -->
-
- 
+    <!-- Presentación end --> 
 </body>
 
 {% include 'projects/modules/footer.html' %}
