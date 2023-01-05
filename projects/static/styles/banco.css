@@ -44,29 +44,6 @@ body, h1, h2, h3, h4, h5, h6, footer, nav {
     color: #25b3c2;
 }
 
-.subdereorange {
-    background-color: #eb6951;
-    border-color: #eb6951;
-}
-
-.subdereblue {
-    background-color: #0183bf;
-    border-color: #0183bf;
-}
-
-.searchheight {
-    height: 80px;
-    padding: 25px;
-  }
-
-.titlelanding {
-    font-size: 30px;
-    margin-right: 15px;
-    margin-top: 5px;
-    color: #25b3c2;
-    font-weight: bold;
-}
-
 .truncate2 {
     overflow:hidden;
     line-height: 2rem;
@@ -82,7 +59,9 @@ body, h1, h2, h3, h4, h5, h6, footer, nav {
   .bannersize {
     height: 300px;
   }
-  
+
+
+
 @media (max-width: 767px) {
    .carousel-inner .carousel-item > div {
        display: none;
