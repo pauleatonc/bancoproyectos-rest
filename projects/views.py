@@ -14,7 +14,6 @@ def index(request):
 
 def search(request):
 
-
     q = request.GET.get('q')
 
     if q:

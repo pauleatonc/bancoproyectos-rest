@@ -1,19 +1,18 @@
 {% load static %}
-<div class="subderegreen fixed-top">
-      <div class="container d-flex flex-wrap align-items-center justify-content-center justify-content-md-between  ">
 
-        <div class= "col-4 col-md-auto logohight" >
-          <img src="{% static 'images/logosubbl.png' %}">
-        </div>
-
-        <div class="nav col-4 col-md-auto justify-content-center mb-md-0">
-          <h5><a href="{% url 'projects:index' %}" class="nav-link px-2 color-text-1">Banco de Proyectos SUBDERE</a></h5>
-        </div>
-
-        <div class="col-md-2 text-end">
-          <!-- <button type="button" class="btn btn-outline-light me-2">Login</button>
-          <button type="button" class="btn  btn-outline-secondary">Sign-up</button> -->
-        </div>
-      </div>
+<nav class="fixed-top subderegreen ">
+  <div class="container d-flex align-items-center">
+    <div class= "col-4 col-md-auto logohight" >
+      <img src="{% static 'images/logosubbl.png' %}">
+    </div>
+    <div class="col-4 col-md-auto ">
+      <a class="container-fluid navbar-brand color-text-1 " href="{% url 'projects:index' %}">Inicio</a>
+    </div>
+    <div class="col-12 ">
+      <h1 class="color-text-1 text-center navname ">Banco de proyectos</h1>
+    </div>
   </div>
-  <div class="navbardist"></div>
+</nav>
+<div class="navbardist"></div>
+
+
