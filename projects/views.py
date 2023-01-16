@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from django.contrib.postgres.search import SearchQuery, SearchVector
+from django.urls import reverse
 
 from .models import Project
 

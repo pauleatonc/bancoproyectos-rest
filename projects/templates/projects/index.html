@@ -8,22 +8,15 @@
     {% include 'projects/modules/navbar.html' %}
     <!-- Botón de búsqueda Init -->
     <div class="container mt-4 navbardist"> 
-
         <img src="{% static 'images\aplicacion_web_v2-01_0.png' %}" class="img-fluid">
-        <div class="row d-flex justify-content-center navbardist align-middle"> 
-
-                <a href="{% url 'projects:search' %}" type="button" class="btn btn-secondary btn-lg subdereblue col-3 align-middle searchheight">Buscar Proyectos. <i class="fa-solid fa-magnifying-glass"></i></a>
-
-                
-                          
-                <a href="{% url 'projects:search' %}" type="button" class="btn btn-secondary btn-lg subderegreen col-3 align-middle searchheight">Buscar Ideas. <i class="fa-solid fa-magnifying-glass"></i></a>
-                  
-
-
-                <a href="{% url 'projects:search' %}" type="button" class="btn btn-secondary btn-lg subdereorange col-3 align-middle searchheight">Buscar Documentos. <i class="fa-solid fa-magnifying-glass"></i></a>
-     
-
-        </div> 
+          <div 
+            class="titlelanding text-center">¿Que buscas hoy?
+          </div>
+          <div class="row d-flex justify-content-center navbardist align-middle"> 
+                <a href="{% url 'projects:search' %}" type="button" class="btn btn-secondary btn-lg subdereblue col-2 align-middle searchheight">Proyectos <i class="fa-solid fa-magnifying-glass"></i></a>                           
+                <a href="{% url 'projects:search' %}" type="button" class="btn btn-secondary btn-lg subderegreen col-2 align-middle searchheight">Ideas <i class="fa-solid fa-magnifying-glass"></i></a>
+                <a href="{% url 'projects:search' %}" type="button" class="btn btn-secondary btn-lg subdereorange col-2 align-middle searchheight">Documentos <i class="fa-solid fa-magnifying-glass"></i></a>
+          </div> 
       </div>
     <!-- Botón de búsqueda end -->
     <!-- Presentación Init -->
@@ -31,9 +24,6 @@
         <div class="row navbardist">
           <div class="col-lg-12">
             <h3 class="text-center"></h3>
-            <p>
-              
-            </p>
             <ul class="timeline">
               <li>
                 <div class="timeline-image center">
