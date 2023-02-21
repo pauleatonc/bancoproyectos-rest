@@ -20,8 +20,8 @@
                             <img src="https://picsum.photos/300/200" class="bd-placeholder-img card-img-top" width="100%" height="225" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title></img>
 
                             <div class="card-body">
-                                        <h5>{{ project.project_name }}</h5>
-                                        <p class="card-text truncate2">Descripción: {{ project.project_description }}</p>
+                                        <h5>{{ project.name }}</h5>
+                                        <p class="card-text truncate2">Descripción: {{ project.description }}</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
                                         <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'projects:project' project.id %}">Ver</a>
