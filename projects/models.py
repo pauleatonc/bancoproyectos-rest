@@ -27,12 +27,10 @@ class Project(models.Model):
     description = models.TextField(verbose_name= 'Descripción')
     program = models.ForeignKey(Program, null=True, blank=False, on_delete=models.SET_NULL, verbose_name= 'Programa')
     type = models.ForeignKey(Type, null=True, blank=False, on_delete=models.SET_NULL, verbose_name= 'Tipo de Proyecto')
+    portada = models.ImageField(upload_to='images', null=True, blank=False)
 
-    import datetime
-    YEAR_CHOICES = []
-    for r in range(1980, (datetime.datetime.now().year+1)):
-        YEAR_CHOICES.append((r,r))
-    pub_date = models.DateTimeField(('Año'), choices=YEAR_CHOICES, default=datetime.datetime.now().year)
+
+    pub_date = models.DateTimeField(verbose_name= 'Año')
 
     def __str__(self):
         return self.name

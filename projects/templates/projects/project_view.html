@@ -7,79 +7,33 @@
 
     <body>
         {% include 'projects/modules/navbar.html' %}
-        
+
+        <!-- Carousel Init -->
         <div class="navbardist"></div>
         <main class="container">
-           <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark bannersize" style="background-image: url('https://images.pexels.com/photos/1849115/pexels-photo-1849115.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1')">
+           <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark bannersize"> <img src="{{ project.portada.url }}" class="img-fluid">
             <div class="col-md-6 px-0 vertical-center">
-              <h1 class="display-4 fst-italic" >Proyecto: Nombre</h1>
+              <h1 class="display-4 fst-italic" >Proyecto: {{ project.name }}</h1>
             </div>
           </div>       
-            <!-- Carousel Init -->
+            
             <div class="container text-center my-3">
               <div class="row mx-auto my-auto justify-content-center">
                 <div id="recipeCarousel" class="carousel slide" data-bs-ride="carousel">
                   <div class="carousel-inner" role="listbox">
+                    {% for projectimage in projectimages %}
                     <div class="carousel-item active">
                       <div class="col-md-3">
                         <div class="card">
                           <div class="card-img">
-                            <img src="https://images.pexels.com/photos/327482/pexels-photo-327482.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="img-fluid">
-                          </div>
-                         
+                            <img src="{{ projectimage.image.url }}" class="img-fluid">
+                          </div>                         
                         </div>
                       </div>
                     </div>
-                    <div class="carousel-item">
-                      <div class="col-md-3">
-                        <div class="card">
-                          <div class="card-img">
-                            <img src="https://images.pexels.com/photos/3312671/pexels-photo-3312671.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="img-fluid">
-                          </div>
-                          
-                        </div>
-                      </div>
-                    </div>
-                    <div class="carousel-item">
-                      <div class="col-md-3">
-                        <div class="card">
-                          <div class="card-img">
-                            <img src="https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="img-fluid">
-                          </div>
-                          
-                        </div>
-                      </div>
-                    </div>
-                    <div class="carousel-item">
-                      <div class="col-md-3">
-                        <div class="card">
-                          <div class="card-img">
-                            <img src="https://images.pexels.com/photos/1849115/pexels-photo-1849115.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="img-fluid">
-                          </div>
-                     
-                        </div>
-                      </div>
-                    </div>
-                    <div class="carousel-item">
-                      <div class="col-md-3">
-                        <div class="card">
-                          <div class="card-img">
-                            <img src="https://images.pexels.com/photos/271667/pexels-photo-271667.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="img-fluid">
-                          </div>
-                    
-                        </div>
-                      </div>
-                    </div>
-                    <div class="carousel-item">
-                      <div class="col-md-3">
-                        <div class="card">
-                          <div class="card-img">
-                            <img src="https://images.pexels.com/photos/392031/pexels-photo-392031.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="img-fluid">
-                          </div>
-                        
-                        </div>
-                      </div>
-                    </div>
+                    {% endfor %} 
+
+
                   </div>
                   <a class="carousel-control-prev bg-transparent w-aut" href="#recipeCarousel" role="button" data-bs-slide="prev">
                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -95,131 +49,49 @@
           <!-- Articulo Init -->
           <div class="row g-5">
             <div class="col-md-8">
-              <h3 class="pb-4 mb-4 fst-italic border-bottom">
-                Imágenes de proyecto
-              </h3>
-        
-              <article class="blog-post">
-                
-                <p class="blog-post-meta fw-bold">Año: 2021</p>
+              <h3 class="pb-4 mb-4 fst-italic border-bottom">Imágenes de proyecto</h3>        
+              <article class="blog-post">                
+                <p><span class="blog-post-meta fw-bold">ID SUBDERE:</span> {{ project.id_subdere }} </p>
+                <p><span class="blog-post-meta fw-bold">Programa:</span> {{ project.program }} ( {{ project.program.name }} )</p>
+                <p><span class="blog-post-meta fw-bold">Categoria:</span> {{ project.type }}</p>
+                <p><span class="blog-post-meta fw-bold">Año:</span> {{ project.pub_date }}</p> 
+                </br>
                 <h1 class="blog-post-title fw-bold">Descripción</h1>
-
-        
-                <p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
-                  The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham.</p>
+                <p>{{ project.description }}</p>
 
               </article>   
-
-
+             <!-- Articulo end -->
+              <!-- Descarga Módulos -->
               <div class="container px-4 py-5" id="icon-grid">
                 <h2 class="pb-2 border-bottom fw-bold" data-bs-toggle="collapse" href="#collapseAp" role="button" aria-expanded="false" aria-controls="collapseAp">Archivos de proyecto <i class="fa-solid fa-angle-down"></i></h2>
-            
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-5 collapse" id="collapseAp">
+                  {% for projectfile in projectfiles %}
                   <div class="col d-flex align-items-start">
                     <i class="fa-solid fa-file-pdf icondocument subderecolor"></i>
                     <div>
-                      <h4 class="fw-bold ">Plantas.dwg</h4>
-                      <p class="fw-normal text-secondary">Nota corta sobre el documento.</p>
+                      <h4 class="fw-bold "><a href="{{ projectfile.file.url }}" target="_blank" >{{ projectfile.name }}</a></h4>
+                      <p class="fw-normal text-secondary" >{{ projectfile.file.name }}</p>
+                      <p class="fw-normal text-secondary">{{ projectfile.file.size|filesizeformat }}</p>
                     </div>
                   </div>
-                  <div class="col d-flex align-items-start">
-                    <i class="fa-solid fa-file-pdf icondocument subderecolor"></i>
-                    <div>
-                      <h4 class="fw-bold">Plantas.dwg</h4>
-                      <p class="fw-normal text-secondary">Nota corta sobre el documento.</p>
-                    </div>
-                  </div>
-                  <div class="col d-flex align-items-start">
-                    <i class="fa-solid fa-file-pdf icondocument subderecolor"></i>
-                    <div>
-                      <h4 class="fw-bold">Plantas.dwg</h4>
-                      <p class="fw-normal text-secondary">Nota corta sobre el documento.</p>
-                    </div>
-                  </div>
-                  <div class="col d-flex align-items-start">
-                    <i class="fa-solid fa-file-pdf icondocument subderecolor"></i>
-                    <div>
-                      <h4 class="fw-bold">Plantas.dwg</h4>
-                      <p class="fw-normal text-secondary">Nota corta sobre el documento.</p>
-                    </div>
-                  </div>              
+                  {% endfor %}                         
                 </div>
               </div>
-
-
-
-
+              <!-- Descarga guías -->
               <div class="container px-4 py-5" id="icon-grid">
                 <h2 class="pb-2 border-bottom fw-bold" data-bs-toggle="collapse" href="#collapseMd" role="button" aria-expanded="false" aria-controls="collapseMd">Modulos de Descarga <i class="fa-solid fa-angle-down"></i></h2>
-            
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-5 collapse" id="collapseMd">
+                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-5 collapse" id="collapseMd">
+                  {% for guide in guides %}
                   <div class="col d-flex align-items-start">
                     <i class="fa-solid fa-file-pdf icondocument subderecolor"></i>
                     <div>
-                      <h4 class="fw-bold">Plantas.dwg</h4>
-                      <p class="fw-normal text-secondary">Nota corta sobre el documento.</p>
+                      <h4 class="fw-bold"><a href="{{ guide.guide.url }}" target="_blank" >{{ guide }}</a></h4>
                     </div>
-                  </div>
-                  <div class="col d-flex align-items-start">
-                    <i class="fa-solid fa-file-pdf icondocument subderecolor"></i>
-                    <div>
-                      <h4 class="fw-bold">Plantas.dwg</h4>
-                      <p class="fw-normal text-secondary">Nota corta sobre el documento.</p>
-                    </div>
-                  </div>
-                  <div class="col d-flex align-items-start">
-                    <i class="fa-solid fa-file-pdf icondocument subderecolor"></i>
-                    <div>
-                      <h4 class="fw-bold">Plantas.dwg</h4>
-                      <p class="fw-normal text-secondary">Nota corta sobre el documento.</p>
-                    </div>
-                  </div>
-                  <div class="col d-flex align-items-start">
-                    <i class="fa-solid fa-file-pdf icondocument subderecolor"></i>
-                    <div>
-                      <h4 class="fw-bold">Plantas.dwg</h4>
-                      <p class="fw-normal text-secondary">Nota corta sobre el documento.</p>
-                    </div>
-                  </div>
-                  <div class="col d-flex align-items-start">
-                    <i class="fa-solid fa-file-pdf icondocument subderecolor"></i>
-                    <div>
-                      <h4 class="fw-bold">Plantas.dwg</h4>
-                      <p class="fw-normal text-secondary">Nota corta sobre el documento.</p>
-                    </div>
-                  </div>
-                  <div class="col d-flex align-items-start">
-                    <i class="fa-solid fa-file-pdf icondocument subderecolor"></i>
-                    <div>
-                      <h4 class="fw-bold">Plantas.dwg</h4>
-                      <p class="fw-normal text-secondary">Nota corta sobre el documento.</p>
-                    </div>
-                  </div>
-                  <div class="col d-flex align-items-start">
-                    <i class="fa-solid fa-file-pdf icondocument subderecolor"></i>
-                    <div>
-                      <h4 class="fw-bold">Plantas.dwg</h4>
-                      <p class="fw-normal text-secondary">Nota corta sobre el documento.</p>
-                    </div>
-                  </div>
-                  <div class="col d-flex align-items-start">
-                    <i class="fa-solid fa-file-pdf icondocument subderecolor"></i>
-                    <div>
-                      <h4 class="fw-bold">Plantas.dwg</h4>
-                      <p class="fw-normal text-secondary">Nota corta sobre el documento.</p>
-                    </div>
-                  </div>
-                </div>
+                  </div>   
+                  {% endfor %}      
+                </div>                
               </div>
-
-
-
             </div>  
-            <!-- Articulo end -->
-
-
-
-
 
             <!-- Columna de descargas init -->
             <div class="col-md-4">
@@ -232,9 +104,9 @@
                 <div class="p-4">
                   <h4 class="fst-italic fw-bold">Guías de Diseño</h4>
                   <ol class="list-unstyled mb-0">
-                    <li><a href="#" class="text-primary">Normas de Pavimentación</a></li>
-                    <li><a href="#" class="text-primary">Guía de Ciclovías</a></li>
-                    <li><a href="#" class="text-primary">Eficiencia Energética</a></li>
+                    {% for guide in guides %}
+                    <li class="text-primary"><a href="{{ guide.guide.url }}" target="_blank" >{{ guide }}</a></li>
+                    {% endfor %}  
                   </ol>
                 </div>
 
@@ -262,13 +134,8 @@
           </div>        
         </main>
 
-
         {% include 'projects/modules/footer.html' %} 
-
         {% load static %}
-        <script src="{% static 'js\carousel.js' %}" type="text/javascript"></script>  
-
-
-        
+        <script src="{% static 'js\carousel.js' %}" type="text/javascript"></script>          
     </body>
 </html>
