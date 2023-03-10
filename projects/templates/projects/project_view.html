@@ -11,7 +11,7 @@
         <!-- Carousel Init -->
         <div class="navbardist"></div>
         <main class="container">
-           <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark bannersize"> <img src="{{ project.portada.url }}" class="img-fluid">
+          <div class="p-4 rounded"> <img src="{{ project.portadabanner.url }}" class="img-fluid">
             <div class="col-md-6 px-0 vertical-center">
               <h1 class="display-4 fst-italic" >Proyecto: {{ project.name }}</h1>
             </div>
@@ -26,7 +26,7 @@
                       <div class="col-md-3">
                         <div class="card">
                           <div class="card-img">
-                            <img src="{{ projectimage.image.url }}" class="img-fluid">
+                            <img src="{{ projectimage.imagethumbnail.url }}" class="img-fluid">
                           </div>                         
                         </div>
                       </div>

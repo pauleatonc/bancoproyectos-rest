@@ -1,4 +1,6 @@
 from django.db import models
+from imagekit.models import ImageSpecField
+from imagekit.processors import ResizeToFill
 
 class Program(models.Model):
     name = models.CharField(max_length=200, verbose_name= 'Nombre')
@@ -28,6 +30,10 @@ class Project(models.Model):
     program = models.ForeignKey(Program, null=True, blank=False, on_delete=models.SET_NULL, verbose_name= 'Programa')
     type = models.ForeignKey(Type, null=True, blank=False, on_delete=models.SET_NULL, verbose_name= 'Tipo de Proyecto')
     portada = models.ImageField(upload_to='images', null=True, blank=False)
+    portadabanner = ImageSpecField(source='portada',
+                                      processors=[ResizeToFill(1208, 300)],
+                                      format='png',
+                                      options={'quality': 60})
 
 
     pub_date = models.DateTimeField(verbose_name= 'Año')
@@ -37,6 +43,11 @@ class Project(models.Model):
 
 class Projectimage(models.Model):
     image = models.ImageField(upload_to='images')
+    imagethumbnail = ImageSpecField(source='image',
+                                      processors=[ResizeToFill(300, 300)],
+                                      format='png',
+                                      options={'quality': 60})
+
     project = models.ForeignKey(Project, null=False, blank=False, on_delete=models.CASCADE, related_name= 'images')
     
 class Projectfile(models.Model):
