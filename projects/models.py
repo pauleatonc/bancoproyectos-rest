@@ -34,7 +34,8 @@ class Project(models.Model):
                                       processors=[ResizeToFill(1208, 300)],
                                       format='png',
                                       options={'quality': 60})
-
+    eett = models.FileField(upload_to='documents', null=True, blank=False, verbose_name= 'EETT')
+    presupuesto = models.FileField(upload_to='documents', null=True, blank=False, verbose_name= 'Presupuesto')
 
     pub_date = models.DateTimeField(verbose_name= 'Año')
 
