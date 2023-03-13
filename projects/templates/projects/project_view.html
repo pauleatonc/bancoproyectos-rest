@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-
-
     {% include 'projects/modules/head.html' %}
-
 
     <body>
         {% include 'projects/modules/navbar.html' %}
@@ -15,12 +12,12 @@
             <div class="col-md-6 px-0 vertical-center">
               <h1 class="display-4 fst-italic" >Proyecto: {{ project.name }}</h1>
             </div>
-          </div>       
-            
+          </div>                   
             <div class="container text-center my-3">
               <div class="row mx-auto my-auto justify-content-center">
                 <div id="recipeCarousel" class="carousel slide" data-bs-ride="carousel">
                   <div class="carousel-inner" role="listbox">
+                    
                     {% for projectimage in projectimages %}
                     <div class="carousel-item active">
                       <div class="col-md-3">
@@ -32,7 +29,6 @@
                       </div>
                     </div>
                     {% endfor %} 
-
 
                   </div>
                   <a class="carousel-control-prev bg-transparent w-aut" href="#recipeCarousel" role="button" data-bs-slide="prev">
@@ -61,7 +57,7 @@
 
               </article>   
              <!-- Articulo end -->
-              <!-- Descarga Módulos -->
+              <!-- Descarga Archivos -->
               <div class="container px-4 py-5" id="icon-grid">
                 <h2 class="pb-2 border-bottom fw-bold" data-bs-toggle="collapse" href="#collapseAp" role="button" aria-expanded="false" aria-controls="collapseAp">Archivos de proyecto <i class="fa-solid fa-angle-down"></i></h2>
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-5 collapse" id="collapseAp">
@@ -77,7 +73,7 @@
                   {% endfor %}                         
                 </div>
               </div>
-              <!-- Descarga guías -->
+              <!-- Descarga Módulos -->
               <div class="container px-4 py-5" id="icon-grid">
                 <h2 class="pb-2 border-bottom fw-bold" data-bs-toggle="collapse" href="#collapseMd" role="button" aria-expanded="false" aria-controls="collapseMd">Modulos de Descarga <i class="fa-solid fa-angle-down"></i></h2>
                  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-5 collapse" id="collapseMd">
@@ -109,28 +105,17 @@
                     {% endfor %}  
                   </ol>
                 </div>
-
+  
                 <div class="p-4">
-                  <h4 class="fst-italic fw-bold">Documentos de Tramitación</h4>
-                  <ol class="list-unstyled mb-0">
-                    <li><a href="#" class="text-primary">Lista de Documentos</a></li>
-                    <li><a href="#" class="text-primary">Guía Operativa</a></li>
-                  </ol>
-                </div>
-        
-                <div class="p-4">
-                  <h4 class="fst-italic fw-bold">Documentos de Referencia</h4>
+                  <h4 class="fst-italic fw-bold">Documentos de Projecto</h4>
                   <ol class="list-unstyled">
-                    <li><a href="#" class="text-primary">Presupuesto General</a></li>
-                    <li><a href="#" class="text-primary">EETT Tipo</a></li>
-                    <li><a href="#"></a></li>
+                    <li class="text-primary"><a href="{{ project.eett.url }}" target="_blank" >EETT</a></li>
+                    <li class="text-primary"><a href="{{ project.presupuesto.url }}" target="_blank" >Presupuesto</a></li>
                   </ol>
                 </div>
               </div>
             </div>
             <!-- Columna de descargas end -->
-
-
           </div>        
         </main>
 

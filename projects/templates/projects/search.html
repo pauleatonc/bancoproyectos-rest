@@ -16,21 +16,24 @@
                     {% for project in projects %}
                     <!-- Card Element Init. -->
                     <div class="col">
+                        <a type="button" class="btn btn-sm " href="{% url 'projects:project' project.id %}">
                         <div class="card shadow-sm">
-                            <img src="https://picsum.photos/300/200" class="bd-placeholder-img card-img-top" width="100%" height="225" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title></img>
+                            <img src="{{ project.portacard.url }}" class="bd-placeholder-img card-img-top" width="100%" height="225" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false" ><title>Placeholder</title></img>
 
                             <div class="card-body">
                                         <h5>{{ project.name }}</h5>
                                         <p class="card-text truncate2">Descripción: {{ project.description }}</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <a type="button" class="btn btn-sm btn-outline-secondary" href="{% url 'projects:project' project.id %}">Ver</a>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">ID Subdere: {{ project.id_subdere }}</button>
+                                     
+                                        <div type="button" class="btn btn-sm btn-outline-secondary">ID Subdere: {{ project.id_subdere }}</div>
+                                        <div type="button" class="btn btn-sm btn-outline-secondary"> {{ project.program }}</div>
+                                        <div type="button" class="btn btn-sm btn-outline-secondary">{{ project.type }}</div>
                                     </div>
-                                    <small class="text-muted">9 mins</small>
                                 </div>
                             </div>
                         </div>
+                    </a>
                     </div>
                     <!-- Card Element End. -->
                     {% endfor %}  
