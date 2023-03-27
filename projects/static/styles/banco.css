@@ -2,6 +2,25 @@ body, h1, h2, h3, h4, h5, h6, footer, nav {
     font-family: 'Roboto', sans-serif;
 }
 
+.portada {
+    position: absolute;
+    z-index: -1;
+}
+.portadamask{
+    background-color: black;
+    opacity: 0.5 ;
+}
+
+.portadacontainer {
+    margin-bottom: 300px;
+    align-items: bottom;
+}
+
+.portadatext {
+    font-weight: bold;
+    padding-left: 10px;
+}
+
 .subderegreen {
     background-color: #25b3c2;
     border-color: #25b3c2;
@@ -32,6 +51,10 @@ body, h1, h2, h3, h4, h5, h6, footer, nav {
 
 .navbardist {
     padding-bottom: 60px;
+ }
+
+ .navbardisttop{
+    padding-top: 30px;
  }
 
  .browsericon {

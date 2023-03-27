@@ -5,47 +5,40 @@
     <body>
         {% include 'projects/modules/navbar.html' %}
 
-        <!-- Carousel Init -->
-        <div class="navbardist"></div>
+
         <main class="container">
-          <div class="p-4 rounded"> <img src="{{ project.portadabanner.url }}" class="img-fluid">
-            <div class="col-md-6 px-0 vertical-center">
-              <h1 class="display-4 fst-italic" >Proyecto: {{ project.name }}</h1>
-            </div>
-          </div>                   
-            <div class="container text-center my-3">
-              <div class="row mx-auto my-auto justify-content-center">
-                <div id="recipeCarousel" class="carousel slide" data-bs-ride="carousel">
-                  <div class="carousel-inner" role="listbox">
-                    
-                    {% for projectimage in projectimages %}
-                    <div class="carousel-item active">
-                      <div class="col-md-3">
-                        <div class="card">
-                          <div class="card-img">
-                            <img src="{{ projectimage.imagethumbnail.url }}" class="img-fluid">
-                          </div>                         
-                        </div>
-                      </div>
-                    </div>
-                    {% endfor %} 
-
-                  </div>
-                  <a class="carousel-control-prev bg-transparent w-aut" href="#recipeCarousel" role="button" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                  </a>
-                  <a class="carousel-control-next bg-transparent w-aut" href="#recipeCarousel" role="button" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                  </a>
-                </div>
-              </div>		
-            </div>
-          <!-- Carousel end -->
-
+          <h6 class="pb-4 mb-4 fst-italic border-bottom navbardisttop">Referencia de navegación</h6>   
+          <!-- portada Init -->
+            <div class="col-md-6 px-0 vertical-center portadacontainer">
+              <img src="{{ project.portadabanner.url }}" class="img-fluid portada">
+              <h1 class="display-4 color-text-1 portadatext" >{{ project.name }}</h1>
+            </div>    
+          <!-- portada End -->
+          
           <!-- Articulo Init -->
-          <div class="row g-5">
+          <div class="row g-5">            
             <div class="col-md-8">
-              <h3 class="pb-4 mb-4 fst-italic border-bottom">Imágenes de proyecto</h3>        
+              <!-- Carousel Init -->                     
+                <div class="gallery-slider_wrapper col-md-6">
+                  <div class="single-gallery-carousel-content-box owl-carousel owl-theme">
+                    {% for projectimage in projectimages %}
+                      <a class="item" href="{{ projectimage.image.url }}">
+                          <img src="{{ projectimage.image.url }}" alt="Awesome Image"/>
+                      </a>
+                      {% endfor %} 
+                  </div>          
+                  <div style="margin:10px 25px 0 25px;">
+                      <div class="single-gallery-carousel-thumbnail-box owl-carousel owl-theme">
+                        {% for projectimage in projectimages %}
+                          <div class="item" href="{{ projectimage.imagethumbnail.url }}">
+                              <img src="{{ projectimage.imagethumbnail.url }}" alt="Awesome Image"/>
+                          </div>    
+                        {% endfor %}               
+                      </div>
+                  </div>
+                </div>
+               <!-- Carousel end -->
+              <h6 class="pb-4 mb-4 fst-italic border-bottom">Imágenes de proyecto</h6>        
               <article class="blog-post">                
                 <p><span class="blog-post-meta fw-bold">ID SUBDERE:</span> {{ project.id_subdere }} </p>
                 <p><span class="blog-post-meta fw-bold">Programa:</span> {{ project.program }} ( {{ project.program.name }} )</p>

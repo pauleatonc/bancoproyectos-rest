@@ -31,7 +31,7 @@ class Project(models.Model):
     type = models.ForeignKey(Type, null=True, blank=False, on_delete=models.SET_NULL, verbose_name= 'Tipo de Proyecto')
     portada = models.ImageField(upload_to='images', null=True, blank=False)
     portadabanner = ImageSpecField(source='portada',
-                                      processors=[ResizeToFill(1208, 300)],
+                                      processors=[ResizeToFill(1300, 350)],
                                       format='png',
                                       options={'quality': 60})
     portacard = ImageSpecField(source='portada',
