@@ -38,6 +38,17 @@ class Project(models.Model):
                                       processors=[ResizeToFill(200, 200)],
                                       format='png',
                                       options={'quality': 60})
+    beforeimage = models.ImageField(upload_to='images', null=True, blank=True, verbose_name= 'Imagen Antes')
+    beforeimageresize = ImageSpecField(source='portada',
+                                      processors=[ResizeToFill(800, 600)],
+                                      format='png',
+                                      options={'quality': 60})
+    afterimage = models.ImageField(upload_to='images', null=True, blank=True, verbose_name= 'Imagen Después')
+    afterimageresize = ImageSpecField(source='portada',
+                                      processors=[ResizeToFill(800, 600)],
+                                      format='png',
+                                      options={'quality': 60})
+
 
     eett = models.FileField(upload_to='documents', null=True, blank=False, verbose_name= 'EETT')
     presupuesto = models.FileField(upload_to='documents', null=True, blank=False, verbose_name= 'Presupuesto')

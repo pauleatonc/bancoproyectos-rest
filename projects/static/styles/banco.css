@@ -19,6 +19,8 @@ body, h1, h2, h3, h4, h5, h6, footer, nav {
     font-size: 25px;
     text-transform: uppercase;
     margin-right: 20%;
+    padding-top: 15px;
+    padding-bottom: 15px;
 }   
 
 .footertitle {

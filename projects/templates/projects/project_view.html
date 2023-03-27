@@ -54,9 +54,22 @@
                 </br>
                 <h1 class="blog-post-title fw-bold">Descripción</h1>
                 <p>{{ project.description }}</p>
-
               </article>   
-             <!-- Articulo end -->
+
+
+             <!-- Foto antes y después -->
+             {% if project.afterimageresize and project.beforeimage %}
+             <div class='col-md-6'>
+                <div class='beforeafter'>
+                  {% load static %} 
+                  <div class='img' style="background-image: url('{% static project.afterimageresize.url %}')"></div>
+                  <div class='img foreground-img' style="background-image: url('{% static project.beforeimage.url %}')"></div>
+                  <input type="range" min="1" max="100" value="50" class="slider" name='slider' id="slider">
+                  <div class='slider-button'></div>
+                </div>      
+             </div>      
+            {% endif %} 
+
               <!-- Descarga Archivos -->
               <div class="container px-4 py-5" id="icon-grid">
                 <h2 class="pb-2 border-bottom fw-bold" data-bs-toggle="collapse" href="#collapseAp" role="button" aria-expanded="false" aria-controls="collapseAp">Archivos de proyecto <i class="fa-solid fa-angle-down"></i></h2>
