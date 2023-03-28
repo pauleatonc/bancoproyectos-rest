@@ -29,9 +29,10 @@ class Project(models.Model):
     description = models.TextField(verbose_name= 'Descripción')
     program = models.ForeignKey(Program, null=True, blank=False, on_delete=models.SET_NULL, verbose_name= 'Programa')
     type = models.ForeignKey(Type, null=True, blank=False, on_delete=models.SET_NULL, verbose_name= 'Tipo de Proyecto')
+    video = models.CharField(max_length=200, null=True, blank=True, verbose_name= 'Youtube')
     portada = models.ImageField(upload_to='images', null=True, blank=False)
     portadabanner = ImageSpecField(source='portada',
-                                      processors=[ResizeToFill(1300, 350)],
+                                      processors=[ResizeToFill(1300, 200)],
                                       format='png',
                                       options={'quality': 60})
     portacard = ImageSpecField(source='portada',
@@ -39,12 +40,12 @@ class Project(models.Model):
                                       format='png',
                                       options={'quality': 60})
     beforeimage = models.ImageField(upload_to='images', null=True, blank=True, verbose_name= 'Imagen Antes')
-    beforeimageresize = ImageSpecField(source='portada',
+    beforeimageresize = ImageSpecField(source='beforeimage',
                                       processors=[ResizeToFill(800, 600)],
                                       format='png',
                                       options={'quality': 60})
     afterimage = models.ImageField(upload_to='images', null=True, blank=True, verbose_name= 'Imagen Después')
-    afterimageresize = ImageSpecField(source='portada',
+    afterimageresize = ImageSpecField(source='afterimage',
                                       processors=[ResizeToFill(800, 600)],
                                       format='png',
                                       options={'quality': 60})

@@ -43,16 +43,18 @@ def search(request):
     return render(request, 'projects/search.html', context)
     
 
-def project(request, project_id):    
+def project(request, project_id):  
     project = Project.objects.get(id=project_id)
     projectfile = Projectfile.objects.all().filter(project=project_id)
     type__id = Project.objects.get(id=project_id).type_id
     guide = Type.objects.get(id=type__id).guides.all()
     projectimage = Projectimage.objects.all().filter(project=project_id)
+    projectlist = Project.objects.filter(type=type__id).exclude(id=project_id)
     context = {'project': project,
                'projectfiles': projectfile, 
                'guides' : guide, 
                'projectimages' : projectimage, 
+               'projectlist' : projectlist, 
                  }
     return render(request, 'projects/project_view.html', context)
 

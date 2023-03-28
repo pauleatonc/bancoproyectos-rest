@@ -12,13 +12,14 @@ body, h1, h2, h3, h4, h5, h6, footer, nav {
 }
 
 .portadacontainer {
-    margin-bottom: 300px;
+    margin-bottom: 50px;
     align-items: bottom;
 }
 
 .portadatext {
     font-weight: bold;
     padding-left: 10px;
+    height: 200px;
 }
 
 .subderegreen {
@@ -44,6 +45,13 @@ body, h1, h2, h3, h4, h5, h6, footer, nav {
 
 .footertitle {
     font-size: 17px;
+    text-transform: uppercase;
+    margin-bottom: 17px;
+    margin-top: 17px;
+}   
+
+.articletitle {
+    font-size: 25px;
     text-transform: uppercase;
     margin-bottom: 17px;
     margin-top: 17px;
@@ -116,6 +124,27 @@ body, h1, h2, h3, h4, h5, h6, footer, nav {
     text-overflow: ellipsis;
     -webkit-line-clamp: 3;
   }
+
+  .carouselhight{
+    max-height: 500px;
+    object-fit: contain;
+  }
+
+.smalcardtext{
+    font-size: 14px;
+    display:inline-block;
+    margin: 0px;
+}
+
+.cardverticalalign{
+    padding-top: 10px;
+}
+
+.elementsdist{
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
 
   
 @media (max-width: 767px) {
