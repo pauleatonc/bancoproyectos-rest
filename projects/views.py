@@ -15,33 +15,25 @@ def index(request):
 
 
 def search(request): 
-    # programa = request.GET.get('programa')
-    # q = request.GET.get('q')
+    programa = request.GET.get('programa')
+    q = request.GET.get('q')
     
-    # if programa:
-    #     vector = SearchVector('program__sigla')
-    #     query = SearchQuery(programa)          
-    #     projects = Project.objects.annotate(search=vector).filter(search=query)
+    if programa:
+        vector = SearchVector('program__sigla')
+        query = SearchQuery(programa)          
+        projects = Project.objects.annotate(search=vector).filter(search=query)
 
-    # elif q:
-    #     vector2 = SearchVector('program__sigla', 'name', 'description', 'id_subdere')
-    #     query2 = SearchQuery(q)
-    #     projects = Project.objects.annotate(search=vector2).filter(search=query2)
+    elif q:
+        vector2 = SearchVector('program__sigla', 'name', 'description', 'id_subdere')
+        query2 = SearchQuery(q)
+        projects = Project.objects.annotate(search=vector2).filter(search=query2)
 
-    # else:
-    #     projects = Project.objects.all()
+    else:
+        projects = Project.objects.all()
 
-    types = Type.objects.all()
-
-    filtro = ProjectFilter(request.GET, queryset=Project.objects.all())
-
-    context = {
-        'form': filtro.form,
-        'projects': filtro.qs,
-        'types': types,
-        }
+    context = {'projects': projects}
     return render(request, 'projects/search.html', context)
-    
+
 
 def project(request, project_id):  
     project = Project.objects.get(id=project_id)

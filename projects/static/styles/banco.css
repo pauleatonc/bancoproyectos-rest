@@ -18,8 +18,7 @@ body, h1, h2, h3, h4, h5, h6, footer, nav {
 
 .portadatext {
     font-weight: bold;
-    padding-left: 10px;
-    height: 200px;
+    height: 50px;
 }
 
 .subderegreen {
@@ -115,19 +114,41 @@ body, h1, h2, h3, h4, h5, h6, footer, nav {
 
 .truncate2 {
     overflow:hidden;
-    line-height: 2rem;
+    line-height: 150%;
     max-height: 8rem;
     -webkit-box-orient: vertical;
     display: block;
     display: -webkit-box;
-    overflow: hidden !important;
+    color: darkgray;
     text-overflow: ellipsis;
     -webkit-line-clamp: 3;
+    text-align: left;
+  }
+
+  .cardsize{
+    height: 485px;
+  }
+  
+  .cardtitlesize{
+    height: 50px;
+  }
+
+  .cardpadding{
+    padding: 10px;
+  }
+  .marginrightcard{
+    margin-right: 10px;
+  }
+
+  .cardbutontext{
+    font-size: 12px;
+    color: black;
   }
 
   .carouselhight{
-    max-height: 500px;
-    object-fit: contain;
+    height: 500px;
+    width: 768px;
+    object-fit: cover;
   }
 
 .smalcardtext{
