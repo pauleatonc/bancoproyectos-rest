@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.postgres',
+    'django_filters',
+    'imagekit',
 
 ]
 
@@ -132,7 +134,11 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+MEDIA_URL = '/media/'
+
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'projects/static'),)
+
+MEDIA_ROOT = os.path.join(os.path.join(BASE_DIR, 'projects/static/media'),)
 
 
 # Default primary key field type
