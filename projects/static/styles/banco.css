@@ -125,12 +125,27 @@ body, h1, h2, h3, h4, h5, h6, footer, nav {
     text-align: left;
   }
 
+  .truncate {
+    overflow:hidden;
+    line-height: 150%;
+    max-height: 8rem;
+    -webkit-box-orient: vertical;
+    display: block;
+    display: -webkit-box;
+    color: darkgray;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+    text-align: left;
+  }
+
   .cardsize{
     height: 485px;
   }
   
   .cardtitlesize{
     height: 50px;
+    margin-top: 5px;
+    margin-bottom: 5px;
   }
 
   .cardpadding{
