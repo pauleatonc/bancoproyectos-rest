@@ -4,7 +4,7 @@ from django.template import loader
 from django.contrib.postgres.search import SearchQuery, SearchVector
 from django.urls import reverse
 from .filters import ProjectFilter
-from .models import Project, Projectfile, Type, Projectimage
+from .models import Project, Projectfile, Type, Projectimage, Year
 from .forms import ProjectFilterForm
 
 
@@ -15,6 +15,8 @@ def index(request):
 
 
 def search(request): 
+    types = Type.objects.all()
+    years = Year.objects.all()
     programa = request.GET.get('programa')
     q = request.GET.get('q')
     
@@ -31,7 +33,7 @@ def search(request):
     else:
         projects = Project.objects.all()
 
-    context = {'projects': projects}
+    context = {'projects': projects, 'types': types, 'years': years}
     return render(request, 'projects/search.html', context)
 
 
