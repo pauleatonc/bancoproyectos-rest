@@ -50,8 +50,6 @@ class Project(models.Model):
     eett = models.FileField(upload_to='documents', null=True, blank=False, verbose_name= 'EETT')
     presupuesto = models.FileField(upload_to='documents', null=True, blank=False, verbose_name= 'Presupuesto')
 
-    pub_date = models.DateTimeField(verbose_name= 'Año (obligatorio)')
-
     def __str__(self):
         return self.name
 
