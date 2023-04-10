@@ -29,22 +29,34 @@
                 </div> 
               </button> 
             </form> 
+
             <div class="col-md-2"> 
-              <button type="button" class="card p-3 d-flex flex-column align-items-center"> 
+              <button type="submit" class="card p-3 d-flex flex-column align-items-center"> 
                 <i class="fa-solid fa-tags browsericon subderecolor"></i>
                 <div class="text-center mg-text"> 
-                  <span class="mg-text subderecolor">Tipo</span> 
+                  <select id="'dropdownid" class="mg-text subderecolor dropdownstyle">
+                  <option class="" value=''>Tipo</option>
+                  {% for type in types %}
+                  <option class="btn btn-outline-secondary" type="submit" name="t" value='{{ type.name }}' checked=True action="" method="GET">{{ type.name }}</option>
+                  {% endfor %}
+                  </select>
                 </div> 
-              </button> 
-            </div> 
+              </button>
+            </div>
+
             <div class="col-md-2"> 
               <button type="button" class="card p-3 d-flex flex-column align-items-center"> 
                 <i class="fa-regular fa-calendar-days browsericon subderecolor"></i>
                 <div class="text-center mg-text"> 
-                  <span class="mg-text subderecolor">Año</span> 
-                </div> 
+                  <select id="'dropdownid" class="mg-text subderecolor dropdownstyle">
+                  <option class="" value=''>Año</option>
+                  {% for year in years %}
+                  <option class="btn btn-outline-secondary" type="submit" name="t" value='{{ type.name }}' checked=True action="" method="GET">{{ year.number }}</option>
+                  {% endfor %}
+                  </select>
               </button> 
             </div> 
+            
             <div class="col-md-2"> 
               <button type="button" class="card p-3 d-flex flex-column align-items-center"> 
                 <i class="fa-solid fa-mountain-sun browsericon subderecolor"></i>
