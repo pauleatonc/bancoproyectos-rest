@@ -42,7 +42,7 @@
                 <p><span class="blog-post-meta fw-bold">ID SUBDERE:</span> {{ project.id_subdere }} </p>
                 <p><span class="blog-post-meta fw-bold">Programa:</span> {{ project.program }} ( {{ project.program.name }} )</p>
                 <p><span class="blog-post-meta fw-bold">Categoria:</span> {{ project.type }}</p>
-                <p><span class="blog-post-meta fw-bold">Año:</span> {{ project.pub_date }}</p> 
+                <p><span class="blog-post-meta fw-bold">Año:</span> {{ project.year }}</p> 
                 </br>
                 <h5 class="blog-post-title fw-bold">Descripción</h5>
                 <p>{{ project.description }}</p>
@@ -50,7 +50,7 @@
 
              <!-- Foto antes y después -->
              {% if project.afterimageresize and project.beforeimage %}
-             <div class='col-md-6'>
+             <div class='col-md-6 elementsdist'>
                 <div class='beforeafter col-md-6'>
                   {% load static %} 
                   <div class='img ' style="background-image: url('{% static project.afterimageresize.url %}')"></div>
@@ -63,8 +63,8 @@
 
              <!-- Video -->
              {% if project.video %}
-             <div class='col-md-6 align-items-center elementsdist'>
-              <iframe width="600 px" height="500 px" class="embed-responsive-item" src="{{ project.video }} " allowfullscreen>
+             <div class='col-md-6 align-items-center elementsdist border-top'>
+              <iframe width="600 px" height="500 px" class="embed-responsive-item elementsdist" src="{{ project.video }} " allowfullscreen>
               </iframe>
              </div>      
              {% endif %} 
@@ -84,17 +84,12 @@
                   </div>
                   {% endfor %}                         
                 </div>
-              </div>
-
-
-
-              
+              </div>              
             </div>  
 
             <!-- Columna Lateral -->
             <!-- descargas init -->
             <div class="col-md-4">
-
               <!-- Card Element Init. -->
               {% if projectlist %}                  
                 <div class="card rounded p-4 mb-3" >
