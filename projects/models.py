@@ -22,11 +22,17 @@ class Type(models.Model):
 
     def __str__(self):
         return self.name
+    
+class Year(models.Model):
+    number = models.CharField(max_length=4, verbose_name= 'Año')
+    def __str__(self):
+        return self.number
 
 class Project(models.Model):
     name = models.CharField(max_length=200, verbose_name= 'Nombre (obligatorio)')
     id_subdere = models.CharField(max_length=200, verbose_name= 'ID SUBDERE (obligatorio)')
     description = models.TextField(verbose_name= 'Descripción (obligatorio)')
+    year = models.ForeignKey(Year, null=True, blank=False, on_delete=models.SET_NULL, verbose_name= 'Año (obligatorio)')
     program = models.ForeignKey(Program, null=True, blank=False, on_delete=models.SET_NULL, verbose_name= 'Programa (obligatorio)')
     type = models.ForeignKey(Type, null=True, blank=False, on_delete=models.SET_NULL, verbose_name= 'Tipo de Proyecto (obligatorio)')
     video = models.CharField(max_length=200, null=True, blank=True, verbose_name= 'Youtube')
@@ -49,7 +55,7 @@ class Project(models.Model):
 
     eett = models.FileField(upload_to='documents', null=True, blank=False, verbose_name= 'EETT')
     presupuesto = models.FileField(upload_to='documents', null=True, blank=False, verbose_name= 'Presupuesto')
-
+    
     def __str__(self):
         return self.name
 

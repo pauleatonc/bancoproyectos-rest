@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Project, Program, Type, Guide, Projectimage, Projectfile
+from .models import Project, Program, Type, Guide, Projectimage, Projectfile, Year
 
 class ProjectfileAdmin(admin.TabularInline):
     model = Projectfile
@@ -33,3 +33,4 @@ class ProjectAdmin(admin.ModelAdmin):
     list_per_page = 20
 
 admin.site.register(Type)
+admin.site.register(Year)
