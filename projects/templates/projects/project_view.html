@@ -21,7 +21,7 @@
                   <div class="single-gallery-carousel-content-box owl-carousel owl-theme">
                     {% for projectimage in projectimages %}
                       <a class="item" href="{{ projectimage.image.url }}">
-                          <img class= "carouselhight" src="{{ projectimage.image.url }}" alt="Awesome Image"/>
+                          <img class= "carouselhight" src="{{ projectimage.imagecarousel.url }}" alt="Awesome Image"/>
                       </a>
                       {% endfor %} 
                   </div>          

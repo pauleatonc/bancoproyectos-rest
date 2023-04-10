@@ -10,7 +10,7 @@ class Program(models.Model):
         return self.sigla
 
 class Guide(models.Model):
-    name = models.CharField(max_length=200, verbose_name= 'Typo de Proyecto')
+    name = models.CharField(max_length=200, verbose_name= 'Guías')
     guide = models.FileField(upload_to='documents', null=True, blank=True)
 
     def __str__(self):
@@ -63,6 +63,10 @@ class Projectimage(models.Model):
     image = models.ImageField(upload_to='images')
     imagethumbnail = ImageSpecField(source='image',
                                       processors=[ResizeToFill(300, 300)],
+                                      format='png',
+                                      options={'quality': 60})
+    imagecarousel = ImageSpecField(source='image',
+                                      processors=[ResizeToFill(768, 500)],
                                       format='png',
                                       options={'quality': 60})
 
