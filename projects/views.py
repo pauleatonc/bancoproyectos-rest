@@ -40,10 +40,11 @@ def search(request):
 def project(request, project_id):  
     project = Project.objects.get(id=project_id)
     projectfile = Projectfile.objects.all().filter(project=project_id)
-    type__id = Project.objects.get(id=project_id).type_id
+    type__id = Project.objects.get(id=project_id).type_id    
     guide = Type.objects.get(id=type__id).guides.all()
     projectimage = Projectimage.objects.all().filter(project=project_id)
-    projectlist = Project.objects.filter(type=type__id).exclude(id=project_id)
+    program__id = Project.objects.get(id=project_id).program_id
+    projectlist = Project.objects.filter(program=program__id).exclude(id=project_id)
     context = {'project': project,
                'projectfiles': projectfile, 
                'guides' : guide, 
