@@ -32,7 +32,6 @@ ALLOWED_HOSTS = ['pauleaton.pythonanywhere.com', 'localhost']
 
 INSTALLED_APPS = [
     "projects",
-    "testdb",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
