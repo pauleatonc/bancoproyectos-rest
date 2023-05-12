@@ -1,22 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-{% load static %}
-{% include 'projects/modules/head.html' %}
+{% extends "home/base_home.html" %}
 
-<body class="">
+{% load  static %}
 
-    {% include 'projects/modules/navbar.html' %}
-    <!-- Botón de búsqueda Init -->
-    <div class="container mt-4 navbardist"> 
+{% block content %}
+
+    {% include "modules/navbar.html" %}
+        <!-- Botón de búsqueda Init -->
+    <div class="container mt-4 navbardist">
         <img src="{% static 'images\aplicacion_web_v2-01_0.png' %}" class="img-fluid">
-          <div 
+          <div
             class="titlelanding text-center">¿Que buscas hoy?
           </div>
-          <div class="row d-flex justify-content-center navbardist align-middle"> 
-                <a href="{% url 'projects:search' %}" type="button" class="btn btn-secondary btn-lg subdereblue col-2 align-middle searchheight">Proyectos <i class="fa-solid fa-magnifying-glass"></i></a>                           
-                <!-- <a href="{% url 'projects:search' %}" type="button" class="btn btn-secondary btn-lg subderegreen col-2 align-middle searchheight">Ideas <i class="fa-solid fa-magnifying-glass"></i></a>
-                <a href="{% url 'projects:search' %}" type="button" class="btn btn-secondary btn-lg subdereorange col-2 align-middle searchheight">Documentos <i class="fa-solid fa-magnifying-glass"></i></a> -->
-          </div> 
+          <div class="row d-flex justify-content-center navbardist align-middle">
+                <a href="{% url 'projects:project-list' %}" type="button" class="btn btn-secondary btn-lg subdereblue col-2 align-middle searchheight">Proyectos <i class="fa-solid fa-magnifying-glass"></i></a>
+                <!-- <a href="{% url 'projects:project-list' %}" type="button" class="btn btn-secondary btn-lg subderegreen col-2 align-middle searchheight">Ideas <i class="fa-solid fa-magnifying-glass"></i></a>
+                <a href="{% url 'projects:project-list' %}" type="button" class="btn btn-secondary btn-lg subdereorange col-2 align-middle searchheight">Documentos <i class="fa-solid fa-magnifying-glass"></i></a> -->
+          </div>
       </div>
     <!-- Botón de búsqueda end -->
     <!-- Presentación Init -->
@@ -113,9 +112,8 @@
           </div>
         </div>
       </div>
-    <!-- Presentación end --> 
-</body>
+    <!-- Presentación end -->
 
-{% include 'projects/modules/footer.html' %}
+    {% include "modules/footer.html" %}
 
-</html>
+{% endblock content %}

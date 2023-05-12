@@ -1,22 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-{% include 'projects/modules/head.html' %}
+{% extends "projects/base_projects.html" %}
 
-<body>
+{% load  static %}
 
-    {% include 'projects/modules/navbar.html' %}
-    {% include 'projects/modules/browser.html' %}
+{% block content %}
 
-    <div class="album py-5 bg-light">
+{% include "modules/navbar.html" %}
+{% include "modules/browser.html" %}
+
+<div class="album py-5 bg-light">
         <div class="container">
             {% if projects %}
              <p class="text-center"> {{ projects|length }} resultados</p>
                  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                
+
                     {% for project in projects %}
                     <!-- Card Element Init. -->
                     <div class="col-md-3">
-                        <a type="button" class="btn btn-sm" href="{% url 'projects:project' project.id %}">
+                        <a type="button" class="btn btn-sm" href="{% url 'projects:project-detail' project.id %}">
                             <div class="card shadow-sm cardsize">
                                 <img src="{{ project.portacard.url }}" class="bd-placeholder-img card-img-top" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false" ><title>Placeholder</title></img>
 
@@ -24,7 +24,7 @@
                                     <p class="blog-post subderecolor footertitle cardtitlesize">{{ project.name }}</p>
                                     <p class="blog-post truncate2">Descripción: {{ project.description }}</p>
                                     <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group d-flex justify-content-center">                                        
+                                        <div class="btn-group d-flex justify-content-center">
                                             <div class="btn card cardbutontext btn-outline-success"> {{ project.program }}</div>
                                             <div class="btn card cardbutontext btn-outline-secondary truncate">{{ project.type }}</div>
                                             <div class="btn card cardbutontext btn-outline-info">{{ project.year }}</div>
@@ -35,20 +35,15 @@
                         </a>
                     </div>
                     <!-- Card Element End. -->
-                    {% endfor %}  
+                    {% endfor %}
 
             {% else %}
-                    <p class="text-center">No hay proyectos que coincidan con la búsqueda.</p>                                         
+                    <p class="text-center">No hay proyectos que coincidan con la búsqueda.</p>
                 </div>
             {% endif %}
         </div>
     </div>
 
-    {% include 'projects/modules/footer.html' %}
-</body>
+{% include "modules/footer.html" %}
 
-
-
-
-
-</html>
+{% endblock content %}
