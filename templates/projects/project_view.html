@@ -7,7 +7,7 @@
 
         <main class="container">          
           <p class=" fst-italic border-bottom navbardisttop ">
-            <a href="{% url 'projects:search' %}"  type="button" class="btn footertitle subderecolor">
+            <a href="{% url 'projects:project-list' %}"  type="button" class="btn footertitle subderecolor">
               Volver</a>/ Tipo de Proyecto / {{ project.type }} / {{ project.name }} .</p> 
           <!-- Título  -->
             <div class="col-md-12 ">
@@ -121,7 +121,7 @@
                   <h5 class="fst-italic ">Zona de Descargas</h5>
                 </div>
                 <div class="p-4">
-                  <h6 class="fst-italic fw-bold ">Documentos de Projecto</h6>
+                  <h6 class="fst-italic fw-bold ">Documentos de Proyecto</h6>
                   <ol class="list-unstyled">
                     <li class="text-primary"><a href="{{ project.eett.url }}" target="_blank" >EETT</a></li>
                     <li class="text-primary"><a href="{{ project.presupuesto.url }}" target="_blank" >Presupuesto</a></li>

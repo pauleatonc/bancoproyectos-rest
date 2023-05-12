@@ -15,7 +15,8 @@ DJANGO_APPS = [
 
 LOCAL_APPS = [
 
-    'apps.projects',
+    'applications.projects',
+    'applications.home',
 
 ]
 

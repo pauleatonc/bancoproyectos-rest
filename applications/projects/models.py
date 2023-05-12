@@ -2,6 +2,9 @@ from django.db import models
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 
+# Managers
+from .managers import ProjectsManager
+
 class Program(models.Model):
     name = models.CharField(max_length=200, verbose_name= 'Nombre')
     sigla = models.CharField(max_length=200, verbose_name= 'Sigla')
@@ -35,6 +38,7 @@ class Project(models.Model):
     year = models.ForeignKey(Year, null=True, blank=False, on_delete=models.SET_NULL, verbose_name= 'Año (obligatorio)')
     program = models.ForeignKey(Program, null=True, blank=False, on_delete=models.SET_NULL, verbose_name= 'Programa (obligatorio)')
     type = models.ForeignKey(Type, null=True, blank=False, on_delete=models.SET_NULL, verbose_name= 'Tipo de Proyecto (obligatorio)')
+    public = models.BooleanField(default=True)
     video = models.CharField(max_length=200, null=True, blank=True, verbose_name= 'Youtube')
     portada = models.ImageField(upload_to='projects', null=True, blank=False, verbose_name= 'Foto miniatura (obligatorio)')
     portacard = ImageSpecField(source='portada',
@@ -55,6 +59,8 @@ class Project(models.Model):
 
     eett = models.FileField(upload_to='project_documents', null=True, blank=False, verbose_name= 'EETT')
     presupuesto = models.FileField(upload_to='project_documents', null=True, blank=False, verbose_name= 'Presupuesto')
+
+    objects = ProjectsManager()
     
     def __str__(self):
         return self.name
