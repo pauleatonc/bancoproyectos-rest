@@ -59,11 +59,11 @@ class UserRegisterView(FormView):
 class LoginUser(FormView):
     template_name = 'users/login.html'
     form_class = LoginForm
-    success_url = reverse_lazy('favoritos_app:perfil')
+    success_url = reverse_lazy('projects_app:project-list')
 
     def form_valid(self, form):
         user = authenticate(
-            email = form.cleaned_data['email'],
+            rut = form.cleaned_data['rut'],
             password = form.cleaned_data['password']
         )
         login(self.request, user)

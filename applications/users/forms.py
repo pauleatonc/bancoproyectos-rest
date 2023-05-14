@@ -59,12 +59,12 @@ class UserRegisterForm(forms.ModelForm):
             self.add_error('password2', 'Las contraseñas no son iguales')
 
 class LoginForm(forms.Form):
-    email = forms.CharField(
-        label='email',
+    rut = forms.CharField(
+        label='rut',
         required=True,
         widget=forms.TextInput(
             attrs={
-                'placeholder': 'Correo electrónico'
+                'placeholder': 'Ingrese su rut sin puntos ni guión'
             }
         )
     )
@@ -81,10 +81,10 @@ class LoginForm(forms.Form):
 
     def clean(self):
         cleaned_data = super(LoginForm, self).clean()
-        email = self.cleaned_data['email']
+        rut = self.cleaned_data['rut']
         password = self.cleaned_data['password']
 
-        if not authenticate(email = email, password = password):
+        if not authenticate(rut = rut, password = password):
             raise forms.ValidationError('Los datos de usuario no son correctos')
         
         return self.cleaned_data
