@@ -34,8 +34,7 @@ class UserRegisterForm(forms.ModelForm):
             'username',
             'nombres',
             'apellidos',
-            'pais',
-            'date_birth'
+            'fecha_nacimiento'
         )
         widgets = {
             'email': forms.EmailInput(

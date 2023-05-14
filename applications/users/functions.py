@@ -2,6 +2,12 @@
 
 from django.core.exceptions import ValidationError
 
+import random
+import string
+
+def code_generator(size=6, chars= string.ascii_uppercase + string.digits):
+    return ''.join(random.choice(chars) for i in range(size))
+
 # Validador personalizado para el RUT chileno
 def validar_rut(value):
     rut = value

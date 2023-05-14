@@ -20,15 +20,15 @@ class User(AbstractBaseUser, PermissionsMixin):
     #dirección = models.CharField(max_length=30, blank=True)
     #comuna = models.CharField(max_length=30, choices=COMUNAS_CHILE, blank=True)
     #region = models.CharField(max_length=30, choices=REGIONES_CHILE, blank=True)
-    profesion = models.ForeignKey(Profesion, on_delete=models.SET_NULL)
+    profesion = models.ForeignKey(Profesion, on_delete=models.SET_NULL, null=True)
     fecha_nacimiento = models.DateField('Fecha de nacimiento', blank=True, null=True)
 
-    usuario_activo = models.BooleanField(default=False)
-    usuario_administrador = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'rut'
 
-    REQUIRED_FIELDS = ['username']
+    REQUIRED_FIELDS = ['username', 'email']
 
     objects = UserManager()
 

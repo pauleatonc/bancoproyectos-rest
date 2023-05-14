@@ -17,6 +17,7 @@ LOCAL_APPS = [
 
     'applications.projects',
     'applications.home',
+    'applications.users',
 
 ]
 
@@ -78,6 +79,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = 'users.User'
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
