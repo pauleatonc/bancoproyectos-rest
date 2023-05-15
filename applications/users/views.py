@@ -18,7 +18,7 @@ from .forms import UserRegisterForm, LoginForm, UpdatePasswordForm, Verification
 
 from .models import User
 
-from .functions import code_generator
+from .functions import code_generator, validar_rut
 
 
 class UserRegisterView(FormView):
@@ -68,7 +68,7 @@ class LoginUser(FormView):
         )
         login(self.request, user)
         return super(LoginUser, self).form_valid(form)
-        
+
 
 class LogoutView(View):
 
@@ -76,7 +76,7 @@ class LogoutView(View):
         logout(request)
         return HttpResponseRedirect(
             reverse(
-                'users_app:user-login'
+                'home_app:index'
             )
         )
 

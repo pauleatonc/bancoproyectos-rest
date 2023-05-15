@@ -5,7 +5,8 @@ from django.contrib import messages
 
 from django.views.generic import (
     ListView,
-    DetailView
+    DetailView,
+    FormView
 )
 
 # Models
@@ -28,3 +29,14 @@ class ProjectDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
+
+'''class SearchProjectView(FormView):
+    template_name = 'modules/browser.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(SearchProjectView, self).get_context_data(**kwargs)
+        # sistema de filtro
+        context['search'] = Project.objects.buscar_proyecto()
+
+        return context'''
+

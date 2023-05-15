@@ -1,7 +1,10 @@
 from django import forms
 from django.contrib.auth import authenticate
+from django.core.exceptions import ValidationError
 
 from .models import User
+
+from .functions import validar_rut
 
 class UserRegisterForm(forms.ModelForm):
 
@@ -60,7 +63,7 @@ class UserRegisterForm(forms.ModelForm):
 
 class LoginForm(forms.Form):
     rut = forms.CharField(
-        label='rut',
+        label='Rut',
         required=True,
         widget=forms.TextInput(
             attrs={
@@ -79,15 +82,25 @@ class LoginForm(forms.Form):
         )
     )
 
-    def clean(self):
-        cleaned_data = super(LoginForm, self).clean()
-        rut = self.cleaned_data['rut']
-        password = self.cleaned_data['password']
+    def clean_rut(self):
+        """
+        Realiza la validación y el formateo del campo Rut
+        """
+        rut = validar_rut(self)
+        return rut
 
-        if not authenticate(rut = rut, password = password):
-            raise forms.ValidationError('Los datos de usuario no son correctos')
-        
-        return self.cleaned_data
+    def clean(self):
+        """
+        Realiza la validación y la autenticación del formulario en su conjunto
+        """
+        cleaned_data = super().clean()
+        rut = cleaned_data.get('rut')
+        password = cleaned_data.get('password')
+        if rut and password:
+            user = authenticate(username=rut, password=password)
+            if user is None:
+                self.add_error('password', 'Usuario y/o contraseña incorrectos')
+        return cleaned_data
 
 class UpdatePasswordForm(forms.Form):
 

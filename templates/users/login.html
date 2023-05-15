@@ -18,6 +18,13 @@
                         <div class="cell medium-12">
                             <label>Rut:
                             {{ form.rut }}
+                            {% if form.rut.errors %}
+                               <ul class="errors">
+                               {% for error in form.rut.errors %}
+                                   <li>{{ error }}</li>
+                               {% endfor %}
+                               </ul>
+                            {% endif %}
                             </label>
                         </div>
                         <div class="cell medium-12">
@@ -25,8 +32,16 @@
                             {{ form.password }}
                             </label>
                         </div>
+                        <div>
+                            {% if form.password.errors %}
+                               <ul class="errors">
+                               {% for error in form.password.errors %}
+                                   <li>{{ error }}</li>
+                               {% endfor %}
+                               </ul>
+                            {% endif %}
+                        </div>
                         <button type="submit" class="cell hollow button primary">Acceder</button>
-                        <a class="cell hollow button alert" href="{% url 'users_app:user-register' %}">Registrar</a>
                     </form>
                 </div>
             </div>
