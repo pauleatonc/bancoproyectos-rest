@@ -26,6 +26,7 @@ THIRD_PARTY_APPS = [
     'django.contrib.postgres',
     'django_filters',
     'imagekit',
+    'import_export'
 
 ]
 

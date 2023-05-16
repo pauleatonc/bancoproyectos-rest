@@ -1,6 +1,6 @@
 <!-- head para PC -->
 {% extends "users/base_users.html" %}
-{% load  static %}
+{% load static %}
 
 {% block content %}
 
@@ -17,28 +17,28 @@
                     <form class="grid-x grid-margin-x" method="POST">{% csrf_token %}
                         <div class="cell medium-12">
                             <label>Rut:
-                            {{ form.rut }}
-                            {% if form.rut.errors %}
-                               <ul class="errors">
-                               {% for error in form.rut.errors %}
-                                   <li>{{ error }}</li>
-                               {% endfor %}
-                               </ul>
-                            {% endif %}
+                                {{ form.rut }}
+                                {% if form.rut.errors %}
+                                    <ul class="errors">
+                                    {% for error in form.rut.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                    </ul>
+                                {% endif %}
                             </label>
                         </div>
                         <div class="cell medium-12">
                             <label>Contraseña:
-                            {{ form.password }}
+                                {{ form.password }}
                             </label>
                         </div>
                         <div>
                             {% if form.password.errors %}
-                               <ul class="errors">
-                               {% for error in form.password.errors %}
-                                   <li>{{ error }}</li>
-                               {% endfor %}
-                               </ul>
+                                <ul class="errors">
+                                {% for error in form.password.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                                </ul>
                             {% endif %}
                         </div>
                         <button type="submit" class="cell hollow button primary">Acceder</button>
