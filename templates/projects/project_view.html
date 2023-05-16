@@ -77,7 +77,11 @@
                   <div class="col d-flex align-items-start">
                     <i class="fa-solid fa-file-pdf icondocument subderecolor"></i>
                     <div>
-                      <h6 class="fw-bold "><a href="{{ projectfile.file.url }}" target="_blank" >{{ projectfile.name }}</a></h6>
+                      {% if user.is_authenticated %}
+                        <h6 class="fw-bold "><a href="{{ projectfile.file.url }}" target="_blank" >{{ projectfile.name }}</a></h6>
+                      {% else %}
+                        <li class="text-primary"><a href="{% url 'users_app:user-login' %}?next={{ request.path }}">{{ projectfile.name }}</a></li>
+                      {% endif %}
                       <p class="fw-normal text-secondary" >{{ projectfile.file.name }}</p>
                       <p class="fw-normal text-secondary">{{ projectfile.file.size|filesizeformat }}</p>
                     </div>
@@ -102,7 +106,7 @@
                       </div>
                       <div class="col-sm-8 align-middle">
                         <div class="card-block cardverticalalign">
-                          <p class="smalcardtext"><a type="button" class=" " href="{% url 'projects:project' projectlist.id %}">{{ projectlist.name }}</a></p></br>
+                          <p class="smalcardtext"><a type="button" class=" " href="{% url 'projects_app:project-detail' projectlist.id %}">{{ projectlist.name }}</a></p></br>
                           <div class="align-middle">
                             <p class="smalcardtext">{{ projectlist.program }}</p><span class="fw-bold">    |    </span>
                             <p class="smalcardtext">{{ projectlist.type }}</p>
@@ -123,15 +127,24 @@
                 <div class="p-4">
                   <h6 class="fst-italic fw-bold ">Documentos de Proyecto</h6>
                   <ol class="list-unstyled">
-                    <li class="text-primary"><a href="{{ project.eett.url }}" target="_blank" >EETT</a></li>
-                    <li class="text-primary"><a href="{{ project.presupuesto.url }}" target="_blank" >Presupuesto</a></li>
+                    {% if user.is_authenticated %}
+                        <li class="text-primary"><a href="{{ project.eett.url }}" target="_blank" >EETT</a></li>
+                        <li class="text-primary"><a href="{{ project.presupuesto.url }}" target="_blank" >Presupuesto</a></li>
+                    {% else %}
+                        <li class="text-primary"><a href="{% url 'users_app:user-login' %}?next={{ request.path }}">EETT</a></li>
+                        <li class="text-primary"><a href="{% url 'users_app:user-login' %}?next={{ request.path }}">Presupuesto</a></li>
+                    {% endif %}
                   </ol>
                 </div>
                 <div class="p-4">
                   <h6 class="fst-italic fw-bold ">Guías de Diseño</h6>
                   <ol class="list-unstyled mb-0">
                     {% for guide in guides %}
-                    <li class="text-primary"><a href="{{ guide.guide.url }}" target="_blank" >{{ guide }}</a></li>
+                    {% if user.is_authenticated %}
+                        <li class="text-primary"><a href="{{ guide.guide.url }}" target="_blank" >{{ guide }}</a></li>
+                    {% else %}
+                        <li class="text-primary"><a href="{% url 'users_app:user-login' %}?next={{ request.path }}">{{ guide }}</a></li>
+                    {% endif %}
                     {% endfor %}  
                   </ol>
                 </div>

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.core.mail import send_mail
 from django.urls import reverse_lazy, reverse
+from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponseRedirect
@@ -59,15 +60,22 @@ class UserRegisterView(FormView):
 class LoginUser(FormView):
     template_name = 'users/login.html'
     form_class = LoginForm
-    success_url = reverse_lazy('projects_app:project-list')
 
     def form_valid(self, form):
         user = authenticate(
-            rut = form.cleaned_data['rut'],
-            password = form.cleaned_data['password']
+            rut=form.cleaned_data['rut'],
+            password=form.cleaned_data['password']
         )
         login(self.request, user)
-        return super(LoginUser, self).form_valid(form)
+
+        # Agregamos un método para redirigir a la página desde donde se originó el login
+        # en el html se debe agregar ?next={{ request.path }} a continuación del href {% url 'users_app:user-login' %}
+        # para recoger el id de la proyecto visitado
+        next_url = self.request.GET.get('next', None)
+        if next_url:
+            return redirect(next_url)
+        else:
+            return redirect('projects_app:project-list')
 
 
 class LogoutView(View):
@@ -76,7 +84,7 @@ class LogoutView(View):
         logout(request)
         return HttpResponseRedirect(
             reverse(
-                'home_app:index'
+                'projects_app:project-list'
             )
         )
 

@@ -28,7 +28,19 @@ class ProjectDetailView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        # Contexto para Archivos de Proyecto
+        context['projectfiles'] = self.object.files.all()
+        # Contexto para carrousel de imágenes
+        context['projectimages'] = self.object.images.all()
+        # Contexto para guías de diseño
+        context['guides'] = self.object.type.guides.all()
+        # Contexto para proyectos relacionados
+        context['projectlist'] = Project.objects.related_projects(self.object)
+        # Contexto para usuario autenticado
+        context['user'] = self.request.user
+
         return context
+
 
 '''class SearchProjectView(FormView):
     template_name = 'modules/browser.html'
