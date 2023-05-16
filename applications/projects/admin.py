@@ -1,7 +1,13 @@
 from django.contrib import admin
 from .models import Project, Program, Type, Guide, Projectimage, Projectfile, Year
-from import_export.admin import ExportMixin
+from import_export.admin import ImportExportMixin
 from import_export.resources import ModelResource
+
+''' La clase Model Resource disponibiliza al Model indicado
+    para poder usar el ImportExportMixin en el administrador
+    de Django. Este método permite Importar/exportar bases de
+    datos. Cuando hay claves foreignkey, éstas deben importarse
+    primero para no crear error'''
 
 class ProjectResource(ModelResource):
     class Meta:
@@ -30,7 +36,7 @@ class ProjectimageAdmin(admin.TabularInline):
     model = Projectimage
 
 @admin.register(Project)
-class ProjectAdmin(ExportMixin, admin.ModelAdmin):
+class ProjectAdmin(ImportExportMixin, admin.ModelAdmin):
     resource_class = ProjectResource
     list_display=('id_subdere', 'name', 'program', 'type',)
     search_fields=('name', 'id_subdere',)
@@ -43,7 +49,7 @@ class ProjectAdmin(ExportMixin, admin.ModelAdmin):
     ]
 
 @admin.register(Program)
-class ProgramAdmin(ExportMixin, admin.ModelAdmin):
+class ProgramAdmin(ImportExportMixin, admin.ModelAdmin):
     resource_class = ProgramResource
     search_fields=('name', 'sigla',)
     list_display=('sigla', 'name')
@@ -51,15 +57,15 @@ class ProgramAdmin(ExportMixin, admin.ModelAdmin):
     list_per_page = 20
 
 @admin.register(Type)
-class TypeAdmin(ExportMixin, admin.ModelAdmin):
+class TypeAdmin(ImportExportMixin, admin.ModelAdmin):
     resource_class = TypeResource
 
 @admin.register(Guide)
-class GuideAdmin(ExportMixin, admin.ModelAdmin):
+class GuideAdmin(ImportExportMixin, admin.ModelAdmin):
     resource_class = GuideResource
     search_fields=('name',)
     list_per_page = 20
 
 @admin.register(Year)
-class YearAdmin(ExportMixin, admin.ModelAdmin):
+class YearAdmin(ImportExportMixin, admin.ModelAdmin):
     resource_class = YearResource

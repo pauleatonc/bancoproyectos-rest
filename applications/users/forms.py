@@ -4,7 +4,7 @@ from django.core.exceptions import ValidationError
 
 from .models import User
 
-from .functions import validar_rut
+from .functions import validar_rut_form
 
 class UserRegisterForm(forms.ModelForm):
 
@@ -86,7 +86,7 @@ class LoginForm(forms.Form):
         """
         Realiza la validación y el formateo del campo Rut
         """
-        rut = validar_rut(self)
+        rut = validar_rut_form(self)
         return rut
 
     def clean(self):
