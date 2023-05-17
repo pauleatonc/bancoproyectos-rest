@@ -34,7 +34,7 @@
               <button type="submit" class="card p-3 d-flex flex-column align-items-center"> 
                 <i class="fa-solid fa-tags browsericon subderecolor"></i>
                 <div class="text-center mg-text"> 
-                  <select id="'dropdownid" class="mg-text subderecolor dropdownstyle">
+                  <select id="dropdownid" class="mg-text subderecolor dropdownstyle">
                   <option class="" value=''>Tipo</option>
                   {% for type in types %}
                   <option class="btn btn-outline-secondary" type="submit" name="t" value='{{ type.name }}' checked=True action="" method="GET">{{ type.name }}</option>

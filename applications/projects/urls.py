@@ -4,7 +4,7 @@ from django.conf import settings
 
 from . import views
 
-app_name = 'projects'
+app_name = 'projects_app'
 
 urlpatterns = [
 

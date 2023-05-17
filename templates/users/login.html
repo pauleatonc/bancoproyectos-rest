@@ -1,0 +1,52 @@
+<!-- head para PC -->
+{% extends "users/base_users.html" %}
+{% load static %}
+
+{% block content %}
+
+{% include "modules/navbar.html" %}
+
+<div class="grid-container">
+    <div class="grid-x grid-margin-x align-center">
+        <div class="cell medium-6 large-4" style="margin-top: 2em;">
+            <div class="card" style="width: 100%;">
+                <div class="card-divider">
+                  <h4>Acceso de usuario</h4>
+                </div>
+                <div class="card-section">
+                    <form class="grid-x grid-margin-x" method="POST">{% csrf_token %}
+                        <div class="cell medium-12">
+                            <label>Rut:
+                                {{ form.rut }}
+                                {% if form.rut.errors %}
+                                    <ul class="errors">
+                                    {% for error in form.rut.errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </label>
+                        </div>
+                        <div class="cell medium-12">
+                            <label>Contraseña:
+                                {{ form.password }}
+                            </label>
+                        </div>
+                        <div>
+                            {% if form.password.errors %}
+                                <ul class="errors">
+                                {% for error in form.password.errors %}
+                                    <li>{{ error }}</li>
+                                {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+                        <button type="submit" class="cell hollow button primary">Acceder</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
