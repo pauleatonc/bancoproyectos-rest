@@ -18,6 +18,7 @@ LOCAL_APPS = [
     'applications.projects',
     'applications.home',
     'applications.users',
+    'applications.regioncomuna',
 
 ]
 

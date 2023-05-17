@@ -2,6 +2,10 @@ from django.shortcuts import render
 from django.urls import reverse_lazy, reverse
 from django.http import HttpResponseRedirect
 from django.contrib import messages
+from django.views.generic import ListView
+from .models import Project
+from applications.regioncomuna.models import Comuna
+from django.http import JsonResponse
 
 from django.views.generic import (
     ListView,
@@ -12,8 +16,20 @@ from django.views.generic import (
 # Models
 from .models import Project
 
+#Forms
+from .forms import ProjectFilterForm, LocationForm
+
+def index(request):
+    projects = Project.objects.index_projects()
+    context = {
+        'projects': projects,
+        'project_filter_form': ProjectFilterForm(),
+        'locacion_form': LocationForm()
+    }
+    return render(request, 'modules/browser.html', context)
 
 class ProjectsListView(ListView):
+    model = Project
     template_name = 'projects/list.html'
     context_object_name = 'projects'
 
@@ -52,3 +68,7 @@ class ProjectDetailView(DetailView):
 
         return context'''
 
+def obtener_comunas(request):
+    region_id = request.GET.get('region')
+    comunas = Comuna.objects.filter(region_id=region_id).values('id', 'name')
+    return JsonResponse(list(comunas), safe=False)

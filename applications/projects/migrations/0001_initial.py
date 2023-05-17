@@ -9,6 +9,7 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
+        ('regioncomuna', '__first__'),
     ]
 
     operations = [
@@ -42,7 +43,16 @@ class Migration(migrations.Migration):
                 ('afterimage', models.ImageField(blank=True, null=True, upload_to='projects', verbose_name='Imagen Después')),
                 ('eett', models.FileField(null=True, upload_to='project_documents', verbose_name='EETT')),
                 ('presupuesto', models.FileField(null=True, upload_to='project_documents', verbose_name='Presupuesto')),
+                ('comuna', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='regioncomuna.comuna')),
                 ('program', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='projects.program', verbose_name='Programa (obligatorio)')),
+                ('region', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, to='regioncomuna.region', verbose_name='Región')),
+            ],
+        ),
+        migrations.CreateModel(
+            name='Year',
+            fields=[
+                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
+                ('number', models.CharField(max_length=4, verbose_name='Año')),
             ],
         ),
         migrations.CreateModel(
