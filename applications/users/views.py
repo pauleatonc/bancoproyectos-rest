@@ -32,13 +32,10 @@ class UserRegisterView(FormView):
         #codigo = code_generator()
 
         usuario = User.objects.create_user(
-            form.cleaned_data['email'],
+            form.cleaned_data['rut'],
             form.cleaned_data['password1'],
+            email=form.cleaned_data['email'],
             username = form.cleaned_data['username'],
-            nombres = form.cleaned_data['nombres'],
-            apellidos = form.cleaned_data['apellidos'],
-            pais = form.cleaned_data['pais'],
-            date_birth = form.cleaned_data['date_birth'],
             #codregistro = codigo
         )
         return super(UserRegisterView, self).form_valid(form)

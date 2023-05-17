@@ -7,7 +7,10 @@ from import_export.resources import ModelResource
     para poder usar el ImportExportMixin en el administrador
     de Django. Este método permite Importar/exportar bases de
     datos. Cuando hay claves foreignkey, éstas deben importarse
-    primero para no crear error'''
+    primero para no crear error.
+    Para instalar la aplicación usar pip install django-import-export
+    o usar el requirements.txt, luego en settings.base instalar la app
+    en la config THIRD_PARTY_APPS'''
 
 class ProjectResource(ModelResource):
     class Meta:

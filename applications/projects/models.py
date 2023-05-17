@@ -20,7 +20,7 @@ class Guide(models.Model):
         return self.name
 
 class Type(models.Model):
-    name = models.CharField(max_length=200, verbose_name= 'Typo de Proyecto', unique=True)
+    name = models.CharField(max_length=200, verbose_name= 'Tipo de Proyecto', unique=True)
     guides = models.ManyToManyField(Guide, related_name = 'guides')
 
     def __str__(self):

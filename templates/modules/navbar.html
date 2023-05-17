@@ -13,7 +13,7 @@
     </div>
     <div class="col-2 col-md-auto">
       {% if not user.is_anonymous %}
-        <a class="container-fluid navbar-brand color-text-1">Usuario autenticado</a>
+        <a class="container-fluid navbar-brand color-text-1">{{user.email}}</a>
         <a href="{% url 'users_app:user-logout' %}">logout</a>
       {% else %}
         <a class="container-fluid navbar-brand color-text-1" href="{% url 'users_app:user-login' %}">Iniciar sesión</a>
@@ -23,5 +23,3 @@
   </div>
 </nav>
 <div class="navbardist"></div>
-
-

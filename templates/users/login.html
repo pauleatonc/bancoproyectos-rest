@@ -6,45 +6,38 @@
 
 {% include "modules/navbar.html" %}
 
-<div class="grid-container">
-    <div class="grid-x grid-margin-x align-center">
-        <div class="cell medium-6 large-4" style="margin-top: 2em;">
-            <div class="card" style="width: 100%;">
-                <div class="card-divider">
-                  <h4>Acceso de usuario</h4>
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div>
+            <h4 class="text-center">Acceso de usuario</h4>
+            <form class="text-center" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label class="text-center">Rut:</label>
+                    {{ form.rut }}
+                    {% if form.rut.errors %}
+                    <ul class="errors">
+                        {% for error in form.rut.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
                 </div>
-                <div class="card-section">
-                    <form class="grid-x grid-margin-x" method="POST">{% csrf_token %}
-                        <div class="cell medium-12">
-                            <label>Rut:
-                                {{ form.rut }}
-                                {% if form.rut.errors %}
-                                    <ul class="errors">
-                                    {% for error in form.rut.errors %}
-                                        <li>{{ error }}</li>
-                                    {% endfor %}
-                                    </ul>
-                                {% endif %}
-                            </label>
-                        </div>
-                        <div class="cell medium-12">
-                            <label>Contraseña:
-                                {{ form.password }}
-                            </label>
-                        </div>
-                        <div>
-                            {% if form.password.errors %}
-                                <ul class="errors">
-                                {% for error in form.password.errors %}
-                                    <li>{{ error }}</li>
-                                {% endfor %}
-                                </ul>
-                            {% endif %}
-                        </div>
-                        <button type="submit" class="cell hollow button primary">Acceder</button>
-                    </form>
+                <div class="form-group">
+                    <label class="text-center">Contraseña:</label>
+                    {{ form.password }}
                 </div>
-            </div>
+                <div>
+                    {% if form.password.errors %}
+                    <ul class="errors">
+                        {% for error in form.password.errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                    {% endif %}
+                </div>
+                <button type="submit" class="btn card cardbutontext btn-outline-secondary mx-auto d-block">Acceder</button>
+            </form>
         </div>
     </div>
 </div>

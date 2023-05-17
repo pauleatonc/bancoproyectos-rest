@@ -32,27 +32,25 @@ class UserRegisterForm(forms.ModelForm):
         """Meta definition for UserRegisterform."""
 
         model = User
-        fields = (            
+        fields = (
+            'rut',
             'email',
             'username',
-            'nombres',
-            'apellidos',
-            'fecha_nacimiento'
         )
         widgets = {
+            'rut': forms.TextInput(
+                attrs={
+                'placeholder': 'Rut...',
+                }
+            ),
             'email': forms.EmailInput(
                 attrs={
-                'placeholder': 'Correo electrónico...',
+                    'placeholder': 'Correo electrónico...',
                 }
             ),
             'username': forms.TextInput(
                 attrs={
                 'placeholder': 'Nombre de usuario'
-                }
-            ),
-            'date_birth': forms.DateInput(
-                attrs={
-                'type': 'date'
                 }
             ),
         }
