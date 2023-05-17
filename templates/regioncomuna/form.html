@@ -1,0 +1,21 @@
+
+            <div class="col-md-2"> 
+              <button type="button" class="card p-3 d-flex flex-column align-items-center"> 
+                <i class="fa-solid fa-mountain-sun browsericon subderecolor"></i>
+                <div class="text-center mg-text"> 
+                  <label for="region">Ubicacion:</label>
+                  <label for="region">Región:</label>
+                  <select name="region" id="region">
+                    {% for region in regiones %}
+                      <option value="{{ region.id }}">{{ region.nombre }}</option>
+                    {% endfor %}
+                  </select>
+                  <label for="comuna">Comuna:</label>
+                  <select name="comuna" id="comuna">
+                    {% for comuna in comunas %}
+                    <option value="{{ comuna.id}}">{{ comuna.nombre }}</option>
+                    {% endfor %}
+                </select>
+                </div> 
+              </button> 
+            </div>
