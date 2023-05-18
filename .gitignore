@@ -1,0 +1,12 @@
+*.pyc
+__pycache__
+db.sqlite3
+/env
+*.env
+.vscode
+node_modules/
+media/
+applications\home\migrations/
+applications\projects\migrations/
+applications\users\migrations/
+applications\regioncomuna\migrations/
