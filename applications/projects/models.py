@@ -2,12 +2,7 @@ from django.db import models
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 from applications.regioncomuna.models import Region, Comuna
-
-# Managers
 from .managers import ProjectsManager
-
-#forms
-
 
 
 class Program(models.Model):
@@ -49,32 +44,26 @@ class Project(models.Model):
         max_length=200, verbose_name='ID SUBDERE (obligatorio)')
     description = models.TextField(verbose_name='Descripción (obligatorio)')
     year = models.ForeignKey(Year, null=True, blank=False,
-                            on_delete=models.SET_NULL, verbose_name='Año (obligatorio)')
+                             on_delete=models.SET_NULL, verbose_name='Año (obligatorio)')
     program = models.ForeignKey(Program, null=True, blank=False,
                                 on_delete=models.SET_NULL, verbose_name='Programa (obligatorio)')
     type = models.ForeignKey(Type, null=True, blank=False, on_delete=models.SET_NULL,
-                            verbose_name='Tipo de Proyecto (obligatorio)')
+                             verbose_name='Tipo de Proyecto (obligatorio)')
     public = models.BooleanField(default=True)
     video = models.CharField(max_length=200, null=True,
-                            blank=True, verbose_name='Youtube')
+                             blank=True, verbose_name='Youtube')
     portada = models.ImageField(upload_to='projects', null=True,
                                 blank=False, verbose_name='Foto miniatura (obligatorio)')
-    portacard = ImageSpecField(source='portada',
-                                    processors=[ResizeToFill(300, 300)],
-                                    format='png',
-                                    options={'quality': 60})
+    portacard = ImageSpecField(source='portada', processors=[
+                               ResizeToFill(300, 300)], format='png', options={'quality': 60})
     beforeimage = models.ImageField(
         upload_to='projects', null=True, blank=True, verbose_name='Imagen Antes')
-    beforeimageresize = ImageSpecField(source='beforeimage',
-                                    processors=[ResizeToFill(800, 600)],
-                                    format='png',
-                                    options={'quality': 60})
+    beforeimageresize = ImageSpecField(source='beforeimage', processors=[
+                                       ResizeToFill(800, 600)], format='png', options={'quality': 60})
     afterimage = models.ImageField(
         upload_to='projects', null=True, blank=True, verbose_name='Imagen Después')
-    afterimageresize = ImageSpecField(source='afterimage',
-                                    processors=[ResizeToFill(800, 600)],
-                                    format='png',
-                                    options={'quality': 60})
+    afterimageresize = ImageSpecField(source='afterimage', processors=[
+                                      ResizeToFill(800, 600)], format='png', options={'quality': 60})
 
     eett = models.FileField(upload_to='project_documents',
                             null=True, blank=False, verbose_name='EETT')
@@ -83,14 +72,13 @@ class Project(models.Model):
     region = models.ForeignKey(
         Region, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Región')
     comuna = models.ForeignKey(
-        Comuna, on_delete=models.SET_NULL, null=True, blank=True,  verbose_name='Comuna')
+        Comuna, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Comuna')
 
-    objects = ProjectsManager()
-    
     def get_comunas_by_region(self):
         if self.region:
-            return self.region.comunas.all()
-        return Comuna.objects.none()
+            return self.region.comunas
+
+    objects = ProjectsManager()
 
     def __str__(self):
         return self.name
@@ -103,9 +91,9 @@ class Projectimage(models.Model):
                                     format='png',
                                     options={'quality': 60})
     imagecarousel = ImageSpecField(source='image',
-                                    processors=[ResizeToFill(768, 500)],
-                                    format='png',
-                                    options={'quality': 60})
+                                   processors=[ResizeToFill(768, 500)],
+                                   format='png',
+                                   options={'quality': 60})
 
     project = models.ForeignKey(
         Project, null=False, blank=False, on_delete=models.CASCADE, related_name='images')
@@ -117,4 +105,3 @@ class Projectfile(models.Model):
     file = models.FileField(upload_to='project_documents')
     project = models.ForeignKey(
         Project, null=False, blank=False, on_delete=models.CASCADE, related_name='files')
-

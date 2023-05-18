@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
+import environ
 import os
 from pathlib import Path
 
@@ -78,7 +79,6 @@ WSGI_APPLICATION = 'projectbank.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-import environ
 env = environ.Env()
 environ.Env.read_env()
 ...
@@ -88,9 +88,9 @@ SECRET_KEY = '4du7wjb+dkbmiw^e1_27r_n(^!rzr9k3q7!zy!k=+a+41d-&^l'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'projectbank',
+        'NAME': 'project_bank',
         'USER': 'postgres',
-        'PASSWORD': 'Subdere.2022',
+        'PASSWORD': '1234',
         'HOST': 'localhost',
         'PORT': '5432',
     }
