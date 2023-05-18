@@ -52,5 +52,6 @@ def get_comunas(request):
     return JsonResponse(list(comunas), safe=False)
 
 # cargar los datos del archivo JSON en la base de datos si aún no se han cargado
+# Comentar para correr las migraciones.
 if not Region.objects.exists() and not Comuna.objects.exists() and os.path.exists('regioncomuna.json'):
     cargar_datos_archivo_json()
