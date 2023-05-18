@@ -4,3 +4,9 @@ db.sqlite3
 /env
 *.env
 .vscode
+node_modules/
+media/
+home\migrations/
+projects\migrations/
+users\migrations/
+regioncomuna\migrations/
