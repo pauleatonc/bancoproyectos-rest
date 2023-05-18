@@ -6,7 +6,8 @@ db.sqlite3
 .vscode
 node_modules/
 media/
-applications\home\migrations/
-applications\projects\migrations/
-applications\users\migrations/
-applications\regioncomuna\migrations/
+applications/home/migrations/
+applications/projects/migrations/
+applications/users/migrations/
+applications/regioncomuna/migrations/
+package-lock.json
