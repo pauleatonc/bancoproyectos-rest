@@ -1,10 +1,22 @@
+#Cache de python
 *.pyc
 __pycache__
+/applications/__pycache__
+/applications/home/__pycache__
+/applications/projects/__pycache__
+/applications/regioncomuna/__pycache__
+/applications/users/__pycache__
+
+#BD
 db.sqlite3
+
+#Ambientes de desarrollo
 /env
 /venv
 *.env
 .vscode
+
+#Images and Documents
 /media/project_documents/*
 /media/projects/*
 /media/CACHE/*
