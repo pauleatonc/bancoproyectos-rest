@@ -23,7 +23,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     profesion = models.ForeignKey(Profesion, on_delete=models.SET_NULL, blank=True, null=True)
     fecha_nacimiento = models.DateField('Fecha de nacimiento', blank=True, null=True)
 
-    is_staff = models.BooleanField(default=False)
+    is_staff = models.BooleanField('Usuario administrador',default=False)
     is_active = models.BooleanField(default=True)
 
     USERNAME_FIELD = 'rut'

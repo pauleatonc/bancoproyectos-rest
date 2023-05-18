@@ -1,0 +1,33 @@
+{% extends "users/base_users.html" %}
+{% load static %}
+
+{% block content %}
+
+{% include "modules/navbar.html" %}
+
+<div class="album py-5 bg-light">
+<div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 justify-content-center">
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Agregar usuario</h5>
+            <p class="card-text">Acceder a registro de nuevos usuarios</p>
+            <a href="{% url 'users_app:user-register' %}" class="btn card cardbutontext btn-outline-secondary mx-auto d-block">Ir</a>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Agregar proyectos</h5>
+            <p class="card-text">Acceder a plataforma para agregar o editar proyectos</p>
+            <a href="{% url 'admin:index' %}" class="btn card cardbutontext btn-outline-secondary mx-auto d-block">Ir</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

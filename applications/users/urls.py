@@ -30,6 +30,11 @@ urlpatterns = [
         views.CodeVerificationView.as_view(),
         name='user-verification',
     ),
+    path(
+        'admin-home/',
+        views.AdminHomeView.as_view(),
+        name='admin-home',
+    ),
 
     
 ]

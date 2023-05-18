@@ -62,13 +62,13 @@
 			<div class="col-6 col-md-3 mb-3">
 				{% if user.is_authenticated %}
 					{% if user.is_staff %}
-						<a class="btn btn-outline-light" href="{% url 'admin:index' %}">Login Administración</a>
+						<a class="btn btn-outline-light" href="{% url 'users_app:admin-home' %}">Login Administración</a>
 					{% else %}
 						<a>Login como Administrador disponible solo para usuarios autorizados</a>
 					{% endif %}
 				{% else %}
 					{% if user.is_staff %}
-						<li class="btn btn-outline-light"><a href="{% url 'users_app:user-login' %}?next={% url 'admin:index' %}">Login Administración</a></li>
+						<li class="btn btn-outline-light"><a href="{% url 'users_app:user-login' %}?next={% url 'users_app:admin-home' %}">Login Administración</a></li>
 					{% else %}
 						<li class="btn btn-outline-light"><a href="{% url 'users_app:user-login' %}?next={% url 'projects_app:project-list' %}">Login Administración</a></li>
 					{% endif %}

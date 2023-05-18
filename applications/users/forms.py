@@ -6,6 +6,7 @@ from .models import User
 
 from .functions import validar_rut_form
 
+
 class UserRegisterForm(forms.ModelForm):
 
     password1 = forms.CharField(
@@ -26,7 +27,7 @@ class UserRegisterForm(forms.ModelForm):
                 'placeholder': 'Repetir contraseña'
             }
         )
-    ) 
+    )
 
     class Meta:
         """Meta definition for UserRegisterform."""
@@ -36,6 +37,7 @@ class UserRegisterForm(forms.ModelForm):
             'rut',
             'email',
             'username',
+            'is_staff'
         )
         widgets = {
             'rut': forms.TextInput(
