@@ -1,103 +1,114 @@
 {% load static %}
-  <div class="container mt-4 navbardist"> 
-    <div class="row d-flex justify-content-center"> 
-      <div class="col-md-9"> 
-        <div class="card p-4 mt-3"> 
-          <h3 class="heading text-center subderecolor">Buscar proyectos según tipo</h3> 
-          <div class="row mt-4 g-1 px-4"> 
-            <form class="col-md-2"> 
-              <button type="submit" name="programa" value= "" checked=True action="" method="GET" class="card p-3 d-flex flex-column align-items-center"> 
+
+<div class="container mt-4 navbardist">
+  <div class="row d-flex justify-content-center">
+    <div class="col-md-9">
+      <div class="card p-4 mt-3">
+        <h3 class="heading text-center subderecolor">Buscar proyectos según tipo</h3>
+        <div class="row mt-4 g-3 px-4 align-items-end">
+          <div class="col-md-2">
+            <div class="card p-2 d-flex flex-column align-items-center custom-div">
+              <a href="{% url 'projects_app:project-list' %}?show_all=true" class="btn btn-outline">
                 <i class="fa-brands fa-font-awesome browsericon subderecolor"></i>
-                <div class="text-center mg-text"> 
-                  <span class="mg-text subderecolor">Todos</span> 
-                </div> 
-              </button> 
-            </form> 
-            <form class="col-md-2"> 
-              <button type="submit" name="programa" value= "pmu" checked=True action="" method="GET" class="card p-3 d-flex flex-column align-items-center"> 
-                <i class="fa-solid fa-tree-city browsericon subderecolor"></i>
-                <div class="text-center mg-text"> 
-                  <span class="mg-text subderecolor">PMU</span> 
-                </div> 
-              </button> 
-            </form> 
-            <form class="col-md-2"> 
-              <button type="submit" name="programa" value= "pmb" checked=True action="" method="GET" class="card p-3 d-flex flex-column align-items-center"> 
-                <i class="fa-solid fa-faucet-drip browsericon subderecolor"></i> 
-                <div class="text-center mg-text"> 
-                  <span class="mg-text subderecolor">PMB</span> 
-                </div> 
-              </button> 
-            </form> 
-
-            <div class="col-md-2"> 
-              <button type="submit" class="card p-3 d-flex flex-column align-items-center"> 
-                <i class="fa-solid fa-tags browsericon subderecolor"></i>
-                <div class="text-center mg-text"> 
-                  <select id="dropdownid" class="mg-text subderecolor dropdownstyle">
-                  <option class="" value=''>Tipo</option>
-                  {% for type in types %}
-                  <option class="btn btn-outline-secondary" type="submit" name="t" value='{{ type.name }}' checked=True action="" method="GET">{{ type.name }}</option>
-                  {% endfor %}
-                  </select>
-                </div> 
-              </button>
+                <div class="text-center mg-text">
+                  <span class="mg-text subderecolor">Todos</span>
+                </div>
+              </a>
             </div>
-
-            <div class="col-md-2"> 
-              <button type="button" class="card p-3 d-flex flex-column align-items-center"> 
-                <i class="fa-regular fa-calendar-days browsericon subderecolor"></i>
-                <div class="text-center mg-text"> 
-                  <select id="dropdownid" class="mg-text subderecolor dropdownstyle">
-                  <option class="" value=''>Año</option>
-                  {% for year in years %}
-                  <option class="btn btn-outline-secondary" type="submit" name="t" value='{{ type.name }}' checked=True action="" method="GET">{{ year.number }}</option>
-                  {% endfor %}
-                  </select>
-              </button> 
-            </div> 
-            
-            <div class="col-md-2"> 
-              <button type="button" class="card p-3 d-flex flex-column align-items-center"> 
-                <i class="fa-regular fa-mountain-sun browsericon subderecolor"></i>
-                <div class="text-center mg-text"> 
-                  <select id="dropdownid" class="mg-text subderecolor dropdownstyle">
-                  <option class="" value=''>Region</option>
-                    {% for region in regiones %}
-                      <option value="{{region.id }}">{{ region.nombre }}</option>
-                    {% endfor %}
-                  </select>
-              </button> 
-            </div> 
-            <div class="col-md-2"> 
-              <button type="button" class="card p-3 d-flex flex-column align-items-center"> 
-                <i class="fa-regular fa-mountain-sun browsericon subderecolor"></i>
-                <div class="text-center mg-text"> 
-                  <select id="dropdownid" class="mg-text subderecolor dropdownstyle">
-                  <option class="" value=''>Comuna</option>
-                  {% for comuna in comunas %}
-                  <option value="{{comuna.id}}">{{ comuna.nombre }}</option>
-                  {% endfor %}
-                  </select>
-              </button> 
-            </div> 
-            
-            
-          </div> 
-
-          <h5 class="heading text-center subderecolor p-3">Buscar proyectos por otras características</h5> 
-          <div class="d-flex justify-content-center px-5"> 
+          </div>
+          <div class="col-md-10">
+            <form method="GET" action="{% url 'projects_app:project-list' %}" class="row g-3" id="search-form">
+              <div class="col-md-2">
+                <div class="card p-3 d-flex flex-column align-items-center">
+                  <i class="fa-solid fa-tree-city browsericon subderecolor"></i>
+                  <div class="text-center mg-text">
+                    <select name="program" class="mg-text subderecolor dropdownstyle">
+                      <option value="">Programa</option>
+                      {% for program in programs %}
+                      <option value="{{ program.id }}">{{ program.sigla}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="card p-3 d-flex flex-column align-items-center">
+                  <i class="fa fa-tag browsericon subderecolor"></i>
+                  <div class="text-center mg-text">
+                    <select name="type" class="mg-text subderecolor dropdownstyle">
+                      <option value="">Tipo</option>
+                      {% for type in types %}
+                      <option value="{{ type.id }}">{{ type.name }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="card p-3 d-flex flex-column align-items-center">
+                  <i class="fa-regular fa-calendar-days browsericon subderecolor"></i>
+                  <div class="text-center mg-text">
+                    <select name="year" class="mg-text subderecolor dropdownstyle">
+                      <option value="">Año</option>
+                      {% for year in years %}
+                      <option value="{{ year.id }}">{{ year.number }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="card p-3 d-flex flex-column align-items-center">
+                  <i class="fas fa-mountain  browsericon subderecolor"></i>
+                  <div class="text-center mg-text">
+                    <select name="region" class="mg-text subderecolor dropdownstyle" id="region-selector">
+                      <option value="">Región</option>
+                      {% for region in regiones %}
+                      <option value='{{region.id}}'>{{region.nombre}}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="card p-3 d-flex flex-column align-items-center">
+                  <i class="fas fa-city  browsericon subderecolor"></i>
+                  <div class="text-center mg-text">
+                    <select name="comuna" class="mg-text subderecolor dropdownstyle" id="comuna-selector">
+                      <option value="">Comuna</option>
+                      {% for comuna in comunas %}
+                      <option value="{{ comuna.id }}">{{ comuna.nombre }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="card p-3 d-flex flex-column align-items-center">
+                  <button class="input-group-text border-0 text-center subderecolor p-3 m-1" id="search-addon" type="submit">
+                  Filtrar
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="row mt-4 g-3 px-4">
+          <div class="col-md-12">
+            <h5 class="heading text-center subderecolor p-3">Buscar proyectos por otras características</h5>
+          </div>
+          <div class="col-md-12">
             <div class="container clearfix">
-              <form class="input-group rounded">
-                <input type="text" name= "q" class="form-control rounded" placeholder="Buscar" aria-label="Buscar" aria-describedby="search-addon" />
+              <form method="GET" action="{% url 'projects_app:project-list' %}" class="input-group rounded" id="search-form">
+                <input type="text" name="search" class="form-control rounded" placeholder="Buscar" aria-label="Buscar" aria-describedby="search-addon" />
                 <button class="input-group-text border-0" id="search-addon">
                   <i class="fas fa-search subderecolor"></i>
                 </button>
               </form>
             </div>
-          </div> 
-
-        </div> 
-      </div> 
-    </div> 
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+</div>

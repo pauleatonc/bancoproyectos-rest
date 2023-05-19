@@ -1,49 +1,56 @@
 {% extends "projects/base_projects.html" %}
 
-{% load  static %}
+{% load static %}
 
 {% block content %}
 
 {% include "modules/navbar.html" %}
+
+<!-- Agrega el formulario de filtro -->
 {% include "modules/browser.html" %}
 
 <div class="album py-5 bg-light">
-        <div class="container">
+    <div class="container">
+        <div id="projects-container">
             {% if projects %}
-             <p class="text-center"> {{ projects|length }} resultados</p>
-                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-
-                    {% for project in projects %}
-                    <!-- Card Element Init. -->
-                    <div class="col-md-3">
-                        <a type="button" class="btn btn-sm" href="{% url 'projects_app:project-detail' project.id %}">
-                            <div class="card shadow-sm cardsize">
-                                <img src="{{ project.portacard.url }}" class="bd-placeholder-img card-img-top" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false" ><title>Placeholder</title></img>
-
-                                <div class="cardpadding ">
-                                    <p class="blog-post subderecolor footertitle cardtitlesize">{{ project.name }}</p>
-                                    <p class="blog-post truncate2">Descripción: {{ project.description }}</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group d-flex justify-content-center">
-                                            <div class="btn card cardbutontext btn-outline-success"> {{ project.program }}</div>
-                                            <div class="btn card cardbutontext btn-outline-secondary truncate">{{ project.type }}</div>
-                                            <div class="btn card cardbutontext btn-outline-info">{{ project.year }}</div>
-                                        </div>
+            <p class="text-center">{{ projects|length }} resultados</p>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                {% for project in projects %}
+                <!-- Card Element Init. -->
+                <div class="col-md-3">
+                    {% if project.id %}
+                    <a type="button" class="btn btn-sm" href="{% url 'projects_app:project-detail' project.id %}">
+                    {% else %}
+                    <a type="button" class="btn btn-sm" href="#">
+                    {% endif %}
+                        <div class="card shadow-sm cardsize">
+                            <img src="{{ project.portacard.url }}" class="bd-placeholder-img card-img-top" role="img"
+                                aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
+                            <title>Placeholder</title>
+                            </img>
+                            <div class="cardpadding">
+                                <p class="blog-post subderecolor footertitle cardtitlesize">{{ project.name }}</p>
+                                <p class="blog-post truncate2">Descripción: {{ project.description }}</p>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group d-flex justify-content-center">
+                                        <div class="btn card cardbutontext btn-outline-success">{{ project.program }}</div>
+                                        <div class="btn card cardbutontext btn-outline-secondary truncate">{{ project.type }}</div>
+                                        <div class="btn card cardbutontext btn-outline-info">{{ project.year }}</div>
                                     </div>
                                 </div>
                             </div>
-                        </a>
-                    </div>
-                    <!-- Card Element End. -->
-                    {% endfor %}
-
-            {% else %}
-                    <p class="text-center">No hay proyectos que coincidan con la búsqueda.</p>
+                        </div>
+                    </a>
                 </div>
+                <!-- Card Element End. -->
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="text-center">No hay proyectos que coincidan con la búsqueda.</p>
             {% endif %}
         </div>
     </div>
+</div>
 
 {% include "modules/footer.html" %}
-
 {% endblock content %}

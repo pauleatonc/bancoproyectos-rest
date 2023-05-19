@@ -1,41 +1,94 @@
 from django.shortcuts import render
-from django.urls import reverse_lazy, reverse
-from django.http import HttpResponseRedirect
-from django.contrib import messages
-from django.views.generic import ListView
-from .models import Project
-from applications.regioncomuna.models import Comuna
-from django.http import JsonResponse
+from django.views.generic import ListView, DetailView
+from .models import Project, Program, Type, Year
+from applications.regioncomuna.models import Region, Comuna
+from django.http import HttpResponseRedirect, JsonResponse
+from .forms import ProjectFilterForm
+from django.db.models import Q
+from .managers import ProjectsManager
 
-from django.views.generic import (
-    ListView,
-    DetailView,
-    FormView
-)
 
-# Models
-from .models import Project
+def get_index_data():
+    programs = Program.objects.all()
+    types = Type.objects.all()
+    years = Year.objects.all()
+    regiones = Region.objects.all()
+    comunas = Comuna.objects.all()
 
-#Forms
-from .forms import ProjectFilterForm, LocationForm
-
-def index(request):
-    projects = Project.objects.index_projects()
-    context = {
-        'projects': projects,
-        'project_filter_form': ProjectFilterForm(),
-        'locacion_form': LocationForm()
+    data = {
+        'programs': programs,
+        'types': types,
+        'years': years,
+        'regiones': regiones,
+        'comunas': comunas,
     }
-    return render(request, 'modules/browser.html', context)
+
+    return data
+
 
 class ProjectsListView(ListView):
     model = Project
     template_name = 'projects/list.html'
     context_object_name = 'projects'
+    paginate_by = 15
 
     def get_queryset(self):
-        projects = Project.objects.index_projects()
-        return projects
+        form = ProjectFilterForm(self.request.GET)
+        if form.is_valid():
+            program = form.cleaned_data.get('program')
+            programs=[program] if program else []
+            type = form.cleaned_data.get('type')
+            types = [type] if type else []
+            year = form.cleaned_data.get('year')
+            years = [year] if year else []
+            region = form.cleaned_data.get('region')
+            regiones = [region] if region else []
+            comuna = form.cleaned_data.get('comuna')
+            comunas = [comuna] if comuna else []
+            search = form.cleaned_data.get('search')
+            show_all = form.cleaned_data.get('show_all')
+
+            projects = Project.objects.filter(public=True)
+
+            if programs:
+                projects = projects.filter(program__in=programs)
+            if types:
+                projects = projects.filter(type__in=types)
+            if years:
+                projects = projects.filter(year__in=years)
+            if regiones:
+                projects = projects.filter(region__in=regiones)
+            if comunas:
+                projects = projects.filter(comuna__in=comunas)
+
+            if search:
+                projects = projects.filter(
+                    Q(name__icontains=search) | Q(description__icontains=search)
+                )
+
+            if show_all:
+                projects = projects.order_by('year')
+            else:
+                projects = projects.order_by('year')[:self.paginate_by]
+
+            return projects
+        else:
+            return Project.objects.none()
+    
+    def get(self, request, *args, **kwargs):
+        show_all = request.GET.get('show_all')
+
+        if show_all:
+            return HttpResponseRedirect(request.path)
+
+        return super().get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update(get_index_data())
+        context['filter_form'] = ProjectFilterForm(self.request.GET)
+        return context
+
 
 class ProjectDetailView(DetailView):
     template_name = 'projects/project_view.html'
@@ -58,17 +111,7 @@ class ProjectDetailView(DetailView):
         return context
 
 
-'''class SearchProjectView(FormView):
-    template_name = 'modules/browser.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(SearchProjectView, self).get_context_data(**kwargs)
-        # sistema de filtro
-        context['search'] = Project.objects.buscar_proyecto()
-
-        return context'''
-
 def obtener_comunas(request):
     region_id = request.GET.get('region')
-    comunas = Comuna.objects.filter(region_id=region_id).values('id', 'name')
+    comunas = Comuna.objects.filter(region_id=region_id).values('id', 'nombre')
     return JsonResponse(list(comunas), safe=False)

@@ -1,14 +1,14 @@
 from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
-from applications.regioncomuna.views  import get_comunas
+
 
 from . import views
+from .views import obtener_comunas
 
 app_name = 'projects_app'
 
 urlpatterns = [
-
     path('list',
          views.ProjectsListView.as_view(),
          name='project-list'
@@ -17,5 +17,4 @@ urlpatterns = [
          views.ProjectDetailView.as_view(),
          name='project-detail'
          ),
-    path('api/get_comunas/', get_comunas, name='get_comunas'),
 ]
