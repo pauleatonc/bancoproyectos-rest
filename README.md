@@ -1,4 +1,4 @@
-# bancoproyecto
+# bancodeproyectos
 
 
 
@@ -15,14 +15,14 @@ Already a pro? Just edit this README.md and make it your own. Want to make it ea
 
 ```
 cd existing_repo
-git remote add origin https://gitlab.com/paul.eaton1/bancoproyecto.git
+git remote add origin https://gitlab.com/gabinetedevs/bancodeproyectos.git
 git branch -M main
 git push -uf origin main
 ```
 
 ## Integrate with your tools
 
-- [ ] [Set up project integrations](https://gitlab.com/paul.eaton1/bancoproyecto/-/settings/integrations)
+- [ ] [Set up project integrations](https://gitlab.com/gabinetedevs/bancodeproyectos/-/settings/integrations)
 
 ## Collaborate with your team
 
