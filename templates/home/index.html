@@ -1,0 +1,119 @@
+{% extends "home/base_home.html" %}
+
+{% load  static %}
+
+{% block content %}
+
+    {% include "modules/navbar.html" %}
+        <!-- Botón de búsqueda Init -->
+    <div class="container mt-4 navbardist">
+        <img src="{% static 'images\aplicacion_web_v2-01_0.png' %}" class="img-fluid">
+          <div
+            class="titlelanding text-center">¿Que buscas hoy?
+          </div>
+          <div class="row d-flex justify-content-center navbardist align-middle">
+                <a href="{% url 'projects_app:project-list' %}" type="button" class="btn btn-secondary btn-lg subdereblue col-2 align-middle searchheight">Proyectos <i class="fa-solid fa-magnifying-glass"></i></a>
+                <!-- <a href="{% url 'projects_app:project-list' %}" type="button" class="btn btn-secondary btn-lg subderegreen col-2 align-middle searchheight">Ideas <i class="fa-solid fa-magnifying-glass"></i></a>
+                <a href="{% url 'projects_app:project-list' %}" type="button" class="btn btn-secondary btn-lg subdereorange col-2 align-middle searchheight">Documentos <i class="fa-solid fa-magnifying-glass"></i></a> -->
+          </div>
+      </div>
+    <!-- Botón de búsqueda end -->
+    <!-- Presentación Init -->
+      <div class="container navbardist">
+        <div class="row navbardist">
+          <div class="col-lg-12">
+            <h3 class="text-center"></h3>
+            <ul class="timeline">
+              <li>
+                <div class="timeline-image center">
+                    <i class="fa-solid fa-question landingicon"></i>
+                </div>
+                <div class="timeline-panel">
+                  <div class="d-flex justify-content-end timeline-heading">
+                    <div class="titlelanding">1.</div>
+                    <div class="titlelanding">¿Que es?</div>
+                  </div>
+                  <div class="timeline-body">
+                    <p class="text-muted">
+                      El Banco de proyectos de la SUBDERE es un repositorio de proyectos referenciales, que entrega la documentación necesaria para la fomulación de proyectos, para postular al Programa de Mejoramiento Urbano y Programa de Mejoramiento de Barrios de la Subsecretaría de Desarrollo Regional y Administrativo.
+                    </p>
+                  </div>
+                </div>
+                <div class="line"></div>
+              </li>
+              <li class="timeline-inverted">
+                <div class="timeline-image center">
+                    <i class="fa-solid fa-code-fork landingicon"></i>
+                </div>
+                <div class="timeline-panel">
+                  <div class="d-flex justify-content-start timeline-heading">
+                    <div class="titlelanding">2.</div>
+                    <div class="titlelanding">¿A quién va dirigido?</div>
+                  </div>
+                  <div class="timeline-body">
+                    <p class="text-muted">
+                      A todo profesional municipal encargado de la formulación de proyectos de infraestructura que se enmarquen en los programas PMU y PMB.
+                    </p>
+                  </div>
+                </div>
+                <div class="line"></div>
+              </li>
+              <li>
+                <div class="timeline-image center">
+                    <i class="fa-solid fa-file-arrow-down landingicon"></i>
+                </div>
+                <div class="timeline-panel">
+                  <div class="d-flex justify-content-end timeline-heading">
+                    <div class="titlelanding">3.</div>
+                    <div class="titlelanding">¿Cómo funciona?</div>
+                  </div>
+                  <div class="timeline-body">
+                    <p class="text-muted">
+                      Filtra y busca el tipo de proyectos que quieres desarrollar para tu comuna. Revisa sus antecedentes y resultados. Descarga documentación tipo y referencial para poder postular un proyecto que se ajuste a la realidad de tu comuna.
+                    </p>
+                  </div>
+                </div>
+                <div class="line"></div>
+              </li>
+              <li class="timeline-inverted">
+                <div class="timeline-image center">
+                    <i class="fa-regular fa-paper-plane landingicon"></i>
+                </div>
+                <div class="timeline-panel">
+                  <div class="d-flex justify-content-start timeline-heading">
+                    <div class="titlelanding">4.</div>
+                    <div class="titlelanding">¿Que información entrega?</div>
+                  </div>
+                  <div class="timeline-body">
+                    <p class="text-muted">
+                      La información se clasifica en dos secciones: Información específica de los proyectos referenciales (planos, especificaciones técnicas, presupuestos), y la información referencial para la elaboración de proyectos. (planos modulares en DWG, formularios, guías de diseño, presupuestos generales. </br> Esta información podrá variar dependiendo del tipo de proyecto buscado.
+                    </p>
+                  </div>
+                </div>
+                <div class="line"></div>
+              </li>
+              <li>
+                <div class="timeline-image center">
+                    <i class="fa-solid fa-landmark landingicon"></i>
+                </div>
+                <div class="timeline-panel">
+                  <div class="d-flex justify-content-end timeline-heading">
+                    <div class="titlelanding">5.</div>
+                    <div class="titlelanding">¿Quienes somos?</div>
+                  </div>
+                  <div class="timeline-body">
+                    <p class="text-muted">
+                      El banco de proyectos es una iniciativa directa de la SUBDERE. Siendo permanentemente evaluada y actualizada su información.
+                    </p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    <!-- Presentación end -->
+
+    {% include "modules/footer.html" %}
+
+{% endblock content %}

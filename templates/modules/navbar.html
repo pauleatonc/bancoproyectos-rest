@@ -1,0 +1,25 @@
+{% load static %}
+
+<nav class="fixed-top subderegreen ">
+  <div class="container d-flex align-items-center">
+    <div class= "col-4 col-md-auto logohight" >
+      <img src="">
+    </div>
+    <div class="col-3 col-md-auto ">
+      <a class="container-fluid navbar-brand color-text-1" href="{% url 'home_app:index' %}">Inicio</a>
+    </div>
+    <div class="col-10">
+      <h1 class="color-text-1 text-center navname ">Banco de proyectos</h1>
+    </div>
+    <div class="col-2 col-md-auto">
+      {% if not user.is_anonymous %}
+        <a class="container-fluid navbar-brand color-text-1">{{user.email}}</a>
+        <a href="{% url 'users_app:user-logout' %}">logout</a>
+      {% else %}
+        <a class="container-fluid navbar-brand color-text-1" href="{% url 'users_app:user-login' %}">Iniciar sesión</a>
+      {% endif %}
+
+    </div>
+  </div>
+</nav>
+<div class="navbardist"></div>

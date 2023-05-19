@@ -1,0 +1,27 @@
+<!-- head para PC -->
+{% extends "users/base_users.html" %}
+{% load  static %}
+
+{% block content %}
+
+{% include "modules/navbar.html" %}
+
+<div class="album py-5 bg-light" align="center">
+
+                <div class="card-divider">
+                  <h4>Ingrese los datos para el nuevo usuario</h4>
+                </div>
+                <div class="card-section">
+                    <form class="grid-x grid-margin-x" method="POST" enctype="multipart/form-data">{% csrf_token %}
+                        <div class="cell large-12">
+                            <label>
+                                {{ form.as_p}}
+                            </label>
+                        </div>
+                        <button type="submit" class="btn card cardbutontext btn-outline-secondary mx-auto d-block">Registrar</button>
+                    </form>
+                </div>
+
+</div>
+
+{% endblock content %}

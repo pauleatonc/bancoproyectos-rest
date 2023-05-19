@@ -1,0 +1,31 @@
+#local migrations
+applications/home/migrations/
+applications/projects/migrations/
+applications/users/migrations/
+applications/regioncomuna/migrations/
+package-lock.json
+
+#Cache de python
+*.pyc
+__pycache__
+/applications/__pycache__
+/applications/home/__pycache__
+/applications/projects/__pycache__
+/applications/regioncomuna/__pycache__
+/applications/users/__pycache__
+
+#BD
+db.sqlite3
+
+#Ambientes de desarrollo
+/env
+/venv
+*.env
+.vscode
+node_modules/
+
+#Images and Documents
+media/
+/media/project_documents/*
+/media/projects/*
+/media/CACHE/*
