@@ -3,12 +3,14 @@ from django.core.mail import send_mail
 from django.urls import reverse_lazy, reverse
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.http import HttpResponseRedirect
+from django.contrib import messages
 
 from django.views.generic import (
     View,
-    CreateView
+    CreateView,
+    TemplateView
 )
 
 from django.views.generic.edit import (
@@ -22,23 +24,27 @@ from .models import User
 from .functions import code_generator, validar_rut
 
 
-class UserRegisterView(FormView):
+class UserRegisterView(LoginRequiredMixin, UserPassesTestMixin, FormView):
     template_name = 'users/register.html'
     form_class = UserRegisterForm
     success_url = reverse_lazy('users_app:user-login')
+
+    def test_func(self):
+        return self.request.user.is_staff
+
+    def handle_no_permission(self):
+        messages.error(self.request, 'Para acceder al panel de administrador necesitas ingresar con usuario autorizado')
+        return redirect('users_app:user-login')
 
     def form_valid(self, form):
         # Genera un código para validar a través de correo
         #codigo = code_generator()
 
         usuario = User.objects.create_user(
-            form.cleaned_data['email'],
+            form.cleaned_data['rut'],
             form.cleaned_data['password1'],
+            email=form.cleaned_data['email'],
             username = form.cleaned_data['username'],
-            nombres = form.cleaned_data['nombres'],
-            apellidos = form.cleaned_data['apellidos'],
-            pais = form.cleaned_data['pais'],
-            date_birth = form.cleaned_data['date_birth'],
             #codregistro = codigo
         )
         return super(UserRegisterView, self).form_valid(form)
@@ -129,3 +135,14 @@ class CodeVerificationView(FormView):
             is_active=True
         )
         return super(CodeVerificationView, self).form_valid(form)
+
+class AdminHomeView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
+    template_name = 'users/admin_home.html'
+    login_url = reverse_lazy('users_app:user-login')
+
+    def test_func(self):
+        return self.request.user.is_staff
+
+    def handle_no_permission(self):
+        messages.error(self.request, 'Para acceder al panel de administrador necesitas ingresar con usuario autorizado')
+        return redirect('users_app:user-login')
