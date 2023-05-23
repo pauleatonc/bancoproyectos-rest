@@ -1,0 +1,33 @@
+.wrap {
+  width: 1110px;
+  height: 138px;
+  align-self: center;
+  flex-grow: 0;
+  margin: 0 0 24px;
+}
+
+.navbar {
+    display: inline;
+}
+
+.Rectangle {
+  width: auto;
+  height: 28px;
+  flex-grow: 0;
+  background-color: #373737;
+}
+
+.text-title-navbar {
+  width: 300px;
+  height: 48px;
+  margin: 19px 0 0;
+  font-family: gobCL_bold;
+  font-size: 20px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: var(--color-gray-373737);
+}

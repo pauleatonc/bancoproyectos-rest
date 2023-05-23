@@ -1,0 +1,39 @@
+{% extends "projects/base_projects.html" %}
+
+{% load static %}
+
+{% block content %}
+
+{% include "modules/navbar.html" %}
+
+<!-- Detalles del proyecto -->
+<div>
+    <h2>{{ project.program }}</h2>
+    <!-- Mostrar otros detalles del proyecto aquí -->
+</div>
+
+<!-- Listado de elementos del campo checklist -->
+<div>
+    <h3>Checklist</h3>
+    <table class="table projects-container">
+        <thead>
+            <tr>
+                <th>Ítem</th>
+                <th>Descripción</th>
+                <th>Descarga</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in project %}
+            <tr>
+                <td>{{ project.checklist.documentname }}</td>
+                <td>{{ project.checklist.description }}</td>
+                <td>{{ project.checklist.file }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% include "modules/footer.html" %}
+{% endblock content %}

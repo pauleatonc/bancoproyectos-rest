@@ -17,4 +17,9 @@ urlpatterns = [
          views.ProjectDetailView.as_view(),
          name='project-detail'
          ),
+    path('project-checklist/<pk>/',
+         views.CheckListProgramView.as_view(),
+         name='project_checklist'
+         ),
+
 ]
