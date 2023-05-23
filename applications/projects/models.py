@@ -34,6 +34,11 @@ class Year(models.Model):
     def __str__(self):
         return self.number
 
+class PrioritizedTag(models.Model):
+    prioritized_tag = models.CharField(max_length=20, verbose_name='Tag para proyectos priorizados', unique=True)
+    def __str__(self):
+        return self.prioritized_tag
+
 
 class Project(models.Model):
     name = models.CharField(max_length=200, verbose_name= 'Nombre (obligatorio)', unique=True)
@@ -58,6 +63,8 @@ class Project(models.Model):
     presupuesto = models.FileField(upload_to='project_documents', null=True, blank=False, verbose_name='Presupuesto')
     region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Región')
     comuna = models.ForeignKey(Comuna, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Comuna')
+
+    prioritized_tag = models.ManyToManyField(PrioritizedTag, null=True, blank=False, verbose_name = 'Tag proyecto priorizado')
 
     def get_comunas_by_region(self):
         if self.region:
