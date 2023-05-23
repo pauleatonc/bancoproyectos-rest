@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib import admin
-from .models import Project, Program, Type, Guide, Projectimage, Projectfile, Year
+from .models import Project, Program, Type, Guide, Projectimage, Projectfile, Year, PrioritizedTag, ChecklistDocuments
 from import_export.admin import ImportExportMixin
 from import_export.resources import ModelResource
 
@@ -32,66 +32,57 @@ class GuideResource(ModelResource):
 class YearResource(ModelResource):
     class Meta:
         model = Year
-from applications.regioncomuna.models import Comuna
 
-
-class ProjectAdminForm(forms.ModelForm):
+class PrioritizedTagResource(ModelResource):
     class Meta:
-        model = Project
-        fields = '__all__'
+        model = PrioritizedTag
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['comuna'].queryset = Comuna.objects.none()
+class ChecklistDocumentsResource(ModelResource):
+    class Meta:
+        model = ChecklistDocuments
 
-        if 'region' in self.data:
-            try:
-                region_id = int(self.data.get('region'))
-                self.fields['comuna'].queryset = Comuna.objects.filter(region_id=region_id)
-            except (ValueError, TypeError):
-                pass
-        elif self.instance and self.instance.region:
-            self.fields['comuna'].queryset = Comuna.objects.filter(region=self.instance.region)
-
-
+# Modelos tipo inline
 class ProjectfileAdmin(admin.TabularInline):
     model = Projectfile
-
 
 class ProjectimageAdmin(admin.TabularInline):
     model = Projectimage
 
+# Modelos disponibles para editar en el admin
 
 @admin.register(Project)
 class ProjectAdmin(ImportExportMixin, admin.ModelAdmin):
     resource_class = ProjectResource
-    list_display=('id_subdere', 'name', 'program', 'type',)
-    search_fields=('name', 'id_subdere',)
-    list_display_links=('name',)
-    list_filter=('program', 'type',)
-    
-class CustomProjectAdmin(admin.ModelAdmin):
-    list_display = ('id_subdere', 'name', 'program', 'type',)
+    list_display = ('id_subdere', 'name', 'program', 'type', 'public')
+    search_fields = ('name', 'id_subdere', 'comuna')
     list_display_links = ('name',)
-    list_filter = ('program', 'type',)
+    list_filter = ('program', 'type', 'prioritized_tag')
     list_per_page = 20
-    search_fields = ('name', 'id_subdere',)
     inlines = [
         ProjectimageAdmin,
         ProjectfileAdmin,
     ]
-    form = ProjectAdminForm
 
-    class Media:
-        js = ('./admin_project_form.js',)
+    # Definir una acción personalizada para editar el campo 'public'
+    def make_public(self, request, queryset):
+        queryset.update(public=True)
 
+    def make_private(self, request, queryset):
+        queryset.update(public=False)
+
+    # Configurar metadatos para la acción personalizada
+    make_public.short_description = "Marcar como público"
+    make_private.short_description = "Marcar como privado"
+
+    # Agregar las acciones personalizadas al administrador
+    actions = [make_public, make_private]
 
 @admin.register(Program)
 class ProgramAdmin(ImportExportMixin, admin.ModelAdmin):
     resource_class = ProgramResource
-    search_fields=('name', 'sigla',)
-    list_display=('sigla', 'name')
-    ordering=('name',)
+    search_fields = ('name', 'sigla')
+    list_display = ('sigla', 'name')
+    ordering = ('name',)
     list_per_page = 20
 
 @admin.register(Type)
@@ -101,9 +92,17 @@ class TypeAdmin(ImportExportMixin, admin.ModelAdmin):
 @admin.register(Guide)
 class GuideAdmin(ImportExportMixin, admin.ModelAdmin):
     resource_class = GuideResource
-    search_fields=('name',)
+    search_fields = ('name',)
     list_per_page = 20
 
 @admin.register(Year)
 class YearAdmin(ImportExportMixin, admin.ModelAdmin):
     resource_class = YearResource
+
+@admin.register(PrioritizedTag)
+class PrioritizedTagAdmin(admin.ModelAdmin):
+    resource_class = PrioritizedTagResource
+
+@admin.register(ChecklistDocuments)
+class ChecklistDocumentsAdmin(ImportExportMixin, admin.ModelAdmin):
+    resource_class = ChecklistDocumentsResource

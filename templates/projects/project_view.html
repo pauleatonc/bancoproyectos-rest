@@ -42,7 +42,7 @@
                 <p><span class="blog-post-meta fw-bold">ID SUBDERE:</span> {{ project.id_subdere }} </p>
                 <p><span class="blog-post-meta fw-bold">Programa:</span> {{ project.program }} ( {{ project.program.name }} )</p>
                 <p><span class="blog-post-meta fw-bold">Categoria:</span> {{ project.type }}</p>
-                <p><span class="blog-post-meta fw-bold">Región:</span> {{ project.region }}</p>
+                <p><span class="blog-post-meta fw-bold">Región:</span> {{ project.comuna.region }}</p>
                 <p><span class="blog-post-meta fw-bold">comuna:</span> {{ project.comuna }}</p>
                 <p><span class="blog-post-meta fw-bold">Año:</span> {{ project.year }}</p> 
                 </br>
@@ -132,9 +132,11 @@
                     {% if user.is_authenticated %}
                         <li class="text-primary"><a href="{{ project.eett.url }}" target="_blank" >EETT</a></li>
                         <li class="text-primary"><a href="{{ project.presupuesto.url }}" target="_blank" >Presupuesto</a></li>
+                        <li>Checklist {{ project.program }}</li>
                     {% else %}
                         <li class="text-primary"><a href="{% url 'users_app:user-login' %}?next={{ request.path }}">EETT</a></li>
                         <li class="text-primary"><a href="{% url 'users_app:user-login' %}?next={{ request.path }}">Presupuesto</a></li>
+                        <li>Checklist {{ project.program }}</li>
                     {% endif %}
                   </ol>
                 </div>
