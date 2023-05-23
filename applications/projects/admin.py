@@ -50,7 +50,7 @@ class ProjectimageAdmin(admin.TabularInline):
 class ProjectAdmin(ImportExportMixin, admin.ModelAdmin):
     resource_class = ProjectResource
     list_display = ('id_subdere', 'name', 'program', 'type', 'public')
-    search_fields = ('name', 'id_subdere')
+    search_fields = ('name', 'id_subdere', 'comuna')
     list_display_links = ('name',)
     list_filter = ('program', 'type', 'prioritized_tag')
     list_per_page = 20
@@ -58,6 +58,20 @@ class ProjectAdmin(ImportExportMixin, admin.ModelAdmin):
         ProjectimageAdmin,
         ProjectfileAdmin,
     ]
+
+    # Definir una acción personalizada para editar el campo 'public'
+    def make_public(self, request, queryset):
+        queryset.update(public=True)
+
+    def make_private(self, request, queryset):
+        queryset.update(public=False)
+
+    # Configurar metadatos para la acción personalizada
+    make_public.short_description = "Marcar como público"
+    make_private.short_description = "Marcar como privado"
+
+    # Agregar las acciones personalizadas al administrador
+    actions = [make_public, make_private]
 
 @admin.register(Program)
 class ProgramAdmin(ImportExportMixin, admin.ModelAdmin):
