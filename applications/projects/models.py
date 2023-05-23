@@ -39,6 +39,13 @@ class PrioritizedTag(models.Model):
     def __str__(self):
         return self.prioritized_tag
 
+class ChecklistDocuments(models.Model):
+    documentname = models.CharField(verbose_name='Nombre documento', unique=True, max_length=50)
+    description = models.TextField(verbose_name='Descripción documento')
+    file = models.ManyToManyField(Guide, verbose_name='Guías de referencia', blank=True)
+
+    def __str__(self):
+        return self.documentname
 
 class Project(models.Model):
     name = models.CharField(max_length=200, verbose_name= 'Nombre (obligatorio)', unique=True)
@@ -61,10 +68,12 @@ class Project(models.Model):
 
     eett = models.FileField(upload_to='project_documents', null=True, blank=False, verbose_name='EETT')
     presupuesto = models.FileField(upload_to='project_documents', null=True, blank=False, verbose_name='Presupuesto')
-    region = models.ForeignKey(Region, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Región')
     comuna = models.ForeignKey(Comuna, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Comuna')
 
-    prioritized_tag = models.ManyToManyField(PrioritizedTag, null=True, blank=False, verbose_name = 'Tag proyecto priorizado')
+    prioritized_tag = models.ManyToManyField(PrioritizedTag, blank=False, verbose_name = 'Tag proyecto priorizado')
+
+    checklist = models.ManyToManyField(ChecklistDocuments, verbose_name='Checklist de documentos obligatorios')
+
 
     def get_comunas_by_region(self):
         if self.region:

@@ -132,9 +132,11 @@
                     {% if user.is_authenticated %}
                         <li class="text-primary"><a href="{{ project.eett.url }}" target="_blank" >EETT</a></li>
                         <li class="text-primary"><a href="{{ project.presupuesto.url }}" target="_blank" >Presupuesto</a></li>
+                        <li>Checklist {{ project.program }}</li>
                     {% else %}
                         <li class="text-primary"><a href="{% url 'users_app:user-login' %}?next={{ request.path }}">EETT</a></li>
                         <li class="text-primary"><a href="{% url 'users_app:user-login' %}?next={{ request.path }}">Presupuesto</a></li>
+                        <li>Checklist {{ project.program }}</li>
                     {% endif %}
                   </ol>
                 </div>
