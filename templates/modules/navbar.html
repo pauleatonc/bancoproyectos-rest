@@ -1,30 +1,44 @@
 {% load static %}
 <div class="Rectangle"></div>
-<nav class="navbar navbar-light navbar-expand-lg navbar-lines wrap">
-  <div class="container"><a class="navbar-brand" href="/"><span class="h6">Subsecretaría de Desarrollo<br>Administrativo y Regional</span></a>
-    <button class="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarLinesLightExampleCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-    <div class="navbar-collapse collapse" id="navbarLinesLightExampleCollapse">
-      <ul class="navbar-nav">
-        {% if not user.is_anonymous %}
-          <li class="nav-item"><a class="btn btn-block btn-primary" href="{% url 'users_app:user-logout' %}">Cerrar sesión</a></li>
-        {% else %}
-          <li class="nav-item"><a class="btn btn-block btn-primary" href="{% url 'users_app:user-login' %}">Iniciar sesión</a></li>
-        {% endif %}
-      </ul>
-      <ul class="navbar-nav">
+<nav class="navbar navbar-expand-lg navbar-lines">
+
+  <div class="container" style="height:220px; border:0">
+
+    <!-- Este a es para el logo gubernamental a la izquierda -->
+    <a class="navbar-brand" href="/"><div class="blue"></div><div class="red"></div><p class="text-title-navbar">Subsecretaría de Desarrollo<br>Administrativo y Regional</p></a>
+
+    <!-- Este div diagrama el nav en tres filas horizontales -->
+    <div class="navbar-collapse" id="navbarLinesLightExampleCollapse" style="height:180px">
+
+      <!-- Este div es para inicio de sesión y botones de accesibilidad -->
+      <div>
+        <ul class="navbar-nav">
+          {% if not user.is_anonymous %}
+            <li class="nav-item"><a class="btn btn-block btn-primary" href="{% url 'users_app:user-logout' %}">Cerrar sesión</a></li>
+          {% else %}
+            <li class="nav-item"><a class="btn btn-block btn-primary" href="{% url 'users_app:user-login' %}">Iniciar sesión</a></li>
+          {% endif %}
+        </ul>
+      </div>
+
+      <!-- Este ul es para redes sociales y barra búsqueda -->
+      <div class="navbar-nav">
+        <form class="simple-search search" style="border: solid 1px #373737; width: 365px; height: 48px;">
+          <div class="search-action" style="padding:4px; margin:0">
+            <button class="btn btn-outline-search" id="searchLineAction" type="submit" style="border: 0; padding:4px"><i class="icon cl cl-search" style="color:#373737; border: 0"></i></button>
+          </div>
+          <input class="form-control" type="text" name="search" placeholder="Buscar" aria-label="search" aria-describedby="searchLineAction" style="border: 0"/>
+        </form>
+      </div>
+
+      <!-- Este ul es para placeholders de navegación -->
+      <ul class="navbar-nav" style="align-self: center;">
         <li class="nav-item"><a class="nav-link" href="{% url 'home_app:index' %}">Inicio</a></li>
         <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" id="navbarLinesLightExampleDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
           <div class="dropdown-menu" aria-labelledby="navbarLinesLightExampleDropdown"><a class="dropdown-item" href="#">Action</a><a class="dropdown-item" href="#">Another action</a>
             <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Something else here</a>
           </div>
         </li>
-        <form class="simple-search search">
-          <input class="form-control" type="text" name="search" placeholder="search" aria-label="search" aria-describedby="searchLineAction"/>
-          <div class="search-action">
-            <button class="btn btn-outline-search dom-search-behavior-cancel d-none" type="button"><i class="icon cl cl-close"></i></button>
-            <button class="btn btn-outline-search" id="searchLineAction" type="submit"><i class="icon cl cl-search"></i></button>
-          </div>
-        </form>
       </ul>
     </div>
   </div>
