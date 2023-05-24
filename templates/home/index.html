@@ -1,119 +1,114 @@
 {% extends "home/base_home.html" %}
-
-{% load  static %}
-
+{% load static %}
 {% block content %}
-
-    {% include "modules/navbar.html" %}
-        <!-- Botón de búsqueda Init -->
-    <div class="container mt-4 navbardist">
-        <img src="{% static 'images\aplicacion_web_v2-01_0.png' %}" class="img-fluid">
-          <div
-            class="titlelanding text-center">¿Que buscas hoy?
-          </div>
-          <div class="row d-flex justify-content-center navbardist align-middle">
-                <a href="{% url 'projects_app:project-list' %}" type="button" class="btn btn-secondary btn-lg subdereblue col-2 align-middle searchheight">Proyectos <i class="fa-solid fa-magnifying-glass"></i></a>
-                <!-- <a href="{% url 'projects_app:project-list' %}" type="button" class="btn btn-secondary btn-lg subderegreen col-2 align-middle searchheight">Ideas <i class="fa-solid fa-magnifying-glass"></i></a>
-                <a href="{% url 'projects_app:project-list' %}" type="button" class="btn btn-secondary btn-lg subdereorange col-2 align-middle searchheight">Documentos <i class="fa-solid fa-magnifying-glass"></i></a> -->
-          </div>
+{%include "modules/navbar.html" %}
+<section class='landing'> 
+  <div class='m-5'>
+  <div class="text-center">
+    <div class="line">
+      <p class="h1 font-weight-bold">Banco de Proyectos</p>
+    </div>
+  </div>
+</div>
+  <section class="m-5">
+    <div class="text-center m-3 h-4 text-muted"> Acceder al buscador de proyectos escribiendo palabra clave</div>
+    <form class="search mx-auto" method="GET" action="{% url 'projects_app:project-list' %}" id="search-form">
+      <input class="form-control" type="text" name="search" placeholder="Buscar proyecto" aria-label="Buscar proyectos"
+        aria-describedby="searchAction" />
+      <div class="search-action">
+        <button class="btn btn-outline-search" id="searchAction" type="submit"><i
+            class="icon cl cl-search"></i></button>
       </div>
-    <!-- Botón de búsqueda end -->
-    <!-- Presentación Init -->
-      <div class="container navbardist">
-        <div class="row navbardist">
-          <div class="col-lg-12">
-            <h3 class="text-center"></h3>
-            <ul class="timeline">
-              <li>
-                <div class="timeline-image center">
-                    <i class="fa-solid fa-question landingicon"></i>
-                </div>
-                <div class="timeline-panel">
-                  <div class="d-flex justify-content-end timeline-heading">
-                    <div class="titlelanding">1.</div>
-                    <div class="titlelanding">¿Que es?</div>
-                  </div>
-                  <div class="timeline-body">
-                    <p class="text-muted">
-                      El Banco de proyectos de la SUBDERE es un repositorio de proyectos referenciales, que entrega la documentación necesaria para la fomulación de proyectos, para postular al Programa de Mejoramiento Urbano y Programa de Mejoramiento de Barrios de la Subsecretaría de Desarrollo Regional y Administrativo.
-                    </p>
-                  </div>
-                </div>
-                <div class="line"></div>
-              </li>
-              <li class="timeline-inverted">
-                <div class="timeline-image center">
-                    <i class="fa-solid fa-code-fork landingicon"></i>
-                </div>
-                <div class="timeline-panel">
-                  <div class="d-flex justify-content-start timeline-heading">
-                    <div class="titlelanding">2.</div>
-                    <div class="titlelanding">¿A quién va dirigido?</div>
-                  </div>
-                  <div class="timeline-body">
-                    <p class="text-muted">
-                      A todo profesional municipal encargado de la formulación de proyectos de infraestructura que se enmarquen en los programas PMU y PMB.
-                    </p>
-                  </div>
-                </div>
-                <div class="line"></div>
-              </li>
-              <li>
-                <div class="timeline-image center">
-                    <i class="fa-solid fa-file-arrow-down landingicon"></i>
-                </div>
-                <div class="timeline-panel">
-                  <div class="d-flex justify-content-end timeline-heading">
-                    <div class="titlelanding">3.</div>
-                    <div class="titlelanding">¿Cómo funciona?</div>
-                  </div>
-                  <div class="timeline-body">
-                    <p class="text-muted">
-                      Filtra y busca el tipo de proyectos que quieres desarrollar para tu comuna. Revisa sus antecedentes y resultados. Descarga documentación tipo y referencial para poder postular un proyecto que se ajuste a la realidad de tu comuna.
-                    </p>
-                  </div>
-                </div>
-                <div class="line"></div>
-              </li>
-              <li class="timeline-inverted">
-                <div class="timeline-image center">
-                    <i class="fa-regular fa-paper-plane landingicon"></i>
-                </div>
-                <div class="timeline-panel">
-                  <div class="d-flex justify-content-start timeline-heading">
-                    <div class="titlelanding">4.</div>
-                    <div class="titlelanding">¿Que información entrega?</div>
-                  </div>
-                  <div class="timeline-body">
-                    <p class="text-muted">
-                      La información se clasifica en dos secciones: Información específica de los proyectos referenciales (planos, especificaciones técnicas, presupuestos), y la información referencial para la elaboración de proyectos. (planos modulares en DWG, formularios, guías de diseño, presupuestos generales. </br> Esta información podrá variar dependiendo del tipo de proyecto buscado.
-                    </p>
-                  </div>
-                </div>
-                <div class="line"></div>
-              </li>
-              <li>
-                <div class="timeline-image center">
-                    <i class="fa-solid fa-landmark landingicon"></i>
-                </div>
-                <div class="timeline-panel">
-                  <div class="d-flex justify-content-end timeline-heading">
-                    <div class="titlelanding">5.</div>
-                    <div class="titlelanding">¿Quienes somos?</div>
-                  </div>
-                  <div class="timeline-body">
-                    <p class="text-muted">
-                      El banco de proyectos es una iniciativa directa de la SUBDERE. Siendo permanentemente evaluada y actualizada su información.
-                    </p>
-                  </div>
-                </div>
-              </li>
-            </ul>
+    </form>
+  </section>
+  <div class="contianer-category">
+    <p class="font-level-2 text-center m-3 font-weight-bold">Categorías principales</p>
+    <div class="category cols-6 row m-5 text-center">
+      <div class="col-2 m-3">
+        <a class="btn btn-outline-primary rounded-circle text-decoration-none font-weight-bold font-level-6" href="{% url 'projects_app:project-list' %}?program=1">PMU</a>
+        <br>
+        <span>Programa Mejoramiento Urbano</span>
+      </div>
+      <div class="col-2 m-3">
+        <a class="btn btn-outline-primary  rounded-circle text-decoration-none font-weight-bold font-level-6" href="{% url 'projects_app:project-list' %}?program=2">PMB</a>
+        <br>
+        <span>Programa Mejoramiento de Barrios</span>
+      </div>
+      <div class="col-2 m-3">
+        <a class="btn btn-outline-primary rounded-circle btn-md" href="{% url 'projects_app:project-list' %}?show_all=true" >
+          <span class="cl cl-list font-level-2 my-1 mx-2"><span/></a>
+            <br>
+        <span>Ver todos los proyectos</span>
+      </div>
+    </div>
+  </div>
+  <section class="section-card">
+    <div class="container-description">
+      <p class="font-level-2 text-left">¿Qué es el Banco de Proyectos?</p>
+      <p class="text-description">El <span>Banco de Proyectos</span> de la Subsecretaría de Desarrollo Regional y
+        Administrativo es un <span></span>repositorio de proyectos ya ejecutados por distintas municipalidades a lo
+        largo del país, que tiene por objetivo poner a
+        disposición diversas iniciativas y su documentación asociada al momento de postular a los Programas de
+        Mejoramiento Urbano (PMU) y de Mejoramiento de Barrios (PMB) de esta Subsecretaría.
+        Toda la información en este repositorio es referencial, siendo responsabilidad de la unidad ejecutora revisar y
+        actualizar sus valores y aspectos normativos</p>
+    </div>
+    <div class="container-cards">
+      <div class="cards cols-12 row">
+        <div class="col-3 m-4">
+          <div class="card-ilus">
+            <div class="group-1">
+              <div class="circle">
+                <img src="{% static 'images/Trabajador_computador_2.png'%}" class="ilustra-1" />
+              </div>
+            </div>
+            <div class="card-text">
+              <p class="title">Para personas encargadas de Programas de Mejoramiento Urbano y de Barrios</p>
+              <p class="text">Dirigido a todo profesional municipal encargado de la formulación de proyectos que se
+                enmarquen en los programas PMU y PMB.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-3 m-4">
+          <div class="card-ilus">
+            <div class="group-2">
+              <div class="circle">
+                <img src="{% static 'images/Mujer_Lupa.png'%}" class="ilustra-2" />
+              </div>
+            </div>
+            <div class="card-text">
+              <p class="title">Filtra información y encuentra el proyecto que se ajuste a tu comuna</p>
+              <p class="text">Podrás filtrar proyectos por tipo de programa, revisar antecedentes y descargar
+                documentación referencial para postular proyectos adecuados a la realidad de tu comuna.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-3 m-4">
+          <div class="card-ilus">
+            <div class="group-3">
+              <div class="circle">
+                <img src="{% static 'images/Trabajador_computador.png'%}" class="ilustra-3" />
+              </div>
+            </div>
+            <div class="card-text">
+              <p class="title">Entregamos información referencial para la realización de proyectos</p>
+              <p class="text">Encontrarás información referencial detallada de proyectos como: planos, especificaciones,
+                presupuestos, e información referencial para su elaboración.</p>
+            </div>
           </div>
         </div>
       </div>
-    <!-- Presentación end -->
+    </div>
+    <div class="container-map">
+      <p class="title-end">¿Quiénes somos?</p>
+      <p class="text-end">El Banco de Proyectos es una iniciativa directa de la Subsecretaría de Desarrollo Regional y
+        Administrativo, cuya información está en permanente actualización.</p>
+      <div class="card-map">
+        <img src="{% static 'images/aplicacion_web_v2-01_0.png'%}" class="map" alt="map" />
+      </div>
+    </div>
+  </section>
+</section>
 
-    {% include "modules/footer.html" %}
-
+{% include "modules/footer.html" %} 
 {% endblock content %}
