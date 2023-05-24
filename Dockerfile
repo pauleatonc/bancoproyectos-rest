@@ -24,8 +24,8 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 # Copiar el código de la aplicación al contenedor
 COPY . /app/
 
-RUN python manage.py makemigrations
-RUN python manage.py migrate
+# Variable de entorno para apuntar a dev.py
+ENV DJANGO_SETTINGS_MODULE=projectbank.settings.dev
 
 # Especificar el comando para ejecutar la aplicación
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
