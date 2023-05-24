@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
-from .models import Project, Program, Type, Year
+from .models import Project, Program, Type, Year, ChecklistDocuments
 from applications.regioncomuna.models import Region, Comuna
 from django.http import HttpResponseRedirect, JsonResponse
 from .forms import ProjectFilterForm
@@ -115,3 +115,8 @@ def obtener_comunas(request):
     region_id = request.GET.get('region')
     comunas = Comuna.objects.filter(region_id=region_id).values('id', 'nombre')
     return JsonResponse(list(comunas), safe=False)
+
+class CheckListProgramView(ListView):
+    model = Project
+    template_name = 'projects/checklist_program.html'
+    context_object_name = 'project'
