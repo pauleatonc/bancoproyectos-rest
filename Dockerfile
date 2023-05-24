@@ -1,8 +1,31 @@
-FROM python:3.11-slim-bullseye AS build
-WORKDIR /projectbank
-COPY . .
+FROM python:3.11.0
 
-RUN pip install -r requirements.txt
+# Keeps Python from generating .pyc files in the container
+ENV PYTHONDONTWRITEBYTECODE=1
+# Turns off buffering for easier container logging
+ENV PYTHONUNBUFFERED=1
+
+# Configurar el directorio de trabajo en el contenedor
+WORKDIR /app
+
+# Instalar dependencias de sistema necesarias para psycopg2-binary
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+    gcc \
+    postgresql \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+
+# Copiar requirements.txt e instalar dependencias
+COPY requirements.txt /app/
+RUN pip3 install --no-cache-dir -r requirements.txt
+
+# Copiar el código de la aplicación al contenedor
+COPY . /app/
+
 RUN python manage.py makemigrations
 RUN python manage.py migrate
-RUN python manage.py runserver
+
+# Especificar el comando para ejecutar la aplicación
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
