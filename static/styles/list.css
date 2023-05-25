@@ -1,0 +1,46 @@
+.dropdown-sort {
+  display: flex;
+  align-self: end;
+}
+
+.btn-sort {
+  width: 270px;
+  height: 48px;
+  flex-grow: 0;
+  padding: 12px 21px 12px 225px;
+  border: solid 1px rgb(54, 54, 54);
+  background-color: #ffffff;
+}
+
+.card-project {
+  width: 371px;
+  height: 554px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 17px;
+  margin: 26px 35px 35px 33px;
+  padding: 15px;
+  border: solid 2px rgb(63, 135, 208);
+}
+
+.img-project {
+  width: 341px;
+  height: 175px;
+  margin: 0 0 17px;
+}
+
+.btn-more {
+  width: 102px;
+  height: 40px;
+  flex-grow: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 10px;
+  padding: 8px 15px;
+  background-color: rgb(15, 105, 196);
+}
+
