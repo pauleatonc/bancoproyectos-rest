@@ -3,7 +3,7 @@
 {% block content %}
 {%include "modules/navbar.html" %}
 <section class='landing'> 
-  <div class='m-5'>
+  <div class='title-landing'>
   <div class="text-center">
     <div class="line">
       <p class="h1 font-weight-bold">Banco de Proyectos</p>
@@ -21,20 +21,20 @@
       </div>
     </form>
   </section>
-  <div class="contianer-category">
+  <div class="container-category-landing">
     <p class="font-level-2 text-center m-3 font-weight-bold">Categorías principales</p>
-    <div class="category cols-6 row m-5 text-center">
-      <div class="col-2 m-3">
+    <div class="category-landing cols-12 row m-5 text-center">
+      <div class="col-3 m-2">
         <a class="btn btn-outline-primary rounded-circle text-decoration-none font-weight-bold font-level-6" href="{% url 'projects_app:project-list' %}?program=1">PMU</a>
         <br>
         <span>Programa Mejoramiento Urbano</span>
       </div>
-      <div class="col-2 m-3">
+      <div class="col-3 m-2">
         <a class="btn btn-outline-primary  rounded-circle text-decoration-none font-weight-bold font-level-6" href="{% url 'projects_app:project-list' %}?program=2">PMB</a>
         <br>
         <span>Programa Mejoramiento de Barrios</span>
       </div>
-      <div class="col-2 m-3">
+      <div class="col-3 m-2">
         <a class="btn btn-outline-primary rounded-circle btn-md" href="{% url 'projects_app:project-list' %}?show_all=true" >
           <span class="cl cl-list font-level-2 my-1 mx-2"><span/></a>
             <br>

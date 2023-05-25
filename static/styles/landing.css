@@ -3,20 +3,28 @@
   height: auto;
 }
 
-.container-category {
-  width: 989px;
-  height: 485px;
+.title-landing {
+  display: flex;
+  justify-content: center;
+}
+
+.container-category-landing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.category-landing {
+  width: 50%;
+  height: 120px;
   flex-grow: 0;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: flex-start;
-  gap: 32px;
+  gap: 25px;
+  margin: 45px 270px 0 270px;
   padding: 0;
-}
-.category {
-  display: flex;
-  justify-content: center;
 }
 .section-card {
   width: auto;
@@ -222,4 +230,3 @@
   width: 1000px;
   height: 350px;
 }
-
