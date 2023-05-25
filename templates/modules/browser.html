@@ -1,114 +1,90 @@
 {% load static %}
 
-<div class="container mt-4 navbardist">
-  <div class="row d-flex justify-content-center">
-    <div class="col-md-9">
-      <div class="card p-4 mt-3">
-        <h3 class="heading text-center subderecolor">Buscar proyectos según tipo</h3>
-        <div class="row mt-4 g-3 px-4 align-items-end">
-          <div class="col-md-2">
-            <div class="card p-2 d-flex flex-column align-items-center custom-div">
-              <a href="{% url 'projects_app:project-list' %}?show_all=true" class="btn btn-outline">
-                <i class="fa-brands fa-font-awesome browsericon subderecolor"></i>
-                <div class="text-center mg-text">
-                  <span class="mg-text subderecolor">Todos</span>
-                </div>
-              </a>
-            </div>
-          </div>
-          <div class="col-md-10">
-            <form method="GET" action="{% url 'projects_app:project-list' %}" class="row g-3" id="search-form">
-              <div class="col-md-2">
-                <div class="card p-3 d-flex flex-column align-items-center">
-                  <i class="fa-solid fa-tree-city browsericon subderecolor"></i>
-                  <div class="text-center mg-text">
-                    <select name="program" class="mg-text subderecolor dropdownstyle">
-                      <option value="">Programa</option>
-                      {% for program in programs %}
-                      <option value="{{ program.id }}">{{ program.sigla}}</option>
-                      {% endfor %}
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-2">
-                <div class="card p-3 d-flex flex-column align-items-center">
-                  <i class="fa fa-tag browsericon subderecolor"></i>
-                  <div class="text-center mg-text">
-                    <select name="type" class="mg-text subderecolor dropdownstyle">
-                      <option value="">Tipo</option>
-                      {% for type in types %}
-                      <option value="{{ type.id }}">{{ type.name }}</option>
-                      {% endfor %}
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-2">
-                <div class="card p-3 d-flex flex-column align-items-center">
-                  <i class="fa-regular fa-calendar-days browsericon subderecolor"></i>
-                  <div class="text-center mg-text">
-                    <select name="year" class="mg-text subderecolor dropdownstyle">
-                      <option value="">Año</option>
-                      {% for year in years %}
-                      <option value="{{ year.id }}">{{ year.number }}</option>
-                      {% endfor %}
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-2">
-                <div class="card p-3 d-flex flex-column align-items-center">
-                  <i class="fas fa-mountain  browsericon subderecolor"></i>
-                  <div class="text-center mg-text">
-                    <select name="region" class="mg-text subderecolor dropdownstyle" id="region-selector">
-                      <option value="">Región</option>
-                      {% for region in regiones %}
-                      <option value='{{region.id}}'>{{region.nombre}}</option>
-                      {% endfor %}
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-2">
-                <div class="card p-3 d-flex flex-column align-items-center">
-                  <i class="fas fa-city  browsericon subderecolor"></i>
-                  <div class="text-center mg-text">
-                    <select name="comuna" class="mg-text subderecolor dropdownstyle" id="comuna-selector">
-                      <option value="">Comuna</option>
-                      {% for comuna in comunas %}
-                      <option value="{{ comuna.id }}">{{ comuna.nombre }}</option>
-                      {% endfor %}
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-2">
-                <div class="card p-3 d-flex flex-column align-items-center">
-                  <button class="input-group-text border-0 text-center subderecolor p-3 m-1" id="search-addon" type="submit">
-                  Filtrar
-                  </button>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-        <div class="row mt-4 g-3 px-4">
-          <div class="col-md-12">
-            <h5 class="heading text-center subderecolor p-3">Buscar proyectos por otras características</h5>
-          </div>
-          <div class="col-md-12">
-            <div class="container clearfix">
-              <form method="GET" action="{% url 'projects_app:project-list' %}" class="input-group rounded" id="search-form">
-                <input type="text" name="search" class="form-control rounded" placeholder="Buscar" aria-label="Buscar" aria-describedby="search-addon" />
-                <button class="input-group-text border-0" id="search-addon">
-                  <i class="fas fa-search subderecolor"></i>
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
+
+<div class="filter">
+  <div class="filter-head">
+    <p class="font-level-2 my-1 ">Filtrar</p>
+    <button class="btn-clean-filter ">Limpiar filtro <i class="fa fa-trash"></i></button>
+  </div>
+  <div class="filter-program">
+    <div class="text-filter-program">
+      <p class="font-level-6 my-1">¿En qué programa se está el proyecto que buscas?</p>
+      <p class="font-level-7 my-1">Puedes elegir más de uno.</p>
+    </div>
+    <div class="category cols-12 row text-center">
+      <div class="col-md">
+        <a class="btn btn-outline-primary rounded-circle text-decoration-none font-weight-bold font-level-6"
+          href="{% url 'projects_app:project-list' %}?program=1">PMU</a>
+        <br>
+        <span class="font-level-7 font-weight-bold">Programa Mejoramiento Urbano</span>
+      </div>
+      <div class="col-md">
+        <a class="btn btn-outline-primary  rounded-circle text-decoration-none font-weight-bold font-level-6"
+          href="{% url 'projects_app:project-list' %}?program=2">PMB</a>
+        <br>
+        <span class="font-level-7 font-weight-bold">Programa Mejoramiento de Barrios</span>
       </div>
     </div>
+  </div>
+  <div class="filter-location">
+    <div class="form-group">
+      <label class="font-level-6 my-1">¿En qué región?</label>
+      <select class="form-control">
+        <option>Region</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label class="font-level-6 my-1">¿En que comuna?</label>
+      <select class="form-control">
+        <option>Comuna</option>
+      </select>
+    </div>
+  </div>
+  <div class="filter-type">
+    <label class="font-level-6 my-2">¿Qué tipo de proyecto es?</label>
+    <div class="cols-12 row text-center my-3">
+      <div class="col-6 my-1">
+        <a class="btn btn-outline-primary rounded-circle btn-md"
+          href="{% url 'projects_app:project-list' %}?show_all=true">
+          <span class="cl cl-list font-level-2 my-1 mx-2"><span /></a>
+        <br>
+        <span class="font-level-7 font-weight-bold">Plazas y áreas verdes</span>
+      </div>
+      <div class="col-6 my-2">
+        <a class="btn btn-outline-primary rounded-circle btn-md"
+          href="{% url 'projects_app:project-list' %}?show_all=true">
+          <span class="cl cl-list font-level-2 my-1 mx-2"><span /></a>
+        <br>
+        <span class="font-level-7 font-weight-bold">Infraestructura deportiva</span>
+      </div>
+      <div class="col-6 my-2">
+        <a class="btn btn-outline-primary rounded-circle btn-md"
+          href="{% url 'projects_app:project-list' %}?show_all=true">
+          <span class="cl cl-list font-level-2 my-1 mx-2"><span /></a>
+        <br>
+        <span class="font-level-7 font-weight-bold">Centros Salud</span>
+      </div>
+      <div class="col-6 my-2">
+        <a class="btn btn-outline-primary rounded-circle btn-md"
+          href="{% url 'projects_app:project-list' %}?show_all=true">
+          <span class="cl cl-list font-level-2 my-1 mx-2"><span /></a>
+        <br>
+        <span class="font-level-7 font-weight-bold">Veredas y ciclovías</span>
+      </div>
+    </div>
+  </div>
+  <div class="filter-years my-3">
+    <div>
+      <label class="font-level-6 my-3">¿Qué años de construcción quieres ver?</label>
+    </div>
+    <div class="form-group">
+      <div class="custom-control custom-checkbox">
+        <input class="custom-control-input" id="customCheckExample" type="checkbox" />
+        <label class="custom-control-label" for="customCheckExample">2018</label>
+      </div>
+    </div>
+  </div>
+  <div>
+    <button class="btn-filter my-5">Mostrar resultados <i class="fa fa-check" aria-hidden="true"></i></button>
   </div>
 </div>
