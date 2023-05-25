@@ -1,56 +1,114 @@
 {% extends "projects/base_projects.html" %}
-
 {% load static %}
-
-{% block content %}
-
+{% block content%}
 {% include "modules/navbar.html" %}
+<section class="projects-search">
+    <div class="m-5 ">
+        <div class="title d-flex justify-content-center">
+            <div class="line">
+                <p class="h1 font-weight-bold ">Banco de Proyectos</p>
+            </div>
+        </div>
+        <nav aria-label="breadcrumb">
+            <ol class=" breadcrumb ml-5 pl-3">
+                <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    Banco de proyectos
+                </li>
+            </ol>
+        </nav>
+    </div>
+    <section class="m-5">
+        <div class="text-center m-3 h-4 text-muted">
+            Acceder al buscador de proyectos escribiendo palabra clave
+        </div>
+        <form class="search mx-auto" method="GET" action="{% url 'projects_app:project-list' %}" id="search-form">
+            <input class="form-control" type="text" name="search" placeholder="Buscar proyecto"
+                aria-label="Buscar proyectos" aria-describedby="searchAction" />
+            <div class="search-action">
+                <button class="btn btn-outline-search" id="searchAction" type="submit">
+                    <i class="icon cl cl-search"></i>
+                </button>
+            </div>
+        </form>
+    </section>
+    <section class="projects">
+        <div class="container-projects">
+            <div class="cols-12 row mx-0">
+                <div class="col-4">
+                    <!-- Agrega el formulario de filtro -->
+                    {% include "modules/browser.html" %}
+                </div>
 
-<!-- Agrega el formulario de filtro -->
-{% include "modules/browser.html" %}
-
-<div class="album py-5 bg-light">
-    <div class="container">
-        <div id="projects-container">
-            {% if projects %}
-            <p class="text-center">{{ projects|length }} resultados</p>
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                {% for project in projects %}
-                <!-- Card Element Init. -->
-                <div class="col-md-3">
-                    {% if project.id %}
-                    <a type="button" class="btn btn-sm" href="{% url 'projects_app:project-detail' project.id %}">
-                    {% else %}
-                    <a type="button" class="btn btn-sm" href="#">
-                    {% endif %}
-                        <div class="card shadow-sm cardsize">
-                            <img src="{{ project.portacard.url }}" class="bd-placeholder-img card-img-top" role="img"
-                                aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                            <title>Placeholder</title>
-                            </img>
-                            <div class="cardpadding">
-                                <p class="blog-post subderecolor footertitle cardtitlesize">{{ project.name }}</p>
-                                <p class="blog-post truncate2">Descripción: {{ project.description }}</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group d-flex justify-content-center">
-                                        <div class="btn card cardbutontext btn-outline-success">{{ project.program }}</div>
-                                        <div class="btn card cardbutontext btn-outline-secondary truncate">{{ project.type }}</div>
-                                        <div class="btn card cardbutontext btn-outline-info">{{ project.year }}</div>
+                <div class="col-8">
+                    <div class="dropdown-sort d-flex justify-content-end">
+                        <button class="btn-sort dropdown-toggle " type="button" data-toggle="dropdown"
+                            aria-expanded="false">
+                            Ordenar por
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Action</a>
+                        </div>
+                    </div>
+                    <div class="projects-list">
+                        <div class="cols-12 row">
+                            {% for project in projects %}
+                            <div class="col-6 ">
+                                <div class="card-project">
+                                    <div class="img-project">
+                                        <img src="{{ project.portacard.url }}" alt="img-miniatura" />
                                     </div>
+                                    <div class="location-project d-flex justify-content-between w-100">
+                                        <p class="mr-5 font-level-8 ">Region:{{ project.comuna.region }}</p>
+                                        <p class="ml-5 font-level-8">Comuna:{{ project.comuna }}</p>
+                                    </div>
+                                    <div class="body-project ">
+                                        <p class="h2">{{ project.name }}</p>
+                                        <p class="description-project font-base text-sm-left">{{ project.description }}
+                                        </p>
+                                        <div class="tags-project row  mt-1">
+                                            <div class="col-auto pb-3">
+                                                <div class="badge border border-primary font-level-7">
+                                                    {{project.program.sigla}}</div>
+                                            </div>
+                                            <div class="col-auto pb-3">
+                                                <div class="badge border  border-primary font-level-7">
+                                                    {{project.year.number}}</div>
+                                            </div>
+                                            <div class="col-auto pb-3">
+                                                <div class="badge border  border-primary font-level-7 ">
+                                                    {{project.type.name}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="btn-more">Ver más ></button>
                                 </div>
                             </div>
+                            {% endfor %}
                         </div>
-                    </a>
+                    </div>
+                    <nav
+                        class="pagination-container my-5 flex-column justify-content-start flex-sm-row a11y-fonts-flex-column a11y-fonts-flex-lg-row">
+                        {% if projects %}
+                        <p class="text-start">{{ projects|length }} resultados de {{ projects|length }} proyectos</p>
+                        <ul class="pagination mx-2">
+                            <li class="page-item border-0"">
+                                <div class=" page-link disabled">
+                                < </div>
+                            </li>
+                            <li class="page-item active border-0""><a class=" page-link" href="#">1</a></li>
+                            <li class="page-item d-none d-ss-block a11y-fonts-d-none a11y-fonts-d-sm-block"><a
+                                    class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">></a></li>
+                        </ul>
+                    </nav>
                 </div>
-                <!-- Card Element End. -->
-                {% endfor %}
+                {% else %}
+                <p class="text-center">No hay proyectos que coincidan con la búsqueda.</p>
+                {% endif %}
             </div>
-            {% else %}
-            <p class="text-center">No hay proyectos que coincidan con la búsqueda.</p>
-            {% endif %}
         </div>
-    </div>
-</div>
-
-{% include "modules/footer.html" %}
-{% endblock content %}
+    </section>
+    {% include "modules/footer.html" %}
+    {% endblock content %}

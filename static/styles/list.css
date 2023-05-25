@@ -1,0 +1,77 @@
+
+.title {
+  width: 100%;
+}
+.line {
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dropdown-sort {
+  display: flex;
+  align-self: end;
+  height: 50px;
+  margin: 10px 20px 20px 10px;
+}
+
+.btn-sort {
+  width: auto;
+  height: 48px;
+  flex-grow: 0;
+  padding: 12px 21px 12px 21px;
+  border: solid 1px rgb(54, 54, 54);
+  background-color: #ffffff;
+}
+.project-list {
+  width: auto;
+}
+
+.card-project {
+  width: 371px;
+  height: 554px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 10px;
+  margin: 10px 35px 35px 10px;
+  padding: 15px;
+  border: solid 2px rgb(63, 135, 208);
+}
+
+.img-project {
+  width: 341px;
+  height: 175px;
+  margin: 0 0 17px;
+}
+
+.description-project {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* Número de líneas que deseas mostrar */
+  -webkit-box-orient: vertical;
+  white-space: normal;
+}
+
+.badge {
+  color: #0f69c4;
+  font-size: 14px;
+}
+
+.btn-more {
+  width: 110px;
+  height: 40px;
+  flex-grow: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: flex-end;
+  gap: 10px;
+  padding: 8px 15px;
+  background-color: rgb(15, 105, 196);
+  color: #ffffff;
+}
+
