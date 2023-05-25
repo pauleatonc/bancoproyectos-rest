@@ -1,167 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-    {% include 'modules/head.html' %}
+{% extends "projects/base_projects.html" %}
 
-    <body>
-        {% include 'modules/navbar.html' %}
+{% load static %}
 
-        <main class="container">          
-          <p class=" fst-italic border-bottom navbardisttop ">
-            <a href="{% url 'projects_app:project-list' %}"  type="button" class="btn footertitle subderecolor">
-              Volver</a>/ Tipo de Proyecto / {{ project.type }} / {{ project.name }} .</p> 
-          <!-- Título  -->
-            <div class="col-md-12 ">
-              <h1 class="portadatext" >{{ project.name }}</h1>
-            </div>         
-          <!-- Articulo Init -->
-          <div class="row g-5">            
-            <div class="col-md-8">
-              <!-- Carousel Init -->                     
-                <div class="gallery-slider_wrapper col-md-6">
-                  <div class="single-gallery-carousel-content-box owl-carousel owl-theme">
-                    {% for projectimage in projectimages %}
-                      <a class="item" href="{{ projectimage.image.url }}">
-                          <img class= "carouselhight" src="{{ projectimage.imagecarousel.url }}" alt="Awesome Image"/>
-                      </a>
-                      {% endfor %} 
-                  </div>          
-                  <div style="margin:10px 25px 0 25px;">
-                      <div class="single-gallery-carousel-thumbnail-box owl-carousel owl-theme">
-                        {% for projectimage in projectimages %}
-                          <div class="item" href="{{ projectimage.imagethumbnail.url }}">
-                              <img src="{{ projectimage.imagethumbnail.url }}" alt="Awesome Image"/>
-                          </div>    
-                        {% endfor %}               
-                      </div>
-                  </div>
-                </div>
-               <!-- Carousel end -->
-              <h6 class="pb-4 mb-4 fst-italic border-bottom">Imágenes de proyecto</h6>        
-              <article class="blog-post elementsdist">    
-                <p><span class="blog-post-meta articletitle subderecolor">{{ project.name }}</span></p>            
-                <p><span class="blog-post-meta fw-bold">ID SUBDERE:</span> {{ project.id_subdere }} </p>
-                <p><span class="blog-post-meta fw-bold">Programa:</span> {{ project.program }} ( {{ project.program.name }} )</p>
-                <p><span class="blog-post-meta fw-bold">Categoria:</span> {{ project.type }}</p>
-                <p><span class="blog-post-meta fw-bold">Región:</span> {{ project.comuna.region }}</p>
-                <p><span class="blog-post-meta fw-bold">comuna:</span> {{ project.comuna }}</p>
-                <p><span class="blog-post-meta fw-bold">Año:</span> {{ project.year }}</p> 
-                </br>
-                <h5 class="blog-post-title fw-bold">Descripción</h5>
-                <p>{{ project.description|linebreaks }}</p>
-              </article>   
+{% block content %}
 
-             <!-- Foto antes y después -->
-             {% if project.afterimageresize and project.beforeimage %}
-             <div class='col-md-6 elementsdist'>
-                <div class='beforeafter col-md-6'>
-                  {% load static %} 
-                  <div class='img ' style="background-image: url('{% static project.afterimageresize.url %}')"></div>
-                  <div class='img foreground-img' style="background-image: url('{% static project.beforeimageresize.url %}')"></div>
-                  <input type="range" min="1" max="100" value="50" class="slider" name='slider' id="slider">
-                  <div class='slider-button'></div>
-                </div>      
-             </div>      
-            {% endif %} 
+{% include "modules/navbar.html" %}
 
-             <!-- Video -->
-             {% if project.video %}
-             <div class='col-md-6 align-items-center elementsdist border-top'>
-              <iframe width="600 px" height="500 px" class="embed-responsive-item elementsdist" src="{{ project.video }} " allowfullscreen>
-              </iframe>
-             </div>      
-             {% endif %} 
+<section class='list_projects'>
+  <div class='m-5'>
+    <div class="text-center">
+      <div class="line">
+        <p class="h1 font-weight-bold">Banco de Proyectos</p>
+      </div>
+    </div>
+  </div>
 
-              <!-- Descarga Archivos -->
-              <div class="py-5" id="icon-grid">
-                <h5 class="pb-2 fw-bold" data-bs-toggle="collapse" href="#collapseAp" role="button" aria-expanded="false" aria-controls="collapseAp">Archivos de proyecto <i class="fa-solid fa-angle-down"></i></h5>
-                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4 py-5 collapse" id="collapseAp">
-                  {% for projectfile in projectfiles %}
-                  <div class="col d-flex align-items-start">
-                    <i class="fa-solid fa-file-pdf icondocument subderecolor"></i>
-                    <div>
-                      {% if user.is_authenticated %}
-                        <h6 class="fw-bold "><a href="{{ projectfile.file.url }}" target="_blank" >{{ projectfile.name }}</a></h6>
-                      {% else %}
-                        <li class="text-primary"><a href="{% url 'users_app:user-login' %}?next={{ request.path }}">{{ projectfile.name }}</a></li>
-                      {% endif %}
-                      <p class="fw-normal text-secondary" >{{ projectfile.file.name }}</p>
-                      <p class="fw-normal text-secondary">{{ projectfile.file.size|filesizeformat }}</p>
-                    </div>
-                  </div>
-                  {% endfor %}                         
-                </div>
-              </div>              
-            </div>  
+   <div class="navegation justify-content-start">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a class="breadcrumb-back" href="/">Inicio</a></li>
+        <li class="breadcrumb-item"><a class="breadcrumb-instance" href="/list">Banco de Proyectos</a></li>
+      </ol>
+    </nav>
+  </div>
 
-            <!-- Columna Lateral -->
-            <!-- descargas init -->
-            <div class="col-md-4">
-              <!-- Card Element Init. -->
-              {% if projectlist %}                  
-                <div class="card rounded p-4 mb-3" >
-                  <h5 class="fst-italic fw-bold elementsdist">Proyectos relacionados</h5> 
-                  {% for projectlist in projectlist %}                      
-                  <div class="float-right elementsdist align-middle">
-                    <div class="row align-middle">
-                      <div class="col-sm-3 align-middle">
-                        <img class="d-block w-100 rounded" src="{{ projectlist.portacard.url }}" alt="">
-                      </div>
-                      <div class="col-sm-8 align-middle">
-                        <div class="card-block cardverticalalign">
-                          <p class="smalcardtext"><a type="button" class=" " href="{% url 'projects_app:project-detail' projectlist.id %}">{{ projectlist.name }}</a></p></br>
-                          <div class="align-middle">
-                            <p class="smalcardtext">{{ projectlist.program }}</p><span class="fw-bold">    |    </span>
-                            <p class="smalcardtext">{{ projectlist.type }}</p>
-                          </div>                      
-                        </div>
-                      </div>           
-                    </div>
-                  </div>              
-                  {% endfor %}  
-                </div>
-                {% endif %} 
 
-              <!-- Card Element End. -->
-              <div class="bg-light rounded" style="top: 2rem;">
-                <div class="p-4 mb-3 bg-light rounded">
-                  <h5 class="fst-italic ">Zona de Descargas</h5>
-                </div>
-                <div class="p-4">
-                  <h6 class="fst-italic fw-bold ">Documentos de Proyecto</h6>
-                  <ol class="list-unstyled">
-                    {% if user.is_authenticated %}
-                        <li class="text-primary"><a href="{{ project.eett.url }}" target="_blank" >EETT</a></li>
-                        <li class="text-primary"><a href="{{ project.presupuesto.url }}" target="_blank" >Presupuesto</a></li>
-                        <li>Checklist {{ project.program }}</li>
-                    {% else %}
-                        <li class="text-primary"><a href="{% url 'users_app:user-login' %}?next={{ request.path }}">EETT</a></li>
-                        <li class="text-primary"><a href="{% url 'users_app:user-login' %}?next={{ request.path }}">Presupuesto</a></li>
-                        <li>Checklist {{ project.program }}</li>
-                    {% endif %}
-                  </ol>
-                </div>
-                <div class="p-4">
-                  <h6 class="fst-italic fw-bold ">Guías de Diseño</h6>
-                  <ol class="list-unstyled mb-0">
-                    {% for guide in guides %}
-                    {% if user.is_authenticated %}
-                        <li class="text-primary"><a href="{{ guide.guide.url }}" target="_blank" >{{ guide }}</a></li>
-                    {% else %}
-                        <li class="text-primary"><a href="{% url 'users_app:user-login' %}?next={{ request.path }}">{{ guide }}</a></li>
-                    {% endif %}
-                    {% endfor %}  
-                  </ol>
-                </div>
-              </div>
-              
-            </div>
-            <!-- Columna de descargas end -->
-          </div>        
-        </main>
 
-        {% include 'modules/footer.html' %}
-        {% load static %}
-        <script src="{% static 'js\carousel.js' %}" type="text/javascript"></script>
-        <script src="{% static 'js\beforeafter.js' %}" type="text/javascript"></script>           
-    </body>
-</html>
+</section>
+
+{% include "modules/footer.html" %}
+{% endblock content %}

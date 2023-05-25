@@ -27,16 +27,12 @@ class ProjectsManager(models.Manager):
 
         return projects
 
-    def search_projects(self, keywords):
-        projects = self.filter(public=True)
-
-        if keywords:
-            projects = projects.filter(
-                Q(name__icontains=keywords) |
-                Q(description__icontains=keywords)
-            )
-
-        return projects
+    def search_projects(self, program, type):
+        return self.filter(
+            program__name = program,
+            type__name = type,
+            public = True
+        ).order_by('year')
 
     def index_projects(self):
         return self.filter(
@@ -51,4 +47,6 @@ class ProjectsManager(models.Manager):
         ).exclude(
             id=project.id
         ).order_by('year')[:5]
+
+
         

@@ -1,21 +1,15 @@
 from django.shortcuts import render
-from applications.projects.models import Project
+from applications.projects.models import Project, Program, Type
+from applications.projects.views import ProjectsListView
 
 from django.views.generic import (
+    View,
     TemplateView,
 )
 
-class HomePageView(TemplateView):
+class HomePageView(ProjectsListView):
     template_name = 'home/index.html'
-
-class NavBarView(TemplateView):
-    template_name = 'modules/navbar.html'
     model = Project
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
 
-        # Contexto para barra búsqueda
-        context['search'] = Project.objects.search_projects(self.object)
 
-        return context
