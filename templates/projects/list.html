@@ -2,15 +2,15 @@
 {% load static %}
 {% block content%}
 {% include "modules/navbar.html" %}
-<section>
-    <div class="m-5">
-        <div class="text-center">
+<section class="projects-search">
+    <div class="m-5 ">
+        <div class="title d-flex justify-content-center">
             <div class="line">
-                <p class="h1 font-weight-bold">Banco de Proyectos</p>
+                <p class="h1 font-weight-bold ">Banco de Proyectos</p>
             </div>
         </div>
         <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
+            <ol class=" breadcrumb ml-5 pl-3">
                 <li class="breadcrumb-item"><a href="#">Inicio</a></li>
                 <li class="breadcrumb-item active" aria-current="page">
                     Banco de proyectos
@@ -32,67 +32,81 @@
             </div>
         </form>
     </section>
-    <section>
+    <section class="projects">
         <div class="container-projects">
-            <div class="row">
-                <div class="col-md">
+            <div class="cols-12 row mx-0">
+                <div class="col-4">
                     <!-- Agrega el formulario de filtro -->
                     {% include "modules/browser.html" %}
                 </div>
 
-                <div class=" col-md">
-                    <div class="dropdown-sort">
-                        <button class="btn-sort dropdown-toggle" type="button" data-toggle="dropdown"
+                <div class="col-8">
+                    <div class="dropdown-sort d-flex justify-content-end">
+                        <button class="btn-sort dropdown-toggle " type="button" data-toggle="dropdown"
                             aria-expanded="false">
                             Ordenar por
                         </button>
                         <div class="dropdown-menu">
                             <a class="dropdown-item" href="#">Action</a>
-                            <a class="dropdown-item" href="#">Another action</a>
-                            <a class="dropdown-item" href="#">Something else here</a>
                         </div>
                     </div>
                     <div class="projects-list">
-                        {% if projects %}
-                        <p class="text-center">{{ projects|length }} resultados</p>
                         <div class="cols-12 row">
                             {% for project in projects %}
-                            <div class="col-md-6 ">
-                                <div class="card-project card-news with-lead">
+                            <div class="col-6 ">
+                                <div class="card-project">
                                     <div class="img-project">
                                         <img src="{{ project.portacard.url }}" alt="img-miniatura" />
                                     </div>
-                                    <div class="location-project">
-                                        <p>Region:</p>
-                                        <p>Comuna:</p>
+                                    <div class="location-project d-flex justify-content-between w-100">
+                                        <p class="mr-5 font-level-8 ">Region:{{ project.comuna.region }}</p>
+                                        <p class="ml-5 font-level-8">Comuna:{{ project.comuna }}</p>
                                     </div>
-                                    <div class="body-project">
-                                        <h3>{{ project.name }}</h3>
-                                        <p>{{ project.description }}</p>
-                                        <div class="tags-project row ">
+                                    <div class="body-project ">
+                                        <p class="h2">{{ project.name }}</p>
+                                        <p class="description-project font-base text-sm-left">{{ project.description }}
+                                        </p>
+                                        <div class="tags-project row  mt-1">
                                             <div class="col-auto pb-3">
-                                                <div class="badge border border-primary font-level-7">tag</div>
+                                                <div class="badge border border-primary font-level-7">
+                                                    {{project.program.sigla}}</div>
                                             </div>
                                             <div class="col-auto pb-3">
-                                                <div class="badge border  border-primary font-level-7">tag</div>
+                                                <div class="badge border  border-primary font-level-7">
+                                                    {{project.year.number}}</div>
                                             </div>
                                             <div class="col-auto pb-3">
-                                                <div class="badge border  border-primary font-level-7">tag</div>
+                                                <div class="badge border  border-primary font-level-7 ">
+                                                    {{project.type.name}}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="action-project">
-                                        <button class="btn-more">Ver más ></button>
-                                    </div>
+                                    <button class="btn-more">Ver más ></button>
                                 </div>
                             </div>
                             {% endfor %}
                         </div>
-                        {% else %}
-                        <p class="text-center">No hay proyectos que coincidan con la búsqueda.</p>
-                        {% endif %}
                     </div>
+                    <nav
+                        class="pagination-container my-5 flex-column justify-content-start flex-sm-row a11y-fonts-flex-column a11y-fonts-flex-lg-row">
+                        {% if projects %}
+                        <p class="text-start">{{ projects|length }} resultados de {{ projects|length }} proyectos</p>
+                        <ul class="pagination mx-2">
+                            <li class="page-item border-0"">
+                                <div class=" page-link disabled">
+                                < </div>
+                            </li>
+                            <li class="page-item active border-0""><a class=" page-link" href="#">1</a></li>
+                            <li class="page-item d-none d-ss-block a11y-fonts-d-none a11y-fonts-d-sm-block"><a
+                                    class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">></a></li>
+                        </ul>
+                    </nav>
                 </div>
+                {% else %}
+                <p class="text-center">No hay proyectos que coincidan con la búsqueda.</p>
+                {% endif %}
             </div>
         </div>
     </section>
