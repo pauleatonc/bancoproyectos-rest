@@ -82,7 +82,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <button class="btn-more">Ver más ></button>
+                                    <a class="btn-more" href="{% url 'projects_app:project-detail' project.id %}">Ver
+                                        más ></a>
                                 </div>
                             </div>
                             {% endfor %}
