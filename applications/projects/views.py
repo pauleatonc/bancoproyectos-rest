@@ -18,30 +18,14 @@ class ProjectsListView(ListView):
         queryset = super().get_queryset()
 
         # Obtener los parámetros del filtro de búsqueda
-        program = self.request.GET.get('program')
-        region = self.request.GET.get('region')
-        comuna = self.request.GET.get('comuna')
-        type = self.request.GET.get('type')
-        year = self.request.GET.get('year')
+        program = self.request.GET.getlist('program')
+        region = self.request.GET.getlist('region')
+        comuna = self.request.GET.getlist('comuna')
+        type = self.request.GET.getlist('type')
+        year = self.request.GET.getlist('year')
 
-        if program or region or comuna or type or year:
-            # Crear una lista vacía para almacenar las condiciones de filtro
-            conditions = []
+        queryset = Project.objects.browser_search_projects(program, region, comuna, type, year)
 
-            # Agregar las condiciones de filtro según los parámetros enviados
-            if program:
-                conditions.append(Q(program=program))
-            if region:
-                conditions.append(Q(comuna__region=region))
-            if comuna:
-                conditions.append(Q(comuna=comuna))
-            if type:
-                conditions.append(Q(type=type))
-            if year:
-                conditions.append(Q(year=year))
-
-            # Unir las condiciones con operador OR para obtener los resultados que cumplan al menos una de las condiciones
-            queryset = queryset.filter(*conditions)
 
         # Ordenar los resultados según los campos elegidos
         sort_by = self.request.GET.get('sort_by')

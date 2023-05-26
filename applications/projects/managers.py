@@ -5,20 +5,24 @@ class ProjectsManager(models.Manager):
     def browser_search_projects(self, program=None, region=None, comuna=None, type=None, year=None):
         queryset = self.get_queryset()
 
+        # Crear una lista vacía para almacenar las condiciones de filtro
+        conditions = []
+
+        # Agregar las condiciones de filtro según los parámetros enviados
         if program:
-            queryset = queryset.filter(program=program)
-
+            conditions.append(Q(program__in=program))
         if region:
-            queryset = queryset.filter(comuna__region=region)
-
+            conditions.append(Q(comuna__region__in=region))
         if comuna:
-            queryset = queryset.filter(comuna=comuna)
-
+            conditions.append(Q(comuna__in=comuna))
         if type:
-            queryset = queryset.filter(type=type)
-
+            conditions.append(Q(type=type))
         if year:
-            queryset = queryset.filter(year=year)
+            conditions.append(Q(year=year))
+
+        # Unir las condiciones con operador OR para obtener los resultados que cumplan al menos una de las condiciones
+        if conditions:
+            queryset = queryset.filter(*conditions)
 
         return queryset
 
