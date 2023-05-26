@@ -1,10 +1,10 @@
 {% load static %}
 
-
+<form method="get">
 <div class="filter">
   <div class="filter-head">
     <p class="font-level-2 my-1 ">Filtrar</p>
-    <button class="btn-clean-filter ">Limpiar filtro <i class="fa fa-trash"></i></button>
+    <a class="btn-clean-filter " href="{% url 'projects_app:project-list' %}?show_all=true">Limpiar filtro <i class="fa fa-trash"></i></a>
   </div>
   <div class="filter-program">
     <div class="text-filter-program">
@@ -29,14 +29,18 @@
   <div class="filter-location">
     <div class="form-group">
       <label class="font-level-6 my-1">¿En qué región?</label>
-      <select class="form-control">
-        <option>Region</option>
+      <select class="form-control" name="region">
+        {% for region in projects %}
+          <option value="{{region.comuna.region.id}}">{{ region.comuna.region }}</option>
+        {% endfor %}
       </select>
     </div>
     <div class="form-group">
       <label class="font-level-6 my-1">¿En que comuna?</label>
-      <select class="form-control">
-        <option>Comuna</option>
+      <select class="form-control" name="comuna">
+        {% for comuna in projects %}
+          <option value="{{comuna.comuna.id}}">{{ comuna.comuna }}</option>
+        {% endfor %}
       </select>
     </div>
   </div>
@@ -85,6 +89,7 @@
     </div>
   </div>
   <div>
-    <button class="btn-filter my-5">Mostrar resultados <i class="fa fa-check" aria-hidden="true"></i></button>
+    <button class="btn-filter my-5" type="submit" name="show_results">Mostrar resultados <i class="fa fa-check" aria-hidden="true"></i></button>
   </div>
 </div>
+</form>

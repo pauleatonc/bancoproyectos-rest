@@ -37,11 +37,11 @@
         <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" id="navbarLinesLightExampleDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Banco de Proyectos</a>
           <div class="dropdown-menu" aria-labelledby="navbarLinesLightExampleDropdown">
             {% for program in programs %}
-              <a class="dropdown-item" href="?program={{ program.name }}">{{ program.name }}</a>
+              <a class="dropdown-item" href="?program={{ program.id }}">{{ program.name }}</a>
             {% endfor %}
             <div class="dropdown-divider"></div>
             {% for type in types %}
-              <a class="dropdown-item" href="?type={{ type.name }}">{{ type.name }}</a>
+              <a class="dropdown-item" href="?type={{ type.id }}">{{ type.name }}</a>
             {% endfor %}
           </div>
         </li>

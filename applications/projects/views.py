@@ -8,85 +8,60 @@ from django.db.models import Q
 from .managers import ProjectsManager
 
 
-def get_index_data():
-    programs = Program.objects.all()
-    types = Type.objects.all()
-    years = Year.objects.all()
-    regiones = Region.objects.all()
-    comunas = Comuna.objects.all()
-
-    data = {
-        'programs': programs,
-        'types': types,
-        'years': years,
-        'regiones': regiones,
-        'comunas': comunas,
-    }
-
-    return data
-
-
 class ProjectsListView(ListView):
     model = Project
     template_name = 'projects/list.html'
     context_object_name = 'projects'
-    paginate_by = 15
+    paginate_by = 6
 
     def get_queryset(self):
-        form = ProjectFilterForm(self.request.GET)
-        if form.is_valid():
-            program = form.cleaned_data.get('program')
-            programs=[program] if program else []
-            type = form.cleaned_data.get('type')
-            types = [type] if type else []
-            year = form.cleaned_data.get('year')
-            years = [year] if year else []
-            region = form.cleaned_data.get('region')
-            regiones = [region] if region else []
-            comuna = form.cleaned_data.get('comuna')
-            comunas = [comuna] if comuna else []
-            search = form.cleaned_data.get('search')
-            show_all = form.cleaned_data.get('show_all')
+        queryset = super().get_queryset()
 
-            projects = Project.objects.filter(public=True)
+        # Obtener los parámetros del filtro de búsqueda
+        program = self.request.GET.get('program')
+        region = self.request.GET.get('region')
+        comuna = self.request.GET.get('comuna')
+        type = self.request.GET.get('type')
+        year = self.request.GET.get('year')
 
-            if programs:
-                projects = projects.filter(program__in=programs)
-            if types:
-                projects = projects.filter(type__in=types)
-            if years:
-                projects = projects.filter(year__in=years)
-            if regiones:
-                projects = projects.filter(region__in=regiones)
-            if comunas:
-                projects = projects.filter(comuna__in=comunas)
+        if program or region or comuna or type or year:
+            # Crear una lista vacía para almacenar las condiciones de filtro
+            conditions = []
 
-            if search:
-                projects = projects.filter(
-                    Q(name__icontains=search) | Q(description__icontains=search)
-                )
+            # Agregar las condiciones de filtro según los parámetros enviados
+            if program:
+                conditions.append(Q(program=program))
+            if region:
+                conditions.append(Q(comuna__region=region))
+            if comuna:
+                conditions.append(Q(comuna=comuna))
+            if type:
+                conditions.append(Q(type=type))
+            if year:
+                conditions.append(Q(year=year))
 
-            if show_all:
-                projects = projects.order_by('year')
-            else:
-                projects = projects.order_by('year')[:self.paginate_by]
+            # Unir las condiciones con operador OR para obtener los resultados que cumplan al menos una de las condiciones
+            queryset = queryset.filter(*conditions)
 
-            return projects
-        else:
-            return Project.objects.none()
-    
-    def get(self, request, *args, **kwargs):
-        show_all = request.GET.get('show_all')
+        # Ordenar los resultados según los campos elegidos
+        sort_by = self.request.GET.get('sort_by')
+        if sort_by == 'created':
+            queryset = queryset.order_by('-id')
+        elif sort_by == 'year':
+            queryset = queryset.order_by('year')
 
-        if show_all:
-            return HttpResponseRedirect(request.path)
-
-        return super().get(request, *args, **kwargs)
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context.update(get_index_data())
-        context['filter_form'] = ProjectFilterForm(self.request.GET)
+        context['programs'] = Program.objects.all()
+        context['types'] = Type.objects.all()
+        # Pasar los parámetros del filtro a la plantilla
+        context['filter_program'] = self.request.GET.get('program')
+        context['filter_region'] = self.request.GET.get('region')
+        context['filter_comuna'] = self.request.GET.get('comuna')
+        context['filter_type'] = self.request.GET.get('type')
+        context['filter_year'] = self.request.GET.get('year')
         return context
 
 
@@ -110,11 +85,6 @@ class ProjectDetailView(DetailView):
 
         return context
 
-
-def obtener_comunas(request):
-    region_id = request.GET.get('region')
-    comunas = Comuna.objects.filter(region_id=region_id).values('id', 'nombre')
-    return JsonResponse(list(comunas), safe=False)
 
 class CheckListProgramView(ListView):
     model = Project

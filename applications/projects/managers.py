@@ -2,37 +2,25 @@ from django.db import models
 from django.db.models import Q
 
 class ProjectsManager(models.Manager):
-    def filter_projects(self, programs=None, types=None, years=None, regiones=None, comunas=None, keywords=None, program_name=None, type_name=None):
-        projects = self.filter(public=True)
+    def browser_search_projects(self, program=None, region=None, comuna=None, type=None, year=None):
+        queryset = self.get_queryset()
 
-        if programs:
-            projects = projects.filter(program__in=programs)
-        if types:
-            projects = projects.filter(type__in=types)
-        if years:
-            projects = projects.filter(year__in=years)
-        if regiones:
-            projects = projects.filter(region__in=regiones)
-        if comunas:
-            projects = projects.filter(comuna__in=comunas)
+        if program:
+            queryset = queryset.filter(program=program)
 
-        if program_name and type_name:
-            projects = projects.filter(program__name=program_name, type__name=type_name)
+        if region:
+            queryset = queryset.filter(comuna__region=region)
 
-        if keywords:
-            projects = projects.filter(
-                Q(name__icontains=keywords) |
-                Q(description__icontains=keywords)
-            )
+        if comuna:
+            queryset = queryset.filter(comuna=comuna)
 
-        return projects
+        if type:
+            queryset = queryset.filter(type=type)
 
-    def search_projects(self, program, type):
-        return self.filter(
-            program__name = program,
-            type__name = type,
-            public = True
-        ).order_by('year')
+        if year:
+            queryset = queryset.filter(year=year)
+
+        return queryset
 
     def index_projects(self):
         return self.filter(
