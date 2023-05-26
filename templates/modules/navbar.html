@@ -23,7 +23,7 @@
 
       <!-- Este ul es para redes sociales y barra búsqueda -->
       <div class="navbar-nav">
-        <form class="simple-search search" style="border: solid 1px #373737; width: 365px; height: 48px;">
+        <form class="simple-search search" style="border: solid 1px #373737; width: 365px; height: 48px;"action="{% url 'projects_app:project-list' %}" id="search-form" action="{% url 'projects_app:project-list' %}" id="search-form">
           <div class="search-action" style="padding:4px; margin:0">
             <button class="btn btn-outline-search" id="searchLineAction" type="submit" style="border: 0; padding:4px"><i class="icon cl cl-search" style="color:#373737; border: 0"></i></button>
           </div>
@@ -34,9 +34,15 @@
       <!-- Este ul es para placeholders de navegación -->
       <ul class="navbar-nav" style="align-self: center;">
         <li class="nav-item"><a class="nav-link" href="{% url 'home_app:index' %}">Inicio</a></li>
-        <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" id="navbarLinesLightExampleDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-          <div class="dropdown-menu" aria-labelledby="navbarLinesLightExampleDropdown"><a class="dropdown-item" href="#">Action</a><a class="dropdown-item" href="#">Another action</a>
-            <div class="dropdown-divider"></div><a class="dropdown-item" href="#">Something else here</a>
+        <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" id="navbarLinesLightExampleDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Banco de Proyectos</a>
+          <div class="dropdown-menu" aria-labelledby="navbarLinesLightExampleDropdown">
+            {% for program in programs %}
+              <a class="dropdown-item" href="?program={{ program.id }}">{{ program.name }}</a>
+            {% endfor %}
+            <div class="dropdown-divider"></div>
+            {% for type in types %}
+              <a class="dropdown-item" href="?type={{ type.id }}">{{ type.name }}</a>
+            {% endfor %}
           </div>
         </li>
       </ul>

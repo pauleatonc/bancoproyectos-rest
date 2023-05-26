@@ -2,41 +2,41 @@ from django.db import models
 from django.db.models import Q
 
 class ProjectsManager(models.Manager):
-    def filter_projects(self, programs=None, types=None, years=None, regiones=None, comunas=None, keywords=None, program_name=None, type_name=None):
-        projects = self.filter(public=True)
+    def browser_search_projects(self, program=None, region=None, comuna=None, type=None, year=None, search_query=None):
+        queryset = self.get_queryset()
 
-        if programs:
-            projects = projects.filter(program__in=programs)
-        if types:
-            projects = projects.filter(type__in=types)
-        if years:
-            projects = projects.filter(year__in=years)
-        if regiones:
-            projects = projects.filter(region__in=regiones)
-        if comunas:
-            projects = projects.filter(comuna__in=comunas)
+        # Crear una lista vacía para almacenar las condiciones de filtro
+        conditions = []
 
-        if program_name and type_name:
-            projects = projects.filter(program__name=program_name, type__name=type_name)
+        # Agregar las condiciones de filtro según los parámetros enviados
+        if program:
+            conditions.append(Q(program__in=program))
+        if region:
+            conditions.append(Q(comuna__region__in=region))
+        if comuna:
+            conditions.append(Q(comuna__in=comuna))
+        if type:
+            conditions.append(Q(type__in=type))
+        if year:
+            conditions.append(Q(year__in=year))
 
-        if keywords:
-            projects = projects.filter(
-                Q(name__icontains=keywords) |
-                Q(description__icontains=keywords)
-            )
+        # Unir las condiciones con operador OR para obtener los resultados que cumplan al menos una de las condiciones
+        if conditions:
+            queryset = queryset.filter(*conditions)
 
-        return projects
+        if search_query:
+            # Filtrar los objetos del modelo Project utilizando la palabra clave
+            queryset = queryset.filter(
+                Q(name__icontains=search_query) |
+                Q(id_subdere__icontains=search_query) |
+                Q(program__icontains=search_query) |
+                Q(comuna__icontains=search_query) |
+                Q(comuna__region__icontains=search_query) |
+                Q(type__icontains=search_query) |
+                Q(year__icontains=search_query)
+            ).order_by('year')
 
-    def search_projects(self, keywords):
-        projects = self.filter(public=True)
-
-        if keywords:
-            projects = projects.filter(
-                Q(name__icontains=keywords) |
-                Q(description__icontains=keywords)
-            )
-
-        return projects
+        return queryset
 
     def index_projects(self):
         return self.filter(
@@ -51,4 +51,6 @@ class ProjectsManager(models.Manager):
         ).exclude(
             id=project.id
         ).order_by('year')[:5]
+
+
         
