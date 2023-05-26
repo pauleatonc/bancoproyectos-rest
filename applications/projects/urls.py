@@ -4,7 +4,6 @@ from django.conf import settings
 
 
 from . import views
-from .views import obtener_comunas
 
 app_name = 'projects_app'
 
