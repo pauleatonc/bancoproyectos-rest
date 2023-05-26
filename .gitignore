@@ -29,3 +29,6 @@ media/
 /media/project_documents/*
 /media/projects/*
 /media/CACHE/*
+
+#Otros (cómo .idea)
+.idea
