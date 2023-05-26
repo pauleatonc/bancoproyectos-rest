@@ -15,16 +15,16 @@ class ProjectsListView(ListView):
     paginate_by = 6
 
     def get_queryset(self):
-        queryset = super().get_queryset()
-
         # Obtener los parámetros del filtro de búsqueda
         program = self.request.GET.getlist('program')
         region = self.request.GET.getlist('region')
         comuna = self.request.GET.getlist('comuna')
         type = self.request.GET.getlist('type')
         year = self.request.GET.getlist('year')
+        search_query = self.request.GET.get('search_query', '')
 
-        queryset = Project.objects.browser_search_projects(program, region, comuna, type, year)
+        queryset = Project.objects.browser_search_projects(program, region, comuna, type, year, search_query)
+
 
 
         # Ordenar los resultados según los campos elegidos
@@ -40,12 +40,11 @@ class ProjectsListView(ListView):
         context = super().get_context_data(**kwargs)
         context['programs'] = Program.objects.all()
         context['types'] = Type.objects.all()
-        # Pasar los parámetros del filtro a la plantilla
-        context['filter_program'] = self.request.GET.get('program')
-        context['filter_region'] = self.request.GET.get('region')
-        context['filter_comuna'] = self.request.GET.get('comuna')
-        context['filter_type'] = self.request.GET.get('type')
-        context['filter_year'] = self.request.GET.get('year')
+        context['regiones'] = Project.objects.values_list('comuna__region', 'comuna__region__nombre').distinct()
+        context['comunas'] = Project.objects.values_list('comuna', 'comuna__nombre').distinct()
+        context['tipos'] = Project.objects.values_list('type', 'type__name').distinct()
+        context['years'] = Project.objects.values_list('year', 'year__number').distinct()
+
         return context
 
 

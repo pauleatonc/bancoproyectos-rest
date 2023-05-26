@@ -22,8 +22,8 @@
         <div class="text-center m-3 h-4 text-muted">
             Acceder al buscador de proyectos escribiendo palabra clave
         </div>
-        <form class="search mx-auto" method="GET" action="{% url 'projects_app:project-list' %}" id="search-form">
-            <input class="form-control" type="text" name="search" placeholder="Buscar proyecto"
+        <form class="search mx-auto" method="GET" id="search-form"> {% csrf_token %}
+            <input class="form-control" type="text" name="search_query" id="search_query" placeholder="Buscar proyecto"
                 aria-label="Buscar proyectos" aria-describedby="searchAction" />
             <div class="search-action">
                 <button class="btn btn-outline-search" id="searchAction" type="submit">

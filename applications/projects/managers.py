@@ -2,7 +2,7 @@ from django.db import models
 from django.db.models import Q
 
 class ProjectsManager(models.Manager):
-    def browser_search_projects(self, program=None, region=None, comuna=None, type=None, year=None):
+    def browser_search_projects(self, program=None, region=None, comuna=None, type=None, year=None, search_query=None):
         queryset = self.get_queryset()
 
         # Crear una lista vacía para almacenar las condiciones de filtro
@@ -16,13 +16,25 @@ class ProjectsManager(models.Manager):
         if comuna:
             conditions.append(Q(comuna__in=comuna))
         if type:
-            conditions.append(Q(type=type))
+            conditions.append(Q(type__in=type))
         if year:
-            conditions.append(Q(year=year))
+            conditions.append(Q(year__in=year))
 
         # Unir las condiciones con operador OR para obtener los resultados que cumplan al menos una de las condiciones
         if conditions:
             queryset = queryset.filter(*conditions)
+
+        if search_query:
+            # Filtrar los objetos del modelo Project utilizando la palabra clave
+            queryset = queryset.filter(
+                Q(name__icontains=search_query) |
+                Q(id_subdere__icontains=search_query) |
+                Q(program__icontains=search_query) |
+                Q(comuna__icontains=search_query) |
+                Q(comuna__region__icontains=search_query) |
+                Q(type__icontains=search_query) |
+                Q(year__icontains=search_query)
+            ).order_by('year')
 
         return queryset
 
