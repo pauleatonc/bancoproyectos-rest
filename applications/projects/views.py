@@ -25,8 +25,6 @@ class ProjectsListView(ListView):
 
         queryset = Project.objects.browser_search_projects(program, region, comuna, type, year, search_query)
 
-
-
         # Ordenar los resultados según los campos elegidos
         sort_by = self.request.GET.get('sort_by')
         if sort_by == 'created':
