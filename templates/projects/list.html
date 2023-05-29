@@ -65,8 +65,8 @@
                             {% for project in projects %}
                             <div class="col-6 ">
                                 <div class="card-project">
-                                    <div class="img-project">
-                                        <img src="{{ project.portacard.url }}" alt="img-miniatura" />
+                                    <div class="card-img-project">
+                                        <img class="img-project" src="{{ project.portacard.url }}" alt="img-miniatura" />
                                     </div>
                                     <div class="location-project d-flex justify-content-between w-100">
                                         <p class="mr-5 font-level-8 ">Region:{{ project.comuna.region }}</p>
