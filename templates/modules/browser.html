@@ -42,7 +42,7 @@
         <label class="font-level-6 my-1">¿En qué región?</label>
         <select class="custom-select" name="region">
           <-- que se muestre por default ( sin seleccionar) ->
-            <option>Seleccionar Region...</option>
+            <option value="">Seleccionar Región...</option>
             {% for region in regiones %}
             <option value="{{ region.0}}">{{ region.1 }}</option>
             {% endfor %}

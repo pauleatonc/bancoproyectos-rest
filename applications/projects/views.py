@@ -16,12 +16,15 @@ class ProjectsListView(ListView):
     def get_queryset(self):
         # Obtener los parámetros del filtro de búsqueda
         program = self.request.GET.getlist('program')
-        region = self.request.GET.getlist('region', '')
         comuna = self.request.GET.getlist('comuna', '')
         project_type = self.request.GET.getlist('type')
         year = self.request.GET.getlist('year')
         search_query = self.request.GET.get('search_query', '')
         sort_by = self.request.GET.get('sort_by')
+
+        region = self.request.GET.getlist('region')
+        if '' in region:
+            region.remove('')
 
 
         queryset = Project.objects.browser_search_projects(search_query, program, region, comuna, project_type, year, sort_by)
