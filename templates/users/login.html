@@ -4,48 +4,85 @@
 {% block content %}
 
 {% include "modules/navbar.html" %}
-
-<div class="album py-5 bg-light">
-    <div class="container">
-        <div>
-            <h4 class="text-center">Acceso de usuario</h4>
-            {% if messages %}
-            <div class="text-center">
-                {% for message in messages %}
-                <p>{{ message }}</p>
-                {% endfor %}
+<section>
+    <div class="m-5 ">
+        <div class="title d-flex justify-content-center">
+            <div class="line">
+                <p class="h1 font-weight-bold ">Banco de Proyectos</p>
             </div>
-            {% endif %}
-            <form class="text-center" method="POST">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label class="text-center">Rut:</label>
-                    {{ form.rut }}
-                    {% if form.rut.errors %}
-                    <ul class="errors">
-                        {% for error in form.rut.errors %}
-                        <li>{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
-                </div>
-                <div class="form-group">
-                    <label class="text-center">Contraseña:</label>
-                    {{ form.password }}
-                </div>
-                <div>
-                    {% if form.password.errors %}
-                    <ul class="errors">
-                        {% for error in form.password.errors %}
-                        <li>{{ error }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% endif %}
-                </div>
-                <button type="submit" class="btn card cardbutontext btn-outline-secondary mx-auto d-block">Acceder</button>
-            </form>
         </div>
+        <nav aria-label="breadcrumb">
+            <ol class=" breadcrumb ml-5 pl-3">
+                <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    Banco de proyectos
+                </li>
+            </ol>
+        </nav>
     </div>
-</div>
-
+    <section>
+        <div class="container-login">
+            <div class="row">
+                <div class="col-md-8 col-lg-6 offset-md-2 offset-lg-3 border-fr-grey">
+                    <div class="card-login border rounded border-dark m-5 p-5">
+                        <p class="h2 text-center">Portal <br>
+                            Banco de Proyectos</p>
+                        <p class="text-center">Requiere credenciales otorgadas por la Subdere</p>
+                        {% if messages %}
+                        <div class="text-center">
+                            {% for message in messages %}
+                            <p>{{ message }}</p>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        <form class="form cols-12 m-5 text-center" method="POST">
+                            {% csrf_token %}
+                            <div class="my-5 mx-3 d-flex flex-column justify-content-center align-items-center">
+                                <div class="form-group  m-2 col-12 font-level-6 ">
+                                    <label>Rut</label>
+                                    <br>
+                                    {{ form.rut }}
+                                    {% if form.rut.errors %}
+                                    <ul class="errors">
+                                        {% for error in form.rut.errors %}
+                                        <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}
+                                </div>
+                                <div class="form-group  m-2 col-12 font-level-6 ">
+                                    <label class="">Contraseña</label>
+                                    <br>
+                                    {{ form.password }}
+                                </div>
+                                <div>
+                                    {% if form.password.errors %}
+                                    <ul class="errors">
+                                        {% for error in form.password.errors %}
+                                        <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column align-items-center">
+                                <button type="submit" class="btn btn-primary btn-default-size">Ingresar al
+                                    portal</button>
+                            </div>
+                        </form>
+                        <div class="text-lines-7-3 text-center mt-5">
+                            <p class="font-level-7 mb-1">¿No tienes credenciales para ingresar al Banco de Proyectos?
+                            </p>
+                            <p class="font-level-7">Debes solicitarlas en tu municipalidad.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+        </div>
+    </section>
+</section>
+{% include "modules/footer.html" %}
 {% endblock content %}
