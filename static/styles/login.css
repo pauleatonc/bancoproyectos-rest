@@ -1,0 +1,13 @@
+.container-login {
+  display: flex;
+  flex-direction: column;
+}
+.line {
+  width: 100px;
+}
+.card-login {
+  width: 570px;
+  height: 680px;
+  margin: 69px 435px 206px 69px;
+  padding: 0 0 18px;
+}
