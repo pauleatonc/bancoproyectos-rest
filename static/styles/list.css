@@ -1,4 +1,3 @@
-
 .title {
   width: 100%;
 }
@@ -35,16 +34,22 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: flex-end;
-  gap: 10px;
+  gap: 8px;
   margin: 10px 35px 35px 10px;
   padding: 15px;
   border: solid 2px rgb(63, 135, 208);
 }
 
-.img-project {
+.card-img-project {
   width: 341px;
   height: 175px;
   margin: 0 0 17px;
+}
+
+.img-project {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
 }
 
 .description-project {
@@ -74,4 +79,3 @@
   background-color: rgb(15, 105, 196);
   color: #ffffff;
 }
-
