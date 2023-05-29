@@ -1,87 +1,99 @@
 {% load static %}
 
 <form method="get">
-<div class="filter">
-  <div class="filter-head">
-    <p class="font-level-2 my-1 ">Filtrar</p>
-    <a class="btn-clean-filter " href="{% url 'projects_app:project-list' %}?show_all=true">Limpiar filtro <i class="fa fa-trash"></i></a>
-  </div>
-  <div class="filter-program">
-  <div class="text-filter-program">
-    <p class="font-level-6 my-1">¿En qué programa se encuentra el proyecto que buscas?</p>
-    <p class="font-level-7 my-1">Puedes elegir más de uno.</p>
-  </div>
-  <div class="category cols-12 row text-center">
-    <div class="col-md">
-      <input type="checkbox" name="program" value="1">
-      <label class="btn btn-outline-primary rounded-circle text-decoration-none font-weight-bold font-level-6">
-         PMU
-      </label>
-      <br>
-      <span class="font-level-7 font-weight-bold">Programa Mejoramiento Urbano</span>
+  <div class="filter">
+    <div class="filter-head">
+      <p class="font-level-2 my-1 ">Filtrar</p>
+      <a class="btn-clean-filter " href="{% url 'projects_app:project-list' %}?show_all=true">Limpiar filtro <i
+          class="fa fa-trash"></i></a>
     </div>
-    <div class="col-md">
-      <input type="checkbox" name="program" value="2">
-      <label class="btn btn-outline-primary rounded-circle text-decoration-none font-weight-bold font-level-6">
-         PMB
-      </label>
-      <br>
-      <span class="font-level-7 font-weight-bold">Programa Mejoramiento de Barrios</span>
-    </div>
-  </div>
-</div>
-  <div class="filter-location">
-    <div class="form-group">
-      <label class="font-level-6 my-1">¿En qué región?</label>
-      <select multiple class="form-control" name="region">
-        <optgroup label="Regiones">
-        {% for region in regiones %}
-          <option value="{{region.0}}">{{ region.1 }}</option>
-        {% endfor %}
-        </optgroup>
-      </select>
-    </div>
-    <div class="form-group">
-      <label class="font-level-6 my-1">¿En que comuna?</label>
-      <select multiple class="form-control" name="comuna">
-        <optgroup label="Comunas">
-        {% for comuna in comunas %}
-          <option value="{{ comuna.0 }}">{{ comuna.1 }}</option>
-        {% endfor %}
-        </optgroup>
-      </select>
-    </div>
-  </div>
-  <div class="filter-type">
-    <label class="font-level-6 my-2">¿Qué tipo de proyecto es?</label>
-    <div class="cols-12 row text-center my-3">
-      {% for tipo in tipos %}
-      <div class="col-6 my-1">
-        <a class="btn btn-outline-primary rounded-circle btn-md">
-          <span class="cl cl-list font-level-2 my-1 mx-2"><span />
-        </a>
-        <input type="checkbox" name="type" value="{{ tipo.0 }}">
-        <br>
-        <span class="font-level-7 font-weight-bold">{{ tipo.1 }}</span>
+    <div class="filter-program">
+      <div class="text-filter-program">
+        <p class="font-level-6 my-1">
+          ¿En qué programa se encuentra el proyecto que buscas?
+        </p>
+        <p class="font-level-7 my-1">Puedes elegir más de uno.</p>
       </div>
-      {% endfor %}
+      <div class="category-btns cols-12 row text-center">
+        <div class="col-md mt-2">
+          <div class="btn-group-toggle" data-toggle="buttons">
+            <label
+              class="btn btn-outline-primary rounded-circle text-decoration-none font-weight-bold font-level-6 active">
+              <input type="checkbox" name="program" value="1" /> PMU
+            </label>
+          </div>
+          <br />
+          <span class="font-level-7 font-weight-bold">Programa Mejoramiento Urbano</span>
+        </div>
+        <div class="col-md mt-2">
+          <div class="btn-group-toggle" data-toggle="buttons">
+            <label
+              class="btn btn-outline-primary rounded-circle text-decoration-none font-weight-bold font-level-6 active">
+              <input type="checkbox" name="program" value="2" /> PMB
+            </label>
+          </div>
+          <br />
+          <span class="font-level-7 font-weight-bold">Programa Mejoramiento de Barrios</span>
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="filter-years my-3">
+    <div class="filter-location">
+      <div class="form-group">
+        <label class="font-level-6 my-1">¿En qué región?</label>
+        <select class="custom-select" name="region">
+          <-- que se muestre por default ( sin seleccionar) ->
+            <option>Seleccionar Region...</option>
+            {% for region in regiones %}
+            <option value="{{ region.0}}">{{ region.1 }}</option>
+            {% endfor %}
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="font-level-6 my-1">¿En que comuna?</label>
+        <select class="custom-select" name="comuna">
+          <-- que se muestre por default ( sin seleccionar) ->
+            <option> Seleccionar comuna...</option>
+            {% for comuna in comunas %}
+            <option value="{{ comuna.0}}">{{ comuna.1 }}</option>
+            {% endfor %}
+        </select>
+      </div>
+    </div>
+    <div class="filter-type">
+      <label class="font-level-6 my-2">¿Qué tipo de proyecto es?</label>
+      <div class="cols-12 row text-center my-3">
+        {% for tipo in tipos %}
+        <div class="col-6 my-2">
+          <div class="btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-outline-primary rounded-circle btn-md active">
+              <input type="checkbox" name="type" value="{{ tipo.0 }}" />
+              <i class="cl cl-list font-level-2 my-1 mx-2  "></i>
+            </label>
+          </div>
+          <span class="font-base font-weight-bold">{{tipo.1}}</span>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="filter-years my-3">
+      <div>
+        <label class="font-level-6 my-3">¿Qué años de construcción quieres ver?</label>
+      </div>
+      <div class="form-group">
+        {% for year in years %}
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" value="{{year.0}}">
+          <label class="form-check-label" for="defaultCheck1">
+            {{year.1}}
+          </label>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
     <div>
-      <label class="font-level-6 my-3">¿Qué años de construcción quieres ver?</label>
-    </div>
-    <div class="form-group">
-      {% for year in years %}
-      <div class="custom-control custom-checkbox">
-          <input class="custom-control-input" id="customCheckExample" type="checkbox" name="year" value="{{ year.0 }}"/>
-          <label class="custom-control-label" for="customCheckExample" >{{ year.1 }}</label>
-      </div>
-      {% endfor %}
+      <button class="btn-filter my-5" type="submit" name="show_results">
+        Mostrar resultados <i class="fa fa-check" aria-hidden="true"></i>
+      </button>
     </div>
   </div>
-  <div>
-    <button class="btn-filter my-5" type="submit" name="show_results">Mostrar resultados <i class="fa fa-check" aria-hidden="true"></i></button>
-  </div>
-</div>
 </form>
