@@ -1,6 +1,6 @@
 {% load static %}
 
-<form method="get">
+<form method="get">{% csrf_token %}
   <div class="filter">
     <div class="filter-head">
       <p class="font-level-2 my-1 ">Filtrar</p>
@@ -41,23 +41,24 @@
       <div class="form-group">
         <label class="font-level-6 my-1">¿En qué región?</label>
         <select class="custom-select" name="region">
-          <!-- que se muestre por default ( sin seleccionar) -->
+          <-- que se muestre por default ( sin seleccionar) ->
             <option>Seleccionar Region...</option>
             {% for region in regiones %}
             <option value="{{ region.0}}">{{ region.1 }}</option>
             {% endfor %}
         </select>
       </div>
+      <!--
       <div class="form-group">
         <label class="font-level-6 my-1">¿En que comuna?</label>
         <select class="custom-select" name="comuna">
-          <!-- que se muestre por default ( sin seleccionar) -->
+          <-- que se muestre por default ( sin seleccionar) ->
             <option> Seleccionar comuna...</option>
             {% for comuna in comunas %}
             <option value="{{ comuna.0}}">{{ comuna.1 }}</option>
             {% endfor %}
         </select>
-      </div>
+      </div>-->
     </div>
     <div class="filter-type">
       <label class="font-level-6 my-2">¿Qué tipo de proyecto es?</label>
