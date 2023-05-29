@@ -9,7 +9,6 @@ from .managers import ProjectsManager
 
 
 class ProjectsListView(ListView):
-    model = Project
     template_name = 'projects/list.html'
     context_object_name = 'projects'
     paginate_by = 6
@@ -19,19 +18,13 @@ class ProjectsListView(ListView):
         program = self.request.GET.getlist('program')
         region = self.request.GET.getlist('region')
         comuna = self.request.GET.getlist('comuna')
-        type = self.request.GET.getlist('type')
+        project_type = self.request.GET.getlist('type')
         year = self.request.GET.getlist('year')
         search_query = self.request.GET.get('search_query', '')
-
-        queryset = Project.objects.browser_search_projects(program, region, comuna, type, year, search_query)
-
-        # Ordenar los resultados según los campos elegidos
         sort_by = self.request.GET.get('sort_by')
-        if sort_by == 'created':
-            queryset = queryset.order_by('-id')
-        elif sort_by == 'year':
-            queryset = queryset.order_by('year')
 
+
+        queryset = Project.objects.browser_search_projects(search_query, program, region, comuna, project_type, year, sort_by)
         return queryset
 
     def get_context_data(self, **kwargs):
@@ -42,7 +35,6 @@ class ProjectsListView(ListView):
         context['comunas'] = Project.objects.values_list('comuna', 'comuna__nombre').distinct()
         context['tipos'] = Project.objects.values_list('type', 'type__name').distinct()
         context['years'] = Project.objects.values_list('year', 'year__number').distinct()
-
         return context
 
 

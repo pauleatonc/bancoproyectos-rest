@@ -11,13 +11,15 @@
         </div>
         <nav aria-label="breadcrumb">
             <ol class=" breadcrumb ml-5 pl-3">
-                <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'home_app:index' %}">Inicio</a></li>
                 <li class="breadcrumb-item active" aria-current="page">
                     Banco de proyectos
                 </li>
             </ol>
         </nav>
     </div>
+
+    <!-- Barra de búsqueda -->
     <section class="m-5">
         <div class="text-center m-3 h-4 text-muted">
             Acceder al buscador de proyectos escribiendo palabra clave
@@ -32,25 +34,32 @@
             </div>
         </form>
     </section>
+
     <section class="projects">
         <div class="container-projects">
             <div class="cols-12 row mx-0">
+
+                <!-- Agrega el formulario de filtro -->
                 <div class="col-4">
-                    <!-- Agrega el formulario de filtro -->
                     {% include "modules/browser.html" %}
                 </div>
 
+                <!-- Agrega bloque de proyectos -->
                 <div class="col-8">
+                    <!-- Agrega el filtro ordenar por -->
                     <div class="dropdown-sort d-flex justify-content-end">
                         <button class="btn-sort dropdown-toggle " type="button" data-toggle="dropdown"
                             aria-expanded="false">
                             Ordenar por
                         </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" onclick="window.location.href='?sort_by=created'">Más reciente</a>
-                            <a class="dropdown-item" onclick="window.location.href='?sort_by=year'">Año</a>
+                            <a class="dropdown-item" href="?sort_by=id">Más reciente</a>
+                            <a class="dropdown-item" href="?sort_by=year">Año</a>
                         </div>
                     </div>
+
+                    <!-- Agrega las cards de proyectos -->
+                    {% if projects %}
                     <div class="projects-list">
                         <div class="cols-12 row">
                             {% for project in projects %}
@@ -92,7 +101,6 @@
                     </div>
                     <nav
                         class="pagination-container my-5 flex-column justify-content-start flex-sm-row a11y-fonts-flex-column a11y-fonts-flex-lg-row">
-                        {% if projects %}
                         <p class="text-start">{{ projects|length }} resultados de {{ projects|length }} proyectos</p>
                         <ul class="pagination mx-2">
                             <li class="page-item border-0"">

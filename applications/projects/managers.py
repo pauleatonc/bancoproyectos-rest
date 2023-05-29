@@ -1,46 +1,41 @@
 from django.db import models
 from django.db.models import Q
 
+
 class ProjectsManager(models.Manager):
-    def browser_search_projects(self, program=None, region=None, comuna=None, type=None, year=None, search_query=None):
-        queryset = self.get_queryset()
 
-        # Crear una lista vacía para almacenar las condiciones de filtro
-        conditions = []
+    def browser_search_projects(self, search_query, program, region, comuna, project_type, year, order_by):
+        queryset = self.filter(public=True)
 
-        # Agregar las condiciones de filtro según los parámetros enviados
-        if program:
-            conditions.append(Q(program__in=program))
-        if region:
-            conditions.append(Q(comuna__region__in=region))
-        if comuna:
-            conditions.append(Q(comuna__in=comuna))
-        if type:
-            conditions.append(Q(type__in=type))
-        if year:
-            conditions.append(Q(year__in=year))
-
-        # Unir las condiciones con operador OR para obtener los resultados que cumplan al menos una de las condiciones
-        if conditions:
-            queryset = queryset.filter(*conditions)
-
-        if search_query:
-            # Filtrar los objetos del modelo Project utilizando la palabra clave
+        if len(search_query) > 0:
             queryset = queryset.filter(
-                Q(name__icontains=search_query) |
-                Q(id_subdere__icontains=search_query) |
-                Q(program__icontains=search_query) |
-                Q(comuna__icontains=search_query) |
-                Q(comuna__region__icontains=search_query) |
-                Q(type__icontains=search_query) |
-                Q(year__icontains=search_query)
-            ).order_by('year')
+                models.Q(name__icontains=search_query) |
+                models.Q(id_subdere__icontains=search_query)
+            )
+
+        if program:
+            queryset = queryset.filter(program__in=program)
+        if region:
+            queryset = queryset.filter(comuna__region__in=region)
+        if comuna:
+            queryset = queryset.filter(comuna__in=comuna)
+        if project_type:
+            queryset = queryset.filter(type__in=project_type)
+        if year:
+            queryset = queryset.filter(year__in=year)
+
+
+        if order_by == 'id':
+            queryset = queryset.order_by('-id')
+        elif order_by == 'year':
+            queryset = queryset.order_by('year')
 
         return queryset
 
+
     def index_projects(self):
         return self.filter(
-            public = True
+            public=True
         ).order_by('year')[:5]
 
     def related_projects(self, project):
@@ -51,6 +46,3 @@ class ProjectsManager(models.Manager):
         ).exclude(
             id=project.id
         ).order_by('year')[:5]
-
-
-        

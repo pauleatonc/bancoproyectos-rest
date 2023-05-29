@@ -17,10 +17,8 @@
       </div>
       <nav aria-label="breadcrumb">
         <ol class=" breadcrumb ml-5 pl-3">
-          <li class="breadcrumb-item"><a href="#">Inicio</a></li>
-          <li class="breadcrumb-item active" aria-current="page">
-            Banco de proyectos
-          </li>
+          <li class="breadcrumb-item"><a href="{% url 'home_app:index' %}">Inicio</a></li>
+          <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'projects_app:project-list' %}">Banco de proyectos</a></li>
           <li class="breadcrumb-item active" aria-current="page">{{project.comuna.region}}</li>
           <li class="breadcrumb-item active" aria-current="page">{{project.comuna}}</li>
           <li class="breadcrumb-item active" aria-current="page">{{project.program.name}}</li>
