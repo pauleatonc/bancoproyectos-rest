@@ -19,8 +19,8 @@ class UserManager(BaseUserManager, models.Manager):
     def create_user(self, rut, password=None, **extra_fields):
         return self._create_user(rut, password, False, False, True, **extra_fields)
 
-    def create_superuser(self, email, password=None, **extra_fields):
-        return self._create_user(email, password, True, True, True, **extra_fields)
+    def create_superuser(self, rut, password=None, **extra_fields):
+        return self._create_user(rut, password, True, True, True, **extra_fields)
 
     def cod_validation(self, id_user, cod_registro):
         if self.filter(id=id_user, codregistro=cod_registro).exists():

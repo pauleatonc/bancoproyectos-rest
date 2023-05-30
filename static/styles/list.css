@@ -44,6 +44,7 @@
   width: 341px;
   height: 175px;
   margin: 0 0 17px;
+  object-fit: cover;
 }
 
 .img-project {
