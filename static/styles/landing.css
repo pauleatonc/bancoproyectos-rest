@@ -149,11 +149,10 @@
   margin-bottom: 10px;
 }
 
-.title {
+.title-card {
   height: 90px;
   align-self: stretch;
   flex-grow: 0;
-  font-family: Roboto;
   font-size: 18px;
   font-weight: 600;
   font-stretch: normal;
@@ -164,11 +163,10 @@
   color: #373737;
 }
 
-.text {
+.text-card {
   height: 120px;
   align-self: stretch;
   flex-grow: 0;
-  font-family: Roboto;
   font-size: 14px;
   font-weight: 500;
   font-stretch: normal;
