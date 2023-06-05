@@ -1,0 +1,68 @@
+{% extends "home/base_home.html" %}
+{% load static %}
+
+{% block content %}
+
+{% include "modules/navbar.html" %}
+<section>
+    <div class="m-5 ">
+        <div class="title d-flex justify-content-center">
+            <div class="line">
+                <p class="h1 font-weight-bold ">Banco de Proyectos</p>
+            </div>
+        </div>
+        <nav aria-label="breadcrumb">
+            <ol class=" breadcrumb ml-5 pl-3">
+                <li class="breadcrumb-item"><a href="{% url 'home_app:index' %}">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    Contacto
+                </li>
+            </ol>
+        </nav>
+    </div>
+    <section>
+        <div class="container-login">
+            <div class="row">
+                <div class="col-md-8 col-lg-6 offset-md-2 offset-lg-3 border-fr-grey">
+                    <div class="card-login rounded m-5">
+                        <p class="font-level-2 text-center m-3 font-weight-bold">Formulario de Contacto</p>
+
+                        <form class="form cols-12 m-5 text-center" method="POST" action="{% url 'home_app:add-contact' %}">
+                            {% csrf_token %}
+                            <label class="contact-label">Nombre completo (Obligatorio)
+                                <input class="contact-box" type="text" placeholder="Ingresa tu nombre." name="full_name" id="id_full_name">
+                            </label>
+                            <label class="contact-label">Correo electrónico institucional (Obligatorio)
+                                <input class="contact-box" type="text" placeholder="Ingresa tu correo electrónico." name="email" id="id_email">
+                            </label>
+                            <label class="contact-label">Organización a la que perteneces (Obligatorio)
+                                <input class="contact-box" type="text" placeholder="Ingresa el nombre de tu organización." name="organization" id="id_organization">
+                            </label>
+                            <label class="contact-label">Razón de contacto (Obligatorio)
+                                <select class="custom-select" name="contact_reason" id="id_contact_reason">
+                                  <-- que se muestre por default ( sin seleccionar) ->
+                                  <option value="">Elige una opción...</option>
+                                  {% for reason in form.contact_reason %}
+                                    <option value="{{ reason }}"></option>
+                                  {% endfor %}
+                                </select>
+                            </label>
+                            <label class="contact-label">Comentario (Obligatorio)
+                                <input class="contact-box" type="text" placeholder="Describe la razón de contacto." name="message" id="id_message">
+                            </label>
+
+                            <div class="d-flex flex-column align-items-center">
+                                <button type="submit" class="btn btn-primary btn-default-size" style="width: 100%">Enviar formulario</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+        </div>
+    </section>
+</section>
+{% include "modules/footer.html" %}
+{% endblock content %}

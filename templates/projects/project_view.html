@@ -166,7 +166,7 @@
                 {% if user.is_authenticated %}
                   <td class="fw-bold "><a href="{{ project.eett.url }}" target="_blank" >Descargar</a></td>
                 {% else %}
-                  <td class="text-primary"><a href="{% url 'users_app:user-login' %}?next={{ request.path }}">Iniciar Sesion para descargar</a></td>
+                  <td class="text-primary"><a href="{% url 'users_app:user-login' %}?next={{ project.eett.url }}#inicio-sesion" target="_blank">Iniciar Sesion para descargar</a></td>
                 {% endif %}
               </tr>
               <tr>
@@ -176,7 +176,7 @@
                 {% if user.is_authenticated %}
                   <td class="fw-bold "><a href="{{ project.presupuesto.url }}" target="_blank" >Descargar</a></td>
                 {% else %}
-                  <td class="text-primary"><a href="{% url 'users_app:user-login' %}?next={{ request.path }}">Iniciar Sesion para descargar</a></td>
+                  <td class="text-primary"><a href="{% url 'users_app:user-login' %}?next={{ project.presupuesto.url }}#inicio-sesion" target="_blank">Iniciar Sesion para descargar</a></td>
                 {% endif %}
               </tr>
               {% for file in projectfiles %}
@@ -187,7 +187,7 @@
                   {% if user.is_authenticated %}
                     <td class="fw-bold"><a href="{{ file.file.url }}" target="_blank">Descargar</a></td>
                   {% else %}
-                    <td class="text-primary"><a href="{% url 'users_app:user-login' %}?next={{ request.path }}">Iniciar Sesion para descargar</a></td>
+                    <td class="text-primary"><a href="{% url 'users_app:user-login' %}?next={{ file.file.url }}#inicio-sesion" target="_blank">Iniciar Sesion para descargar</a></td>
                   {% endif %}
                 </tr>
               {% endfor %}
