@@ -1,27 +1,80 @@
 <!-- head para PC -->
 {% extends "users/base_users.html" %}
-{% load  static %}
-
+{% load static %}
 {% block content %}
-
 {% include "modules/navbar.html" %}
 
-<div class="album py-5 bg-light" align="center">
-
-                <div class="card-divider">
-                  <h4>Ingrese los datos para el nuevo usuario</h4>
-                </div>
-                <div class="card-section">
-                    <form class="grid-x grid-margin-x" method="POST" enctype="multipart/form-data">{% csrf_token %}
-                        <div class="cell large-12">
-                            <label>
-                                {{ form.as_p}}
+<section class="register-users">
+    <div>
+        <div class="title d-flex justify-content-center">
+            <div class="line">
+                <p class="h1 font-weight-bold ">Banco de Proyectos</p>
+            </div>
+        </div>
+        <nav aria-label="breadcrumb">
+            <ol class=" breadcrumb ml-5 pl-3">
+                <li class="breadcrumb-item">
+                    <a href="{% url 'home_app:index' %}">Inicio</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <a href="{% url 'users_app:admin-home' %}">Home Administrador</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <a>Gestion de Usuarios</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    <a>Crear usuario</a>
+                </li>
+            </ol>
+        </nav>
+    </div>
+    <div class="d-flex flex-column align-items-center">
+        <div class="container-register-users d-flex flex-column  m-5 w-50">
+            <div class="card-divider my-3">
+                <span class="font-level-2 ">Formulario de creación de usuario</s>
+            </div>
+            <div class="card-section">
+                <form class="form-row w-auto d-flex " method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group col-12">
+                        <label>RUT (Obligatorio)</label>
+                        <input class="form-control" type="text" placeholder="Escriba aquí" value="" />
+                    </div>
+                    <div class="form-group col-12">
+                        <label>Nombre de Usuario (Obligatorio):</label>
+                        <input class="form-control" type="text" placeholder="Escriba aquí" value="" />
+                    </div>
+                    <div class="form-group col-12">
+                        <label>Correo electrónico institucional (Obligatorio)</label>
+                        <input class="form-control" type="email" placeholder="Escriba aquí" value="" />
+                    </div>
+                    <div class="col-12 my-3">
+                        <span>¿Este usuario será administrador?</span>
+                        <div class="btn-group-toggle mt-2" data-toggle="buttons">
+                            <label class="btn btn-outline-primary btn-lg active px-3 mr-2">
+                                <input type="radio" class="px-3"> Si
+                            </label>
+                            <label class="btn btn-outline-primary btn-lg active  px-3 ">
+                                <input type="radio" class="px-3"> No
                             </label>
                         </div>
-                        <button type="submit" class="btn card cardbutontext btn-outline-secondary mx-auto d-block">Registrar</button>
-                    </form>
-                </div>
+                    </div>
+                    <div class="form-group col-12">
+                        <label>Escribe una contraseña</label>
+                        <input class="form-control" type="password" placeholder="*****" value="" />
+                    </div>
+                    <div class="form-group col-12">
+                        <label>Confirma la contraseña escrita anteriormente:</label>
+                        <input class="form-control" type="password" placeholder="*****" value="" />
+                    </div>
 
-</div>
-
+                    <button type="submit" class="btn btn-primary btn-default-size col-12 mt-3">
+                        Crear usuario
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% include "modules/footer.html" %}
 {% endblock content %}
