@@ -36,7 +36,6 @@ class UserRegisterForm(forms.ModelForm):
         fields = (
             'rut',
             'email',
-            'username',
             'is_staff'
         )
         widgets = {
@@ -50,11 +49,7 @@ class UserRegisterForm(forms.ModelForm):
                     'placeholder': 'Correo electrónico...',
                 }
             ),
-            'username': forms.TextInput(
-                attrs={
-                'placeholder': 'Nombre de usuario'
-                }
-            ),
+
         }
 
     def clean_password2(self):
@@ -97,7 +92,7 @@ class LoginForm(forms.Form):
         rut = cleaned_data.get('rut')
         password = cleaned_data.get('password')
         if rut and password:
-            user = authenticate(username=rut, password=password)
+            user = authenticate(rut=rut, password=password)
             if user is None:
                 self.add_error('password', 'Usuario y/o contraseña incorrectos')
         return cleaned_data

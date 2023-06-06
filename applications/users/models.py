@@ -12,19 +12,20 @@ class Profesion(models.Model):
 class User(AbstractBaseUser, PermissionsMixin):
 
     rut = models.CharField(max_length=10, validators=[validar_rut], unique=True)
-    nombres = models.CharField(max_length=30, blank=True)
-    apellidos = models.CharField(max_length=30, blank=True)
+    nombres = models.CharField(max_length=30, blank=True, null=True, default="none")
+    apellidos = models.CharField(max_length=30, blank=True, null=True, default="none")
     password = models.CharField(max_length=200, blank=True)
     email = models.CharField(max_length=100, blank=True, null=True, default="none")
-    
+
+    #Setiando el nombre de usuario al rut
+    USERNAME_FIELD = 'rut'    
 
 
     is_staff = models.BooleanField('Usuario administrador',default=False)
     is_active = models.BooleanField(default=True)
 
-    USERNAME_FIELD = 'rut'
-
-    REQUIRED_FIELDS = ['rut', 'password']
+    #Campos requeridos
+    REQUIRED_FIELDS = ['password']
 
     objects = UserManager()
 
