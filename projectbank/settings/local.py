@@ -11,6 +11,7 @@ ALLOWED_HOSTS = []
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 DATABASES = {
+    # Base de datos de aplicación
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'projectbank',
@@ -18,8 +19,17 @@ DATABASES = {
         'PASSWORD': 'Subdere.2022',
         'HOST': 'localhost',
         'PORT': '5432',
-    }
-}
+    },
+    # Base de datos externa
+    'externaldb': {
+        'ENGINE': 'django.db.backends.postgresql', 
+        'NAME': 'externaldb',
+        'USER': 'postgres',
+        'PASSWORD': 'Subdere.2022',
+        'HOST': 'localhost',
+        'PORT': '5432',
+            }
+                }
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
