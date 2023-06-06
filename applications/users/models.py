@@ -15,6 +15,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     nombres = models.CharField(max_length=30, blank=True)
     apellidos = models.CharField(max_length=30, blank=True)
     password = models.CharField(max_length=200, blank=True)
+    email = models.CharField(max_length=100, blank=True, null=True, default="none")
 
 
     is_staff = models.BooleanField('Usuario administrador',default=False)
@@ -22,7 +23,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     USERNAME_FIELD = 'rut'
 
-    REQUIRED_FIELDS = ['username', 'email']
+    REQUIRED_FIELDS = ['rut', 'password']
 
     objects = UserManager()
 
