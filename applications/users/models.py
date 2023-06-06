@@ -16,6 +16,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     apellidos = models.CharField(max_length=30, blank=True)
     password = models.CharField(max_length=200, blank=True)
     email = models.CharField(max_length=100, blank=True, null=True, default="none")
+    
 
 
     is_staff = models.BooleanField('Usuario administrador',default=False)
