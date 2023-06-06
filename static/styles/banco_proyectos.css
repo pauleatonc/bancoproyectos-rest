@@ -295,3 +295,17 @@
 .breadcrumb-instance{
   color: rgba(0, 0, 0, 0.38);
 }
+
+.text-white{
+    color: var(--color-gray-373737);
+}
+
+.btn-cerrar-sesion{
+    color: #871a1a;
+    border-color: #871a1a;
+}
+
+.btn-cerrar-sesion:hover {
+  background-color: #871a1a;
+  color: #ffffff;
+}

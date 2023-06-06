@@ -117,7 +117,7 @@ class Project(models.Model):
 
     prioritized_tag = models.ManyToManyField(PrioritizedTag, blank=False, verbose_name = 'Tag proyecto priorizado')
 
-    checklist = models.ManyToManyField(ChecklistDocuments, verbose_name='Checklist de documentos obligatorios')
+    #checklist = models.ManyToManyField(ChecklistDocuments, verbose_name='Checklist de documentos obligatorios')
 
 
     def get_comunas_by_region(self):
