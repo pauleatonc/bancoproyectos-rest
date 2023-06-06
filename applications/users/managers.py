@@ -4,9 +4,10 @@ from django.contrib.auth.models import BaseUserManager
 
 class UserManager(BaseUserManager, models.Manager):
 
-    def _create_user(self, rut, password, is_staff, is_superuser, is_active, **extra_fields):
+    def _create_user(self, rut, email, password, is_staff, is_superuser, is_active, **extra_fields):
         user = self.model(
             rut=rut,
+            email=email,
             is_staff=is_staff,
             is_superuser=is_superuser,
             is_active=is_active,

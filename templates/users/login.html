@@ -13,15 +13,15 @@
         </div>
         <nav aria-label="breadcrumb">
             <ol class=" breadcrumb ml-5 pl-3">
-                <li class="breadcrumb-item"><a href="#">Inicio</a></li>
+                <li class="breadcrumb-item"><a href="{% url 'home_app:index' %}">Inicio</a></li>
                 <li class="breadcrumb-item active" aria-current="page">
-                    Banco de proyectos
+                    Inicio de sesión Portal Banco de Proyectos
                 </li>
             </ol>
         </nav>
     </div>
     <section>
-        <div class="container-login">
+        <div class="container-login" id="inicio-sesion">
             <div class="row">
                 <div class="col-md-8 col-lg-6 offset-md-2 offset-lg-3 border-fr-grey">
                     <div class="card-login border rounded border-dark m-5 p-5">

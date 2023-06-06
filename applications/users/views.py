@@ -76,7 +76,7 @@ class LoginUser(FormView):
 
         # Agregamos un método para redirigir a la página desde donde se originó el login
         # en el html se debe agregar ?next={{ request.path }} a continuación del href {% url 'users_app:user-login' %}
-        # para recoger el id de la proyecto visitado
+        # para recoger el id del proyecto visitado
         next_url = self.request.GET.get('next', None)
         if next_url:
             return redirect(next_url)
@@ -90,7 +90,7 @@ class LogoutView(View):
         logout(request)
         return HttpResponseRedirect(
             reverse(
-                'projects_app:project-list'
+                'home_app:index'
             )
         )
 

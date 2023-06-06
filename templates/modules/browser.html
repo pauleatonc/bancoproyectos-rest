@@ -1,11 +1,15 @@
 {% load static %}
 
-<form method="get">{% csrf_token %}
+<form method="get">
+  {% csrf_token %}
   <div class="filter">
     <div class="filter-head">
       <p class="font-level-2 my-1 ">Filtrar</p>
-      <a class="btn-clean-filter " href="{% url 'projects_app:project-list' %}?show_all=true">Limpiar filtro <i
-          class="fa fa-trash"></i></a>
+      <a
+        class="btn-clean-filter "
+        href="{% url 'projects_app:project-list' %}?show_all=true"
+        >Limpiar filtro <i class="fa fa-trash"></i
+      ></a>
     </div>
     <div class="filter-program">
       <div class="text-filter-program">
@@ -18,34 +22,40 @@
         <div class="col-md-6 mt-2">
           <div class="btn-group-toggle" data-toggle="buttons">
             <label
-              class="btn btn-outline-primary rounded-circle text-decoration-none font-weight-bold font-level-6 active">
+              class="btn btn-outline-primary rounded-circle text-decoration-none font-weight-bold font-level-6 active"
+            >
               <input type="checkbox" name="program" value="1" /> PMU
             </label>
           </div>
           <br />
-          <span class="font-level-7 font-weight-bold">Programa Mejoramiento Urbano</span>
+          <span class="font-level-7 font-weight-bold"
+            >Programa Mejoramiento Urbano</span
+          >
         </div>
         <div class="col-md-6 mt-2">
           <div class="btn-group-toggle" data-toggle="buttons">
             <label
-              class="btn btn-outline-primary rounded-circle text-decoration-none font-weight-bold font-level-6 active">
+              class="btn btn-outline-primary rounded-circle text-decoration-none font-weight-bold font-level-6 active"
+            >
               <input type="checkbox" name="program" value="2" /> PMB
             </label>
           </div>
           <br />
-          <span class="font-level-7 font-weight-bold">Programa Mejoramiento de Barrios</span>
+          <span class="font-level-7 font-weight-bold"
+            >Programa Mejoramiento de Barrios</span
+          >
         </div>
       </div>
     </div>
     <div class="filter-location">
       <div class="form-group">
-        <label class="font-level-6 my-1">¿En qué región?</label>
+        <label class="font-level-6 my-5">¿En qué región?</label>
         <select class="custom-select" name="region">
           <-- que se muestre por default ( sin seleccionar) ->
-            <option>Seleccionar Region...</option>
-            {% for region in regiones %}
-            <option value="{{ region.0}}">{{ region.1 }}</option>
-            {% endfor %}
+          <option value="">Seleccionar Región...</option>
+          {% for region in regiones %}
+          <option value="{{ region.0}}">{{ region.1 }}</option>
+          {% endfor %}
         </select>
       </div>
       <!--
@@ -78,12 +88,14 @@
     </div>
     <div class="filter-years my-3">
       <div>
-        <label class="font-level-6 my-3">¿Qué años de construcción quieres ver?</label>
+        <label class="font-level-6 my-3"
+          >¿Qué años de construcción quieres ver?</label
+        >
       </div>
       <div class="form-group">
         {% for year in years %}
         <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="{{year.0}}">
+          <input class="form-check-input" type="checkbox" value="{{year.0}}" />
           <label class="form-check-label" for="defaultCheck1">
             {{year.1}}
           </label>

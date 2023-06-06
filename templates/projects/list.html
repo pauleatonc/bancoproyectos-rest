@@ -3,10 +3,10 @@
 {% block content%}
 {% include "modules/navbar.html" %}
 <section class="projects-search">
-    <div class="m-5 ">
+    <div class="m-5 " >
         <div class="title d-flex justify-content-center">
             <div class="line">
-                <p class="h1 font-weight-bold ">Banco de Proyectos</p>
+                <p class="h1 font-weight-bold" id="inicio-banco-proyectos">Banco de Proyectos</p>
             </div>
         </div>
         <nav aria-label="breadcrumb">
@@ -68,24 +68,24 @@
                                     <div class="card-img-project">
                                         <img class="img-project" src="{{ project.portacard.url }}" alt="img-miniatura" />
                                     </div>
-                                    <div class="location-project d-flex justify-content-between w-100">
-                                        <p class="mr-5 font-level-8 ">Region:{{ project.comuna.region }}</p>
-                                        <p class="ml-5 font-level-8">Comuna:{{ project.comuna }}</p>
+                                    <div class="location-project d-flex justify-content-between w-100 h-20">
+                                        <p class=" font-level-8 m-0">Region: {{ project.comuna.region }}</p>
+                                        <p class=" font-level-8 m-0">Comuna: {{ project.comuna }}</p>
                                     </div>
                                     <div class="body-project ">
                                         <p class="h2">{{ project.name }}</p>
                                         <p class="description-project font-base text-sm-left">{{ project.description }}
                                         </p>
-                                        <div class="tags-project row  mt-1">
-                                            <div class="col-auto pb-3">
+                                        <div class="tags-project row ">
+                                            <div class="col-auto pb-2">
                                                 <div class="badge border border-primary font-level-7">
                                                     {{project.program.sigla}}</div>
                                             </div>
-                                            <div class="col-auto pb-3">
+                                            <div class="col-auto pb-2">
                                                 <div class="badge border  border-primary font-level-7">
                                                     {{project.year.number}}</div>
                                             </div>
-                                            <div class="col-auto pb-3">
+                                            <div class="col-auto pb-2">
                                                 <div class="badge border  border-primary font-level-7 ">
                                                     {{project.type.name}}
                                                 </div>
@@ -105,7 +105,7 @@
                         <ul class="pagination mx-2">
                             <li class="page-item border-0"">
                                 <div class=" page-link disabled">
-                                < </div>
+                                </div>
                             </li>
                             <li class="page-item active border-0""><a class=" page-link" href="#">1</a></li>
                             <li class="page-item d-none d-ss-block a11y-fonts-d-none a11y-fonts-d-sm-block"><a
@@ -121,4 +121,14 @@
         </div>
     </section>
     {% include "modules/footer.html" %}
+
+    <!-- Script que carga la página con el ID del div escogido -->
+    <script>
+      window.addEventListener('DOMContentLoaded', function() {
+        var targetElement = document.getElementById('inicio-banco-proyectos');
+        if (targetElement) {
+          targetElement.scrollIntoView();
+        }
+      });
+    </script>
     {% endblock content %}
