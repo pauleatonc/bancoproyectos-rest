@@ -20,49 +20,58 @@
             </ol>
         </nav>
     </div>
-    <section>
-        <div class="container-login">
-            <div class="row">
-                <div class="col-md-8 col-lg-6 offset-md-2 offset-lg-3 border-fr-grey">
-                    <div class="card-login rounded m-5">
-                        <p class="font-level-2 text-center m-3 font-weight-bold">Formulario de Contacto</p>
+</section>
 
-                        <form class="form cols-12 m-5 text-center" method="POST" action="{% url 'home_app:add-contact' %}">
-                            {% csrf_token %}
-                            <label class="contact-label">Nombre completo (Obligatorio)
-                                <input class="contact-box" type="text" placeholder="Ingresa tu nombre." name="full_name" id="id_full_name">
-                            </label>
-                            <label class="contact-label">Correo electrónico institucional (Obligatorio)
-                                <input class="contact-box" type="text" placeholder="Ingresa tu correo electrónico." name="email" id="id_email">
-                            </label>
-                            <label class="contact-label">Organización a la que perteneces (Obligatorio)
-                                <input class="contact-box" type="text" placeholder="Ingresa el nombre de tu organización." name="organization" id="id_organization">
-                            </label>
-                            <label class="contact-label">Razón de contacto (Obligatorio)
-                                <select class="custom-select" name="contact_reason" id="id_contact_reason">
-                                  <-- que se muestre por default ( sin seleccionar) ->
-                                  <option value="">Elige una opción...</option>
-                                  {% for reason in form.contact_reason %}
-                                    <option value="{{ reason }}"></option>
-                                  {% endfor %}
-                                </select>
-                            </label>
-                            <label class="contact-label">Comentario (Obligatorio)
-                                <input class="contact-box" type="text" placeholder="Describe la razón de contacto." name="message" id="id_message">
-                            </label>
+<section>
+    <div class="container-login">
+        <div class="row">
+            <div class="col-md-8 col-lg-6 offset-md-2 offset-lg-3 border-fr-grey">
+                <div class="card-login rounded m-5">
+                    <p class="font-level-2 text-center m-3 font-weight-bold">Formulario de Contacto</p>
 
-                            <div class="d-flex flex-column align-items-center">
-                                <button type="submit" class="btn btn-primary btn-default-size" style="width: 100%">Enviar formulario</button>
-                            </div>
-                        </form>
-                    </div>
+                    <form class="form cols-12 m-5 text-center" method="POST" action="{% url 'home_app:add-contact' %}">
+                        {% csrf_token %}
+                        {{ form.non_field_errors }}
+
+                        <div class="form-group">
+                            {{ form.full_name.label_tag }}
+                            {{ form.full_name }}
+                            {{ form.full_name.errors }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.email.label_tag }}
+                            {{ form.email }}
+                            {{ form.email.errors }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.organization.label_tag }}
+                            {{ form.organization }}
+                            {{ form.organization.errors }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.contact_reason.label_tag }}
+                            {{ form.contact_reason }}
+                            {{ form.contact_reason.errors }}
+                        </div>
+
+                        <div class="form-group">
+                            {{ form.message.label_tag }}
+                            {{ form.message }}
+                            {{ form.message.errors }}
+                        </div>
+
+                        <div class="d-flex flex-column align-items-center">
+                            <button type="submit" class="btn btn-primary btn-default-size" style="width: 100%">Enviar formulario</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-        </div>
-        </div>
-        </div>
-    </section>
+    </div>
 </section>
+
 {% include "modules/footer.html" %}
 {% endblock content %}
