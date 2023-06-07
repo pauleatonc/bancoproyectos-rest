@@ -42,7 +42,7 @@ MEDIA_ROOT = BASE_DIR.child('media')
 
 # EMAIL SETTINGS
 EMAIL_USE_TLS = True
-EMAIL_HOST = 'smtp-gmaail.com'
+EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_HOST_USER = 'jhearquitecto@gmail.com'
-EMAIL_HOST_PASSWORD = ''
+EMAIL_HOST_PASSWORD = 'dromllkmnvtvxdzz'
 EMAIL_PORT = 587

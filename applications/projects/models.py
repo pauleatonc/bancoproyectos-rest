@@ -54,6 +54,7 @@ class Type(models.Model):
     name = models.CharField(
         max_length=200, verbose_name='Tipo de Proyecto', unique=True)
     guides = models.ManyToManyField(Guide, related_name='guides')
+    icon_type = models.CharField(verbose_name='Icono ( Nombre icono)', max_length=200,default='other_admission')
 
     def __str__(self):
         return self.name

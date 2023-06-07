@@ -26,7 +26,6 @@ class ProjectsListView(ListView):
         if '' in region:
             region.remove('')
 
-
         queryset = Project.objects.browser_search_projects(search_query, program, region, comuna, project_type, year, sort_by)
         return queryset
 
@@ -36,7 +35,7 @@ class ProjectsListView(ListView):
         context['types'] = Type.objects.all()
         context['regiones'] = Project.objects.values_list('comuna__region', 'comuna__region__nombre').distinct()
         context['comunas'] = Project.objects.values_list('comuna', 'comuna__nombre').distinct()
-        context['tipos'] = Project.objects.values_list('type', 'type__name').distinct()
+        context['tipos'] = Project.objects.values_list('type', 'type__name', 'type__iconType').distinct()
         context['years'] = Project.objects.values_list('year', 'year__number').distinct()
         return context
 

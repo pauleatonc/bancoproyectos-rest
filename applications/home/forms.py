@@ -1,7 +1,13 @@
 from django import forms
 from .models import Contact
 
+
 class ContactForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['message'].widget.attrs.update({'oninput': 'countWords()'})
+
     class Meta:
         model = Contact
         fields = ('full_name', 'email', 'organization', 'contact_reason', 'message')
@@ -19,7 +25,7 @@ class ContactForm(forms.ModelForm):
             'email': forms.EmailInput(attrs={'required': True, 'placeholder': 'Ingresa tu corre electrónico.', 'class': 'custom-input'}),
             'organization': forms.TextInput(attrs={'required': True, 'placeholder': 'Ingresa el nombre de tu organización.', 'class': 'custom-input'}),
             'contact_reason': forms.Select(attrs={'required': True, 'placeholder': 'Elige una opción', 'class': 'custom-select'}),
-            'message': forms.Textarea(attrs={'required': True, 'maxlength': 250, 'placeholder': 'Describe la razón de contacto.', 'class': 'custom-textarea'}),
+            'message': forms.Textarea(attrs={'required': True, 'placeholder': 'Describe la razón de contacto.', 'class': 'custom-textarea'}),
         }
 
     def clean_email(self):
@@ -27,3 +33,13 @@ class ContactForm(forms.ModelForm):
         if email and '@' not in email:
             raise forms.ValidationError('Por favor, introduce un correo electrónico válido.')
         return email
+
+    def clean_message(self):
+        message = self.cleaned_data.get('message')
+        word_limit = 250  # Número máximo de palabras permitidas
+
+        if message:
+            word_count = len(message.split())
+            if word_count > word_limit:
+                raise forms.ValidationError(f'El comentario no puede exceder {word_limit} palabras.')
+        return message

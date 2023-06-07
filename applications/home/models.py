@@ -18,7 +18,7 @@ class Contact(TimeStampedModel):
     email = models.EmailField('Correo electrónico institucional (obligatorio)')
     organization = models.CharField('Organización a la que perteneces (obligatorio)', max_length=30)
     contact_reason = models.CharField('Razón de contacto (obligatorio)', max_length=30, choices=CONTACT_REASON_CHOICES)
-    message = models.TextField('Comentario (obligatorio)', max_length=250)
+    message = models.TextField('Comentario (obligatorio)')
 
     class Meta:
         verbose_name = 'Contacto'
