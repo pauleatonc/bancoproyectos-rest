@@ -12,21 +12,21 @@
   padding: 0;
 }
 
-.form-group {
+.form-group-contact {
     text-align: left;
     width: 100%;
     position: relative;
     margin-bottom: 30px
     }
 
-.form-group label {
+.form-group-contact label {
     margin-left: 15px;
     position: absolute;
     top: -10px;
     background-color: var(--color-gray-ffffff);
 }
 
-.custom-input{
+.custom-input {
     width: 100%;
     height: 60px;
     padding: 15px 14px;
@@ -54,4 +54,11 @@
     padding: 15px 14px;
     border: solid 1px var(--color-gray-373737);
     background-color: var(--color-gray-ffffff);
+}
+
+.card-contact {
+  width: 570px;
+  height: 800px;
+  margin: 69px 435px 206px 69px;
+  padding: 0 0 18px;
 }

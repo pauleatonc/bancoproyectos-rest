@@ -1,6 +1,6 @@
 {% load static %}
 
-<form method="get">
+<form hx-get="{% url 'projects_app:project-list' %}" hx-target="body">
   {% csrf_token %}
   <div class="filter">
     <div class="filter-head">
