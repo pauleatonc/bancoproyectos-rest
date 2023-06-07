@@ -19,7 +19,9 @@ from django.views.generic.edit import (
 
 from .forms import UserRegisterForm, LoginForm, UpdatePasswordForm, VerificationSignInForm
 
+# Models
 from .models import User
+from applications.projects.models import Program, Type
 
 from .functions import code_generator, validar_rut
 
@@ -82,6 +84,13 @@ class LoginUser(FormView):
             return redirect(next_url)
         else:
             return redirect('projects_app:project-list')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['programs'] = Program.objects.all()
+        context['types'] = Type.objects.all()
+
+        return context
 
 
 class LogoutView(View):
