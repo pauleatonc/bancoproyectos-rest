@@ -35,7 +35,7 @@ class ProjectsListView(ListView):
         context['types'] = Type.objects.all()
         context['regiones'] = Project.objects.values_list('comuna__region', 'comuna__region__nombre').distinct()
         context['comunas'] = Project.objects.values_list('comuna', 'comuna__nombre').distinct()
-        context['tipos'] = Project.objects.values_list('type', 'type__name', 'type__iconType').distinct()
+        context['tipos'] = Project.objects.values_list('type', 'type__name', 'type__icon_type').distinct()
         context['years'] = Project.objects.values_list('year', 'year__number').distinct()
         return context
 

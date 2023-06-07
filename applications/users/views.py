@@ -46,7 +46,7 @@ class UserRegisterView(LoginRequiredMixin, UserPassesTestMixin, FormView):
             form.cleaned_data['rut'],
             form.cleaned_data['password1'],
             email=form.cleaned_data['email'],
-            username = form.cleaned_data['username'],
+
             #codregistro = codigo
         )
         return super(UserRegisterView, self).form_valid(form)
