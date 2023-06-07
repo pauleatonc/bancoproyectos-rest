@@ -5,14 +5,14 @@
 import hashlib
 from django.contrib.auth.hashers import BasePasswordHasher, mask_hash
 from django.utils.crypto import get_random_string, constant_time_compare
-from django.utils.datastructures import SortedDict
-from django.utils.translation import ugettext_noop as _
+from collections import OrderedDict
+from django.utils.translation import gettext_noop as _
 
 class MD5PasswordHasher(BasePasswordHasher):
     algorithm = "md5"
 
     def salt(self):
-        return get_random_string()
+        return get_random_string(length=12)  # Ajusta la longitud según tus necesidades
 
     def encode(self, password, salt):
         assert password is not None
@@ -29,7 +29,7 @@ class MD5PasswordHasher(BasePasswordHasher):
     def safe_summary(self, encoded):
         algorithm, salt, hash = encoded.split('$', 2)
         assert algorithm == self.algorithm
-        return SortedDict([
+        return OrderedDict([
             (_('algorithm'), algorithm),
             (_('salt'), mask_hash(salt)),
             (_('hash'), mask_hash(hash)),

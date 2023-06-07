@@ -15,7 +15,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     nombres = models.CharField(max_length=30, blank=True, null=True, default="none")
     apellidos = models.CharField(max_length=30, blank=True, null=True, default="none")
     password = models.CharField(max_length=200, blank=True)
-    email = models.CharField(max_length=100, blank=True, null=True, default="none")
+    email = models.TextField(max_length=100, blank=True, null=True, default="none")
 
     #Setiando el nombre de usuario al rut
     USERNAME_FIELD = 'rut'    

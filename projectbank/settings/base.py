@@ -85,7 +85,7 @@ AUTH_USER_MODEL = 'users.User'
 
 # Incluyendo el hash MD5 para lectura de claves de Subdereenlinea
 PASSWORD_HASHERS = [
-    'users.myhashers.MD5PasswordHasher',
+    'applications.users.myhashers.MD5PasswordHasher',
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
