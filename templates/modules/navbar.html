@@ -32,11 +32,13 @@
               <li class="nav-item"><a class="btn btn-block btn-primary" href="{% url 'users_app:user-logout' %}">Cerrar sesión</a></li>
             {% endif %}
           {% else %}
-            <li class="nav-item"><div class="btn btn-block btn-primary">
-              <div class="doc-icon m-2"><span class="cl cl-claveunica"></span></div>
-              <a class="text-white" href="{% url 'users_app:user-login' %}#inicio-sesion">Iniciar sesión</a>
-              </div>
-            </li>
+            <form method="GET" class="nav-item" action="{% url 'users_app:user-login' %}#inicio-sesion">
+              <input id="next-url" type="hidden" name="next" value="">
+              <button class="btn btn-block btn-primary" type="submit" onclick="setNextUrl()">
+                <div class="doc-icon m-2"><span class="cl cl-claveunica"></span></div>
+                Iniciar sesión
+              </button>
+            </form>
           {% endif %}
           </li>
         </ul>
@@ -97,3 +99,11 @@
 
   </div>
 </nav>
+
+<script>
+function setNextUrl() {
+  var currentUrl = window.location.href;
+  var nextUrlInput = document.getElementById("next-url");
+  nextUrlInput.value = currentUrl;
+}
+</script>
