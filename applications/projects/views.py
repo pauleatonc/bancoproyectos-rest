@@ -26,7 +26,6 @@ class ProjectsListView(ListView):
         if '' in region:
             region.remove('')
 
-
         queryset = Project.objects.browser_search_projects(search_query, program, region, comuna, project_type, year, sort_by)
         return queryset
 
