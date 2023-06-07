@@ -50,11 +50,26 @@
     <div class="filter-location">
       <div class="form-group">
         <label class="font-level-6 my-5">¿En qué región?</label>
-        <select class="custom-select" name="region">
-          <-- que se muestre por default ( sin seleccionar) ->
-          <option value="">Seleccionar Región...</option>
+        <select
+          class="selectpicker mt-3"
+          data-style="btn-outline-primary"
+          multiple
+          name="region"
+          data-size="5"
+          title="Elige una o más regiones..."
+          data-live-search="true"
+          data-none-results-text="No se encontro coincidencia"
+          data-width="100%"
+          data-actions-box="true"
+          data-select-all-text="Selecionar todas"
+          data-count-selected-text="{0} items seleccionados"
+          data-deselect-all-text="Limpiar"
+          data-selected-text-format="count"
+        >
           {% for region in regiones %}
-          <option value="{{ region.0}}">{{ region.1 }}</option>
+          <option value="{{ region.0}}" style="height:35px;"
+            >{{ region.1 }}</option
+          >
           {% endfor %}
         </select>
       </div>
@@ -78,7 +93,9 @@
           <div class="btn-group-toggle" data-toggle="buttons">
             <label class="btn btn-outline-primary rounded-circle btn-md active">
               <input type="checkbox" name="type" value="{{ tipo.0 }}" />
-              <i class="cl cl-list font-level-2 my-1 mx-2  "></i>
+              <i class="material-symbols-rounded mx-2">
+                {{ tipo.2 }}
+              </i>
             </label>
           </div>
           <span class="font-base font-weight-bold">{{tipo.1}}</span>
@@ -92,16 +109,26 @@
           >¿Qué años de construcción quieres ver?</label
         >
       </div>
-      <div class="form-group">
+      <select
+        class="selectpicker my-3"
+        multiple
+        name="year"
+        data-size="5"
+        title="Elige uno o más años..."
+        data-width="100%"
+        data-style="btn-outline-primary"
+        data-selected-text-format="count"
+        data-count-selected-text="{0} items seleccionados"
+        data-actions-box=" true"
+        data-select-all-text="Selecionar todos"
+        data-deselect-all-text="Limpiar"
+      >
         {% for year in years %}
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" value="{{year.0}}" />
-          <label class="form-check-label" for="defaultCheck1">
-            {{year.1}}
-          </label>
-        </div>
+        <option value="{{year.0}}" style="height:35px ; padding: auto;"
+          >{{year.1}}</option
+        >
         {% endfor %}
-      </div>
+      </select>
     </div>
     <div>
       <button class="btn-filter my-5" type="submit" name="show_results">
