@@ -94,8 +94,37 @@
                 </div>
             </form>
 
+            <div id="confirmation-message" class="hidden"></div>
+
         </div>
     </div>
 </section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+  $('form').on('submit', function(event) {
+    event.preventDefault(); // Evita el envío del formulario por defecto
+    var formData = $(this).serialize(); // Obtiene los datos del formulario
+
+    // Realiza la petición AJAX al endpoint del formulario
+    $.ajax({
+      url: $(this).attr('action'),
+      type: $(this).attr('method'),
+      data: formData,
+      success: function(response) {
+        // En caso de éxito, muestra el mensaje de confirmación y oculta el formulario
+        $('#confirmation-message').text('Enviaste el formulario exitosamente. Tu mensaje será derivado al área correspondiente.').removeClass('hidden');
+        $('form').addClass('hidden');
+      },
+      error: function(xhr, status, error) {
+        // Maneja los errores si es necesario
+      }
+    });
+  });
+});
+</script>
+
+
 {% include "modules/footer.html" %}
 {% endblock content %}

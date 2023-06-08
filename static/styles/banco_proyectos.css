@@ -320,3 +320,14 @@
 .errorlist__item {
     margin-bottom: 0px;
 }
+
+#confirmation-message {
+  margin-top: 10px;
+  padding: 10px;
+  background-color: green;
+  color: white;
+}
+
+.hidden {
+    display: none;
+}
