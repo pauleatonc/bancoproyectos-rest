@@ -6,6 +6,7 @@ from .functions import validar_rut
 
 from .managers import UserManager
 
+
 class Profesion(models.Model):
     ocupation = models.CharField('Profesión', max_length=20, unique=True)
 
