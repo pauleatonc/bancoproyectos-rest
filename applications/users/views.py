@@ -73,7 +73,6 @@ class UserRegisterView(LoginRequiredMixin, UserPassesTestMixin, FormView):
 class LoginUser(FormView):
     template_name = 'users/login.html'
     form_class = LoginForm
-    model = User
 
     def form_valid(self, form):
         user = authenticate(
@@ -103,11 +102,8 @@ class LogoutView(View):
 
     def get(self, request, *args, **kwargs):
         logout(request)
-        return HttpResponseRedirect(
-            reverse(
-                'home_app:index'
-            )
-        )
+        return redirect(self.request.META.get('HTTP_REFERER', '/'))
+
 
 class UpdatePasswordView(LoginRequiredMixin, FormView):
     template_name = 'users/update.html'

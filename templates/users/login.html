@@ -35,13 +35,14 @@
                         Banco de Proyectos</p>
                     <p class="text-center">Requiere credenciales otorgadas por la Subdere</p>
                     {% if messages %}
-                    <div class="text-center">
-                        {% for message in messages %}
-                        <p>{{ message }}</p>
-                        {% endfor %}
-                    </div>
+                        <div class="text-center">
+                            {% for message in messages %}
+                                <p>{{ message }}</p>
+                            {% endfor %}
+                        </div>
                     {% endif %}
-                    <form class="form cols-12 mx-5 " method="POST">
+
+                    <form class="form cols-12 mx-5" method="POST">
                         {% csrf_token %}
                         <div class="my-4 mx-3 d-flex flex-column justify-content-center align-items-center">
                             <div class="form-group-login my-3">
