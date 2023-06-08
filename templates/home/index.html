@@ -25,18 +25,18 @@
     <p class="font-level-2 text-center m-3 font-weight-bold">Categorías principales</p>
     <div class="category-landing cols-12 row m-5 text-center">
       <div class="col-3 m-2">
-        <a class="btn btn-outline-primary rounded-circle text-decoration-none font-weight-bold font-level-6" href="{% url 'projects_app:project-list' %}?program=1">PMU</a>
+        <a class="btn btn-outline-primary my-1 rounded-circle text-decoration-none font-weight-bold font-level-5" href="{% url 'projects_app:project-list' %}?program=1">PMU</a>
         <br>
         <span>Programa Mejoramiento Urbano</span>
       </div>
       <div class="col-3 m-2">
-        <a class="btn btn-outline-primary  rounded-circle text-decoration-none font-weight-bold font-level-6" href="{% url 'projects_app:project-list' %}?program=2">PMB</a>
+        <a class="btn btn-outline-primary my-1  rounded-circle text-decoration-none font-weight-bold font-level-6" href="{% url 'projects_app:project-list' %}?program=2">PMB</a>
         <br>
         <span>Programa Mejoramiento de Barrios</span>
       </div>
       <div class="col-3 m-2">
-        <a class="btn btn-outline-primary rounded-circle btn-md" href="{% url 'projects_app:project-list' %}?show_all=true" >
-          <span class="cl cl-list font-level-2 my-1 mx-2"><span/></a>
+        <a class="btn btn-outline-primary rounded-circle btn-md font-weight-bold px-3" href="{% url 'projects_app:project-list' %}?show_all=true" >
+          <span class="cl cl-list font-level-3 mx-2 my-2 "><span/></a>
             <br>
         <span>Ver todos los proyectos</span>
       </div>
@@ -44,7 +44,7 @@
   </div>
   <section class="section-card">
     <div class="container-description">
-      <p class="font-level-2 text-left">¿Qué es el Banco de Proyectos?</p>
+      <p class="font-level-1 text-left">¿Qué es el Banco de Proyectos?</p>
       <p class="text-description">El <span>Banco de Proyectos</span> de la Subsecretaría de Desarrollo Regional y
         Administrativo es un <span></span>repositorio de proyectos ya ejecutados por distintas municipalidades a lo
         largo del país, que tiene por objetivo poner a
@@ -57,42 +57,42 @@
       <div class="cards cols-12 row">
         <div class="col-3 m-4">
           <div class="card-ilus">
-            <div class="group-1">
+            <div class="group">
               <div class="circle">
                 <img src="{% static 'images/Trabajador_computador_2.png'%}" class="ilustra-1" />
               </div>
             </div>
-            <div class="card-text">
-              <p class="title">Para personas encargadas de Programas Mejoramiento Urbano y de Barrios</p>
-              <p class="text">Dirigido a todo profesional municipal encargado de la formulación de proyectos que se
+            <div class="card-text-landing text-center">
+              <span class="font-level-4 font-weight-bolder">Para personas encargadas de Programas Mejoramiento Urbano y de Barrios</>
+              <p class="font-level-6 my-2">Dirigido a todo profesional municipal encargado de la formulación de proyectos que se
                 enmarquen en los programas PMU y PMB.</p>
             </div>
           </div>
         </div>
         <div class="col-3 m-4">
           <div class="card-ilus">
-            <div class="group-2">
+            <div class="group">
               <div class="circle">
                 <img src="{% static 'images/Mujer_Lupa.png'%}" class="ilustra-2" />
               </div>
             </div>
-            <div class="card-text">
-              <p class="title">Filtra información y encuentra el proyecto que se ajuste a tu comuna</p>
-              <p class="text">Podrás filtrar proyectos por tipo de programa, revisar antecedentes y descargar
+            <div class="card-text-landing text-center">
+              <span class="font-level-4 font-weight-bolder">Filtra información y encuentra el proyecto que se ajuste a tu comuna</span>
+              <p class="font-level-6 my-2">Podrás filtrar proyectos por tipo de programa, revisar antecedentes y descargar
                 documentación referencial para postular proyectos adecuados a la realidad de tu comuna.</p>
             </div>
           </div>
         </div>
         <div class="col-3 m-4">
           <div class="card-ilus">
-            <div class="group-3">
+            <div class="group">
               <div class="circle">
                 <img src="{% static 'images/Trabajador_computador.png'%}" class="ilustra-3" />
               </div>
             </div>
-            <div class="card-text">
-              <p class="title">Entregamos información referencial para la realización de proyectos</p>
-              <p class="text">Encontrarás información referencial detallada de proyectos como: planos, especificaciones,
+            <div class="card-text-landing text-center">
+              <span class="font-level-4 font-weight-bolder">Entregamos información referencial para la realización de proyectos</span>
+              <p class="font-level-6 my-2">Encontrarás información referencial detallada de proyectos como: planos, especificaciones,
                 presupuestos, e información referencial para su elaboración.</p>
             </div>
           </div>
@@ -100,7 +100,7 @@
       </div>
     </div>
     <div class="container-map">
-      <p class="title-end">¿Quiénes somos?</p>
+      <p class="font-level-1 text-center font-weight-bold">¿Quiénes somos?</p>
       <p class="text-end">El Banco de Proyectos es una iniciativa directa de la Subsecretaría de Desarrollo Regional y
         Administrativo, cuya información está en permanente actualización.</p>
       <div class="card-map">
