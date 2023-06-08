@@ -36,7 +36,8 @@ class UserRegisterForm(forms.ModelForm):
         label='¿Este usuario será administrador?',
         required=True,
         widget=forms.RadioSelect(
-            choices=((True, 'Sí'), (False, 'No')),
+            attrs={'type': 'radio'},
+            choices=((True, 'Sí'), (False, 'No'))
         )
     )
 

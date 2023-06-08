@@ -30,62 +30,69 @@
     </div>
     <div class="d-flex flex-column align-items-center">
         <div class="container-register-users d-flex flex-column  m-5 w-50">
-            <div class="card-divider my-3">
+            <div class="card-divider my-2 mx-5">
                 <span class="font-level-2 ">Formulario de creación de usuario</s>
             </div>
 
-                <form class="form cols-12 m-5 text-center" method="POST" action="{% url 'users_app:user-register' %}">
-                    {% csrf_token %}
-                    {{ form.non_field_errors }}
+            <form class="form cols-12 m-5 text-center" method="POST" action="{% url 'users_app:user-register' %}">
+                {% csrf_token %}
+                {{ form.non_field_errors }}
 
-                    <div class="form-group-contact">
-                        {{ form.rut.label_tag }}
-                        {{ form.rut }}
-                        {{ form.rut.errors }}
-                    </div>
+                <div class="form-group-contact">
+                    {{ form.rut.label_tag }}
+                    {{ form.rut }}
+                    {{ form.rut.errors }}
+                </div>
 
-                    <div class="form-group-contact">
-                        {{ form.nombres.label_tag }}
-                        {{ form.nombres }}
-                        {{ form.nombres.errors }}
-                    </div>
+                <div class="form-group-contact">
+                    {{ form.nombres.label_tag }}
+                    {{ form.nombres }}
+                    {{ form.nombres.errors }}
+                </div>
 
-                    <div class="form-group-contact">
-                        {{ form.apellidos.label_tag }}
-                        {{ form.apellidos }}
-                        {{ form.apellidos.errors }}
-                    </div>
+                <div class="form-group-contact">
+                    {{ form.apellidos.label_tag }}
+                    {{ form.apellidos }}
+                    {{ form.apellidos.errors }}
+                </div>
 
-                    <div class="form-group-contact">
-                        {{ form.email.label_tag }}
-                        {{ form.email }}
-                        {{ form.email.errors }}
-                    </div>
+                <div class="form-group-contact">
+                    {{ form.email.label_tag }}
+                    {{ form.email }}
+                    {{ form.email.errors }}
+                </div>
 
-                    <div class="col-12 my-3">
-                        <span>{{ form.is_staff.label_tag }}</span>
-                        <div>
-                            {{ form.is_staff }}
-                            {{ form.is_staff.errors }}
-                        </div>
+                <div class="col-12 my-3 ">
+                    <span class="row justify-content-start">{{ form.is_staff.label_tag }}</span>
+                    <div class="btn-group btn-group-toggle d-flex  justify-self-start col-6 pl-0" data-toggle="buttons">
+                        {% for radio in form.is_staff %}
+                        <label
+                            class="btn btn-outline-primary my-3  mr-3 {% if radio.choice_value == form.is_staff.value %}active{% endif %}">
+                            {{ radio.choice_label }}
+                            {{ radio.tag }}
+                        </label>
+                        {% endfor %}
+                        {{ form.is_staff.errors }}
                     </div>
+                </div>
 
-                    <div class="form-group-contact">
-                        {{ form.password1.label_tag }}
-                        {{ form.password1 }}
-                        {{ form.password1.errors }}
-                    </div>
+                <div class="form-group-contact">
+                    {{ form.password1.label_tag }}
+                    {{ form.password1 }}
+                    {{ form.password1.errors }}
+                </div>
 
-                    <div class="form-group-contact">
-                        {{ form.password2.label_tag }}
-                        {{ form.password2 }}
-                        {{ form.password2.errors }}
-                    </div>
+                <div class="form-group-contact">
+                    {{ form.password2.label_tag }}
+                    {{ form.password2 }}
+                    {{ form.password2.errors }}
+                </div>
 
-                    <div class="d-flex flex-column align-items-center">
-                        <button type="submit" class="btn btn-primary btn-default-size" style="width: 100%">Crear usuario</button>
-                    </div>
-                </form>
+                <div class="d-flex flex-column align-items-center">
+                    <button type="submit" class="btn btn-primary btn-default-size" style="width: 100%">Crear
+                        usuario</button>
+                </div>
+            </form>
 
         </div>
     </div>
