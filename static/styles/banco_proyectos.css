@@ -309,3 +309,14 @@
   background-color: #871a1a;
   color: #ffffff;
 }
+
+.errorlist {
+    color: red;
+    list-style-type: none;
+    margin-left: -40px;
+    font-size: 14px;
+}
+
+.errorlist__item {
+    margin-bottom: 0px;
+}
