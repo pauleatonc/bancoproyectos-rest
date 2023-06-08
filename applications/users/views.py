@@ -29,7 +29,8 @@ from .functions import code_generator, validar_rut
 class UserRegisterView(LoginRequiredMixin, UserPassesTestMixin, FormView):
     template_name = 'users/register.html'
     form_class = UserRegisterForm
-    success_url = reverse_lazy('users_app:user-login')
+    model = User
+    success_url = '.'
 
     def test_func(self):
         return self.request.user.is_staff
@@ -43,13 +44,17 @@ class UserRegisterView(LoginRequiredMixin, UserPassesTestMixin, FormView):
         #codigo = code_generator()
 
         usuario = User.objects.create_user(
-            form.cleaned_data['rut'],
-            form.cleaned_data['password1'],
+            rut=form.cleaned_data['rut'],
+            password=form.cleaned_data['password1'],
+            is_staff=form.cleaned_data['is_staff']=='True',
+            nombres=form.cleaned_data['nombres'],
+            apellidos=form.cleaned_data['apellidos'],
             email=form.cleaned_data['email'],
 
             #codregistro = codigo
         )
         return super(UserRegisterView, self).form_valid(form)
+
         """# enviar el codigo al email del user
         asunto = 'Email de confirmación ArchiPartner'
         mensaje = 'El código de verificación es: ' + codigo

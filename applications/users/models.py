@@ -11,7 +11,7 @@ class Profesion(models.Model):
 
 class User(AbstractBaseUser, PermissionsMixin):
 
-    rut = models.CharField(max_length=10, validators=[validar_rut], unique=True)
+    rut = models.CharField(max_length=15, validators=[validar_rut], unique=True)
     nombres = models.CharField(max_length=30, blank=True, null=True, default="none")
     apellidos = models.CharField(max_length=30, blank=True, null=True, default="none")
     password = models.CharField(max_length=200, blank=True)
@@ -21,7 +21,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     USERNAME_FIELD = 'rut'    
 
 
-    is_staff = models.BooleanField('Usuario administrador',default=False)
+    is_staff = models.BooleanField('Usuario administrador', default=False)
     is_active = models.BooleanField(default=True)
 
     #Campos requeridos
