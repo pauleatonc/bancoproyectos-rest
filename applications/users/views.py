@@ -73,7 +73,6 @@ class UserRegisterView(LoginRequiredMixin, UserPassesTestMixin, FormView):
 class LoginUser(FormView):
     template_name = 'users/login.html'
     form_class = LoginForm
-    model = User
 
     def form_valid(self, form):
         user = authenticate(
