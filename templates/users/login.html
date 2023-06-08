@@ -41,7 +41,7 @@
                             {% endfor %}
                         </div>
                     {% endif %}
-                    <form class="form cols-12 mx-5 " method="POST" action="{% url 'users_app:user-login' %}">
+                    <form class="form cols-12 mx-5 " method="POST">
                         {% csrf_token %}
                         <div class="my-4 mx-3 d-flex flex-column justify-content-center align-items-center">
                             <div class="form-group-login my-3">

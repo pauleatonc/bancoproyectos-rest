@@ -102,11 +102,8 @@ class LogoutView(View):
 
     def get(self, request, *args, **kwargs):
         logout(request)
-        return HttpResponseRedirect(
-            reverse(
-                'home_app:index'
-            )
-        )
+        return redirect(self.request.META.get('HTTP_REFERER', '/'))
+
 
 class UpdatePasswordView(LoginRequiredMixin, FormView):
     template_name = 'users/update.html'
