@@ -10,22 +10,33 @@ from .functions import validar_rut_form
 class UserRegisterForm(forms.ModelForm):
 
     password1 = forms.CharField(
-        label='Contraseña',
+        label='Escribe una contraseña',
         required=True,
         widget=forms.PasswordInput(
             attrs={
-                'placeholder': 'Contraseña'
+                'placeholder': '********',
+                'class': 'custom-input'
             }
         )
     )
 
     password2 = forms.CharField(
-        label='Repetir Contraseña',
+        label='Confirma la contraseña escrita anteriormente',
         required=True,
         widget=forms.PasswordInput(
             attrs={
-                'placeholder': 'Repetir contraseña'
+                'placeholder': '********',
+                'class': 'custom-input'
+
             }
+        )
+    )
+
+    is_staff = forms.BooleanField(
+        label='¿Este usuario será administrador?',
+        required=True,
+        widget=forms.RadioSelect(
+            choices=((True, 'Sí'), (False, 'No')),
         )
     )
 
@@ -35,26 +46,55 @@ class UserRegisterForm(forms.ModelForm):
         model = User
         fields = (
             'rut',
+            'nombres',
+            'apellidos',
             'email',
-            'is_staff'
         )
+
+        labels = {
+            'rut': 'RUT (Obligatorio)',
+            'nombres': 'Nombre',
+            'apellidos': 'Apellidos',
+            'email': 'Correo electrónico institucional (obligatorio)',
+        }
+
         widgets = {
             'rut': forms.TextInput(
                 attrs={
-                'placeholder': 'Rut...',
+                    'required': True,
+                    'placeholder': 'Escribe tu RUT sin puntos ni guiones y con dígito verificador',
+                    'class': 'custom-input'
+                }
+            ),
+            'nombres': forms.TextInput(
+                attrs={
+                    'required': True,
+                    'placeholder': 'Ingresa tu nombre.',
+                    'class': 'custom-input'
+                }
+            ),
+            'apellidos': forms.TextInput(
+                attrs={
+                    'required': True,
+                    'placeholder': 'Ingresa tus apellidos.',
+                    'class': 'custom-input'
                 }
             ),
             'email': forms.EmailInput(
                 attrs={
-                    'placeholder': 'Correo electrónico...',
+                    'required': True,
+                    'placeholder': 'Ingresa tu correo electrónico.',
+                    'class': 'custom-input'
                 }
             ),
-
         }
 
     def clean_password2(self):
-        if self.cleaned_data['password1'] != self.cleaned_data['password2']:
-            self.add_error('password2', 'Las contraseñas no son iguales')
+        password1 = self.cleaned_data.get('password1')
+        password2 = self.cleaned_data.get('password2')
+        if password1 and password2 and password1 != password2:
+            raise forms.ValidationError('Las contraseñas no coinciden')
+        return password2
 
 class LoginForm(forms.Form):
     rut = forms.CharField(

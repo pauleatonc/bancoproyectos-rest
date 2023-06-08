@@ -22,7 +22,7 @@ class ContactForm(forms.ModelForm):
 
         widgets = {
             'full_name': forms.TextInput(attrs={'required': True, 'placeholder': 'Ingresa tu nombre.', 'class': 'custom-input'}),
-            'email': forms.EmailInput(attrs={'required': True, 'placeholder': 'Ingresa tu corre electrónico.', 'class': 'custom-input'}),
+            'email': forms.EmailInput(attrs={'required': True, 'placeholder': 'Ingresa tu correo electrónico.', 'class': 'custom-input'}),
             'organization': forms.TextInput(attrs={'required': True, 'placeholder': 'Ingresa el nombre de tu organización.', 'class': 'custom-input'}),
             'contact_reason': forms.Select(attrs={'required': True, 'placeholder': 'Elige una opción', 'class': 'custom-select'}),
             'message': forms.Textarea(attrs={'required': True, 'placeholder': 'Describe la razón de contacto.', 'class': 'custom-textarea'}),
