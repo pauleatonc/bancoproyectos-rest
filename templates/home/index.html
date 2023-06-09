@@ -3,13 +3,11 @@
 {% block content %}
 {%include "modules/navbar.html" %}
 <section class='landing'>
-  <div class='title-landing'>
-  <div class="text-center">
+  <div class='title d-flex justify-content-center mt-5'>
     <div class="line">
       <p class="h1 font-weight-bold">Banco de Proyectos</p>
     </div>
   </div>
-</div>
   <section class="m-5">
     <div class="text-center m-3 h-4 text-muted"> Acceder al buscador de proyectos escribiendo palabra clave</div>
     <form class="search mx-auto" method="GET" action="{% url 'projects_app:project-list' %}" id="search-form">
@@ -25,19 +23,22 @@
     <p class="font-level-2 text-center m-3 font-weight-bold">Categorías principales</p>
     <div class="category-landing cols-12 row m-5 text-center">
       <div class="col-3 m-2">
-        <a class="btn btn-outline-primary my-1 rounded-circle text-decoration-none font-weight-bold font-level-5" href="{% url 'projects_app:project-list' %}?program=1">PMU</a>
+        <a class="btn btn-outline-primary my-1 rounded-circle text-decoration-none font-weight-bold font-level-5"
+          href="{% url 'projects_app:project-list' %}?program=1">PMU</a>
         <br>
         <span>Programa Mejoramiento Urbano</span>
       </div>
       <div class="col-3 m-2">
-        <a class="btn btn-outline-primary my-1  rounded-circle text-decoration-none font-weight-bold font-level-6" href="{% url 'projects_app:project-list' %}?program=2">PMB</a>
+        <a class="btn btn-outline-primary my-1  rounded-circle text-decoration-none font-weight-bold font-level-6"
+          href="{% url 'projects_app:project-list' %}?program=2">PMB</a>
         <br>
         <span>Programa Mejoramiento de Barrios</span>
       </div>
       <div class="col-3 m-2">
-        <a class="btn btn-outline-primary rounded-circle btn-md font-weight-bold px-3" href="{% url 'projects_app:project-list' %}?show_all=true" >
-          <span class="cl cl-list font-level-3 mx-2 my-2 "><span/></a>
-            <br>
+        <a class="btn btn-outline-primary rounded-circle btn-md font-weight-bold px-3"
+          href="{% url 'projects_app:project-list' %}?show_all=true">
+          <span class="cl cl-list font-level-3 mx-2 my-2 "><span /></a>
+        <br>
         <span>Ver todos los proyectos</span>
       </div>
     </div>
@@ -63,9 +64,11 @@
               </div>
             </div>
             <div class="card-text-landing text-center">
-              <span class="font-level-4 font-weight-bolder">Para personas encargadas de Programas Mejoramiento Urbano y de Barrios</>
-              <p class="font-level-6 my-2">Dirigido a todo profesional municipal encargado de la formulación de proyectos que se
-                enmarquen en los programas PMU y PMB.</p>
+              <span class="font-level-4 font-weight-bolder">Para personas encargadas de Programas Mejoramiento Urbano y
+                de Barrios</>
+                <p class="font-level-6 my-2">Dirigido a todo profesional municipal encargado de la formulación de
+                  proyectos que se
+                  enmarquen en los programas PMU y PMB.</p>
             </div>
           </div>
         </div>
@@ -77,8 +80,10 @@
               </div>
             </div>
             <div class="card-text-landing text-center">
-              <span class="font-level-4 font-weight-bolder">Filtra información y encuentra el proyecto que se ajuste a tu comuna</span>
-              <p class="font-level-6 my-2">Podrás filtrar proyectos por tipo de programa, revisar antecedentes y descargar
+              <span class="font-level-4 font-weight-bolder">Filtra información y encuentra el proyecto que se ajuste a
+                tu comuna</span>
+              <p class="font-level-6 my-2">Podrás filtrar proyectos por tipo de programa, revisar antecedentes y
+                descargar
                 documentación referencial para postular proyectos adecuados a la realidad de tu comuna.</p>
             </div>
           </div>
@@ -91,8 +96,10 @@
               </div>
             </div>
             <div class="card-text-landing text-center">
-              <span class="font-level-4 font-weight-bolder">Entregamos información referencial para la realización de proyectos</span>
-              <p class="font-level-6 my-2">Encontrarás información referencial detallada de proyectos como: planos, especificaciones,
+              <span class="font-level-4 font-weight-bolder">Entregamos información referencial para la realización de
+                proyectos</span>
+              <p class="font-level-6 my-2">Encontrarás información referencial detallada de proyectos como: planos,
+                especificaciones,
                 presupuestos, e información referencial para su elaboración.</p>
             </div>
           </div>
@@ -110,5 +117,5 @@
   </section>
 </section>
 
-{% include "modules/footer.html" %} 
+{% include "modules/footer.html" %}
 {% endblock content %}
