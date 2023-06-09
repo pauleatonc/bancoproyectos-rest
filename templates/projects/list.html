@@ -1,17 +1,19 @@
-{% extends "projects/base_projects.html" %}
-{% load static %}
-{% block content%}
+{% extends "projects/base_projects.html" %} {% load static %} {% block content%}
 {% include "modules/navbar.html" %}
 <section class="projects-search">
-    <div class="m-5 " >
+    <div class="m-5 ">
         <div class="title d-flex justify-content-center">
             <div class="line">
-                <p class="h1 font-weight-bold" id="inicio-banco-proyectos">Banco de Proyectos</p>
+                <p class="h1 font-weight-bold" id="inicio-banco-proyectos">
+                    Banco de Proyectos
+                </p>
             </div>
         </div>
         <nav aria-label="breadcrumb">
             <ol class=" breadcrumb ml-5 pl-3">
-                <li class="breadcrumb-item"><a href="{% url 'home_app:index' %}">Inicio</a></li>
+                <li class="breadcrumb-item">
+                    <a href="{% url 'home_app:index' %}">Inicio</a>
+                </li>
                 <li class="breadcrumb-item active" aria-current="page">
                     Banco de proyectos
                 </li>
@@ -24,7 +26,8 @@
         <div class="text-center m-3 h-4 text-muted">
             Acceder al buscador de proyectos escribiendo palabra clave
         </div>
-        <form class="search mx-auto" method="GET" id="search-form"> {% csrf_token %}
+        <form class="search mx-auto" method="GET" id="search-form">
+            {% csrf_token %}
             <input class="form-control" type="text" name="search_query" id="search_query" placeholder="Buscar proyecto"
                 aria-label="Buscar proyectos" aria-describedby="searchAction" />
             <div class="search-action">
@@ -38,7 +41,6 @@
     <section class="projects">
         <div class="container-projects">
             <div class="cols-12 row mx-0">
-
                 <!-- Agrega el formulario de filtro -->
                 <div class="col-4">
                     {% include "modules/browser.html" %}
@@ -66,24 +68,31 @@
                             <div class="col-6 ">
                                 <div class="card-project">
                                     <div class="card-img-project">
-                                        <img class="img-project" src="{{ project.portacard.url }}" alt="img-miniatura" />
+                                        <img class="img-project" src="{{ project.portada.url }}" alt="img-miniatura" />
                                     </div>
                                     <div class="location-project d-flex justify-content-between w-100 h-20">
-                                        <p class=" font-level-8 m-0">Region: {{ project.comuna.region }}</p>
-                                        <p class=" font-level-8 m-0">Comuna: {{ project.comuna }}</p>
+                                        <p class=" font-level-8 m-0">
+                                            Region: {{ project.comuna.region }}
+                                        </p>
+                                        <p class=" font-level-8 m-0">
+                                            Comuna: {{ project.comuna }}
+                                        </p>
                                     </div>
                                     <div class="body-project ">
                                         <p class="h2">{{ project.name }}</p>
-                                        <p class="description-project font-base text-sm-left">{{ project.description }}
+                                        <p class="description-project font-base text-sm-left">
+                                            {{ project.description }}
                                         </p>
                                         <div class="tags-project row ">
                                             <div class="col-auto pb-2">
                                                 <div class="badge border border-primary font-level-7">
-                                                    {{project.program.sigla}}</div>
+                                                    {{project.program.sigla}}
+                                                </div>
                                             </div>
                                             <div class="col-auto pb-2">
                                                 <div class="badge border  border-primary font-level-7">
-                                                    {{project.year.number}}</div>
+                                                    {{project.year.number}}
+                                                </div>
                                             </div>
                                             <div class="col-auto pb-2">
                                                 <div class="badge border  border-primary font-level-7 ">
@@ -100,22 +109,34 @@
                         </div>
                     </div>
                     <nav
-                        class="pagination-container my-5 flex-column justify-content-start flex-sm-row a11y-fonts-flex-column a11y-fonts-flex-lg-row">
-                        <p class="text-start">{{ projects|length }} resultados de {{ projects|length }} proyectos</p>
-                        <ul class="pagination mx-2">
-                            <li class="page-item border-0"">
-                                <div class=" page-link disabled">
-                                </div>
+                        class="pagination-container flex-column flex-sm-row justify-content-start a11y-fonts-flex-column a11y-fonts-flex-lg-row">
+                        <p class="text-start mr-5">
+                            {{ projects|length }} resultados de {{ projects|length }}
+                            proyectos
+                        </p>
+                        <ul class="pagination justify-content-center align-items-center active">
+                            <li class="page-item">
+                                <a class="page-link border-0 text-decoration-none font-level-1 " href="#">
+                                    < </a>
                             </li>
-                            <li class="page-item active border-0""><a class=" page-link" href="#">1</a></li>
-                            <li class="page-item d-none d-ss-block a11y-fonts-d-none a11y-fonts-d-sm-block"><a
-                                    class="page-link" href="#">2</a></li>
-                            <li class="page-item"><a class="page-link" href="#">></a></li>
+                            <li class="page-item ">
+                                <a class="page-link border-0 text-decoration-none" href="#">1</a>
+                            </li>
+                            <li class="page-item d-none d-ss-block a11y-fonts-d-none a11y-fonts-d-sm-block border-0">
+                                <a class="page-link border-0 text-decoration-none" href="#">2</a>
+                            </li>
+                            <li class="page-item a11y-fonts-d-none a11y-fonts-d-sm-block border-0">
+                                <a class="page-link border-0 text-decoration-none" href="#">...</a>
+                            </li>
+                            <li class="page-item "><a class="page-link border-0 font-level-1  text-decoration-none"
+                                    href="#"> > </a></li>
                         </ul>
                     </nav>
                 </div>
                 {% else %}
-                <p class="alert alert-warning" role="alert" >No hay proyectos que coincidan con la búsqueda.</p>
+                <p class="alert alert-warning" role="alert">
+                    No hay proyectos que coincidan con la búsqueda.
+                </p>
                 {% endif %}
             </div>
         </div>
@@ -124,11 +145,14 @@
 
     <!-- Script que carga la página con el ID del div escogido -->
     <script>
-      window.addEventListener('DOMContentLoaded', function() {
-        var targetElement = document.getElementById('inicio-banco-proyectos');
-        if (targetElement) {
-          targetElement.scrollIntoView();
-        }
-      });
+        window.addEventListener("DOMContentLoaded", function ()
+        {
+            var targetElement = document.getElementById("inicio-banco-proyectos");
+            if (targetElement)
+            {
+                targetElement.scrollIntoView();
+            }
+        });
     </script>
     {% endblock content %}
+</section>
