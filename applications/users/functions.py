@@ -10,9 +10,9 @@ def code_generator(size=6, chars= string.ascii_uppercase + string.digits):
 
 # Validador para el Modelo User para el RUT chileno
 def validar_rut(value):
-    rut = value.replace(".", "").replace("-", "")  # Eliminar puntos y guion
-    if not rut.isdigit():
-        raise ValidationError('El RUT debe contener sólo números')
+    rut = value.replace(".", "").replace("-", "")  # Eliminar puntos y guiones
+    if not rut[:-1].isdigit() or (rut[-1].lower() != 'k' and not rut[-1].isdigit()):
+        raise ValidationError('El RUT debe contener sólo números o "-k" como dígito verificador')
     if len(rut) < 7:
         raise ValidationError('El RUT debe contener al menos 7 dígitos')
     verificador = rut[-1].lower()  # Obtener dígito verificador
