@@ -1,19 +1,22 @@
+import environ
 from .base import *
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# we load the variables from the .env file to the environment
+env = environ.Env()
+environ.Env.read_env()
 
-ALLOWED_HOSTS = ['pauleaton.pythonanywhere.com', 'localhost']
+# SECURITY WARNING: keep the secret key used in production secret!
+# Your secret key
+SECRET_KEY = env("SECRET_KEY")
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = env.bool('DEBUG', default=False)
+
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-import environ
-env = environ.Env()
-environ.Env.read_env()
-...
-# Your secret key
-SECRET_KEY = env("SECRET_KEY")
-...
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
