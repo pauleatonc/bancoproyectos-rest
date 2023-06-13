@@ -1,0 +1,1 @@
+// agrupa las secciones escritas de Que es? y Quienes somos?, presente en vista inicio.

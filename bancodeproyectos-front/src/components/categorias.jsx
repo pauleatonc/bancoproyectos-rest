@@ -1,0 +1,1 @@
+// selector de las categorias de proyectos a mostrar (PMU, PMB y Todos), presente en vista inicio

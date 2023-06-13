@@ -1,0 +1,1 @@
+// footer, repite en todas las vistas
