@@ -1,5 +1,6 @@
 from django import forms
 from .models import Contact
+from captcha.fields import ReCaptchaField
 
 
 class ContactForm(forms.ModelForm):
@@ -27,6 +28,8 @@ class ContactForm(forms.ModelForm):
             'contact_reason': forms.Select(attrs={'required': True, 'placeholder': 'Elige una opción', 'class': 'custom-select'}),
             'message': forms.Textarea(attrs={'required': True, 'placeholder': 'Describe la razón de contacto.', 'class': 'custom-textarea'}),
         }
+
+    captcha = ReCaptchaField()
 
     def clean_email(self):
         email = self.cleaned_data.get('email')

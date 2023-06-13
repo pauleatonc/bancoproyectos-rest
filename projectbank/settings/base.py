@@ -29,6 +29,7 @@ THIRD_PARTY_APPS = [
     'imagekit',
     'import_export',
     'storages',
+    'captcha'
 
 ]
 

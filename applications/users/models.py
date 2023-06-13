@@ -13,10 +13,10 @@ class Profesion(models.Model):
 class User(AbstractBaseUser, PermissionsMixin):
 
     rut = models.CharField(max_length=15, validators=[validar_rut], unique=True)
-    nombres = models.CharField(max_length=30, blank=True, null=True, default="none")
-    apellidos = models.CharField(max_length=30, blank=True, null=True, default="none")
+    nombres = models.CharField(max_length=30, blank=True, null=True)
+    apellidos = models.CharField(max_length=30, blank=True, null=True)
     password = models.CharField(max_length=200, blank=True)
-    email = models.TextField(max_length=100, blank=True, null=True, default="none")
+    email = models.TextField(max_length=100, blank=True, null=True)
 
     #Setiando el nombre de usuario al rut
     USERNAME_FIELD = 'rut'    
