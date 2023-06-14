@@ -1,10 +1,7 @@
-import DefaultLayout from "../../../layout/defaultLayout";
-
 const Home = () => {
     return (
       <>
-        <DefaultLayout />
-
+        <h1>mostrando Home</h1>
       </>
     );
   };
