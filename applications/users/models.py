@@ -26,7 +26,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
 
     #Campos requeridos
-    REQUIRED_FIELDS = ['password']
+    REQUIRED_FIELDS = []
 
     objects = UserManager()
 
