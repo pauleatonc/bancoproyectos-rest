@@ -35,22 +35,22 @@ La aplicación Banco de Proyectos SUBDERE es una aplicación web desarrollada pa
 - Versión Django: 4.1.3
 
 ### Instalación y Configuración
-# Clonar el repositorio
+### Clonar el repositorio
 git clone git@gitlab.com:gabinetedevs/bancodeproyectos.git
 
-# Cambiar al directorio del proyecto
+### Cambiar al directorio del proyecto
 cd bancodeproyectos
 
-# Asegúrate de tener instalado Python 3.11.0
+### Asegúrate de tener instalado Python 3.11.0
 python --version
 
-# Instalar las dependencias
+### Instalar las dependencias
 pip install -r requirements.txt
 
-# Aplicar las migraciones
+### Aplicar las migraciones
 python manage.py migrate
 
-# Iniciar el servidor de desarrollo
+### Iniciar el servidor de desarrollo
 python manage.py runserver
 
 ### Estructura del Proyecto Django
@@ -67,19 +67,19 @@ python manage.py runserver
 - Requiere Node.js para la instalación y ejecución
 
 ### Instalación y Configuración
-# Asegúrate de tener Node.js instalado
+### Asegúrate de tener Node.js instalado
 node --version
 
-# Clonar el repositorio
+### Clonar el repositorio
 git clone git@gitlab.com:gabinetedevs/bancodeproyectos-front.git
 
-# Cambiar al directorio del proyecto
+### Cambiar al directorio del proyecto
 cd bancodeproyectos-front
 
-# Instalar las dependencias
+### Instalar las dependencias
 npm install
 
-# Iniciar el servidor de desarrollo
+### Iniciar el servidor de desarrollo
 npm start
 
 ### Estructura del Proyecto React
@@ -92,17 +92,17 @@ npm start
 ### Despliegue y Configuración
 La aplicación se despliega utilizando Docker Compose. Asegúrese de tener instalado Docker y Docker Compose en su sistema antes de intentar el despliegue.
 
-# Verificar la instalación de Docker
+### Verificar la instalación de Docker
 docker --version
 
-# Verificar la instalación de Docker Compose
+### Verificar la instalación de Docker Compose
 docker-compose --version
 
-# Si Docker o Docker Compose no están instalados, siga las instrucciones oficiales para instalarlos:
-# Docker: https://docs.docker.com/engine/install/
-# Docker Compose: https://docs.docker.com/compose/install/
+### Si Docker o Docker Compose no están instalados, siga las instrucciones oficiales para instalarlos:
+ Docker: https://docs.docker.com/engine/install/
+ Docker Compose: https://docs.docker.com/compose/install/
 
-# Para desplegar la aplicación, navegue hasta el directorio del proyecto y ejecute:
+### Para desplegar la aplicación, navegue hasta el directorio del proyecto y ejecute:
 docker-compose up
 
 Por favor, consulte el archivo docker-compose.yml para más detalles sobre el despliegue de la aplicación y cualquier configuración adicional necesaria.
