@@ -1,4 +1,4 @@
-// vista banco de proyectos
+// vista al hacer click a "banco de proyectos"
 
 /*
 Heather

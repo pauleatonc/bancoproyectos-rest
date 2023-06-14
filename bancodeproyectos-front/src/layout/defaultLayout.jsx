@@ -1,0 +1,1 @@
+// plantilla para el general de la pagina, incluye header, buscador y footer

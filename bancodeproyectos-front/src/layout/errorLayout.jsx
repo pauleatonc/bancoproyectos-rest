@@ -1,0 +1,1 @@
+// plantilla para errores, incluye header y footer
