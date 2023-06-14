@@ -13,9 +13,11 @@ from django.views.generic import (
 # forms
 from .forms import ContactForm
 
+
 class HomePageView(ProjectsListView):
     template_name = 'home/index.html'
     model = Project
+    cache_key = 'project_search_cache'
 
 
 class ContactCreateView(CreateView):
@@ -69,4 +71,3 @@ class ContactCreateView(CreateView):
         context['types'] = Type.objects.all()
 
         return context
-
