@@ -1,7 +1,9 @@
-// vista Error 503
-
-/*
-Heather (sin titulo ni ruta, ocultar?)
--mensaje de error-
-Footer
-*/
+const Error503 = () => {
+    return (
+      <>
+        <h1>ERROR 503</h1>
+      </>
+    );
+  };
+  
+  export default Error503;

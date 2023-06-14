@@ -1,7 +1,9 @@
-// vista Error 404
-
-/*
-Heather (sin titulo ni ruta, ocultar?)
--mensaje de error-
-Footer
-*/
+const Error404 = () => {
+    return (
+      <>
+        <h1>ERROR 404</h1>
+      </>
+    );
+  };
+  
+  export default Error404;
