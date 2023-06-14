@@ -26,6 +26,9 @@ DATABASES = {
         'HOST': env("DB_HOST"),
         'PORT': env("DB_PORT"),
     }
+        # Base de datos externa
+        # Revisar cómo setiaremos la base de datos externa en ambiente de desarrollo. Para poder testear la importación de usuarios.
+
 }
 
 # Static files (CSS, JavaScript, Images)

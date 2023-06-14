@@ -4,7 +4,7 @@ env = environ.Env()
 environ.Env.read_env()
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-l64!chq$8+=31*7_p02l^d2iy$uf#l87(by_#@=(yn)%6c$7g#'
+SECRET_KEY = env("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -17,20 +17,20 @@ DATABASES = {
     # Base de datos de aplicación
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'projectbank',
-        'USER': 'postgres',
-        'PASSWORD': 'Subdere.2022',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'NAME': env("NAME"),
+        'USER': env("USER"),
+        'PASSWORD': env("PASSWORD"),
+        'HOST': env("HOST"),
+        'PORT': env("PORT"),
     },
     # Base de datos externa
     'externaldb': {
-        'ENGINE': 'django.db.backends.postgresql', 
-        'NAME': 'externaldb',
-        'USER': 'postgres',
-        'PASSWORD': 'Subdere.2022',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.mysql', # Necesita instalación de mysqlclient (en reqirements.txt)
+        'NAME': env("SEL_DB_NAME"),
+        'USER': env("SEL_DB_USER"),
+        'PASSWORD': env("SEL_DB_PASSWORD"),
+        'HOST': env("SEL_DB_HOST"),
+        'PORT': env("SEL_DB_PORT"),
             }
                 }
 
