@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models import Q
+from django.core.cache import cache
 
 
 class ProjectsManager(models.Manager):
@@ -7,23 +8,22 @@ class ProjectsManager(models.Manager):
     def browser_search_projects(self, search_query, program, region, comuna, project_type, year, order_by):
         queryset = self.filter(public=True)
 
-        if len(search_query) > 0:
+        if search_query and len(search_query) > 0:
             queryset = queryset.filter(
-                models.Q(name__icontains=search_query) |
-                models.Q(id_subdere__icontains=search_query)
+                Q(name__icontains=search_query) |
+                Q(id_subdere__icontains=search_query)
             )
 
-        if program:
+        if program and len(program) > 0:
             queryset = queryset.filter(program__in=program)
-        if region:
+        if region and len(region) > 0:
             queryset = queryset.filter(comuna__region__in=region)
-        if comuna:
+        if comuna and len(comuna) > 0:
             queryset = queryset.filter(comuna__in=comuna)
-        if project_type:
+        if project_type and len(project_type) > 0:
             queryset = queryset.filter(type__in=project_type)
-        if year:
+        if year and len(year) > 0:
             queryset = queryset.filter(year__in=year)
-
 
         if order_by == 'id':
             queryset = queryset.order_by('-id')
@@ -31,7 +31,6 @@ class ProjectsManager(models.Manager):
             queryset = queryset.order_by('year')
 
         return queryset
-
 
     def index_projects(self):
         return self.filter(
