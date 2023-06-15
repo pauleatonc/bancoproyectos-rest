@@ -47,12 +47,16 @@ class UserRegisterView(LoginRequiredMixin, UserPassesTestMixin, FormView):
             rut=form.cleaned_data['rut'],
             password=form.cleaned_data['password1'],
             nombres=form.cleaned_data['nombres'],
-            apellidos=form.cleaned_data['apellidos'],
+            apellido_paterno=form.cleaned_data['apellido_paterno'],
+            apellido_materno=form.cleaned_data['apellido_materno'],
             email=form.cleaned_data['email'],
 
             #codregistro = codigo
         )
-        return super(UserRegisterView, self).form_valid(form)
+
+        # Mensaje de éxito para mostrar en la plantilla
+        success_message = "Has creado al usuario exitosamente."
+        return self.render_to_response(self.get_context_data(success_message=success_message))
 
         """# enviar el codigo al email del user
         asunto = 'Email de confirmación ArchiPartner'

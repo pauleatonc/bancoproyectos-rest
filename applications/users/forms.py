@@ -39,14 +39,16 @@ class UserRegisterForm(forms.ModelForm):
         fields = (
             'rut',
             'nombres',
-            'apellidos',
+            'apellido_paterno',
+            'apellido_materno',
             'email',
         )
 
         labels = {
             'rut': 'RUT (Obligatorio)',
             'nombres': 'Nombre',
-            'apellidos': 'Apellidos',
+            'apellido_paterno': 'Apellido paterno',
+            'apellido_materno': 'Apellido materno',
             'email': 'Correo electrónico institucional (obligatorio)',
         }
 
@@ -65,10 +67,17 @@ class UserRegisterForm(forms.ModelForm):
                     'class': 'custom-input'
                 }
             ),
-            'apellidos': forms.TextInput(
+            'apellido_paterno': forms.TextInput(
                 attrs={
                     'required': True,
-                    'placeholder': 'Ingresa tus apellidos.',
+                    'placeholder': 'Ingresa tu apellido paterno.',
+                    'class': 'custom-input'
+                }
+            ),
+            'apellido_materno': forms.TextInput(
+                attrs={
+                    'required': True,
+                    'placeholder': 'Ingresa tu apellido materno.',
                     'class': 'custom-input'
                 }
             ),
