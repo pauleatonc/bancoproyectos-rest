@@ -36,7 +36,16 @@
 
             <form id="user-register-form" class="form cols-12 m-5 text-center" method="POST" action="{% url 'users_app:user-register' %}">
                 {% csrf_token %}
-                {{ form.non_field_errors }}
+
+                {% if form.non_field_errors %}
+                    <div class="form-group-contact">
+                        <ul class="errorlist">
+                            {% for error in form.non_field_errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
 
                 <div class="form-group-contact">
                     {{ form.rut.label_tag }}
@@ -51,9 +60,15 @@
                 </div>
 
                 <div class="form-group-contact">
-                    {{ form.apellidos.label_tag }}
-                    {{ form.apellidos }}
-                    {{ form.apellidos.errors }}
+                    {{ form.apellido_paterno.label_tag }}
+                    {{ form.apellido_paterno }}
+                    {{ form.apellido_paterno.errors }}
+                </div>
+
+                <div class="form-group-contact">
+                    {{ form.apellido_materno.label_tag }}
+                    {{ form.apellido_materno }}
+                    {{ form.apellido_materno.errors }}
                 </div>
 
                 <div class="form-group-contact">
@@ -92,47 +107,29 @@
                     <button id="submitButton" type="submit" class="btn btn-primary btn-default-size" style="width: 100%">Crear
                         usuario</button>
                 </div>
-            </form>
 
-            <div id="confirmation-message" class="hidden"></div>
+
+            </form>
 
         </div>
     </div>
 </section>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   $(document).ready(function() {
-    $("#user-register-form").submit(function(event) {
-      event.preventDefault(); // Evitar que el formulario se envíe de forma predeterminada
-
+    // Verificar si el formulario se envió correctamente
+    var successMessage = "{{ success_message }}";
+    if (successMessage) {
       // Cambiar el color y el contenido del botón
       var submitButton = $("#submitButton");
       submitButton.css("background-color", "green");
       submitButton.css("text-decoration", "none");
-      submitButton.html("Has creado al usuario exitosamente.");
+      submitButton.html(successMessage);
       submitButton.prop("disabled", true); // Desactivar el botón
-
-      // Obtener los datos del formulario
-      var formData = $(this).serialize();
-
-      // Enviar los datos del formulario mediante AJAX
-      $.ajax({
-        url: $(this).attr("action"),
-        type: "POST",
-        data: formData,
-        success: function(response) {
-          // Puedes realizar acciones adicionales después de enviar el formulario correctamente
-          console.log("Formulario enviado correctamente");
-        },
-        error: function(error) {
-          // Manejar el error en caso de que ocurra
-          console.error("Error al enviar el formulario:", error);
-        }
-      });
-    });
+    }
   });
 </script>
+
 
 
 {% include "modules/footer.html" %}

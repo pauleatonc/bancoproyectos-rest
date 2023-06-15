@@ -92,37 +92,18 @@
     }
 </script>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
   $(document).ready(function() {
-    $("#contact-form").submit(function(event) {
-      event.preventDefault(); // Evitar que el formulario se envíe de forma predeterminada
-
+    // Verificar si el formulario se envió correctamente
+    var successMessage = "{{ success_message }}";
+    if (successMessage) {
       // Cambiar el color y el contenido del botón
       var submitButton = $("#submitButton");
       submitButton.css("background-color", "green");
       submitButton.css("text-decoration", "none");
-      submitButton.html("Enviaste el formulario exitosamente.<br/>Tu mensaje será derivado al área correspondiente.");
+      submitButton.html(successMessage);
       submitButton.prop("disabled", true); // Desactivar el botón
-
-      // Obtener los datos del formulario
-      var formData = $(this).serialize();
-
-      // Enviar los datos del formulario mediante AJAX
-      $.ajax({
-        url: $(this).attr("action"),
-        type: "POST",
-        data: formData,
-        success: function(response) {
-          // Puedes realizar acciones adicionales después de enviar el formulario correctamente
-          console.log("Formulario enviado correctamente");
-        },
-        error: function(error) {
-          // Manejar el error en caso de que ocurra
-          console.error("Error al enviar el formulario:", error);
-        }
-      });
-    });
+    }
   });
 </script>
 
