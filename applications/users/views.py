@@ -46,7 +46,6 @@ class UserRegisterView(LoginRequiredMixin, UserPassesTestMixin, FormView):
         usuario = User.objects.create_user(
             rut=form.cleaned_data['rut'],
             password=form.cleaned_data['password1'],
-            is_staff=form.cleaned_data['is_staff']=='True',
             nombres=form.cleaned_data['nombres'],
             apellidos=form.cleaned_data['apellidos'],
             email=form.cleaned_data['email'],
