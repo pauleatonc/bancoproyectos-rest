@@ -4,7 +4,7 @@ import Footer from "../components/Footer/footer";
 const ErrorLayout = () => {
   return (
     <>
-    <h2>errorLayout</h2>
+    <h2>ErrorLayout</h2>
       <Outlet />
       <Footer />
     </>
