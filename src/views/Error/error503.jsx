@@ -1,7 +1,7 @@
 const Error503 = () => {
     return (
       <>
-        <h1>ERROR 503</h1>
+        <h4>ERROR 503</h4>
       </>
     );
   };

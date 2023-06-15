@@ -1,5 +1,45 @@
-#headercontainer{
-    background-color: lightgrey;
+#header{
+    border: 1px dashed grey;
     width: 100%;
-    height: 10em;
+    height: 20em;
+}
+#decoBlk{
+    background-color: #373737;
+    width: 100%;
+    height: 2em;
+}
+
+
+#firstRow{
+    display:flex;
+    height: 4em;
+    border: 1px solid black;
+    justify-content: space-around;
+}
+
+#secondRow{
+    display:flex;
+    height: 4em;
+    border: 1px solid black;
+    justify-content: space-around;
+}
+
+#thirdRow{
+    border: 1px solid black;
+    height: 4em;
+    display:flex;
+    align-items:baseline;
+    justify-content: center;
+}
+#seccionesHeader{
+    width: 500px;
+    height: 3em;
+    display: flex;
+    flex-direction:row;
+    justify-content: space-around;
+    margin: 1em 1em 3em 4em;
+    border: 1px solid black;
+}
+.linkHeader{
+    color:#001c41;
 }
