@@ -11,7 +11,7 @@ function singleGalleryCarousel()
         $sync1.owlCarousel({ //function for preview carousel
             items: 1,
             margin: 0,
-            nav: true,
+            nav: false,
             dots: true
         })
             .on('changed.owl.carousel', function (e)
@@ -62,10 +62,10 @@ function singleGalleryCarousel()
         $sync2.owlCarousel({ //function for thumbnails carousel
             margin: 1,
             items: 3,
-            nav: true,
+            nav: false,
             info: false,
-            dots: true,
-            navText: true,
+            dots: false,
+            navText: false,
             center: false,
             autoWidth: true,
             responsive: {

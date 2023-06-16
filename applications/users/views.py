@@ -30,7 +30,7 @@ class UserRegisterView(LoginRequiredMixin, UserPassesTestMixin, FormView):
     template_name = 'users/register.html'
     form_class = UserRegisterForm
     model = User
-    success_url = '.'
+    success_url = reverse_lazy('users_app:register_success')
 
     def test_func(self):
         return self.request.user.is_staff
@@ -46,13 +46,14 @@ class UserRegisterView(LoginRequiredMixin, UserPassesTestMixin, FormView):
         usuario = User.objects.create_user(
             rut=form.cleaned_data['rut'],
             password=form.cleaned_data['password1'],
-            is_staff=form.cleaned_data['is_staff']=='True',
             nombres=form.cleaned_data['nombres'],
-            apellidos=form.cleaned_data['apellidos'],
+            primer_apellido=form.cleaned_data['primer_apellido'],
+            segundo_apellido=form.cleaned_data['segundo_apellido'],
             email=form.cleaned_data['email'],
 
             #codregistro = codigo
         )
+
         return super(UserRegisterView, self).form_valid(form)
 
         """# enviar el codigo al email del user
@@ -156,4 +157,15 @@ class AdminHomeView(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
 
     def handle_no_permission(self):
         messages.error(self.request, 'Para acceder al panel de administrador necesitas ingresar con usuario autorizado')
+        return redirect('users_app:user-login')
+
+class RegisterSuccess(LoginRequiredMixin, TemplateView):
+    template_name = 'users/register_success.html'
+    login_url = reverse_lazy('users_app:user-login')
+
+    def test_func(self):
+        return self.request.user.is_staff
+
+    def handle_no_permission(self):
+        messages.error(self.request, 'No tienes los permisos para crear usuarios')
         return redirect('users_app:user-login')

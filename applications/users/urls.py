@@ -35,6 +35,11 @@ urlpatterns = [
         views.AdminHomeView.as_view(),
         name='admin-home',
     ),
+    path(
+        'register-success/',
+        views.RegisterSuccess.as_view(),
+        name='register_success',
+    ),
 
     
 ]

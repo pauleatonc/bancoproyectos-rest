@@ -20,6 +20,7 @@
             </ol>
         </nav>
     </div>
+
 </section>
 
 <section>
@@ -29,7 +30,7 @@
                 <div class="card-contact rounded m-5">
                     <p class="font-level-2 text-center m-3 font-weight-bold">Formulario de Contacto</p>
 
-                    <form class="form cols-12 m-5 text-center" method="POST" action="{% url 'home_app:add-contact' %}">
+                    <form id="contact-form" class="form cols-12 m-5 text-center" method="POST" action="{% url 'home_app:add-contact' %}">
                         {% csrf_token %}
                         {{ form.non_field_errors }}
 
@@ -64,12 +65,14 @@
                             {{ form.message.errors }}
                         </div>
 
+                        <div class="form-group-contact">
+                            {{ form.captcha }}
+                        </div>
+
                         <div class="d-flex flex-column align-items-center">
-                            <button type="submit" class="btn btn-primary btn-default-size" style="width: 100%">Enviar formulario</button>
+                            <button id="submitButton" type="submit" class="btn btn-primary btn-default-size" style="width: 100%">Enviar formulario</button>
                         </div>
                     </form>
-
-                    <div id="confirmation-message" class="hidden"></div>
 
                 </div>
             </div>
@@ -87,30 +90,7 @@
         wordCountElement.textContent = `${wordCount} / 250 palabras.`;
     }
 </script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-$(document).ready(function() {
-  $('form').on('submit', function(event) {
-    event.preventDefault(); // Evita el envío del formulario por defecto
-    var formData = $(this).serialize(); // Obtiene los datos del formulario
 
-    // Realiza la petición AJAX al endpoint del formulario
-    $.ajax({
-      url: $(this).attr('action'),
-      type: $(this).attr('method'),
-      data: formData,
-      success: function(response) {
-        // En caso de éxito, muestra el mensaje de confirmación y oculta el formulario
-        $('#confirmation-message').text('Enviaste el formulario exitosamente. Tu mensaje será derivado al área correspondiente.').removeClass('hidden');
-        $('form').addClass('hidden');
-      },
-      error: function(xhr, status, error) {
-        // Maneja los errores si es necesario
-      }
-    });
-  });
-});
-</script>
 
 {% include "modules/footer.html" %}
 {% endblock content %}

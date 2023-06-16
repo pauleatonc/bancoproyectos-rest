@@ -14,5 +14,10 @@ urlpatterns = [
         'register-contact',
         views.ContactCreateView.as_view(),
         name = 'add-contact'
+    ),
+    path(
+        'contact-success',
+        views.ContactSuccess.as_view(),
+        name = 'contact_success'
     )
 ]

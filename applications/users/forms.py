@@ -32,15 +32,6 @@ class UserRegisterForm(forms.ModelForm):
         )
     )
 
-    is_staff = forms.BooleanField(
-        label='¿Este usuario será administrador?',
-        required=True,
-        widget=forms.RadioSelect(
-            attrs={'type': 'radio'},
-            choices=((True, 'Sí'), (False, 'No'))
-        )
-    )
-
     class Meta:
         """Meta definition for UserRegisterform."""
 
@@ -48,14 +39,16 @@ class UserRegisterForm(forms.ModelForm):
         fields = (
             'rut',
             'nombres',
-            'apellidos',
+            'primer_apellido',
+            'segundo_apellido',
             'email',
         )
 
         labels = {
             'rut': 'RUT (Obligatorio)',
             'nombres': 'Nombre',
-            'apellidos': 'Apellidos',
+            'primer_apellido': 'Primer apellido',
+            'segundo_apellido': 'Segundo apellido',
             'email': 'Correo electrónico institucional (obligatorio)',
         }
 
@@ -74,10 +67,17 @@ class UserRegisterForm(forms.ModelForm):
                     'class': 'custom-input'
                 }
             ),
-            'apellidos': forms.TextInput(
+            'primer_apellido': forms.TextInput(
                 attrs={
                     'required': True,
-                    'placeholder': 'Ingresa tus apellidos.',
+                    'placeholder': 'Ingresa tu primer apellido.',
+                    'class': 'custom-input'
+                }
+            ),
+            'segundo_apellido': forms.TextInput(
+                attrs={
+                    'required': True,
+                    'placeholder': 'Ingresa tu segundo apellido.',
                     'class': 'custom-input'
                 }
             ),
@@ -96,6 +96,12 @@ class UserRegisterForm(forms.ModelForm):
         if password1 and password2 and password1 != password2:
             raise forms.ValidationError('Las contraseñas no coinciden')
         return password2
+
+    def clean_rut(self):
+        rut = self.cleaned_data['rut']
+        rut = rut.replace('-', '').replace('.', '').replace(',', '')  # Limpiar rut ingresado
+        rut = f'{rut[:-1]}-{rut[-1]}'  # Insertar guion antes del último dígito
+        return rut
 
 
 class LoginForm(forms.Form):
