@@ -59,7 +59,7 @@ python manage.py runserver
 - Templates
 - URLs
 ### APIs y Endpoints
-### Pruebas
+## Pruebas
 ### Despliegue y Configuración
 
 ## Frontend (React)
@@ -82,14 +82,14 @@ npm install
 ### Iniciar el servidor de desarrollo
 npm start
 
-### Estructura del Proyecto React
+## Estructura del Proyecto React
 - Componentes
 - Estado y Props
 - Rutas
 - Estilos
-### Consumo de APIs
-### Pruebas
-### Despliegue y Configuración
+## Consumo de APIs
+## Pruebas
+## Despliegue y Configuración
 La aplicación se despliega utilizando Docker Compose. Asegúrese de tener instalado Docker y Docker Compose en su sistema antes de intentar el despliegue.
 
 ### Verificar la instalación de Docker
