@@ -3,6 +3,7 @@ from applications.projects.models import Project, Program, Type
 from applications.home.models import Contact
 from applications.projects.views import ProjectsListView
 from django.core.mail import send_mail
+from django.urls import reverse_lazy
 
 from django.views.generic import (
     View,
@@ -24,7 +25,7 @@ class ContactCreateView(CreateView):
     template_name = 'home/contact.html'
     form_class = ContactForm
     model = Contact
-    success_url = '.'
+    success_url = reverse_lazy('home_app:contact_success')
 
     def form_valid(self, form):
         # Guardar el formulario y obtener la instancia del modelo
@@ -71,3 +72,6 @@ class ContactCreateView(CreateView):
         context['types'] = Type.objects.all()
 
         return context
+
+class ContactSuccess(TemplateView):
+    template_name = 'home/contact-success.html'

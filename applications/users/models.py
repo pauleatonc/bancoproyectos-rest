@@ -21,8 +21,8 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     rut = models.CharField(max_length=15, validators=[validar_rut], unique=True)
     nombres = models.CharField(max_length=30, blank=True, null=True)
-    apellido_paterno = models.CharField(max_length=30, blank=True, null=True)
-    apellido_materno = models.CharField(max_length=30, blank=True, null=True)
+    primer_apellido = models.CharField(max_length=30, blank=True, null=True)
+    segundo_apellido = models.CharField(max_length=30, blank=True, null=True)
     comuna = models.ForeignKey(
         Comuna, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Comuna')
     tipo_usuario = models.CharField('SUBDERE o Banco de Proyectos', max_length=10, choices=USER_TYPE_CHOICES)
@@ -45,4 +45,4 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.nombres
 
     def get_full_name(self):
-        return self.nombres + ' ' +self.apellido_paterno + ' ' +self.apellido_materno
+        return self.nombres + ' ' + self.primer_apellido + ' ' + self.segundo_apellido

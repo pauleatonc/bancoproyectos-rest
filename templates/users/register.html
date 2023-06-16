@@ -60,15 +60,15 @@
                 </div>
 
                 <div class="form-group-contact">
-                    {{ form.apellido_paterno.label_tag }}
-                    {{ form.apellido_paterno }}
-                    {{ form.apellido_paterno.errors }}
+                    {{ form.primer_apellido.label_tag }}
+                    {{ form.primer_apellido }}
+                    {{ form.primer_apellido.errors }}
                 </div>
 
                 <div class="form-group-contact">
-                    {{ form.apellido_materno.label_tag }}
-                    {{ form.apellido_materno }}
-                    {{ form.apellido_materno.errors }}
+                    {{ form.segundo_apellido.label_tag }}
+                    {{ form.segundo_apellido }}
+                    {{ form.segundo_apellido.errors }}
                 </div>
 
                 <div class="form-group-contact">
@@ -114,22 +114,6 @@
         </div>
     </div>
 </section>
-
-<script>
-  $(document).ready(function() {
-    // Verificar si el formulario se envió correctamente
-    var successMessage = "{{ success_message }}";
-    if (successMessage) {
-      // Cambiar el color y el contenido del botón
-      var submitButton = $("#submitButton");
-      submitButton.css("background-color", "green");
-      submitButton.css("text-decoration", "none");
-      submitButton.html(successMessage);
-      submitButton.prop("disabled", true); // Desactivar el botón
-    }
-  });
-</script>
-
 
 
 {% include "modules/footer.html" %}

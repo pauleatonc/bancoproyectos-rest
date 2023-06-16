@@ -64,5 +64,5 @@ def validar_rut_form(self):
         dv_calculated = 'k'
     if str(dv_calculated) != dv:
         raise ValidationError('El RUT no es válido')
-    return rut + dv
+    return rut + '-' + dv
 
