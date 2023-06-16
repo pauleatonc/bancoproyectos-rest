@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import "../../styles/Header/header.css";
 import BuscadorGeneral from "./buscadorGeneral";
 import Accesibilidad from './accesibilidad';
+import Rrss from './rrss';
 
 const Header = () => {
     return (
@@ -10,10 +11,10 @@ const Header = () => {
         <div id="firstRow">
           <div>logo</div>
           <Accesibilidad />
-          <button>inicio sesion</button>
+          <Link to="/login" className="linkHeader"> Inicio Sesion </Link>
         </div>
         <div id="secondRow">
-          <div>RRSS</div>
+          <Rrss />
           <BuscadorGeneral/>
         </div>
         <div id="thirdRow">

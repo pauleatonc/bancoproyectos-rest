@@ -1,9 +1,9 @@
-// vista inicio de sesion de ususarios
-
-/*
-Heather
--contenido(*)-
-Footer
-*/
-
-// (*) aqui creo que no es necesario dividir en mas componentes
+const Login = () => {
+    return (
+      <>
+        <h5>Vista Login</h5>
+      </>
+    );
+  };
+  
+  export default Login;
