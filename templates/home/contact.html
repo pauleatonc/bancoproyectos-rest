@@ -20,6 +20,7 @@
             </ol>
         </nav>
     </div>
+
 </section>
 
 <section>
@@ -73,8 +74,6 @@
                         </div>
                     </form>
 
-                    <div id="confirmation-message" class="hidden"></div>
-
                 </div>
             </div>
         </div>
@@ -92,20 +91,6 @@
     }
 </script>
 
-<script>
-  $(document).ready(function() {
-    // Verificar si el formulario se envió correctamente
-    var successMessage = "{{ success_message }}";
-    if (successMessage) {
-      // Cambiar el color y el contenido del botón
-      var submitButton = $("#submitButton");
-      submitButton.css("background-color", "green");
-      submitButton.css("text-decoration", "none");
-      submitButton.html(successMessage);
-      submitButton.prop("disabled", true); // Desactivar el botón
-    }
-  });
-</script>
 
 {% include "modules/footer.html" %}
 {% endblock content %}
