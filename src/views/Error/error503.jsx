@@ -1,8 +1,8 @@
+import Error503msj from "../../components/Error/error503";
+
 const Error503 = () => {
     return (
-      <>
-        <h4>ERROR 503</h4>
-      </>
+      <Error503msj />
     );
   };
   

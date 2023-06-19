@@ -1,14 +1,5 @@
 import React , { Suspense } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
-// import MainLayout from './layout/mainLayout';
-// import Home from './views/Home/home/home';
-// import Contacto from './views/Home/contacto/contacto';
-// import Login from './views/Users/login/login';
-// import BancoProyectos from './views/Projects/bancodeproyectos/bancodeproyectos';
-// import ErrorLayout from './layout/errorLayout';
-// import Error404 from './views/Error/error404';
-// import Error500 from './views/Error/error500';
-// import Error503 from './views/Error/error503';
 
 const MainLayout = React.lazy(() => import('./layout/mainLayout'));
 const Home = React.lazy(() => import('./views/Home/home/home'));

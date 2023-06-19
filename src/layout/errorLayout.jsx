@@ -1,10 +1,11 @@
 import {Outlet} from 'react-router-dom';
-import Footer from "../components/Footer/footer";
+import Header from '../components/Header/header'
+import Footer from '../components/Footer/footer';
 
 const ErrorLayout = () => {
   return (
     <>
-    <h2>ErrorLayout</h2>
+      <Header />
       <Outlet />
       <Footer />
     </>

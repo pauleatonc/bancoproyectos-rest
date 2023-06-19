@@ -1,8 +1,8 @@
+import Error404msj from "../../components/Error/error404";
+
 const Error404 = () => {
     return (
-      <>
-        <h4>ERROR 404</h4>
-      </>
+      <Error404msj />
     );
   };
   

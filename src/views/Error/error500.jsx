@@ -1,8 +1,8 @@
+import Error500msj from "../../components/Error/error500";
+
 const Error500 = () => {
     return (
-      <>
-        <h4>ERROR 500</h4>
-      </>
+      <Error500msj />
     );
   };
   
