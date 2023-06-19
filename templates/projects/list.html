@@ -1,5 +1,8 @@
-{% extends "projects/base_projects.html" %} {% load static %} {% block content%}
+{% extends "projects/base_projects.html" %} 
+{% load static %} 
+{% block content%}
 {% include "modules/navbar.html" %}
+
 <section class="projects-search">
     <div class="m-5 ">
         <div class="title d-flex justify-content-center">
@@ -50,16 +53,14 @@
                 <div class="col-8">
                     <!-- Agrega el filtro ordenar por -->
                     <div class="dropdown-sort d-flex justify-content-end">
-                        <button class="btn-sort dropdown-toggle " type="button" data-toggle="dropdown"
-                            aria-expanded="false">
+                        <button class="btn-sort dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
                             Ordenar por
                         </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item" href="?sort_by=id">Más reciente</a>
-                            <a class="dropdown-item" href="?sort_by=year">Año</a>
+                            <a class="dropdown-item {% if sort_by == 'id' %}active{% endif %}" href="{% url 'projects_app:project-list' %}?{% if cache_key %}cache_key={{ cache_key }}&{% endif %}search_query={{ search_query }}{% for p in selected_programs %}&program={{ p }}{% endfor %}{% for r in selected_regions %}&region={{ r }}{% endfor %}{% for c in selected_comunas %}&comuna={{ c }}{% endfor %}{% for t in selected_types %}&type={{ t }}{% endfor %}{% for y in selected_years %}&year={{ y }}{% endfor %}&sort_by=id">Más reciente</a>
+                            <a class="dropdown-item {% if sort_by == 'year' %}active{% endif %}" href="{% url 'projects_app:project-list' %}?{% if cache_key %}cache_key={{ cache_key }}&{% endif %}search_query={{ search_query }}{% for p in selected_programs %}&program={{ p }}{% endfor %}{% for r in selected_regions %}&region={{ r }}{% endfor %}{% for c in selected_comunas %}&comuna={{ c }}{% endfor %}{% for t in selected_types %}&type={{ t }}{% endfor %}{% for y in selected_years %}&year={{ y }}{% endfor %}&sort_by=year">Año</a>
                         </div>
                     </div>
-
                     <!-- Agrega las cards de proyectos -->
                     {% if projects %}
                     <div class="projects-list">
@@ -113,23 +114,33 @@
                             {{ search_projects }} resultados de {{ total_projects }} proyectos
                         </p>
                         <ul class="pagination justify-content-center align-items-center active">
-                            <li class="page-item">
-                                <a class="page-link border-0 text-decoration-none font-level-1" href="{% url 'projects_app:project-list' %}">
-                                    &lt;
-                                </a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link border-0 text-decoration-none" href="{% url 'projects_app:project-list' %}">1</a>
-                            </li>
-                            <li class="page-item d-none d-ss-block a11y-fonts-d-none a11y-fonts-d-sm-block border-0">
-                                <a class="page-link border-0 text-decoration-none" href="{% url 'projects_app:project-list' %}">2</a>
-                            </li>
-                            <li class="page-item a11y-fonts-d-none a11y-fonts-d-sm-block border-0">
-                                <a class="page-link border-0 text-decoration-none" href="{% url 'projects_app:project-list' %}">...</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link border-0 font-level-1 text-decoration-none" href="{% url 'projects_app:project-list' %}">&gt;</a>
-                            </li>
+                            {% if is_paginated %}
+                                {% if page_obj.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link border-0 text-decoration-none font-level-1" href="?{% if cache_key %}cache_key={{ cache_key }}&{% endif %}search_query={{ search_query }}{% for p in selected_programs %}&program={{ p }}{% endfor %}{% for r in selected_regions %}&region={{ r }}{% endfor %}{% for c in selected_comunas %}&comuna={{ c }}{% endfor %}{% for t in selected_types %}&type={{ t }}{% endfor %}{% for y in selected_years %}&year={{ y }}{% endfor %}&sort_by={{ sort_by }}&page={{ page_obj.previous_page_number }}">
+                                            &lt;
+                                        </a>
+                                    </li>
+                                {% endif %}
+                                {% for num in page_obj.paginator.page_range %}
+                                    {% if page_obj.number == num %}
+                                        <li class="page-item active">
+                                            <a class="page-link border-0 text-decoration-none" href="?{% if cache_key %}cache_key={{ cache_key }}&{% endif %}search_query={{ search_query }}{% for p in selected_programs %}&program={{ p }}{% endfor %}{% for r in selected_regions %}&region={{ r }}{% endfor %}{% for c in selected_comunas %}&comuna={{ c }}{% endfor %}{% for t in selected_types %}&type={{ t }}{% endfor %}{% for y in selected_years %}&year={{ y }}{% endfor %}&sort_by={{ sort_by }}&page={{ num }}">{{ num }}</a>
+                                        </li>
+                                    {% else %}
+                                        <li class="page-item">
+                                            <a class="page-link border-0 text-decoration-none" href="?{% if cache_key %}cache_key={{ cache_key }}&{% endif %}search_query={{ search_query }}{% for p in selected_programs %}&program={{ p }}{% endfor %}{% for r in selected_regions %}&region={{ r }}{% endfor %}{% for c in selected_comunas %}&comuna={{ c }}{% endfor %}{% for t in selected_types %}&type={{ t }}{% endfor %}{% for y in selected_years %}&year={{ y }}{% endfor %}&sort_by={{ sort_by }}&page={{ num }}">{{ num }}</a>
+                                        </li>
+                                    {% endif %}
+                                {% endfor %}
+                                {% if page_obj.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link border-0 font-level-1 text-decoration-none" href="?{% if cache_key %}cache_key={{ cache_key }}&{% endif %}search_query={{ search_query }}{% for p in selected_programs %}&program={{ p }}{% endfor %}{% for r in selected_regions %}&region={{ r }}{% endfor %}{% for c in selected_comunas %}&comuna={{ c }}{% endfor %}{% for t in selected_types %}&type={{ t }}{% endfor %}{% for y in selected_years %}&year={{ y }}{% endfor %}&sort_by={{ sort_by }}&page={{ page_obj.next_page_number }}">
+                                            &gt;
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            {% endif %}
                         </ul>
                     </nav>
                 </div>
