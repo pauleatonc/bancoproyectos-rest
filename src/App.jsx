@@ -2,8 +2,8 @@ import React , { Suspense } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 
 const MainLayout = React.lazy(() => import('./layout/mainLayout'));
-const Home = React.lazy(() => import('./views/Home/home/home'));
-const Contacto = React.lazy(() => import('./views/Home/contacto/contacto'));
+const Home = React.lazy(() => import('./views/Home/home'));
+const Contacto = React.lazy(() => import('./views/Home/contacto'));
 const Login = React.lazy(() => import('./views/Users/login/login'));
 const BancoProyectos = React.lazy(() => import('./views/Projects/bancodeproyectos/bancodeproyectos'));
 const ErrorLayout = React.lazy(() => import('./layout/errorLayout'));

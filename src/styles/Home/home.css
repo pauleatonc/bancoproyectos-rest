@@ -1,0 +1,107 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap');
+
+.homeH1{
+  width: 1110px;
+  height: 49px;
+  flex-grow: 0;
+  margin: 0 0 45px;
+  font-family: 'Roboto';
+  font-size: 39px;
+  font-weight: 500;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.25;
+  letter-spacing: normal;
+  text-align: center;
+  color: #373737;
+}
+.homeH2{
+    height: 90px;
+    align-self: stretch;
+    flex-grow: 0;
+    font-family: Roboto;
+    font-size: 20px;
+    font-weight: 600;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: center;
+    color: #373737;
+}
+.homeH3{
+  width: 80%;
+  height: 57px;
+  flex-grow: 0;
+  font-family: 'Roboto';
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  text-align: center;
+  color: #373737;
+}
+.homeH4{
+    width: 70%;
+    margin-bottom: 1.5em;
+    font-family: 'Roboto';
+    font-size: 16px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    line-height: 1.88;
+    color: #373737; 
+}
+
+.simbolo{
+  width: 60px;
+  height: 60px;
+  flex-grow: 0;
+  object-fit: contain;
+  border-radius: 16000px;
+  border: solid 1px #0f69c4;
+}
+.circulo{
+    width: 200px;
+    height: 200px;
+    flex-grow: 0;
+    object-fit: contain;
+    border-radius: 16000px;
+    background-color: #9fc3e7;
+  }
+
+#catsContainer{
+    width: 700px;
+    display: flex;
+    justify-content: space-around;
+}
+.catContainer{
+    width: 10em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#descContainer{
+    height: 550px;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 2em;
+}
+.desc{
+    width: 20em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#imgIntro{
+    width: 980px;
+    height: 238px;
+    background-color:aquamarine;
+    margin-bottom: 4em;
+}
