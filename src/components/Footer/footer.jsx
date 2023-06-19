@@ -26,8 +26,8 @@ const Footer = () => {
         <div id="enlaces">
           <h1>Enlaces</h1>
           <div id="enlacesContainer">
-            <a className="link" href="https://www.google.com/" target="_blank" rel="noreferrer">Programa Mejoramiento Urbano</a>
-            <a className="link" href="https://www.google.com/" target="_blank" rel="noreferrer">Programa Mejoramiento de Barrios</a>
+            <a className="link" href="https://www.subdere.gov.cl/programas/divisi%C3%B3n-municipalidades/programa-mejoramiento-urbano-y-equipamiento-comunal-pmu" target="_blank" rel="noreferrer">Programa Mejoramiento Urbano</a>
+            <a className="link" href="https://www.subdere.gov.cl/programas/divisi%C3%B3n-municipalidades/programa-mejoramiento-de-barrios-pmb" target="_blank" rel="noreferrer">Programa Mejoramiento de Barrios</a>
             <a className="link" href="https://www.subdere.gov.cl/" target="_blank" rel="noreferrer">Subsecretaría de Desarrollo Regional y Administrativo SUBDERE</a>
             <a className="link" href="https://www.interior.gob.cl/" target="_blank" rel="noreferrer">Ministerio del Interior y Seguridad Pública</a>
           </div>
