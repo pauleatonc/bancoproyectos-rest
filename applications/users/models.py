@@ -20,7 +20,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     primer_apellido = models.CharField(max_length=30, blank=True, null=True)
     segundo_apellido = models.CharField(max_length=30, blank=True, null=True)
     comuna = models.CharField(max_length=50, blank=True, null=True)
-    tipo_usuario = models.CharField('SUBDERE o Banco de Proyectos', max_length=20, choices=USER_TYPE_CHOICES)
+    tipo_usuario = models.CharField('SUBDERE o Banco de Proyectos', max_length=20, choices=USER_TYPE_CHOICES, default='Banco de Proyectos')
     password = models.CharField(max_length=200, blank=True)
     email = models.TextField(max_length=100, blank=True, null=True)
 
