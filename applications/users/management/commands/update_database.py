@@ -34,9 +34,11 @@ class Command(BaseCommand):
         # Y luego usas el ORM de Django para insertar los datos recuperados en tu base de datos local
         with connections['default'].cursor() as cursor:
             for row in rows:
-                # El usuario es identificado por la columna 'rut'
                 cursor.execute("SELECT * FROM users_user WHERE rut = %s", [row[0]])
                 if cursor.fetchone() is None:  # Si el usuario no existe en la base de datos local
-                    # Asumiendo que 'row' es una lista de valores que corresponden a las columnas en tu tabla local de usuarios
-                    cursor.execute("INSERT INTO users_user (rut, password, is_superuser, is_staff, is_active) VALUES (%s, %s, %s, %s, %s)", (row[0], row[1], False, False, True))
-        self.stdout.write(self.style.SUCCESS('Successfully updated user database')) # Modificar según campos de nueva tabla usuarios
+                    cursor.execute("""
+                        INSERT INTO users_user 
+                        (rut, nombres, primer_apellido, segundo_apellido, comuna, tipo_usuario, password, is_superuser, is_staff, is_active) 
+                        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    """, (row[0], row[1], row[2], row[3], row[4], 'SUBDERE', row[5], False, False, True))
+        self.stdout.write(self.style.SUCCESS('Successfully updated user database'))

@@ -1,11 +1,7 @@
 from django.db import models
-
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
-
 from .functions import validar_rut
-
 from .managers import UserManager
-
 from applications.regioncomuna.models import Comuna
 
 
@@ -23,9 +19,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     nombres = models.CharField(max_length=30, blank=True, null=True)
     primer_apellido = models.CharField(max_length=30, blank=True, null=True)
     segundo_apellido = models.CharField(max_length=30, blank=True, null=True)
-    comuna = models.ForeignKey(
-        Comuna, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Comuna')
-    tipo_usuario = models.CharField('SUBDERE o Banco de Proyectos', max_length=10, choices=USER_TYPE_CHOICES)
+    comuna = models.CharField(max_length=50, blank=True, null=True)
+    tipo_usuario = models.CharField('SUBDERE o Banco de Proyectos', max_length=20, choices=USER_TYPE_CHOICES, default='Banco de Proyectos')
     password = models.CharField(max_length=200, blank=True)
     email = models.TextField(max_length=100, blank=True, null=True)
 
