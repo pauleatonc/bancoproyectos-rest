@@ -23,15 +23,23 @@ class ProjectsListView(ListView):
         project_type = self.request.GET.getlist('type', '')
         year = self.request.GET.getlist('year', '')
         sort_by = self.request.GET.get('sort_by')
+        cache_key = self.request.GET.get('cache_key')
 
-        # Comprobar si los resultados de búsqueda están en caché
-        cache_key = self.generate_cache_key(
-            search_query, region, program,  comuna, project_type, year, sort_by)
+        if cache_key:
+            queryset = cache.get(cache_key)
 
-        queryset = cache.get(cache_key)
-
-        if queryset is None:
-            # Los resultados no están en caché, realizar la búsqueda en la base de datos
+            if queryset is None:
+                queryset = Project.objects.browser_search_projects(
+                    search_query=search_query,
+                    program=program,
+                    region=region,
+                    comuna=comuna,
+                    project_type=project_type,
+                    year=year,
+                    order_by=sort_by
+                )
+                cache.set(cache_key, queryset)
+        else:
             queryset = Project.objects.browser_search_projects(
                 search_query=search_query,
                 program=program,
@@ -41,7 +49,28 @@ class ProjectsListView(ListView):
                 year=year,
                 order_by=sort_by
             )
-            cache.set(cache_key, queryset)
+
+        # Generar la clave de caché solo si hay resultados de búsqueda
+            if queryset.exists():
+                cache_key = self.generate_cache_key(
+                    search_query=search_query,
+                    program=program,
+                    region=region,
+                    comuna=comuna,
+                    project_type=project_type,
+                    year=year,
+                    sort_by=sort_by
+                )
+                cache.set(cache_key, queryset)
+            else:
+                cache_key = None
+
+        self.request.session['cache_key'] = cache_key
+
+        if sort_by == 'id':
+            queryset = queryset.order_by('-id')
+        elif sort_by == 'year':
+            queryset = queryset.order_by('year')
 
         return queryset
 
@@ -69,6 +98,7 @@ class ProjectsListView(ListView):
         project_type = self.request.GET.getlist('type', [])
         year = self.request.GET.getlist('year', [])
         sort_by = self.request.GET.get('sort_by')
+        cache_key = self.request.session.get('cache_key')
 
         # Obtener la cantidad total de proyectos existentes
         total_projects = Project.objects.count()
@@ -86,6 +116,7 @@ class ProjectsListView(ListView):
         context['sort_by'] = sort_by
         context['total_projects'] = total_projects
         context['search_projects'] = search_projects
+        context['cache_key'] = cache_key
 
         # Obtener otros datos necesarios para el contexto
         context['programs'] = Program.objects.all()
@@ -98,8 +129,6 @@ class ProjectsListView(ListView):
         context['years'] = Project.objects.values_list(
             'year', 'year__number').distinct()
 
-        context['cache_key'] = self.generate_cache_key(
-            search_query, program, region, comuna, project_type, year, sort_by)
         
         return context
 
