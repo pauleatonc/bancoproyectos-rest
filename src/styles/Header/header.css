@@ -10,21 +10,35 @@
 }
 
 
-#firstRow{
+#upperSection{
+    display:flex;
+    height: 4em;
+    border: 1px solid black;
+    justify-content: space-around;
+}
+#logoHeader{
+    width: 300px;
+    height: 48px;
+    margin: 19px 0 0;
+    font-family: gobCL;
+    font-size: 20px;
+    font-weight: bold;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    text-align: left;
+    color: var(--color-gray-373737);
+}
+
+#middleSection{
     display:flex;
     height: 4em;
     border: 1px solid black;
     justify-content: space-around;
 }
 
-#secondRow{
-    display:flex;
-    height: 4em;
-    border: 1px solid black;
-    justify-content: space-around;
-}
-
-#thirdRow{
+#lowerSection{
     border: 1px solid black;
     height: 4em;
     display:flex;

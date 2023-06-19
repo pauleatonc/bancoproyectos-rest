@@ -17,7 +17,9 @@ const Footer = () => {
           <h1>Secciones</h1>
           <div id="seccionesContainer">
             <Link to="/" className="link"> Inicio </Link>
-            <Link to="/contacto" className="link"> Banco de Proyectos </Link>
+            <Link to="/bancodeproyectos" className="link"> Banco de Proyectos </Link>
+            {/* agregue un enlace a contacto tambien, para que sea como las secciones de header */}
+            <Link to="/contacto" className="link"> Contacto </Link>
           </div>
         </div>
 
@@ -26,8 +28,8 @@ const Footer = () => {
           <div id="enlacesContainer">
             <a className="link" href="https://www.google.com/" target="_blank" rel="noreferrer">Programa Mejoramiento Urbano</a>
             <a className="link" href="https://www.google.com/" target="_blank" rel="noreferrer">Programa Mejoramiento de Barrios</a>
-            <a className="link" href="https://www.google.com/" target="_blank" rel="noreferrer">Subsecretaría de Desarrollo Regional y Administrativo SUBDERE</a>
-            <a className="link" href="https://www.google.com/" target="_blank" rel="noreferrer">Ministerio del Interior y Seguridad Pública</a>
+            <a className="link" href="https://www.subdere.gov.cl/" target="_blank" rel="noreferrer">Subsecretaría de Desarrollo Regional y Administrativo SUBDERE</a>
+            <a className="link" href="https://www.interior.gob.cl/" target="_blank" rel="noreferrer">Ministerio del Interior y Seguridad Pública</a>
           </div>
         </div>
 

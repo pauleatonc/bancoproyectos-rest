@@ -8,21 +8,28 @@ const Header = () => {
     return (
       <header id="header">
         <div id="decoBlk"></div>
-        <div id="firstRow">
-          <div>logo</div>
+        <section id="upperSection">
+          <div>
+            <h1 id="logoHeader">Subsecretaría de Desarrollo <br /> Administrativo y Regional</h1>
+            <div id="decoGob">
+            <div id="azul"></div>
+            <div id="rojo"></div>
+          </div>
+          </div>
           <Accesibilidad />
           <Link to="/login" className="linkHeader"> Inicio Sesion </Link>
-        </div>
-        <div id="secondRow">
+        </section>
+        <section id="middleSection">
           <Rrss />
           <BuscadorGeneral/>
-        </div>
-        <div id="thirdRow">
+        </section>
+        <section id="lowerSection">
         <div id="seccionesHeader">
           <Link to="/" className="linkHeader"> Inicio </Link>
-          <Link to="/contacto" className="linkHeader"> Banco de Proyectos </Link>
+          <Link to="/bancodeproyectos" className="linkHeader"> Banco de Proyectos </Link>
+          <Link to="/contacto" className="linkHeader"> Contacto </Link>
         </div>
-        </div>
+        </section>
       </header>
     );
   };

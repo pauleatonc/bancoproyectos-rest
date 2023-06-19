@@ -1,10 +1,9 @@
-// vista al hacer click a "banco de proyectos"
-
-/*
-Heather
-Buscador
-ProyectosFilter
-ProyectosSort
-ProyectosContainer
-Footer
-*/
+const BancoProyectos = () => {
+    return (
+      <>
+        <h5>Vista Banco de Proyectos</h5>
+      </>
+    );
+  };
+  
+  export default BancoProyectos;
