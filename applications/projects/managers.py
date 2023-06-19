@@ -1,6 +1,6 @@
 from django.db import models
 from django.db.models import Q
-from django.core.cache import cache
+
 
 
 class ProjectsManager(models.Manager):

@@ -1,6 +1,7 @@
 {% load static %}
+{% load cache %}
 
-<form method="get" action="{% url 'projects_app:project-list' %}">
+<form class="filter-form" method="get" action="{% url 'projects_app:project-list' %}?{{ request.GET.urlencode }}">
   {% csrf_token %}
   <div class="filter">
     <div class="filter-head">
@@ -54,29 +55,15 @@
     <div class="filter-location">
       <div class="form-group">
         <label class="font-level-6 my-5">¿En qué región?</label>
-        <select
-          class="selectpicker mt-3"
-          data-style="btn-outline-primary"
-          multiple
-          name="region"
-          data-size="5"
-          title="Elige una o más regiones..."
-          data-live-search="true"
-          data-none-results-text="No se encontro coincidencia"
-          data-width="100%"
-          data-actions-box="true"
-          data-select-all-text="Selecionar todas"
-          data-count-selected-text="{0} items seleccionados"
-          data-deselect-all-text="Limpiar"
-          data-selected-text-format="count">
-          {% for region in regiones %}
-          <option value="{{ region.0}}" style="height: 35px"
-          {% if region.0 in selected_region %}
-          selected
-          {% endif %}>
+        <select class="selectpicker" multiple name="region" data-size="5" title="Elige una o más regiones..." data-live-search="true" data-width="100%" data-selected-text-format="count" data-count-selected-text="{0} items seleccionados" data-style="btn-outline-primary" data-actions-box="true" data-select-all-text="Seleccionar todas" data-deselect-all-text="Limpiar">
+        {% for region in regiones %}
+          <option value="{{ region.0 }}" style="height: 35px"
+            {% if region.0|stringformat:"s" in selected_regions %}
+            selected="selected"
+            {% endif %}>
             {{ region.1 }}
           </option>
-          {% endfor %}
+        {% endfor %}
         </select>
       </div>
       <!--
@@ -94,17 +81,17 @@
     <div class="filter-type">
       <label class="font-level-6 my-2">¿Qué tipo de proyecto es?</label>
       <div class="cols-12 row text-center my-3">
-        {% for tipo in tipos %}
-        <div class="col-6 my-2">
+        {% for type in tipos %}
+          <div class="col-6 my-2">
             <div class="btn-group-toggle" data-toggle="buttons">
-                <label class="btn btn-outline-primary rounded-circle {% if tipo.0 in selected_types %}active{% endif %}">
-                    <input type="checkbox" name="type" value="{{ tipo.0 }}" {% if tipo.0 in selected_types %}checked{% endif %}>
-                    <i class="material-symbols-rounded mx-2">{{ tipo.2 }}</i>
-                </label>
+              <label class="btn btn-outline-primary rounded-circle {% if type.0|stringformat:s in selected_types %}active{% endif %}">
+                <input type="checkbox" name="type" value="{{ type.0 }}" {% if type.0|stringformat:"s" in selected_types %}checked{% endif %}>
+                <i class="material-symbols-rounded mx-2">{{ type.2 }}</i>
+              </label>
             </div>
-            <span class="font-base font-weight-bold">{{ tipo.1 }}</span>
-        </div>
-    {% endfor %}
+            <span class="font-base font-weight-bold">{{ type.1 }}</span>
+          </div>
+        {% endfor %}
       </div>
     </div>
     <div class="filter-years my-3">
@@ -113,33 +100,29 @@
           >¿Qué años de construcción quieres ver?</label
         >
       </div>
-      <select
-      class="selectpicker my-3"
-      multiple
-      name="year"
-      data-size="5"
-      title="Elige uno o más años..."
-      data-width="100%"
-      data-style="btn-outline-primary"
-      data-selected-text-format="count"
-      data-count-selected-text="{0} items seleccionados"
-      data-actions-box=" true"
-      data-select-all-text="Selecionar todos"
-      data-deselect-all-text="Limpiar">
-      {% for year in years %}
-      <option value="{{year.0}}" style="height: 35px; padding: auto"
-      {% if year.0 in selected_years %}
-      selected
-      {% endif %}>
-        {{year.1}}
-      </option>
+      <select class="selectpicker" multiple name="year" data-size="5" title="Elige uno o más años..." data-width="100%" data-style="btn-outline-primary" data-selected-text-format="count" data-count-selected-text="{0} items seleccionados" data-actions-box="true" data-select-all-text="Seleccionar todos" data-deselect-all-text="Limpiar">
+        {% for year in years %}
+        <option value="{{ year.0 }}" style="height: 35px"
+          {% if year.0|stringformat:"s" in selected_years %}
+          selected="selected"
+          {% endif %}>
+          {{ year.1 }}
+        </option>
       {% endfor %}
-    </select>
+      </select>
     </div>
     <div>
-      <button class="btn-filter my-5" type="submit" name="show_results">
+      <button class="btn-filter my-5" type="submit" name="show_results" cache="filter-form">
         Mostrar resultados <i class="fa fa-check" aria-hidden="true"></i>
       </button>
     </div>
   </div>
 </form>
+
+<script>
+  $(document).ready(function() {
+    $('.selectpicker').selectpicker();
+    $('.selectpicker').selectpicker('val', [{% for region in selected_regions %}"{{ region }}", {% endfor %}]);
+    $('.selectpicker').selectpicker('val', [{% for year in selected_years %}"{{ year }}", {% endfor %}]);
+  });
+</script>
