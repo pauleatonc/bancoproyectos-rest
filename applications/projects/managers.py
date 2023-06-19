@@ -35,7 +35,7 @@ class ProjectsManager(models.Manager):
     def index_projects(self):
         return self.filter(
             public=True
-        ).order_by('year')[:5]
+        ).order_by('year')[:6]
 
     def related_projects(self, project):
         return self.filter(
@@ -44,4 +44,4 @@ class ProjectsManager(models.Manager):
             type=project.type
         ).exclude(
             id=project.id
-        ).order_by('year')[:5]
+        ).order_by('year')[:6]
