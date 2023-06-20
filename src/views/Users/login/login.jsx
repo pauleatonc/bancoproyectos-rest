@@ -1,9 +1,9 @@
-const Login = () => {
+import Login from "../../../components/Login/login";
+
+const InicioSesion = () => {
     return (
-      <>
-        <h5>Vista Login</h5>
-      </>
+     <Login />
     );
   };
   
-  export default Login;
+  export default InicioSesion;
