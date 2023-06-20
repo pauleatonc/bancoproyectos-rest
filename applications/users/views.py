@@ -169,3 +169,6 @@ class RegisterSuccess(LoginRequiredMixin, TemplateView):
     def handle_no_permission(self):
         messages.error(self.request, 'No tienes los permisos para crear usuarios')
         return redirect('users_app:user-login')
+
+class PasswordRecoveryMain(TemplateView):
+    template_name = 'users/password_recovery_main.html'

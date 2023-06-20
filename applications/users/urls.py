@@ -40,6 +40,11 @@ urlpatterns = [
         views.RegisterSuccess.as_view(),
         name='register_success',
     ),
+    path(
+        'password-recovery',
+        views.PasswordRecoveryMain.as_view(),
+        name='password_recovery',
+    ),
 
     
 ]

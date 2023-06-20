@@ -1,11 +1,6 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
-from .models import Project, Program, Type, Year, ChecklistDocuments
-from applications.regioncomuna.models import Region, Comuna
-from django.http import HttpResponseRedirect, JsonResponse
-from .forms import ProjectFilterForm
-from django.db.models import Q
-from .managers import ProjectsManager
+from .models import Project, Program, Type
 from django.core.cache import cache
 
 
