@@ -38,7 +38,7 @@
   font-weight: normal;
   font-stretch: normal;
   font-style: normal;
-  line-height: normal;
+  line-height: 1.88;
   letter-spacing: normal;
   text-align: center;
   color: #373737;
@@ -78,6 +78,7 @@
     width: 700px;
     display: flex;
     justify-content: space-around;
+    margin-bottom: 4em;
 }
 .catContainer{
     width: 10em;
