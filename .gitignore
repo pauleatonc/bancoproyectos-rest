@@ -1,8 +1,3 @@
-#local migrations
-applications/home/migrations/
-applications/projects/migrations/
-applications/users/migrations/
-applications/regioncomuna/migrations/
 package-lock.json
 
 #Cache de python
