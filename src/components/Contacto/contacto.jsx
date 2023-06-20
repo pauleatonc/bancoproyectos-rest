@@ -143,6 +143,9 @@ const ContactForm = () => {
         ></textarea>
         {formErrors.commentError && <span>{formErrors.commentError}</span>}
       </div>
+      <div className="contadorCaracteres">
+    ({formData.comment.length}/250)
+  </div>
       <button className='btn' type='submit'>Enviar</button>
     </form>
   );
