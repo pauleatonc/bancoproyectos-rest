@@ -9,11 +9,11 @@ const Header = () => {
       <header id="header">
         <div id="decoBlk"></div>
         <section id="upperSection">
-          <div>
-            <h1 id="logoHeader">Subsecretaría de Desarrollo <br /> Administrativo y Regional</h1>
+          <div id='logosub'>
             <div id="decoGob">
             <div id="azul"></div>
             <div id="rojo"></div>
+            <h1 id="logoHeader">Subsecretaría de Desarrollo <br /> Administrativo y Regional</h1>
           </div>
           </div>
           <Accesibilidad />

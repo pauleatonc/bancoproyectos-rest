@@ -1,8 +1,8 @@
+import ContactoForm from "../../components/Contacto/contacto";
+
 const Contacto = () => {
     return (
-      <>
-        <h5>Vista Contacto</h5>
-      </>
+      <ContactoForm />
     );
   };
   

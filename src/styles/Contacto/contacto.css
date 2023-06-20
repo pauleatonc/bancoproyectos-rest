@@ -1,0 +1,14 @@
+#formularioContacto{
+    margin-top: 4em;
+}
+.inputFormulario{
+    display:flex;
+    flex-direction: column;
+    margin-bottom: 2em;
+}
+.campo{
+    height: 3em;
+}
+.campocomentario{
+    height: 6em;
+}
