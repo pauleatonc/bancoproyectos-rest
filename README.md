@@ -106,8 +106,7 @@ docker-compose --version
 docker-compose up
 
 Por favor, consulte el archivo docker-compose.yml para más detalles sobre el despliegue de la aplicación y cualquier configuración adicional necesaria.
-## Base de Datos (Postgres)
-### Resumen de Postgres
+### Base de Datos (Postgres)
 - Versión Postgres: 14
 ### Estructura de la Base de Datos
 - Tablas
@@ -115,7 +114,44 @@ Por favor, consulte el archivo docker-compose.yml para más detalles sobre el de
 - Índices
 ### Consultas Principales
 ### Seguridad y Acceso
+## OWASP Top 10 Proactive Controls
+El "OWASP Top 10 Proactive Controls" es una lista de técnicas de seguridad que se deben implementar al diseñar, probar y liberar aplicaciones web modernas. OWASP es el acrónimo de Open Web Application Security Project.Dame l
+# 1- Definición: Requisitos de seguridad.
+- Autenticación: Autenticación propia de la aplicación, según los estándares de seguridad incorporados en Django Auth (Autenticación, Hashing de contraseñas, gestión de sesiones, control de acceso basado en roles)
+- Autorización: Existen 3 perfiles de usuarios:
+    - Superadmin: 1 por programa. Gestiona usuarios de todo tipo, gestiona proyectos. Autorizan gestión de projectos de usuarios admin.
+    - Admin: Los que los programas determinen. Solo gestiona usuarios municipales. Gestionan proyectos y solicitan validaciones.
+    - Municipal: Tiene acceso a descargas de documentos técnicos.
+    - Abierto: Puede navegar por la plataforma y ver todo su contenido. no puede descargar.
+    * Roles y validaciones según estándares de Django Auth.
+
+- Protección de datos: Hash MD5 (estandar subdere en linea) Para configuración de contraseñas.
+- Registro y monitorización: No se ha determinado
+- Gestión de sesiones: Token semanal.
+- Comunicaciones seguras: Cuenta con certificado HTTPS.
+- Protección contra amenazas comunes: Estándares de Django.
+- Pruebas de seguridad: No se ha determinado.
+- Gestión de incidentes y respuesta a incidentes: No se ha determinado.
+# 2- Configuraciones de seguridad.
+- Completar
+# 3- Codificar y escapar datos.
+- Django escapa automáticamente las salidas de las plantillas para prevenir ataques de Cross Site Scripting (XSS).
+# 4- Validación de las entradas.
+- Django tiene un sistema de formularios que valida automáticamente los datos de entrada del usuario. Sin embargo, debes definir las reglas de validación que se aplican a tus formularios.
+# 5- Implementación control de acceso.
+- Django Auth.
+# 6- Protección de datos sensibles.
+- Completar
+# 7- Protección contra ataques de CSRF (Cross-Site Request Forgery). 
+- Django tiene protección CSRF incorporada y está habilitada por defecto.
+# 8- Protección contra ataques de XSS (Cross-Site Scripting).
+- Como mencioné antes, Django escapa automáticamente las salidas de las plantillas para prevenir ataques XSS.
+# 9- Protección contra las vulnerabilidades de deserialización.
+- Django ofrece serialización y deserialización segura a través de su framework ORM.
+# 10- Monitoreo y registro.
+- Completar.
 ### Copias de Seguridad y Recuperación
+- Completar.
 
 ## Procesos de Desarrollo
 ### Control de Versiones
