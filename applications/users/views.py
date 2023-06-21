@@ -17,7 +17,7 @@ from django.views.generic.edit import (
     FormView
 )
 
-from .forms import UserRegisterForm, LoginForm, UpdatePasswordForm, VerificationSignInForm
+from .forms import UserRegisterForm, LoginForm, UpdatePasswordForm, VerificationSignInForm, PasswordRecoveryForm
 
 # Models
 from .models import User
@@ -171,4 +171,22 @@ class RegisterSuccess(LoginRequiredMixin, TemplateView):
         return redirect('users_app:user-login')
 
 class PasswordRecoveryMain(TemplateView):
-    template_name = 'users/password_recovery_main.html'
+    def get(self, request):
+        form = PasswordRecoveryForm()
+        return render(request, 'users/password_recovery_main.html', {'form': form})
+
+    def post(self, request):
+        form = PasswordRecoveryForm(request.POST)
+
+        if form.is_valid():
+            rut = form.cleaned_data['rut']
+            user = User.objects.get(rut=rut)
+
+            if user.tipo_usuario == 'SUBDERE':
+                # Realiza las acciones correspondientes para el tipo de usuario 'SUBDERE'
+                return redirect('subdere_link')
+            elif user.tipo_usuario == 'BANCO':
+                # Realiza las acciones correspondientes para el tipo de usuario 'BANCO'
+                return redirect('banco_link')
+
+        return render(request, 'users/password_recovery_main.html', {'form': form})
