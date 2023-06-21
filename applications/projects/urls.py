@@ -18,5 +18,4 @@ urlpatterns = [
          views.CheckListProgramView.as_view(),
          name='project_checklist'
          ),
-
 ]

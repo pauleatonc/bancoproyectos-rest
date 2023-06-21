@@ -19,5 +19,6 @@ urlpatterns = [
         'contact-success',
         views.ContactSuccess.as_view(),
         name = 'contact_success'
-    )
+    ),
+    
 ]
