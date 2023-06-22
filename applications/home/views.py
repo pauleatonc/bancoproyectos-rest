@@ -7,11 +7,9 @@ from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail
 from django.urls import reverse_lazy
 
-from django.views.generic import (
-    View,
-    TemplateView,
-    CreateView
-)
+from django.views.generic import View, TemplateView, CreateView
+from django.http import  HttpResponseServerError
+
 
 def send_email(subject, content, from_email, to_emails):
     message = Mail(
@@ -37,6 +35,7 @@ class HomePageView(ProjectsListView):
     template_name = 'home/index.html'
     model = Project
     cache_key = 'project_search_cache'
+    
 
 
 class ContactCreateView(CreateView):
@@ -100,3 +99,35 @@ class ContactCreateView(CreateView):
 
 class ContactSuccess(TemplateView):
     template_name = 'home/contact-success.html'
+
+class Error404(TemplateView):
+    template_name = 'home/404.html'
+    
+class Error500(TemplateView):
+    template_name = "home/500.html"
+
+    @classmethod
+    def as_error_view(cls):
+
+        v = cls.as_view()
+        def view(request):
+            r = v(request)
+            r.render()
+            return r
+        return view
+    
+class Error503(TemplateView):
+    template_name = 'home/503.html'
+
+    @classmethod
+    def as_error_view(cls):
+        v = cls.as_view()
+
+        def view(request):
+            r = v(request)
+            r.render()
+            return r
+
+        return view
+
+    

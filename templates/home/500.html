@@ -1,0 +1,19 @@
+{% extends "home/base_home.html" %}
+{% load static %} 
+{% block content%}
+{% include "modules/navbar.html" %}
+<section class="page-error m-5"">
+<section class="container-fluid  w-75 h-100 p-3">
+<span class="h1 font-weight-bold my-5">Problemas con la plataforma</span>
+<div class="my-5">
+<p>Código de error: 500 - Error interno del servidor</p>
+<p class="text-lines-6-3 mb-2">La plataforma está presentando <strong>problemas inesperados </strong>. El sistema envió una notificación con este<br> error a la administración de la plataforma. Sentimos los inconvenientes que esto pueda haber<br> provocado.</strong>
+</div>
+<div class="my-1">
+<p class="text-lines-6-3 mb-2">Si te encontrabas ingresando información o llenando formularios,<strong> no ha sido posible guardar tus <br> respuestas </strong>. Cuando la plataforma vuelva a estar disponible, deberás hacerlo nuevamente.</p>
+<p class="text-lines-6-3 mb-2">Te puedes contactar con la SUBDERE al teléfono de mesa central:<strong> (2) 2 636 36 00</strong></p>
+</div>
+</section>
+</section>
+{% include "modules/footer.html" %}
+{% endblock content %}
