@@ -45,6 +45,12 @@ urlpatterns = [
         views.PasswordRecoveryMain.as_view(),
         name='password_recovery',
     ),
+    path(
+        'password-recovery-SUBDERE',
+        views.PasswordRecoverySubdere.as_view(),
+        name='password_recovery_SUBDERE',
+    ),
+
 
     
 ]

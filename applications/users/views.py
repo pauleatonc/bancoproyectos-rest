@@ -181,12 +181,25 @@ class PasswordRecoveryMain(TemplateView):
         if form.is_valid():
             rut = form.cleaned_data['rut']
             user = User.objects.get(rut=rut)
+            request.session['rut_value'] = rut
 
             if user.tipo_usuario == 'SUBDERE':
                 # Realiza las acciones correspondientes para el tipo de usuario 'SUBDERE'
-                return redirect('subdere_link')
+                return redirect('users_app:password_recovery_SUBDERE')
             elif user.tipo_usuario == 'BANCO':
                 # Realiza las acciones correspondientes para el tipo de usuario 'BANCO'
                 return redirect('banco_link')
 
         return render(request, 'users/password_recovery_main.html', {'form': form})
+
+
+class PasswordRecoverySubdere(TemplateView):
+    template_name = 'users/password_recovery_SUBDERE.html'
+
+    def get_context_data(self, **kwargs):
+        # Obtener el valor del campo "rut" de la vista anterior
+        rut_value = self.request.session.get('rut_value', '')
+
+        context = super().get_context_data(**kwargs)
+        context['rut_value'] = rut_value
+        return context
