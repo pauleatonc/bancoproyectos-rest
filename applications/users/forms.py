@@ -42,28 +42,30 @@ class UserRegisterForm(forms.ModelForm):
             'primer_apellido',
             'segundo_apellido',
             'email',
+            'institucion'
         )
 
         labels = {
             'rut': 'RUT (Obligatorio)',
-            'nombres': 'Nombre',
-            'primer_apellido': 'Primer apellido',
-            'segundo_apellido': 'Segundo apellido',
-            'email': 'Correo electrónico institucional (obligatorio)',
+            'nombres': 'Nombre (Obligatorio)',
+            'primer_apellido': 'Primer apellido (Obligatorio)',
+            'segundo_apellido': 'Segundo apellido (Obligatorio)',
+            'email': 'Correo electrónico institucional (Obligatorio)',
+            'institucion': 'Institución a la que representas (Obligatorio)'
         }
 
         widgets = {
             'rut': forms.TextInput(
                 attrs={
                     'required': True,
-                    'placeholder': 'Escribe tu RUT sin puntos ni guiones y con dígito verificador',
+                    'placeholder': 'Escribe tu RUT',
                     'class': 'custom-input'
                 }
             ),
             'nombres': forms.TextInput(
                 attrs={
                     'required': True,
-                    'placeholder': 'Ingresa tu nombre.',
+                    'placeholder': 'Ingresa tu nombre sin apellidos.',
                     'class': 'custom-input'
                 }
             ),
@@ -85,6 +87,13 @@ class UserRegisterForm(forms.ModelForm):
                 attrs={
                     'required': True,
                     'placeholder': 'Ingresa tu correo electrónico.',
+                    'class': 'custom-input'
+                }
+            ),
+            'institucion': forms.EmailInput(
+                attrs={
+                    'required': True,
+                    'placeholder': 'Nombre de la Institución a la que representas.',
                     'class': 'custom-input'
                 }
             ),

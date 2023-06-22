@@ -10,6 +10,7 @@ from django.contrib import messages
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.shortcuts import get_object_or_404
+from datetime import datetime
 
 from django.views.generic import (
     View,
@@ -247,7 +248,11 @@ class PasswordRecoveryBanco(PasswordResetView):
         # Enviar el correo electrónico de recuperación de contraseña
         send_mail(
             subject='Banco de Proyectos: Recuperación de contraseña',
-            message='Haga clic en el siguiente enlace para restablecer su contraseña: {}'.format(reset_url),
+            message='Hola {},\n\n'.format(user.nombres) +
+                    'Acabas de solicitar un cambio de contraseña para ingresar al Banco de Proyectos.\n\n'
+                    'Para esto, dirígete a este enlace para crear una nueva contraseña: {}\n\n'.format(reset_url) +
+                    'Si crees que esto es un error o no fuiste tú, haz caso omiso a este correo y ponte en contacto con '
+                    'nosotros mediante este correo modernizacion@subdere.gov.cl.\n',
             from_email='modernizacion@subdere.gov.cl',
             recipient_list=[user.email],
         )
@@ -282,10 +287,31 @@ class PasswordRecoveryRequestSuccess(TemplateView):
 
 class CustomPasswordResetConfirmView(PasswordResetConfirmView):
     template_name = 'users/password_recovery_form.html'
-    success_url = 'users_app:password_recovery_success'
+    success_url = reverse_lazy('users_app:password_recovery_success')
 
     def form_valid(self, form):
         form.save()
+
+        # Obtener el usuario
+        user = form.user
+        fecha_cambio = datetime.now().strftime('%d-%m-%Y - %H:%M:%S')
+
+        # Enviar el correo electrónico de éxito del cambio de contraseña
+        send_mail(
+            subject='Banco de Proyectos: Realizaste un cambio de contraseña',
+            message='Hola {},\n\n'.format(user.nombres) +
+                    'Realizaste un cambio de contraseña para el Banco de Proyectos con los siguientes datos:\n\n'
+                    'Nombre: ' + user.nombres + ' ' + user.primer_apellido + ' ' + user.segundo_apellido + '\n'
+                    'RUT: ' + user.rut + '\n'
+                    'Institución: ' + user.institucion + '\n'
+                    'Correo: ' + user.email + '\n\n'
+                    'Fecha de cambio de contraseña: ' + fecha_cambio + '\n\n'
+                    'Si crees que esto es un error o no fuiste tú, haz caso omiso a este correo y ponte en contacto con '
+                    'nosotros mediante este correo modernizacion@subdere.gov.cl.\n',
+            from_email='modernizacion@subdere.gov.cl',
+            recipient_list=[user.email],
+        )
+
         return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
@@ -294,6 +320,10 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
         # Obtener los valores de uid y token
         uid = self.kwargs['uidb64']
         token = self.kwargs['token']
+
+        # Asignar los valores de uidb64 y token al contexto
+        context['uid'] = uid
+        context['token'] = token
 
         try:
             # Decodificar el uidb64 y obtener el usuario correspondiente
@@ -308,12 +338,8 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
             context['nombre'] = ''
             context['email'] = ''
 
-        # Asignar los valores de uidb64 y token al contexto
-        context['uid'] = uid
-        context['token'] = token
-
         return context
 
 class PasswordRecoverySuccess(TemplateView):
-    template_name = 'home/contact-success.html'
+    template_name = 'users/password_recovery_success.html'
 

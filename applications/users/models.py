@@ -23,6 +23,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     tipo_usuario = models.CharField('SUBDERE o Banco de Proyectos', max_length=20, choices=USER_TYPE_CHOICES, default='Banco de Proyectos')
     password = models.CharField(max_length=200, blank=True)
     email = models.TextField(max_length=100, blank=True, null=True)
+    institucion = models.CharField(max_length=50, blank=True, null=True)
 
     #Setiando el nombre de usuario al rut
     USERNAME_FIELD = 'rut'    

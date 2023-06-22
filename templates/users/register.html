@@ -72,6 +72,12 @@
                 </div>
 
                 <div class="form-group-contact">
+                    {{ form.institucion.label_tag }}
+                    {{ form.institucion }}
+                    {{ form.institucion.errors }}
+                </div>
+
+                <div class="form-group-contact">
                     {{ form.email.label_tag }}
                     {{ form.email }}
                     {{ form.email.errors }}
