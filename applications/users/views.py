@@ -4,8 +4,12 @@ from django.urls import reverse_lazy, reverse
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.http import HttpResponseRedirect
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView
 from django.contrib import messages
+from django.utils.encoding import force_bytes
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.shortcuts import get_object_or_404
 
 from django.views.generic import (
     View,
@@ -188,7 +192,7 @@ class PasswordRecoveryMain(TemplateView):
                 return redirect('users_app:password_recovery_SUBDERE')
             elif user.tipo_usuario == 'BANCO':
                 # Realiza las acciones correspondientes para el tipo de usuario 'BANCO'
-                return redirect('banco_link')
+                return redirect('users_app:password_recovery_Banco')
 
         return render(request, 'users/password_recovery_main.html', {'form': form})
 
@@ -203,3 +207,113 @@ class PasswordRecoverySubdere(TemplateView):
         context = super().get_context_data(**kwargs)
         context['rut_value'] = rut_value
         return context
+
+class PasswordRecoveryBanco(PasswordResetView):
+    template_name = 'users/password_recovery_Banco.html'
+    email_template_name = 'users/password_reset_email.html'
+    success_url = 'users_app:password_recovery_request_success'
+
+    def get_context_data(self, **kwargs):
+        # Obtener el valor del campo "rut" de la vista anterior
+        rut = self.request.session.get('rut_value', '')
+        user = User.objects.get(rut=rut)
+        email_value = user.email
+
+        # Obtener el nombre de usuario y el dominio del correo electrónico
+        username, domain = email_value.split('@')
+
+        # Aplicar la máscara a los caracteres del nombre de usuario
+        masked_username = username[:3] + '*' * (len(username) - 3)
+
+        # Reconstruir el correo electrónico con el nombre de usuario oculto
+        masked_email = masked_username + '@' + domain
+
+        context = super().get_context_data(**kwargs)
+        context['email_value'] = masked_email
+        return context
+
+    def post(self, request, *args, **kwargs):
+        # Obtener el valor del campo "rut" de la vista anterior
+        rut = request.session.get('rut_value', '')
+        user = User.objects.get(rut=rut)
+
+        # Generar los datos necesarios para el correo de recuperación de contraseña
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+        token = default_token_generator.make_token(user)
+
+        # Construir la URL para el restablecimiento de contraseña
+        reset_url = request.build_absolute_uri(reverse('users_app:password_reset_confirm', kwargs={'uidb64': uid, 'token': token}))
+
+        # Enviar el correo electrónico de recuperación de contraseña
+        send_mail(
+            subject='Banco de Proyectos: Recuperación de contraseña',
+            message='Haga clic en el siguiente enlace para restablecer su contraseña: {}'.format(reset_url),
+            from_email='modernizacion@subdere.gov.cl',
+            recipient_list=[user.email],
+        )
+
+        # Redireccionar a la página de éxito y mostrar un mensaje
+        messages.success(request, 'Se ha enviado un correo de recuperación de contraseña.')
+        return redirect(reverse(self.get_success_url()))
+
+
+class PasswordRecoveryRequestSuccess(TemplateView):
+    template_name = 'users/password_recovery_request_success.html'
+
+    def get_context_data(self, **kwargs):
+        # Obtener el valor del campo "rut" de la vista anterior
+        rut = self.request.session.get('rut_value', '')
+        user = User.objects.get(rut=rut)
+        email_value = user.email
+
+        # Obtener el nombre de usuario y el dominio del correo electrónico
+        username, domain = email_value.split('@')
+
+        # Aplicar la máscara a los caracteres del nombre de usuario
+        masked_username = username[:3] + '*' * (len(username) - 3)
+
+        # Reconstruir el correo electrónico con el nombre de usuario oculto
+        masked_email = masked_username + '@' + domain
+
+        context = super().get_context_data(**kwargs)
+        context['email_value'] = masked_email
+        return context
+
+
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    template_name = 'users/password_recovery_form.html'
+    success_url = 'users_app:password_recovery_success'
+
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        # Obtener los valores de uid y token
+        uid = self.kwargs['uidb64']
+        token = self.kwargs['token']
+
+        try:
+            # Decodificar el uidb64 y obtener el usuario correspondiente
+            uid = urlsafe_base64_decode(uid).decode()
+            user = get_object_or_404(User, pk=uid)
+
+            # Agregar el nombre de usuario y correo electrónico al contexto
+            context['nombre'] = user.nombres
+            context['email'] = user.email
+        except (TypeError, ValueError, OverflowError, User.DoesNotExist):
+            # Manejar el error si no se puede decodificar el uidb64 o el usuario no existe
+            context['nombre'] = ''
+            context['email'] = ''
+
+        # Asignar los valores de uidb64 y token al contexto
+        context['uid'] = uid
+        context['token'] = token
+
+        return context
+
+class PasswordRecoverySuccess(TemplateView):
+    template_name = 'home/contact-success.html'
+

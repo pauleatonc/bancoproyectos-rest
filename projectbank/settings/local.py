@@ -43,8 +43,8 @@ MEDIA_ROOT = BASE_DIR.child('media')
 # EMAIL SETTINGS
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'modernizacion@subdere.gov.cl'
-EMAIL_HOST_PASSWORD = 'Subde*moder23'
+EMAIL_HOST_USER = 'jhearquitecto@gmail.com'
+EMAIL_HOST_PASSWORD = 'kuakykjkptuapxrd'
 EMAIL_PORT = 587
 
 # RECAPTCHA SETTINGS

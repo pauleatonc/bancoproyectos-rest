@@ -73,4 +73,13 @@
     </section>
 </section>
 {% include "modules/footer.html" %}
+
+<script>
+    // Desplazamiento automático al elemento con ID "inicio-sesion" después de que se cargue la página
+    window.onload = function() {
+        var element = document.getElementById('inicio-sesion');
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+</script>
+
 {% endblock content %}
