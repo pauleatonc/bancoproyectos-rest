@@ -1,0 +1,20 @@
+{% extends "home/base_home.html" %}
+{% load static %} 
+{% block content%}
+{% include "modules/navbar.html" %}
+<section class="page-error m-5"">
+<section class="container-fluid  w-75 h-100 p-5">
+<span class="h1 font-weight-bold my-5">Página no encontrada.</span>
+<div class="my-2">
+<p>Codigo de error: 404 - no encontrado. </p>
+<p>Sentimos no haber encontrado la página que buscabas. Es posible que haya cambiado de ubicación,<br> haya sido eliminada o no existe.</p>
+</div>
+<ul class="my-5">
+  <li class="mt-2">Si escribiste la dirección, revisa que no haya errores de escritura.</li>
+  <li class="mt-2">Si copiaste y pegaste la dirección, revisa si copiaste la dirección completa.</li>
+</ul>
+<p>Si crees que esto se puede tratar de un error de la plataforma, <a href="/register-contact">ingresa un formulario de contacto </a> explicando la situación,<br> así podremos derivarla al área correspondiente.</p>
+</section>
+</section>
+{% include "modules/footer.html" %}
+{% endblock content %}
