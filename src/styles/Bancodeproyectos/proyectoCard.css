@@ -1,0 +1,76 @@
+#proyectoContainer{
+    border: 2px solid #3f87d0;
+    width:350px;
+    margin: 1em 0em 1em 0em;
+}
+#foto{
+    background-color: black;
+    width: 250px;
+    height: 150px;
+    margin: 1em 0em 1em 1em;
+}
+#pie{
+    width:200px;
+    display: flex;
+    flex-direction:row;
+    justify-content: space-around;
+}
+
+.titulo{
+  width: 320px;
+  height: 56px;
+  align-self: center;
+  flex-grow: 0;
+  margin: 0 0 28px;
+  font-family: 'RobotoSlab';
+  font-size: 24px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.17;
+  letter-spacing: normal;
+  text-align: left;
+  color: #373737;
+  margin: 1em 0em 1em 1em;
+}
+.descripcion{
+  width: 320px;
+  height: 80px;
+  align-self: center;
+  flex-grow: 0;
+  margin: 17px 10.5px;
+  padding: 0 305.5px 0 8.5px;
+  font-family: 'Roboto';
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.25;
+  letter-spacing: normal;
+  text-align: left;
+  color: #373737;
+}
+h7{
+    width: 31px;
+    height: 22px;
+    flex-grow: 0;
+    font-family: Roboto;
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: 1.57;
+    letter-spacing: normal;
+    text-align: center;
+    color: #0f69c4;
+    border: 1px solid #0f69c4;
+    margin: 1em 0em 1em 1em;
+}
+#btnMas{
+    background-color:#0f69c4;
+    color:aliceblue;
+    width: 100px;
+    height: 30px;
+    border: none;
+    margin: 1em 0em 1em 1em;
+}

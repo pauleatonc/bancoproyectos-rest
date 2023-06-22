@@ -1,1 +1,11 @@
-// contiene las tarjetas de proyectos a visualizar por el usuario, disponible en vista bancoproyectos
+import ProyectoCard from "./proyectoCard";
+
+const ProyectosContainer = () => {
+    return (
+        <div>
+            <ProyectoCard />
+        </div>
+    );
+  };
+  
+  export default ProyectosContainer;
