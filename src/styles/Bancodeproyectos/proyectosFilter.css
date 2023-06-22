@@ -3,21 +3,32 @@
     width: 300px;
     height: 1200px;
     margin: 1em 1em 01em 0em;
+    box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
 }
+
 #programasSection{
     display:flex;
+    justify-content: space-around;
     margin-bottom: 1.5em;
 }
+.programaContainer{
+    width: 60px;
+    margin-right: 2em;
+}
+
 .linea{
     height:1px;
     width: 200px;
-    margin: 2em 1em 01em 0em;
+    margin: 2em 1em 01em 1em;
     background-color: #c4c4c4;
 }
 #selectoresSection{
     display: flex;
     flex-direction: column;
     margin: 1em 1em 1em 0.5em;
+}
+label{
+    margin-top: 1em;
 }
 
 #tiposSection{

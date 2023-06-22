@@ -13,10 +13,10 @@ const ProyectoCard = () => {
                 desarrollo desigual con carencia en servicios de 
                 equipamiento e infraestructura ...
             </h5>
-            <div>
-                <h7>PMU</h7>
-                <h7>2018</h7>
-                <h7>Plazas y Áreas Verdes</h7>
+            <div id='resumenContainer'>
+                <h5 className='resumen'>PMU</h5>
+                <h5 className='resumen'>2018</h5>
+                <h5 className='resumen'>Plazas y Áreas Verdes</h5>
             </div>
             <button id='btnMas'>Ver más</button>
         </div>

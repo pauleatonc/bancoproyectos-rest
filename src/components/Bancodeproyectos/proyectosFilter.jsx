@@ -8,13 +8,13 @@ const FiltroProyectos = () => {
         <h4>¿En qué programa se está el proyecto que buscas?</h4>
         <h5>Puedes elegir más de uno.</h5>
         <section id='programasSection'>
-            <div className='catContainer'>
-                <div className='simbolo'></div>
-                <h3 className='homeH3'>Programa  Mejoramiento Urbano</h3>
+            <div className='programaContainer'>
+                <div className='circle'></div>
+                <h5>Programa  Mejoramiento Urbano</h5>
             </div>
-            <div className='catContainer'>
-                 <div className='simbolo'></div>
-                 <h3 className='homeH3'>Programa  Mejoramiento de Barrios</h3>
+            <div className='programaContainer'>
+                 <div className='circle'></div>
+                 <h5>Programa  Mejoramiento de Barrios</h5>
             </div>
         </section>
         <div className='linea'></div>
