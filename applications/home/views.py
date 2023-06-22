@@ -1,8 +1,10 @@
 from django.shortcuts import render
+from django.conf import settings
 from applications.projects.models import Project, Program, Type
 from applications.home.models import Contact
 from applications.projects.views import ProjectsListView
-from django.core.mail import send_mail
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 from django.urls import reverse_lazy
 
 from django.views.generic import (
@@ -10,6 +12,22 @@ from django.views.generic import (
     TemplateView,
     CreateView
 )
+
+def send_email(subject, content, from_email, to_emails):
+    message = Mail(
+        from_email=from_email,
+        to_emails=to_emails,
+        subject=subject,
+        plain_text_content=content)
+
+    try:
+        sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+        response = sg.send(message)
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
+    except Exception as e:
+        print(e.message)
 
 # forms
 from .forms import ContactForm
@@ -39,29 +57,36 @@ class ContactCreateView(CreateView):
         client_email = form.cleaned_data['email']
 
         # Correos destinatarios como admin
-        admin_email = ['', '']
+        admin_email = settings.ADMIN_EMAIL
+        noreplay_email = settings.NOREPLY_EMAIL
 
         # Enviar el correo electrónico con los datos del formulario
-        send_mail(
+        send_email(
+            # Subject
             'Razón de contacto: ' + contact_reason + ' - Banco de Proyectos',
+            # Content
             'Ha recibido el siguiente comentario: \n' +
             'Nombre de usuario: ' + client_name + '\n' +
             'Organización: ' + organization + '\n' +
             'Razón de contacto: ' + contact_reason + '\n' +
-            'Mensaje: \n' + message,
-            '',  # Correo electrónico del remitente
-            admin_email,  # Correo electrónico del destinatario
-            fail_silently=False,
+            'Mensaje: \n\n' + message,
+            # From email
+            noreplay_email[0],
+            # To emails
+            admin_email
         )
 
         # Enviar copia al cliente del correo electrónico con los datos del formulario
-        send_mail(
+        send_email(
+            # Subject
             'Razón de contacto: ' + contact_reason + ' - Banco de Proyectos',
-            'Su comentario ha sido recepcionado correctamente. A continuación se adjunta una copia de su comentario: \n'
+            # Content
+            'Su comentario ha sido recepcionado correctamente. A continuación se adjunta una copia de su comentario: \n\n'
             + form.cleaned_data['message'],
-            '',  # Correo electrónico del remitente
-            [client_email],  # Correo electrónico del destinatario
-            fail_silently=False,
+            # From email
+            noreplay_email[0],
+            # To emails
+            [client_email]
         )
 
         return super().form_valid(form)
