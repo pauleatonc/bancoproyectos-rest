@@ -1,5 +1,7 @@
 from django.shortcuts import render
-from django.core.mail import send_mail
+from django.conf import settings
+from sendgrid.helpers.mail import Mail
+from sendgrid import SendGridAPIClient
 from django.urls import reverse_lazy, reverse
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
@@ -29,6 +31,23 @@ from .models import User
 from applications.projects.models import Program, Type
 
 from .functions import code_generator, validar_rut
+
+def send_email(subject, content, from_email, to_emails):
+    message = Mail(
+        from_email=from_email,
+        to_emails=to_emails,
+        subject=subject,
+        plain_text_content=content)
+
+    try:
+        sg = SendGridAPIClient(settings.SENDGRID_API_KEY)
+        response = sg.send(message)
+        print(response.status_code)
+        print(response.body)
+        print(response.headers)
+    except Exception as e:
+        print(e)
+
 
 
 class UserRegisterView(LoginRequiredMixin, UserPassesTestMixin, FormView):
@@ -245,16 +264,23 @@ class PasswordRecoveryBanco(PasswordResetView):
         # Construir la URL para el restablecimiento de contraseña
         reset_url = request.build_absolute_uri(reverse('users_app:password_reset_confirm', kwargs={'uidb64': uid, 'token': token}))
 
+        # Correos destinatarios como admin
+        noreplay_email = settings.NOREPLY_EMAIL
+
         # Enviar el correo electrónico de recuperación de contraseña
-        send_mail(
-            subject='Banco de Proyectos: Recuperación de contraseña',
-            message='Hola {},\n\n'.format(user.nombres) +
-                    'Acabas de solicitar un cambio de contraseña para ingresar al Banco de Proyectos.\n\n'
-                    'Para esto, dirígete a este enlace para crear una nueva contraseña: {}\n\n'.format(reset_url) +
-                    'Si crees que esto es un error o no fuiste tú, haz caso omiso a este correo y ponte en contacto con '
-                    'nosotros mediante este correo modernizacion@subdere.gov.cl.\n',
-            from_email='modernizacion@subdere.gov.cl',
-            recipient_list=[user.email],
+        send_email(
+            # Subject
+            'Banco de Proyectos: Recuperación de contraseña',
+            # Content
+            'Hola {},\n\n'.format(user.nombres) +
+            'Acabas de solicitar un cambio de contraseña para ingresar al Banco de Proyectos.\n\n'
+            'Para esto, dirígete a este enlace para crear una nueva contraseña: {}\n\n'.format(reset_url) +
+            'Si crees que esto es un error o no fuiste tú, haz caso omiso a este correo y ponte en contacto con '
+            'nosotros mediante este correo modernizacion@subdere.gov.cl.\n',
+            # From email
+            noreplay_email[0],
+            # To emails
+            [user.email],
         )
 
         # Redireccionar a la página de éxito y mostrar un mensaje
@@ -296,20 +322,27 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
         user = form.user
         fecha_cambio = datetime.now().strftime('%d-%m-%Y - %H:%M:%S')
 
+        # Correos destinatarios como admin
+        noreplay_email = settings.NOREPLY_EMAIL
+
         # Enviar el correo electrónico de éxito del cambio de contraseña
-        send_mail(
-            subject='Banco de Proyectos: Realizaste un cambio de contraseña',
-            message='Hola {},\n\n'.format(user.nombres) +
-                    'Realizaste un cambio de contraseña para el Banco de Proyectos con los siguientes datos:\n\n'
-                    'Nombre: ' + user.nombres + ' ' + user.primer_apellido + ' ' + user.segundo_apellido + '\n'
-                    'RUT: ' + user.rut + '\n'
-                    'Institución: ' + user.institucion + '\n'
-                    'Correo: ' + user.email + '\n\n'
-                    'Fecha de cambio de contraseña: ' + fecha_cambio + '\n\n'
-                    'Si crees que esto es un error o no fuiste tú, haz caso omiso a este correo y ponte en contacto con '
-                    'nosotros mediante este correo modernizacion@subdere.gov.cl.\n',
-            from_email='modernizacion@subdere.gov.cl',
-            recipient_list=[user.email],
+        send_email(
+            # Subject
+            'Banco de Proyectos: Realizaste un cambio de contraseña',
+            # Content
+            'Hola {},\n\n'.format(user.nombres) +
+            'Realizaste un cambio de contraseña para el Banco de Proyectos con los siguientes datos:\n\n'
+            'Nombre: ' + user.nombres + ' ' + user.primer_apellido + ' ' + user.segundo_apellido + '\n'
+            'RUT: ' + user.rut + '\n'
+            'Institución: ' + user.institucion + '\n'
+            'Correo: ' + user.email + '\n\n'
+            'Fecha de cambio de contraseña: ' + fecha_cambio + '\n\n'
+            'Si crees que esto es un error o no fuiste tú, haz caso omiso a este correo y ponte en contacto con '
+            'nosotros mediante este correo modernizacion@subdere.gov.cl.\n',
+            # From email
+            noreplay_email[0],
+            # To emails
+            [user.email],
         )
 
         return super().form_valid(form)
