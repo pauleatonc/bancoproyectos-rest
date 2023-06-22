@@ -42,28 +42,30 @@ class UserRegisterForm(forms.ModelForm):
             'primer_apellido',
             'segundo_apellido',
             'email',
+            'institucion'
         )
 
         labels = {
             'rut': 'RUT (Obligatorio)',
-            'nombres': 'Nombre',
-            'primer_apellido': 'Primer apellido',
-            'segundo_apellido': 'Segundo apellido',
-            'email': 'Correo electrónico institucional (obligatorio)',
+            'nombres': 'Nombre (Obligatorio)',
+            'primer_apellido': 'Primer apellido (Obligatorio)',
+            'segundo_apellido': 'Segundo apellido (Obligatorio)',
+            'email': 'Correo electrónico institucional (Obligatorio)',
+            'institucion': 'Institución a la que representas (Obligatorio)'
         }
 
         widgets = {
             'rut': forms.TextInput(
                 attrs={
                     'required': True,
-                    'placeholder': 'Escribe tu RUT sin puntos ni guiones y con dígito verificador',
+                    'placeholder': 'Escribe tu RUT',
                     'class': 'custom-input'
                 }
             ),
             'nombres': forms.TextInput(
                 attrs={
                     'required': True,
-                    'placeholder': 'Ingresa tu nombre.',
+                    'placeholder': 'Ingresa tu nombre sin apellidos.',
                     'class': 'custom-input'
                 }
             ),
@@ -85,6 +87,13 @@ class UserRegisterForm(forms.ModelForm):
                 attrs={
                     'required': True,
                     'placeholder': 'Ingresa tu correo electrónico.',
+                    'class': 'custom-input'
+                }
+            ),
+            'institucion': forms.EmailInput(
+                attrs={
+                    'required': True,
+                    'placeholder': 'Nombre de la Institución a la que representas.',
                     'class': 'custom-input'
                 }
             ),
@@ -205,3 +214,30 @@ class VerificationSignInForm(forms.Form):
                 raise forms.ValidationError('el codigo es incorrecto')
         else:
             raise forms.ValidationError('el codigo es incorrecto')
+
+
+class PasswordRecoveryForm(forms.Form):
+    rut = forms.CharField(
+        label='Rut',
+        required=True,
+        widget=forms.TextInput(
+            attrs={
+                'placeholder': 'Ingresa tu RUT',
+                'class': 'custom-input'
+            }
+        )
+    )
+
+    def clean_rut(self):
+        """
+        Realiza la validación y el formateo del campo Rut
+        """
+        rut = validar_rut_form(self)
+
+        # Verificación si el RUT existe en la base de datos
+        try:
+            user = User.objects.get(rut=rut)
+        except User.DoesNotExist:
+            raise forms.ValidationError('El usuario no existe en la base de datos')
+
+        return rut
