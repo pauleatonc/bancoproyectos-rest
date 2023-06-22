@@ -9,10 +9,8 @@ function BuscadorGeneral() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Aquí puedes realizar acciones adicionales cuando se envíe el formulario de búsqueda,
-    // como realizar la búsqueda en tu base de datos o filtrar datos.
-    // Por ejemplo:
-    // console.log('Búsqueda enviada:', searchTerm);
+    // Aquí realizar acciones adicionales cuando se envíe el formulario de búsqueda,
+    // como realizar la búsqueda en la base de datos o filtrar datos.
   };
 
   return (

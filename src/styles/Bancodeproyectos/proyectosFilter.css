@@ -1,0 +1,45 @@
+#filterContainer{
+    border: 1px solid #3f87d0;
+    width: 300px;
+    height: 1200px;
+    margin: 1em 1em 01em 0em;
+}
+#programasSection{
+    display:flex;
+    margin-bottom: 1.5em;
+}
+.linea{
+    height:1px;
+    width: 200px;
+    margin: 2em 1em 01em 0em;
+    background-color: #c4c4c4;
+}
+#selectoresSection{
+    display: flex;
+    flex-direction: column;
+    margin: 1em 1em 1em 0.5em;
+}
+
+#tiposSection{
+    display: flex;
+    flex-wrap: wrap;
+}
+.tipoContainer{
+    display: flex;
+    flex-direction: column;
+    width: 100px;
+}
+.circle{
+    height: 50px;
+    width:50px;
+    border-radius: 50%;
+    background-color: #0f69c4;
+}
+#filterBtn{
+    width: 200px;
+    height: 40px;
+    background-color: #0f69c4;
+    color: whitesmoke;
+    border: none;
+    margin: 2em 1em 1em 0em;
+}

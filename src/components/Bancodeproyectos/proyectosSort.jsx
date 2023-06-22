@@ -1,1 +1,10 @@
-// selector para ordenar proyectos segun criterios, presente en vista bancoproyectos
+const SortProyectos = () => {
+    return (
+        <select>
+        <option value=''>Ordenado: Más reciente</option>
+        <option value='desc'>Menos reciente</option>
+     </select>
+    );
+  };
+  
+  export default SortProyectos;
