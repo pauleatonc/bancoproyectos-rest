@@ -27,5 +27,12 @@ COPY . /app/
 # Variable de entorno para apuntar a dev.py
 ENV DJANGO_SETTINGS_MODULE=projectbank.settings.dev
 
+# Collect static files
+RUN python manage.py collectstatic --no-input
+
 # Especificar el comando para ejecutar la aplicación
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+#CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"] 
+
+#Reemplaza para el despligue
+# Especificar el comando para ejecutar la aplicación con Gunicorn
+CMD ["gunicorn", "projectbank.wsgi:application", "--bind", "0.0.0.0:8000"]
