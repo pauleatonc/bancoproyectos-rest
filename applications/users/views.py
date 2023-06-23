@@ -73,6 +73,7 @@ class UserRegisterView(LoginRequiredMixin, UserPassesTestMixin, FormView):
             nombres=form.cleaned_data['nombres'],
             primer_apellido=form.cleaned_data['primer_apellido'],
             segundo_apellido=form.cleaned_data['segundo_apellido'],
+            institucion=form.cleaned_data['institucion'],
             email=form.cleaned_data['email'],
 
             #codregistro = codigo

@@ -90,7 +90,7 @@ class UserRegisterForm(forms.ModelForm):
                     'class': 'custom-input'
                 }
             ),
-            'institucion': forms.EmailInput(
+            'institucion': forms.TextInput(
                 attrs={
                     'required': True,
                     'placeholder': 'Nombre de la Institución a la que representas.',
