@@ -22,7 +22,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'projectbank',
         'USER': 'postgres',
-        'PASSWORD':'1234',#'Subdere.2022',
+        'PASSWORD':'Subdere.2022',
         'HOST': 'localhost',
         'PORT': '5432',
     },

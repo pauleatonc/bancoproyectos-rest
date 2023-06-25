@@ -33,6 +33,11 @@ def validar_rut(value):
     if dv_esperado != verificador:
         raise ValidationError('El RUT ingresado no es válido')
 
+    # Formatear RUT con guión y dígito verificador
+    rut_formateado = rut + "-" + dv_esperado
+
+    return rut_formateado
+
 # Validador y formateador del rut para el Forms.py
 def validar_rut_form(self):
     rut = self.cleaned_data['rut'].replace('.', '').replace('-', '')

@@ -98,15 +98,25 @@
                 </div>
 
                 <div class="form-group-contact">
-                    {{ form.password1.label_tag }}
-                    {{ form.password1 }}
-                    {{ form.password1.errors }}
+                    <input type="password" name="{{ form.password1.name }}" id="{{ form.password1.id_for_label }}"
+                           class="custom-input" placeholder="Contraseña">
+                    <button class="toggle-password" type="button">
+                        <img src="{% static 'images/Close_eye.svg' %}" alt="Toggle Password">
+                    </button>
+                    {% for error in form.password1.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                    {% endfor %}
                 </div>
 
                 <div class="form-group-contact">
-                    {{ form.password2.label_tag }}
-                    {{ form.password2 }}
-                    {{ form.password2.errors }}
+                    <input type="password" name="{{ form.password2.name }}" id="{{ form.password2.id_for_label }}"
+                           class="custom-input" placeholder="Confirmar Contraseña">
+                    <button class="toggle-password" type="button">
+                        <img src="{% static 'images/Close_eye.svg' %}" alt="Toggle Password">
+                    </button>
+                    {% for error in form.password2.errors %}
+                        <span class="text-danger">{{ error }}</span>
+                    {% endfor %}
                 </div>
 
                 <div class="d-flex flex-column align-items-center">
@@ -121,6 +131,27 @@
     </div>
 </section>
 
-
 {% include "modules/footer.html" %}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        // Ocultar el campo de contraseña al cargar la página
+        $('input[type="password"]').attr('type', 'password');
+
+        $('.toggle-password').click(function() {
+            var passwordInput = $(this).prev('input');
+            var icon = $(this).find('img');
+
+            if (passwordInput.attr('type') === 'password') {
+                passwordInput.attr('type', 'text');
+                icon.attr('src', '{% static 'images/Eye.svg' %}');
+            } else {
+                passwordInput.attr('type', 'password');
+                icon.attr('src', '{% static 'images/Close_eye.svg' %}');
+            }
+        });
+    });
+</script>
+
 {% endblock content %}

@@ -326,20 +326,32 @@ class CustomPasswordResetConfirmView(PasswordResetConfirmView):
         # Correos destinatarios como admin
         noreplay_email = settings.NOREPLY_EMAIL
 
+        # Construir el contenido del correo electrónico
+        content = 'Hola {},\n\n'.format(user.nombres)
+
+        if user.nombres:
+            content += 'Nombre: {}\n'.format(user.nombres)
+
+        if user.rut:
+            content += 'RUT: {}\n'.format(user.rut)
+
+        if user.institucion:
+            content += 'Institución: {}\n'.format(user.institucion)
+
+        if user.email:
+            content += 'Correo: {}\n'.format(user.email)
+
+        content += '\nFecha de cambio de contraseña: {}\n\n'.format(fecha_cambio)
+
+        content += 'Si crees que esto es un error o no fuiste tú, haz caso omiso a este correo y ponte en contacto ' \
+                   'con nosotros mediante este correo modernizacion@subdere.gov.cl.\n'
+
         # Enviar el correo electrónico de éxito del cambio de contraseña
         send_email(
             # Subject
             'Banco de Proyectos: Realizaste un cambio de contraseña',
             # Content
-            'Hola {},\n\n'.format(user.nombres) +
-            'Realizaste un cambio de contraseña para el Banco de Proyectos con los siguientes datos:\n\n'
-            'Nombre: ' + user.nombres + ' ' + user.primer_apellido + ' ' + user.segundo_apellido + '\n'
-            'RUT: ' + user.rut + '\n'
-            'Institución: ' + user.institucion + '\n'
-            'Correo: ' + user.email + '\n\n'
-            'Fecha de cambio de contraseña: ' + fecha_cambio + '\n\n'
-            'Si crees que esto es un error o no fuiste tú, haz caso omiso a este correo y ponte en contacto con '
-            'nosotros mediante este correo modernizacion@subdere.gov.cl.\n',
+            content,
             # From email
             noreplay_email[0],
             # To emails

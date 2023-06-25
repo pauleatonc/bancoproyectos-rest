@@ -20,7 +20,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     primer_apellido = models.CharField(max_length=30, blank=True, null=True)
     segundo_apellido = models.CharField(max_length=30, blank=True, null=True)
     comuna = models.CharField(max_length=50, blank=True, null=True)
-    tipo_usuario = models.CharField('SUBDERE o Banco de Proyectos', max_length=20, choices=USER_TYPE_CHOICES, default='Banco de Proyectos')
+    tipo_usuario = models.CharField('SUBDERE o Banco de Proyectos', max_length=20, choices=USER_TYPE_CHOICES, default='BANCO')
     password = models.CharField(max_length=200, blank=True)
     email = models.TextField(max_length=100, blank=True, null=True)
     institucion = models.CharField(max_length=50, blank=True, null=True)
@@ -33,7 +33,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
 
     #Campos requeridos
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['email']
 
     objects = UserManager()
 
@@ -42,3 +42,9 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     def get_full_name(self):
         return self.nombres + ' ' + self.primer_apellido + ' ' + self.segundo_apellido
+
+    def save(self, *args, **kwargs):
+        # Formatear el RUT antes de guardar
+        rut_formateado = validar_rut(self.rut)
+        self.rut = rut_formateado
+        super().save(*args, **kwargs)
