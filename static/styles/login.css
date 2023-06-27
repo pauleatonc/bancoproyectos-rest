@@ -50,4 +50,21 @@
   text-align: left;
   width: 100%;
   position: relative;
+
+}
+
+.input-with-toggle {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    vertical-align: middle;
 }
