@@ -41,7 +41,8 @@ DATABASES = {
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
+STATIC_ROOT = 'staticfiles/'
 STATICFILES_DIRS = [BASE_DIR.child('static')]
 
 DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
@@ -57,6 +58,9 @@ AWS_S3_ENDPOINT_URL = env("AWS_S3_ENDPOINT_URL")
 AWS_S3_FILE_OVERWRITE = env.bool('AWS_S3_FILE_OVERWRITE', default=False)
 AWS_DEFAULT_ACL = None
 
-
+# Recaptcha
 RECAPTCHA_PRIVATE_KEY = env("RECAPTCHA_PRIVATE_KEY")
 RECAPTCHA_PUBLIC_KEY = env("RECAPTCHA_PUBLIC_KEY")
+
+# Sendgrid
+SENDGRID_API_KEY = env("SENDGRID_API_KEY")
