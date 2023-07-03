@@ -18,6 +18,7 @@ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
+    # Base de datos de aplicación
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': env("DB_NAME"),
@@ -34,10 +35,11 @@ DATABASES = {
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = '/static/'
+STATIC_URL = 'static/'
+STATIC_ROOT = 'staticfiles/'
 STATICFILES_DIRS = [BASE_DIR.child('static')]
 
-MEDIA_URL = '/media/'
+MEDIA_URL = 'media/'
 MEDIA_ROOT = BASE_DIR.child('media')
 
 RECAPTCHA_PRIVATE_KEY = env("RECAPTCHA_PRIVATE_KEY")

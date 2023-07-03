@@ -28,3 +28,6 @@ media/
 
 #Otros (cómo .idea)
 .idea
+
+# For this specific project, in prod we collect the estatics file in this folder (for now)
+staticfiles
