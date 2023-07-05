@@ -64,3 +64,11 @@ RECAPTCHA_PUBLIC_KEY = env("RECAPTCHA_PUBLIC_KEY")
 
 # Sendgrid
 SENDGRID_API_KEY = env("SENDGRID_API_KEY")
+
+# Trusted origins for the CSRF validation
+# https://docs.djangoproject.com/en/4.2/ref/settings/#csrf-trusted-origins
+CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=[])
+
+# If we are behind proxy with https we trust the header defined here.
+# https://docs.djangoproject.com/en/4.2/ref/settings/#secure-proxy-ssl-header
+SECURE_PROXY_SSL_HEADER = env.tuple('SECURE_PROXY_SSL_HEADER', default=None)
