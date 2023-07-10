@@ -1,13 +1,10 @@
 const Title = () => {
     return (
-        <>
-        <h4 id="title">Banco de Proyectos</h4><div>
-        <div id="decoGob">
-            <div id="azul" />
-            <div id="rojo"/>
+        <div className="container d-flex flex-column my-md-5">
+            <p className="h1 text-center">Banco de Proyectos</p>
+            <div className="h3 line"></div>
         </div>
-        </div>
-        </>
+
     );
   };
   
