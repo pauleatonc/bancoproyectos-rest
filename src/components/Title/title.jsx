@@ -1,5 +1,3 @@
-import "../../styles/Title/title.css";
-
 const Title = () => {
     return (
         <>

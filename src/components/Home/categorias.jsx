@@ -1,4 +1,3 @@
-import "../../styles/Home/home.css";
 import { Link } from "react-router-dom";
 
 const CategoriasProyecto = () => {

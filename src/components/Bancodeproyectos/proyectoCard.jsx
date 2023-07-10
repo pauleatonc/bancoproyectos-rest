@@ -1,5 +1,3 @@
-import '../../styles/Bancodeproyectos/proyectoCard.css'
-
 const ProyectoCard = () => {
     return (
         <div id='proyectoContainer'>

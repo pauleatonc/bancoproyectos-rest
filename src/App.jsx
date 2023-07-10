@@ -1,6 +1,8 @@
 import React , { Suspense } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
 
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 const MainLayout = React.lazy(() => import('./layout/mainLayout'));
 const Home = React.lazy(() => import('./views/Home/home'));
 const Contacto = React.lazy(() => import('./views/Home/contacto'));

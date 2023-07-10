@@ -1,4 +1,3 @@
-import "../../styles/Error/errorMsj.css";
 import { Link } from 'react-router-dom';
 
 const Error404msj = () => {

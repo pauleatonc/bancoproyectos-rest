@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import "../../styles/Header/header.css";
 import BuscadorGeneral from "./buscadorGeneral";
 import Accesibilidad from './accesibilidad';
 import Rrss from './rrss';

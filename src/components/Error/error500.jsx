@@ -1,5 +1,3 @@
-import "../../styles/Error/errorMsj.css";
-
 const Error500msj = () => {
     return (
         <>

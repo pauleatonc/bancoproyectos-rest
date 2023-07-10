@@ -1,5 +1,3 @@
-import '../../styles/Bancodeproyectos/proyectosFilter.css'
-
 const FiltroProyectos = () => {
     return (
       <div id='filterContainer'>

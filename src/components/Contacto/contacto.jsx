@@ -1,4 +1,3 @@
-import "../../styles/Contacto/contacto.css";
 import { useState } from 'react';
 
 const ContactForm = () => {
