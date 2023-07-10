@@ -1,11 +1,11 @@
 import {Outlet} from 'react-router-dom';
-import Header from '../components/Header/header'
+import Navbar from '../components/Navbar/navbar'
 import Footer from '../components/Footer/footer';
 
 const ErrorLayout = () => {
   return (
     <>
-      <Header />
+      <Navbar />
       <Outlet />
       <Footer />
     </>
