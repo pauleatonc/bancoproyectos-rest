@@ -50,7 +50,7 @@ const Navbar = () => {
           </div>
         </div>
         
-        <div className="d-flex justify-content-end my-md-3">
+        <div className="d-flex justify-content-end">
           {/* Botones RRSS */}
           <div className="d-flex align-items-center m-2">
             <div className="doc-icon m-2"> <span className="cl cl-youtube mb-2 text-secondary"></span> </div>
@@ -59,13 +59,13 @@ const Navbar = () => {
             <div className="doc-icon m-2"> <span className="cl cl-messenger mb-2 text-secondary"></span> </div> 
           </div>
           {/* Buscador */}
-          <form className="col-3 simple-search search">
-            <input className="form-control" type="text" name="search" placeholder="search" aria-label="search" aria-describedby="searchLineAction" />
+          <form className="search  col-4 my-3 my-md-4" action="" method="GET">
+            <input className="form-control " type="text" name="search" placeholder="Texto demo" aria-label="Texto demo" aria-describedby="searchAction"/>
             <div className="search-action">
-              <button className="btn btn-outline-search dom-search-behavior-cancel d-none" type="button"><i className="icon cl cl-close"></i></button>
-              <button className="btn btn-outline-search" id="searchLineAction" type="submit"><i className="icon cl cl-search text-secondary"></i></button>
+              <button className="btn btn-outline-search" id="searchAction" type="submit"><i className="icon cl cl-search"></i></button>
             </div>
           </form>
+          
         </div>
 
         {/* Navegacion */}
