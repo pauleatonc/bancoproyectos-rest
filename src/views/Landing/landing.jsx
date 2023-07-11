@@ -6,7 +6,7 @@ const Home = () => {
       <BuscadorProyectos />
 
       {/* Categorias principales */}
-      <div className="container mb-md-5">
+      <div className="container my-4 mb-md-5">
         <p className="font-level-1 text-center">Categorías principales</p>
         <div className="container d-flex flex-row justify-content-center">
 
@@ -36,7 +36,7 @@ const Home = () => {
       
 
       {/* Que es el Banco de Proyectos */}
-      <div className="container col-md-8">
+      <div className="container col-md-8 px-4 mb-4">
         <p className="font-level-1">¿Qué es el Banco de Proyectos?</p>
         <p> El <strong> Banco de Proyectos </strong> de la Subsecretaría de Desarrollo Regional y Administrativo es un
           <strong> repositorio de proyectos ya ejecutados por distintas municipalidades </strong>a lo largo del país, que tiene por objetivo
@@ -48,15 +48,15 @@ const Home = () => {
 
         <div className="container d-md-flex my-md-5">
           <div className="col-md-4 d-flex flex-column mx-md-2 align-items-center">
-            <div className="rounded-circle bg-primary d-flex align-items-center justify-content-center mb-md-4" style={{ width: '200px', height: '200px' }}>
-              <img src="src/static/img/que_es_1.png" alt="Imagen" className="img-fluid rounded-circle h-100" />
+            <div className="rounded-circle bg-primary d-flex align-items-center justify-content-center mb-md-4 my-4" style={{ width: '200px', height: '200px' }}>
+              <img src="src/static/img/que_es_1.png" alt="Imagen" className="img-fluid rounded-circle h-100 " />
             </div>
             <strong className="text-center font-level-4 text-gray-a">Para personas encargadas de Programas de Mejoramiento Urbano y de Barrios</strong>
             <p className="text-center my-md-4">Dirigido a todo profesional municipal encargado de la formulación de proyectos que se enmarquen en los programas PMU y PMB.</p>
           </div>
 
           <div className="col-md-4 d-flex flex-column mx-md-2 align-items-center">
-            <div className="rounded-circle bg-primary d-flex align-items-center justify-content-center mb-md-4" style={{ width: '200px', height: '200px' }}>
+            <div className="rounded-circle bg-primary d-flex align-items-center justify-content-center mb-md-4 my-4" style={{ width: '200px', height: '200px' }}>
               <img src="src/static/img/que_es_2.png" alt="Imagen" className="img-fluid rounded-circle h-100" />
             </div>
             <strong className="text-center font-level-4 text-gray-a">Filtra información y encuentra el proyecto que se ajuste a tu comuna</strong>
@@ -64,7 +64,7 @@ const Home = () => {
           </div>
 
           <div className="col-md-4 d-flex flex-column mx-md-2 align-items-center">
-            <div className="rounded-circle bg-primary d-flex align-items-center justify-content-center mb-md-4" style={{ width: '200px', height: '200px' }}>
+            <div className="rounded-circle bg-primary d-flex align-items-center justify-content-center mb-md-4 my-4" style={{ width: '200px', height: '200px' }}>
               <img src="src/static/img/que_es_3.png" alt="Imagen" className="img-fluid rounded-circle h-100" />
             </div>
             <strong className="text-center font-level-4 text-gray-a">Entregamos información referencial para la realización de proyectos</strong>
@@ -74,7 +74,7 @@ const Home = () => {
       </div>
 
       {/* Quienes somos */}
-      <div className="container col-md-8">
+      <div className="container col-md-8 px-4">
         <p className="font-level-1 text-center">¿Quiénes somos?</p>
         <p>El Banco de Proyectos es una iniciativa directa de la  Subsecretaría de Desarrollo Regional y Administrativo, cuya información está en permanente actualización.</p>
       </div>
