@@ -4,8 +4,8 @@ import { Route, Routes, Navigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const MainLayout = React.lazy(() => import('./layout/mainLayout'));
-const Home = React.lazy(() => import('./views/Home/home'));
-const Contacto = React.lazy(() => import('./views/Home/contacto'));
+const Landing = React.lazy(() => import('./views/Landing/landing'));
+const Contacto = React.lazy(() => import('./views/Landing/contacto'));
 const Login = React.lazy(() => import('./views/Users/login/login'));
 const BancoProyectos = React.lazy(() => import('./views/Projects/bancodeproyectos/bancodeproyectos'));
 const ErrorLayout = React.lazy(() => import('./layout/errorLayout'));
@@ -18,7 +18,7 @@ function App() {
     <Suspense>
       <Routes>
         <Route path="/" element={<MainLayout />}>
-          <Route index element={<Home />} />
+          <Route index element={<Landing />} />
           <Route path="contacto" element={<Contacto />} />
           <Route path="login" element={<Login />} />
           <Route path="bancodeproyectos" element={<BancoProyectos />} />
