@@ -1,4 +1,5 @@
 import BuscadorProyectos from "../../components/Landing/buscadorproyectos";
+import "../../static/styles/landing.css"
 
 const Home = () => {
   return (
@@ -11,21 +12,21 @@ const Home = () => {
         <div className="container d-flex flex-row justify-content-center">
 
           <div className="col-md-2 d-flex flex-column mx-md-5 align-items-center">
-            <div className="rounded-circle border border-primary d-flex align-items-center justify-content-center my-md-3" style={{ width: '65px', height: '65px' }}>
-              <span className="h4 font-weight-bold text-primary mt-2">PMU</span>
+            <div className="categoriasCircle rounded-circle d-flex align-items-center justify-content-center my-md-3">
+              <span className="categoriaSiglas h4 font-weight-bold mt-2">PMU</span>
             </div>
             <p className="text-center">Programa Mejoramiento Urbano</p>
           </div>
           
           <div className="col-md-2 d-flex flex-column mx-md-5 align-items-center">
-            <div className="rounded-circle border border-primary d-flex align-items-center justify-content-center my-md-3" style={{ width: '65px', height: '65px' }}>
-              <span className="h4 font-weight-bold text-primary mt-2">PMB</span>
+            <div className="categoriasCircle rounded-circle d-flex align-items-center justify-content-center my-md-3">
+              <span className="categoriaSiglas h4 font-weight-bold mt-2">PMB</span>
             </div>
             <p className="text-center">Programa Mejoramiento de Barrios</p>
           </div>
 
           <div className="col-md-2 d-flex flex-column mx-md-5 align-items-center">
-            <div className="rounded-circle border border-primary d-flex align-items-center justify-content-center my-md-3" style={{ width: '65px', height: '65px' }}>
+            <div className="categoriasCircle rounded-circle d-flex align-items-center justify-content-center my-md-3">
               <img src="src/static/img/icon_categorias_landing.png" alt="Icono"/>
             </div>
             <p className="text-center">Ver todos los proyectos</p>
@@ -48,24 +49,24 @@ const Home = () => {
 
         <div className="container d-md-flex my-md-5">
           <div className="col-md-4 d-flex flex-column mx-md-2 align-items-center">
-            <div className="rounded-circle bg-primary d-flex align-items-center justify-content-center mb-md-4 my-4" style={{ width: '200px', height: '200px' }}>
-              <img src="src/static/img/que_es_1.png" alt="Imagen" className="img-fluid rounded-circle h-100 " />
+            <div className="queEsCircle rounded-circle d-flex align-items-center justify-content-center mb-md-4 my-4" >
+              <img src="src/static/img/que_es_1.png" alt="Imagen" className="queEsImg img-fluid rounded-circle h-100 " />
             </div>
             <strong className="text-center font-level-4 text-gray-a">Para personas encargadas de Programas de Mejoramiento Urbano y de Barrios</strong>
             <p className="text-center my-md-4">Dirigido a todo profesional municipal encargado de la formulación de proyectos que se enmarquen en los programas PMU y PMB.</p>
           </div>
 
           <div className="col-md-4 d-flex flex-column mx-md-2 align-items-center">
-            <div className="rounded-circle bg-primary d-flex align-items-center justify-content-center mb-md-4 my-4" style={{ width: '200px', height: '200px' }}>
-              <img src="src/static/img/que_es_2.png" alt="Imagen" className="img-fluid rounded-circle h-100" />
+            <div className="queEsCircle rounded-circle d-flex align-items-center justify-content-center mb-md-4 my-4" >
+              <img src="src/static/img/que_es_2.png" alt="Imagen" className="queEsImg img-fluid rounded-circle h-100" />
             </div>
             <strong className="text-center font-level-4 text-gray-a">Filtra información y encuentra el proyecto que se ajuste a tu comuna</strong>
             <p className="text-center my-md-4">Podrás filtrar proyectos por tipo de programa, revisar antecedentes y descargar documentación referencial para postular proyectos adecuados a la realidad de tu comuna.</p>
           </div>
 
           <div className="col-md-4 d-flex flex-column mx-md-2 align-items-center">
-            <div className="rounded-circle bg-primary d-flex align-items-center justify-content-center mb-md-4 my-4" style={{ width: '200px', height: '200px' }}>
-              <img src="src/static/img/que_es_3.png" alt="Imagen" className="img-fluid rounded-circle h-100" />
+            <div className="queEsCircle rounded-circle d-flex align-items-center justify-content-center mb-md-4 my-4" >
+              <img src="src/static/img/que_es_3.png" alt="Imagen" className="queEsImg img-fluid rounded-circle" />
             </div>
             <strong className="text-center font-level-4 text-gray-a">Entregamos información referencial para la realización de proyectos</strong>
             <p className="text-center my-md-4">Encontrarás información referencial detallada de proyectos como: planos, especificaciones, presupuestos, e información referencial para su elaboración. </p>

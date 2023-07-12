@@ -5,11 +5,15 @@ const Footer = () => {
       <footer className="content-always-on-display">
         <div className="container">
 
-          <div className="line w-sm-50"></div>
+        <div className="line w-50 d-sm-none"></div>
+        <div className="line d-none d-sm-block"></div>
+      
 
           <div className="row">
-            <div className="col-md-3 a11y-fonts-col-12">
-              <img className="mw-100 h-75 mb-3 img-fluid img-sm" src="src/static/img/logo_Subdere.png" />
+            <div className="col-md-3 col-8 a11y-fonts-col-12">
+              <div className="aspect-ratio ratio-4x3">
+                <img className="mb-3 img-fluid img-sm" src="src/static/img/logo_Subdere.png" />
+              </div>  
             </div>
 
             <div className="col-md-3 a11y-fonts-col-12">

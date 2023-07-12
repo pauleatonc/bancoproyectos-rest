@@ -1,0 +1,82 @@
+#lineContainer{
+    width: 100px;
+    height: 30px;
+}
+#lineBlue {
+    width: 58px;
+    height: 8px;
+    background-color: #0f69c4;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+}
+#lineRed {
+    width: 82px;
+    height: 8px;
+    background-color: #e22c2c;
+    position: absolute;
+    left: 58px;
+    top: 0;
+    bottom: 0;
+}
+#logoSubdere{
+    color: #373737;
+    font-family: 'Roboto';
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.btnAccesibilidadM{
+    color:#0f69c4;
+    border: 1px solid #0f69c4;
+    display: flex;
+    width: 38px;
+    height: 38px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+.btnAccesibilidadS{
+    color:#0f69c4;
+    border: 1px solid #0f69c4;
+    display: flex;
+    font-size: 12px;
+    width: 24px;
+    height: 24px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+}
+/* .btnEscuchar{
+    color:#0f69c4;
+    border: 1px solid #0f69c4;
+    height: 38px;
+} */
+
+.btnIniciarsesion{
+    background-color: #0f69c4;
+    color: white;
+    border: none;
+    width: 157px;
+    height: 48px;
+    flex-shrink: 0;
+}
+
+.btnEscuchar {
+    border: 1px solid #0f69c4;
+    display: flex;
+    flex-direction:row;
+    width: 166px;
+    height: 38px;
+    flex-shrink: 0;
+  }
+  .btnEscuchar em {
+    color: #0f69c4; /* Estilo del icono */
+  }
+  .btnEscuchar span {
+    color: #0f69c4;
+    padding-bottom: 1px; /* Estilo del texto "Escuchar" */
+  }
+  

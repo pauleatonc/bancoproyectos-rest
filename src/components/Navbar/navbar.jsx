@@ -1,16 +1,22 @@
 import { Link } from 'react-router-dom';
+import "../../static/styles/navbar.css"
 
 const Navbar = () => {
-  return (
+  return (  
     <nav className="container col-md-10 navbar navbar-light navbar-expand-lg">
       <div className="col">
 
         <div className="d-flex">
-          <div>
+          <div className="border border-primary">
             {/* Logo SUBDERE reducido */}
-            <a className="navbar-brand" href="/">
-              <img className="h-100" src="src/static/img/logo_SubdereReducido.png" />
-            </a>
+            <div className="col-8">
+              <div id="lineContainer">
+                <div id="lineBlue" />
+                <div id="lineRed" />
+              </div>
+              <p id="logoSubdere" >Subsecretaría de Desarrollo Administrativo y Regional</p>
+            </div>
+            
             {/* Boton hamburguesa - vista mobile */}
             <button className="navbar-toggler collapsed border border-primary" type="button" data-toggle="collapse" data-target="#navbarLightExampleCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
               <span className="navbar-toggler-icon"></span>
@@ -22,20 +28,26 @@ const Navbar = () => {
 
               {/* Accesibilidad */}
               <div className="toolbar with-read-speaker">
-                <a className="toolbar-btn toolbar-behavior-contrast border border-primary" href="#"><i className="cl cl-contrast"></i></a>
-                <div className="toolbar-btn-group">
-                  <a className="toolbar-btn toolbar-behavior-decrease border border-primary" href="#"><i className="cl cl-decrease-text"></i></a>
-                  <a className="toolbar-btn toolbar-behavior-increase border border-primary" href="#"><i className="cl cl-increase-text"></i></a>
+                <a className="btnAccesibilidadM toolbar-behavior-contrast" href="#"><i className="cl cl-contrast"></i></a>
+                <div className="toolbar-btn-group d-flex flex-row">
+                  <a className="btnAccesibilidadM toolbar-behavior-decrease" href="#"><i className="cl cl-decrease-text"></i></a>
+                  <a className="btnAccesibilidadM toolbar-behavior-increase mx-1" href="#"><i className="cl cl-increase-text"></i></a>
                 </div>
-                <div className="toolbar-player toolbar-btn toolbar-behavior-read rs_skip rsbtn-gobcl-skin  border border-primary" id="readspeaker_button1">
-                  <a rel="nofollow" accessKey="L" href="#"><span className="rsbtn_left rsimg rspart"><span className="rsbtn_text text-primary">
-                    <div className="toolbar-btn-icon-content">
-                      <em className="cl cl-sound"></em>
-                    </div>
-                    <span>Escuchar</span></span></span>
+
+                <div className=" toolbar-player toolbar-behavior-read rs_skip rsbtn-gobcl-skin" id="readspeaker_button1">
+                  <a rel="nofollow" accessKey="L" href="#">
+                    <span className="rsbtn_left rsimg rspart">
+                      <span className="btnEscuchar rsbtn_text d-flex align-items-center p-1">
+                        <div className="toolbar-btn-icon-content mx-1">
+                          <em className="cl cl-sound"></em>
+                        </div>
+                        <span className="mx-2">Escuchar</span>
+                      </span>
+                    </span>
                     <span className="rsbtn_right rsimg rsplay rspart"></span>
                   </a>
                 </div>
+
                 <a className="toolbar-btn toolbar-toggler" href="#">
                   <i className="cl cl-accessibility toolbar-behavior-on"></i>
                   <span className="toolbar-behavior-off">X</span>
@@ -43,9 +55,11 @@ const Navbar = () => {
               </div>
 
               {/* EN - login? - Iniciar Sesion */}
-              <li className="nav-behavior"><a className="nav-link text-uppercase text-underline border border-primary" href="#">en</a></li>
-              <li className="nav-behavior"><a className="nav-link border border-primary" href="#"><i className="cl cl-login"></i></a></li>
-              <li className="nav-item"><button className="btn btn-primary" type="button">Iniciar sesión</button></li>
+              <div className="toolbar-btn-group d-flex flex-row mx-4">
+                <a className="btnAccesibilidadS toolbar-behavior-decrease text-uppercase text-underline" href="#">en</a>
+                <a className="btnAccesibilidadS toolbar-behavior-increase mx-1" href="#"><i className="cl cl-login"></i></a>
+              </div>
+              <li className="nav-item"><button className="btnIniciarsesion" type="button"><i className="cl cl-claveunica"/> <span className="text-underline mx-1">Iniciar sesión</span></button></li>
             </ul>
           </div>
         </div>
@@ -53,13 +67,13 @@ const Navbar = () => {
         <div className="d-flex justify-content-end">
           {/* Botones RRSS */}
           <div className="d-flex align-items-center m-2">
-            <div className="doc-icon m-2"> <span className="cl cl-youtube mb-2 text-secondary"></span> </div>
-            <div className="doc-icon m-2"> <span className="cl cl-facebook mb-2 text-secondary"></span> </div>
-            <div className="doc-icon m-2"> <span className="cl cl-twitter mb-2 text-secondary"></span> </div>
-            <div className="doc-icon m-2"> <span className="cl cl-messenger mb-2 text-secondary"></span> </div> 
+            <div className="doc-icon m-2"> <span className="cl cl-youtube mb-2 text-dark"></span> </div>
+            <div className="doc-icon m-2"> <span className="cl cl-facebook mb-2 text-dark"></span> </div>
+            <div className="doc-icon m-2"> <span className="cl cl-twitter mb-2 text-dark"></span> </div>
+            <div className="doc-icon m-2"> <span className="cl cl-messenger mb-2 text-dark"></span> </div> 
           </div>
           {/* Buscador */}
-          <form className="search  col-4 my-3 my-md-4" action="" method="GET">
+          <form className="search col-4 my-3 my-md-4" action="" method="GET">
             <input className="form-control " type="text" name="search" placeholder="Texto demo" aria-label="Texto demo" aria-describedby="searchAction"/>
             <div className="search-action">
               <button className="btn btn-outline-search" id="searchAction" type="submit"><i className="icon cl cl-search"></i></button>
