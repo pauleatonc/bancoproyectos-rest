@@ -1,4 +1,4 @@
-import BuscadorProyectos from "../../components/Landing/buscadorproyectos";
+import BuscadorProyectos from "../../components/Commons/buscadorproyectos";
 import "../../static/styles/landing.css"
 
 const Home = () => {

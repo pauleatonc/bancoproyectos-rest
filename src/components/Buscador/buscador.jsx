@@ -1,1 +1,0 @@
-// componente de buscador para la pagina, repite en vistas inicio y bancodeproyectos

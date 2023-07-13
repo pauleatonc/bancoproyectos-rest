@@ -1,80 +1,119 @@
+import "../../static/styles/proyectosFilter.css"
+
 const FiltroProyectos = () => {
     return (
-      <div id='filterContainer'>
-        <h2>Filtrar</h2>
-        <button>Limpiar filtro</button>
-        <h4>¿En qué programa se está el proyecto que buscas?</h4>
-        <h5>Puedes elegir más de uno.</h5>
-        <section id='programasSection'>
-            <div className='programaContainer'>
-                <div className='circle'></div>
-                <h5>Programa  Mejoramiento Urbano</h5>
+      <div className="col-md-3" id="filter-container">
+        <div className="container d-flex justify-content-between my-3 p-0">
+            <p className="font-level-3">Filtrar</p>
+            <button>Limpiar filtro</button>
+        </div>
+        
+        <p className="">¿En qué programa está el proyecto que buscas?</p>
+        <p>Puedes elegir más de uno.</p>
+
+        <div className="container d-flex justify-content-around mx-0 p-0">
+            <div className="col-md-2 d-flex flex-column align-items-center mr-5">
+                <div className="categoriasCircle rounded-circle d-flex align-items-center justify-content-center my-md-3">
+                    <span className="categoriaSiglas h4 font-weight-bold mt-2">PMU</span>
+                </div>
+                <p className="text-center font-weight-bold">Programa Mejoramiento Urbano</p>
             </div>
-            <div className='programaContainer'>
-                 <div className='circle'></div>
-                 <h5>Programa  Mejoramiento de Barrios</h5>
+            <div className="col-md-2 d-flex flex-column  align-items-center">
+                <div className="categoriasCircle rounded-circle d-flex align-items-center justify-content-center my-md-3">
+                    <span className="categoriaSiglas h4 font-weight-bold mt-2">PMB</span>
+                </div>
+                <p className="text-center font-weight-bold">Programa Mejoramiento de Barrios</p>
+          </div>
+        </div>
+
+        <div className="container filter-line"></div>
+
+        <div className="mt-3">
+            <div className="container d-flex justify-content-between align-items-start px-1">
+                <p>¿En qué región?</p>
+                <button>Borrar</button>
             </div>
-        </section>
-        <div className='linea'></div>
-        <section id='selectoresSection'>
-            <label>¿En qué región?</label>
-            <select>
+            <select className="container mb-4">
                 <option value=''>Elije una opción</option>
                 <option value='region1'>Region 1</option>
                 <option value='region2'>Region 2</option>
                 <option value='region3'>Region 3</option>
             </select>
-            <label>¿En que comuna?</label>
-            <select>
+            <p className="px-1">¿En que comuna?</p>
+            <select className="container">
                 <option value=''>Elije una opción</option>
                 <option value='comuna1'>Comuna 1</option>
                 <option value='comuna2'>Comuna 2</option>
                 <option value='comuna3'>Comuna 3</option>
              </select>
-        </section>
-        <div className='linea'></div>
-        <h4>¿Qué tipo de proyecto es?</h4>
-        <section id='tiposSection'>
-            <div className='tipoContainer'>
-                <div className='circle'></div>
-                <h5>Plazas y Áreas Verdes</h5>
+        </div>
+
+        <div className="container filter-line my-3"></div>
+
+        <div>
+            <div className="container d-flex justify-content-between align-items-start px-1 mb-3">
+                <p>¿Qué tipo de proyecto es?</p>
+                <button>Borrar</button>
             </div>
-            <div className='tipoContainer'>
-                <div className='circle'></div>
-                <h5>Infraestructura Deportiva</h5>
+            
+            <div className="d-flex flex-wrap">
+                <div className="col-5 d-flex flex-column mx-2 align-items-center">
+                    <div className="categoriasCircle rounded-circle d-flex align-items-center justify-content-center my-md-3">
+                        <img src="src/static/img/icon_categorias_landing.png" alt="Icono"/>
+                    </div>
+                    <p className="text-center font-weight-bold">Plazas y Áreas Verdes</p>
+                </div>
+                <div className="col-5 d-flex flex-column mx-2 align-items-center">
+                    <div className="categoriasCircle rounded-circle d-flex align-items-center justify-content-center my-md-3">
+                        <img src="src/static/img/icon_categorias_landing.png" alt="Icono"/>
+                    </div>
+                    <p className="text-center font-weight-bold">Infraestructura Deportiva</p>
+                </div>
+                <div className="col-5 d-flex flex-column mx-2 align-items-center">
+                    <div className="categoriasCircle rounded-circle d-flex align-items-center justify-content-center my-md-3">
+                        <img src="src/static/img/icon_categorias_landing.png" alt="Icono"/>
+                    </div>
+                    <p className="text-center font-weight-bold">Centros de Salud</p>
+                </div>
+                <div className="col-5 d-flex flex-column mx-2 align-items-center">
+                    <div className="categoriasCircle rounded-circle d-flex align-items-center justify-content-center my-md-3">
+                        <img src="src/static/img/icon_categorias_landing.png" alt="Icono"/>
+                    </div>
+                    <p className="text-center font-weight-bold">Luminarias</p>
+                </div>
+                <div className="col-5 d-flex flex-column mx-2 align-items-center">
+                    <div className="categoriasCircle rounded-circle d-flex align-items-center justify-content-center my-md-3">
+                        <img src="src/static/img/icon_categorias_landing.png" alt="Icono"/>
+                    </div>
+                    <p className="text-center font-weight-bold">Reciclaje</p>
+                </div>
+                <div className="col-5 d-flex flex-column mx-2 align-items-center">
+                    <div className="categoriasCircle rounded-circle d-flex align-items-center justify-content-center my-md-3">
+                        <img src="src/static/img/icon_categorias_landing.png" alt="Icono"/>
+                    </div>
+                    <p className="text-center font-weight-bold">Energía</p>
+                </div>
+                <div className="col-5 d-flex flex-column mx-2 align-items-center">
+                    <div className="categoriasCircle rounded-circle d-flex align-items-center justify-content-center my-md-3">
+                        <img src="src/static/img/icon_categorias_landing.png" alt="Icono"/>
+                    </div>
+                    <p className="text-center font-weight-bold">Desarrollo Técnológico</p>
+                </div>
             </div>
-            <div className='tipoContainer'>
-                <div className='circle'></div>
-                <h5>Centros de Salud</h5>
-            </div>
-            <div className='tipoContainer'>
-                <div className='circle'></div>
-                <h5>Luminarias</h5>
-            </div>
-            <div className='tipoContainer'>
-                <div className='circle'></div>
-                <h5>Reciclaje</h5>
-            </div>
-            <div className='tipoContainer'>
-                <div className='circle'></div>
-                <h5>Energía</h5>
-            </div>
-            <div className='tipoContainer'>
-                <div className='circle'></div>
-                <h5>Desarrollo Técnológico</h5>
-            </div>
-        </section>
-        <div className='linea'></div>
-        <h4>¿Qué años de construcción quieres ver?</h4>
-        <section>
-            <input type='checkbox' />
+        </div>
+        
+        <div className="container filter-line"></div>
+
+        <p className="mt-3 px-1">¿Qué años de construcción quieres ver?</p>
+        <div className="mb-4">
+            <input className="mx-2" type="checkbox" />
             <label>2019</label> <br />
-            <input type='checkbox' />
+            <input className="mx-2" type="checkbox" />
             <label>2020</label> <br />
-            <input type='checkbox' />
+            <input className="mx-2" type="checkbox" />
             <label>2021</label>
-        </section>
-        <button id='filterBtn'>Mostrar resultados</button>
+        </div>
+        <button className="mb-4">Mostrar resultados</button>
 
       </div>
     );
