@@ -22,3 +22,9 @@
     object-fit: cover;
     object-position: center;
 }
+
+.text-body {
+    line-height: 30px;
+    color: #373737;
+  }
+  
