@@ -5,7 +5,7 @@ const FiltroProyectos = () => {
       <div className="col-md-3" id="filter-container">
         <div className="container d-flex justify-content-between my-3 p-0">
             <p className="font-level-3">Filtrar</p>
-            <button>Limpiar filtro</button>
+            <button className="btn-limpiar p-2">Limpiar filtro</button>
         </div>
         
         <p className="">¿En qué programa está el proyecto que buscas?</p>
@@ -31,16 +31,16 @@ const FiltroProyectos = () => {
         <div className="mt-3">
             <div className="container d-flex justify-content-between align-items-start px-1">
                 <p>¿En qué región?</p>
-                <button>Borrar</button>
+                <button className="btn-limpiar">Borrar</button>
             </div>
-            <select className="container mb-4">
-                <option value=''>Elije una opción</option>
+            <select className="container selectores mb-4 text-underline text-muted">
+                <option className="" value=''>Elige una o más regiones</option>
                 <option value='region1'>Region 1</option>
                 <option value='region2'>Region 2</option>
                 <option value='region3'>Region 3</option>
             </select>
-            <p className="px-1">¿En que comuna?</p>
-            <select className="container">
+            <p className="px-1">Elige una o más comunas</p>
+            <select className="container selectores text-underline text-muted">
                 <option value=''>Elije una opción</option>
                 <option value='comuna1'>Comuna 1</option>
                 <option value='comuna2'>Comuna 2</option>
@@ -53,7 +53,7 @@ const FiltroProyectos = () => {
         <div>
             <div className="container d-flex justify-content-between align-items-start px-1 mb-3">
                 <p>¿Qué tipo de proyecto es?</p>
-                <button>Borrar</button>
+                <button className="btn-limpiar">Borrar</button>
             </div>
             
             <div className="d-flex flex-wrap">
@@ -113,7 +113,10 @@ const FiltroProyectos = () => {
             <input className="mx-2" type="checkbox" />
             <label>2021</label>
         </div>
-        <button className="mb-4">Mostrar resultados</button>
+
+        <div className="d-flex justify-content-center">
+            <button className="btn-resultados mb-4">Mostrar resultados</button>
+        </div>
 
       </div>
     );
