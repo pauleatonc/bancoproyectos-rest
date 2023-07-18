@@ -1,11 +1,15 @@
-import "../../static/styles/proyectosFilter.css"
+import "../../static/styles/proyectosFilter.css";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 
 const FiltroProyectos = () => {
     return (
-      <div className="col-md-3" id="filter-container">
+      <div className="mb-md-4" id="filter-container">
         <div className="container d-flex justify-content-between my-3 p-0">
             <p className="font-level-3">Filtrar</p>
-            <button className="btn-limpiar p-2">Limpiar filtro</button>
+            <button className="btn-limpiar p-2">
+                Limpiar filtro <FontAwesomeIcon icon={faTrashCan} />
+            </button>
         </div>
         
         <p className="">¿En qué programa está el proyecto que buscas?</p>
@@ -31,8 +35,11 @@ const FiltroProyectos = () => {
         <div className="mt-3">
             <div className="container d-flex justify-content-between align-items-start px-1">
                 <p>¿En qué región?</p>
-                <button className="btn-limpiar">Borrar</button>
+                <button className="btn-limpiar">
+                    Borrar <FontAwesomeIcon icon={faTrashCan} />
+                </button>
             </div>
+
             <select className="container selectores mb-4 text-underline text-muted">
                 <option className="" value=''>Elige una o más regiones</option>
                 <option value='region1'>Region 1</option>
@@ -53,7 +60,9 @@ const FiltroProyectos = () => {
         <div>
             <div className="container d-flex justify-content-between align-items-start px-1 mb-3">
                 <p>¿Qué tipo de proyecto es?</p>
-                <button className="btn-limpiar">Borrar</button>
+                <button className="btn-limpiar">
+                    Borrar <FontAwesomeIcon icon={faTrashCan} />
+                </button>
             </div>
             
             <div className="d-flex flex-wrap">
