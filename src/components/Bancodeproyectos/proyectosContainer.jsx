@@ -2,7 +2,9 @@ import ProyectoCard from "./proyectoCard";
 
 const ProyectosContainer = () => {
     return (
-        <div>
+        <div className="d-flex flex-wrap justify-content-between">
+            <ProyectoCard />
+            <ProyectoCard />
             <ProyectoCard />
         </div>
     );

@@ -1,9 +1,11 @@
+import "../../static/styles/proyectosSort.css"
+
 const SortProyectos = () => {
     return (
-        <select>
-        <option value=''>Ordenado: Más reciente</option>
-        <option value='desc'>Menos reciente</option>
-     </select>
+      <select className="selector text-underline">
+        <option value="">Ordenado: Más reciente</option>
+        <option value="desc">Ordenado: Menos reciente</option>
+      </select>
     );
   };
   

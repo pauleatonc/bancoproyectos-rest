@@ -5,15 +5,19 @@ import ProyectosContainer from "../../../components/Bancodeproyectos/proyectosCo
 
 const BancoProyectos = () => {
     return (
-      <>
+      <div className="">
         <BuscadorProyectos />
-        <div className="container">
+        <div className="container d-flex flex-column flex-md-row">
           <FiltroProyectos />
-          <SortProyectos />
-          <ProyectosContainer />
+          <div className="ml-md-5">
+            <div className="d-flex justify-content-end mb-4">
+              <SortProyectos />
+            </div>
+            <ProyectosContainer />
+          </div>
         </div>
         
-      </>
+      </div>
     );
   };
   
