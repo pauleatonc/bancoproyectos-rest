@@ -5,3 +5,20 @@
     max-width: 371px;
     min-width: 321px;
 }
+.card-img{
+    height: 150px;
+    width: 95%;
+    background-color: bisque;
+}
+.tag{
+    border: 1px solid #0F69C4;
+    background-color: transparent;
+    color: #0F69C4;
+}
+.card-btn{
+    width: 40%;
+    background-color:#0F69C4;
+    border: none;
+    color:#FFFFFF;
+    padding: 13px;
+}
