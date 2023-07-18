@@ -10,7 +10,7 @@ const BancoProyectos = () => {
         <div className="container d-flex flex-column flex-md-row">
           <FiltroProyectos />
           <div className="ml-md-5">
-            <div className="d-flex justify-content-end mb-4">
+            <div className="d-flex justify-content-end mb-1">
               <SortProyectos />
             </div>
             <ProyectosContainer />
