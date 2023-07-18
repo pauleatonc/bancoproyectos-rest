@@ -10,12 +10,12 @@
     color: #373737;
   }
 
-.categoriasCircle{
+.categorias-circle{
     border: 2px solid #0F69C4;
     width: 60px; 
     height: 60px;
 }
-.categoriaSiglas{
+.categorias-siglas{
     color: #0F69C4;
 }
 .filter-line{

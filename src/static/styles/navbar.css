@@ -33,7 +33,7 @@
     line-height: normal;
 }
 
-.btnAccesibilidadM{
+.btn-accesibilidad-m{
     color:#0f69c4;
     border: 2px solid #0f69c4;
     display: flex;
@@ -43,7 +43,7 @@
     align-items: center;
     flex-shrink: 0;
 }
-.btnAccesibilidadS{
+.btn-accesibilidad-s{
     color:#0f69c4;
     border: 1px solid #0f69c4;
     display: flex;
@@ -54,11 +54,11 @@
     align-items: center;
     flex-shrink: 0;
 }
-.btnAccesibilidadS i {
+.btn-accesibilidad-s i {
     color: #0f69c4; 
 }
 
-.btnIniciarsesion{
+.btn-iniciarsesion{
     background-color: #0f69c4;
     color: white;
     border: none;
@@ -67,7 +67,7 @@
     flex-shrink: 0;
 }
 
-.btnEscuchar {
+.btn-escuchar {
     border: 2px solid #0f69c4;
     display: flex;
     flex-direction:row;
@@ -75,19 +75,14 @@
     height: 30px;
     flex-shrink: 0;
   }
-  .btnEscuchar em {
+  .btn-escuchar em {
     color: #0f69c4; /* Estilo del icono */
   }
-  .btnEscuchar span {
+  .btn-escuchar span {
     color: #0f69c4;
     padding-bottom: 1px; /* Estilo del texto */
   }
 
 .buscador{
     border: 2px solid #373737;
-}
-.iconoRRSS{
-    height: 100px;
-    width: 100px;
-    border: 1px solid purple;
 }

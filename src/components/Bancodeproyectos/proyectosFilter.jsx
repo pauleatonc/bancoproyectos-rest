@@ -17,14 +17,14 @@ const FiltroProyectos = () => {
 
         <div className="container d-flex justify-content-around mx-0 p-0">
             <div className="col-md-2 d-flex flex-column align-items-center mr-5">
-                <div className="categoriasCircle rounded-circle d-flex align-items-center justify-content-center my-md-3">
-                    <span className="categoriaSiglas h4 font-weight-bold mt-2">PMU</span>
+                <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-md-3">
+                    <span className="categorias-siglas h4 font-weight-bold mt-2">PMU</span>
                 </div>
                 <p className="text-center font-weight-bold">Programa Mejoramiento Urbano</p>
             </div>
             <div className="col-md-2 d-flex flex-column  align-items-center">
-                <div className="categoriasCircle rounded-circle d-flex align-items-center justify-content-center my-md-3">
-                    <span className="categoriaSiglas h4 font-weight-bold mt-2">PMB</span>
+                <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-md-3">
+                    <span className="categorias-siglas h4 font-weight-bold mt-2">PMB</span>
                 </div>
                 <p className="text-center font-weight-bold">Programa Mejoramiento de Barrios</p>
           </div>
@@ -67,43 +67,43 @@ const FiltroProyectos = () => {
             
             <div className="d-flex flex-wrap">
                 <div className="col-5 d-flex flex-column mx-2 align-items-center">
-                    <div className="categoriasCircle rounded-circle d-flex align-items-center justify-content-center my-md-3">
+                    <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-md-3">
                         <img src="src/static/img/icon_categorias_landing.png" alt="Icono"/>
                     </div>
                     <p className="text-center font-weight-bold">Plazas y Áreas Verdes</p>
                 </div>
                 <div className="col-5 d-flex flex-column mx-2 align-items-center">
-                    <div className="categoriasCircle rounded-circle d-flex align-items-center justify-content-center my-md-3">
+                    <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-md-3">
                         <img src="src/static/img/icon_categorias_landing.png" alt="Icono"/>
                     </div>
                     <p className="text-center font-weight-bold">Infraestructura Deportiva</p>
                 </div>
                 <div className="col-5 d-flex flex-column mx-2 align-items-center">
-                    <div className="categoriasCircle rounded-circle d-flex align-items-center justify-content-center my-md-3">
+                    <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-md-3">
                         <img src="src/static/img/icon_categorias_landing.png" alt="Icono"/>
                     </div>
                     <p className="text-center font-weight-bold">Centros de Salud</p>
                 </div>
                 <div className="col-5 d-flex flex-column mx-2 align-items-center">
-                    <div className="categoriasCircle rounded-circle d-flex align-items-center justify-content-center my-md-3">
+                    <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-md-3">
                         <img src="src/static/img/icon_categorias_landing.png" alt="Icono"/>
                     </div>
                     <p className="text-center font-weight-bold">Luminarias</p>
                 </div>
                 <div className="col-5 d-flex flex-column mx-2 align-items-center">
-                    <div className="categoriasCircle rounded-circle d-flex align-items-center justify-content-center my-md-3">
+                    <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-md-3">
                         <img src="src/static/img/icon_categorias_landing.png" alt="Icono"/>
                     </div>
                     <p className="text-center font-weight-bold">Reciclaje</p>
                 </div>
                 <div className="col-5 d-flex flex-column mx-2 align-items-center">
-                    <div className="categoriasCircle rounded-circle d-flex align-items-center justify-content-center my-md-3">
+                    <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-md-3">
                         <img src="src/static/img/icon_categorias_landing.png" alt="Icono"/>
                     </div>
                     <p className="text-center font-weight-bold">Energía</p>
                 </div>
                 <div className="col-5 d-flex flex-column mx-2 align-items-center">
-                    <div className="categoriasCircle rounded-circle d-flex align-items-center justify-content-center my-md-3">
+                    <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-md-3">
                         <img src="src/static/img/icon_categorias_landing.png" alt="Icono"/>
                     </div>
                     <p className="text-center font-weight-bold">Desarrollo Técnológico</p>

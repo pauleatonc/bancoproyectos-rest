@@ -57,7 +57,7 @@ const ProyectosContainer = () => {
             </li>
             {/* Renderizar los numeros de pagina segun la cantidad de proyectos */}
             {Array.from({ length: Math.ceil(allProjects.length / projectsPerPage) }, (_, i) => (
-              <li key={i} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}>
+              <li key={i} className={`page-item ${currentPage === i + 1 ? 'active' : ''}`}> 
                 <a className="page-link" href="#" onClick={() => handlePageChange(i + 1)}>
                   {i + 1}
                 </a>

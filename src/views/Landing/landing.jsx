@@ -12,21 +12,21 @@ const Home = () => {
         <div className="container d-flex flex-row justify-content-center">
 
           <div className="col-md-2 d-flex flex-column mx-md-5 align-items-center">
-            <div className="categoriasCircle rounded-circle d-flex align-items-center justify-content-center my-md-3">
-              <span className="categoriaSiglas h4 font-weight-bold mt-2">PMU</span>
+            <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-md-3">
+              <span className="categorias-siglas h4 font-weight-bold mt-2">PMU</span>
             </div>
             <p className="text-body text-center">Programa Mejoramiento Urbano</p>
           </div>
           
           <div className="col-md-2 d-flex flex-column mx-md-5 align-items-center">
-            <div className="categoriasCircle rounded-circle d-flex align-items-center justify-content-center my-md-3">
-              <span className="categoriaSiglas h4 font-weight-bold mt-2">PMB</span>
+            <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-md-3">
+              <span className="categorias-siglas h4 font-weight-bold mt-2">PMB</span>
             </div>
             <p className="text-body text-center">Programa Mejoramiento de Barrios</p>
           </div>
 
           <div className="col-md-2 d-flex flex-column mx-md-5 align-items-center">
-            <div className="categoriasCircle rounded-circle d-flex align-items-center justify-content-center my-md-3">
+            <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-md-3">
               <img src="src/static/img/icon_categorias_landing.png" alt="Icono"/>
             </div>
             <p className="text-body text-center">Ver todos los proyectos</p>
@@ -49,24 +49,24 @@ const Home = () => {
 
         <div className="container d-md-flex my-md-5">
           <div className="col-md-4 d-flex flex-column mx-md-2 align-items-center">
-            <div className="queEsCircle rounded-circle d-flex align-items-center justify-content-center mb-md-4 my-4" >
-              <img src="src/static/img/que_es_1.png" alt="Imagen" className="queEsImg img-fluid rounded-circle h-100 " />
+            <div className="que-es-circle rounded-circle d-flex align-items-center justify-content-center mb-md-4 my-4" >
+              <img src="src/static/img/que_es_1.png" alt="Imagen" className="que-es-img img-fluid rounded-circle h-100 " />
             </div>
             <strong className="text-center font-level-4 text-gray-a">Para personas encargadas de Programas de Mejoramiento Urbano y de Barrios</strong>
             <p className="text-body text-center my-3 my-md-4">Dirigido a todo profesional municipal encargado de la formulación de proyectos que se enmarquen en los programas PMU y PMB.</p>
           </div>
 
           <div className="col-md-4 d-flex flex-column mx-md-2 align-items-center">
-            <div className="queEsCircle rounded-circle d-flex align-items-center justify-content-center mb-md-4 my-4" >
-              <img src="src/static/img/que_es_2.png" alt="Imagen" className="queEsImg img-fluid rounded-circle h-100" />
+            <div className="que-es-circle rounded-circle d-flex align-items-center justify-content-center mb-md-4 my-4" >
+              <img src="src/static/img/que_es_2.png" alt="Imagen" className="que-es-img img-fluid rounded-circle h-100" />
             </div>
             <strong className="text-center font-level-4 text-gray-a">Filtra información y encuentra el proyecto que se ajuste a tu comuna</strong>
             <p className="text-body text-center my-3 my-md-4">Podrás filtrar proyectos por tipo de programa, revisar antecedentes y descargar documentación referencial para postular proyectos adecuados a la realidad de tu comuna.</p>
           </div>
 
           <div className="col-md-4 d-flex flex-column mx-md-2 align-items-center">
-            <div className="queEsCircle rounded-circle d-flex align-items-center justify-content-center mb-md-4 my-4" >
-              <img src="src/static/img/que_es_3.png" alt="Imagen" className="queEsImg img-fluid rounded-circle" />
+            <div className="que-es-circle rounded-circle d-flex align-items-center justify-content-center mb-md-4 my-4" >
+              <img src="src/static/img/que_es_3.png" alt="Imagen" className="que-es-img img-fluid rounded-circle" />
             </div>
             <strong className="text-center font-level-4 text-gray-a">Entregamos información referencial para la realización de proyectos</strong>
             <p className="text-body text-center my-3 my-md-4">Encontrarás información referencial detallada de proyectos como: planos, especificaciones, presupuestos, e información referencial para su elaboración. </p>
