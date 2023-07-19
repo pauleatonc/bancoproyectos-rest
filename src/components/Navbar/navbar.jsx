@@ -45,7 +45,7 @@ const Navbar = () =>{
                 <a className="btn-accesibilidad-m toolbar-behavior-increase mx-1" href="#"><i className="cl cl-increase-text"></i></a>
               </div>
 
-              <div className="d-none d-lg-block toolbar-player toolbar-behavior-read rs_skip rsbtn-gobcl-skin mt-1" id="readspeaker_button1">
+              <div className="d-none d-lg-block toolbar-player toolbar-behavior-read rs_skip rsbtn-gobcl-skin" id="readspeaker_button1">
                 <a rel="nofollow" accessKey="L" href="#">
                   <span className="rsbtn_left rsimg rspart">
                     <span className="btn-escuchar rsbtn_text d-flex align-items-center p-1">

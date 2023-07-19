@@ -48,8 +48,8 @@ const ProyectosContainer = () => {
         ))}
       </div>
 
-      <div className="mt-4 d-flex flex-row">
-        <p className="mr-5"> {`${rangeStart} - ${rangeEnd}, de ${totalProjects} publicaciones`} </p>
+      <div className="mt-4 d-flex flex-column flex-md-row">
+        <p className="mr-md-5"> {`${rangeStart} - ${rangeEnd}, de ${totalProjects} publicaciones`} </p>
         <nav className="pagination-container flex-column flex-sm-row a11y-fonts-flex-column a11y-fonts-flex-lg-row">
           <ul className="pagination justify-content-center">
             <li className="page-item">
