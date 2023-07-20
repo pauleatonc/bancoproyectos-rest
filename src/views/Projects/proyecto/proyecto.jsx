@@ -4,6 +4,7 @@ const Proyecto = () => {
 
   return (
     <>
+      {/* Boton volver y breadcrumbs */}
       <div className="container">
         <div className="d-flex align-items-center">
           <button className="volver-btn d-none d-lg-block"> &lt; volver</button>
@@ -16,10 +17,10 @@ const Proyecto = () => {
             </ol>
           </nav>
         </div>
-        
 
         <p className="font-level-1 my-md-4">Mejoramiento Integral Plaza El Olivar</p>
 
+        {/* Descripcion del proyecto */}
         <div className="container descripcion-container py-md-3">
           <p className="font-level-2 my-md-2">Descripción del proyecto</p>
           <p className="text-body">El permanente crecimiento de la comuna ha llevado a un desarrollo desigual con carencia en servicios de 
@@ -72,21 +73,23 @@ const Proyecto = () => {
 
       {/* Imágenes del proyecto */}
       <p className="font-level-2 container">Imágenes del proyecto</p>
-      <div className="container border border-warning">carrusel de fotos</div>
+      <div className="container border border-danger">carrusel de fotos</div>
 
-      <div className="container">
-        <div>
+      <div className="container p-0 d-md-flex justify-content-between my-4">
+        <div className="col-md-6">
           <p className="font-level-4">Antes del proyecto</p>
-          <div>img</div>
+          <div className="img-proyecto"></div>
         </div>
-        <div>
+        <div className="col-md-6">
           <p className="font-level-4">Después del proyecto</p>
-          <div>img</div>
+          <div className="img-proyecto" />
         </div>
       </div>
 
       <p className="container font-level-4">Video del proyecto</p>
-      <div className="container border border-warning"> contenedor video</div>
+      <div className="container d-flex justify-content-center mb-md-5">
+        <div className="col-md-7 img-proyecto" />
+      </div>
 
       <p className="font-level-2 container">Documentos del proyecto</p>
       <div className="container border border-warning">componente? tabla? ver como</div>
