@@ -8,6 +8,7 @@ const Landing = React.lazy(() => import('./views/Landing/landing'));
 const Contacto = React.lazy(() => import('./views/Landing/contacto'));
 const Login = React.lazy(() => import('./views/Users/login/login'));
 const BancoProyectos = React.lazy(() => import('./views/Projects/bancodeproyectos/bancodeproyectos'));
+const Proyecto = React.lazy(() => import('./views/Projects/proyecto/proyecto'))
 const ErrorLayout = React.lazy(() => import('./layout/errorLayout'));
 const Error404 = React.lazy(() => import('./views/Error/error404'));
 const Error500 = React.lazy(() => import('./views/Error/error500'));
@@ -22,6 +23,7 @@ function App() {
           <Route path="contacto" element={<Contacto />} />
           <Route path="login" element={<Login />} />
           <Route path="bancodeproyectos" element={<BancoProyectos />} />
+          <Route path="proyecto" element={<Proyecto />} />
           <Route path="*" element={<Navigate to="/error/error404" />} />
         </Route>
         <Route path="error" element={<ErrorLayout />}>

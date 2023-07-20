@@ -1,0 +1,19 @@
+.breadcrumb-style{
+    background-color: transparent;
+}
+.breadcrumb-style a{
+    color: #0F69C4;
+}
+.volver-btn{
+    border:none;
+    color:#0F69C4;
+    background-color: transparent;
+    width: 90px;
+}
+.descripcion-container{
+    background-color: #EEE;
+}
+.text-body {
+    line-height: 30px;
+  }
+  
