@@ -30,71 +30,72 @@ const Proyecto = () => {
         </div>
       </div>
 
-      <div className="my-md-5">
-        <div className="container border border-primary">
-          <p>Detalles del proyecto</p>
+      {/* Tabla detalles del proyecto */}
+      <div className="container">
+        <div className="container detalles-del-proyecto mt-md-5">
+            <p className="font-level-2 pt-2 pt-md-0 my-md-2 ml-md-1">Detalles del proyecto</p>
         </div>
-
-        <div className="container d-flex flex-row justify-content-between">
-          <div>
-            <p>Nombre del proyecto</p>
-            <p>Mejoramiento Integral Plaza El Olivar</p>
-          </div>
-          <div>
-            <p>Programa</p>
-            <p>Programa de Mejoramiento Urbano (PMU)</p>
-          </div>
-          <div>
-            <p>Tipo de proyecto</p>
-            <p>Plazas y Áreas Verdes</p>
-          </div>
+      </div>
+      <div className="parent container my-4 my-md-5">
+        <div className="div1 ml-md-3">
+          <p><strong>Nombre del proyecto</strong></p>
+          <p>Mejoramiento Integral Plaza El Olivar</p>
         </div>
-
-        <div className="container d-flex flex-row justify-content-between">
-          <div>
-            <p>Región</p>
-            <p>Valparaíso</p>
-          </div>
-          <div>
-            <p>Comuna</p>
-            <p>Algarrobo</p>
-          </div>
-          <div>
-            <p>Año de construcción</p>
-            <p>2018</p>
-          </div>
+        <div className="div2">
+          <p><strong>Programa</strong></p>
+          <p>Programa de Mejoramiento Urbano (PMU)</p>
         </div>
-
-        <div className="container">
+        <div className="div3">
+          <p><strong>Tipo de proyecto</strong></p>
+          <p>Plazas y Áreas Verdes</p>
+        </div>
+        <div className="div4 ml-md-3">
+          <p><strong>Región</strong></p>
+          <p>Valparaíso</p>
+        </div>
+        <div className="div5">
+          <p><strong>Comuna</strong></p>
+          <p>Algarrobo</p>
+        </div>
+        <div className="div6">
+          <p><strong>Año de construcción</strong></p>
+          <p>2018</p>
+        </div>
+        <div className="div7 ml-md-3">
           <div>
-            <p>Código de identificación SUBDERE</p>
+            <p><strong>Código de identificación SUBDERE</strong></p>
             <p>1-C-2018-93</p>
           </div>
         </div>
+        <div className="div8 d-block d-sm-none"></div>
       </div>
 
-      <p className="container">Imágenes del proyecto</p>
+      {/* Imágenes del proyecto */}
+      <p className="font-level-2 container">Imágenes del proyecto</p>
       <div className="container border border-warning">carrusel de fotos</div>
 
       <div className="container">
         <div>
-          <p>Antes del proyecto</p>
+          <p className="font-level-4">Antes del proyecto</p>
           <div>img</div>
         </div>
         <div>
-          <p>Después del proyecto</p>
+          <p className="font-level-4">Después del proyecto</p>
           <div>img</div>
         </div>
       </div>
 
-      <p className="container">Video del proyecto</p>
+      <p className="container font-level-4">Video del proyecto</p>
       <div className="container border border-warning"> contenedor video</div>
 
-      <p className="container">Documentos del proyecto</p>
+      <p className="font-level-2 container">Documentos del proyecto</p>
       <div className="container border border-warning">componente? tabla? ver como</div>
 
-      <p className="container">Documentos con normativa de uso general</p>
+      <p className="font-level-2 container">Documentos con normativa de uso general</p>
       <div className="container border border-warning">componente? tabla? ver como</div>
+
+      <p className="font-level-2 container">Proyectos relacionados</p>
+      <div className="container border border-warning">componente?</div>
 
     </>
   );
