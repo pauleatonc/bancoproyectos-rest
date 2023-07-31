@@ -1,0 +1,30 @@
+.categorias-circle{
+    border: 1px solid #0F69C4;
+    width: 65px; 
+    height: 65px;
+}
+.categorias-siglas{
+    color: #0F69C4;
+}
+
+.que-es-circle{
+    background-color: rgba(27, 103, 178, .4);
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.que-es-img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.text-body {
+    line-height: 30px;
+    color: #373737;
+  }
+  
