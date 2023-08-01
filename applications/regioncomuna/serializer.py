@@ -6,21 +6,15 @@ from .models import (
 )
 
 
-class RegionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Region
-        fields = (
-            'region',
-        )
-
-
 class ComunaSerializer(serializers.ModelSerializer):
-
-    region = RegionSerializer()
-
     class Meta:
         model = Comuna
-        fields = (
-            'comuna',
-            'region'
-        )
+        fields = ('comuna',)
+
+
+class RegionSerializer(serializers.ModelSerializer):
+    comunas = ComunaSerializer(many=True)
+
+    class Meta:
+        model = Region
+        fields = ('region', 'comunas')

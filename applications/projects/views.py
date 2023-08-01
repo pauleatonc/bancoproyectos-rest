@@ -116,9 +116,9 @@ class ProjectsListView(ListView):
         # Obtener otros datos necesarios para el contexto
         context['programs'] = Program.objects.all()
         context['regiones'] = Project.objects.values_list(
-            'comuna__region', 'comuna__region__nombre').distinct()
+            'comuna__region', 'comuna__region__region').distinct()
         context['comunas'] = Project.objects.values_list(
-            'comuna', 'comuna__nombre').distinct()
+            'comuna', 'comuna__comuna').distinct()
         context['tipos'] = Type.objects.values_list(
             'id', 'name', 'icon_type').distinct()
         context['years'] = Project.objects.values_list(

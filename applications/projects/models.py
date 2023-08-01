@@ -6,29 +6,7 @@ from applications.regioncomuna.models import Region, Comuna
 from .managers import ProjectsManager
 from django.core.validators import FileExtensionValidator
 from django.core.exceptions import ValidationError
-
-
-# límite de tamaño para los archivo
-FIVE_SIZE_LIMIT = 5 * 1024 * 1024  # 5 MB
-TWENTY_SIZE_LIMIT = 20 * 1024 * 1024  # 20 MB
-
-
-def validate_file_size_five(value):
-    filesize = value.size
-
-    if filesize > FIVE_SIZE_LIMIT:
-        raise ValidationError("El archivo PDF no debe exceder los 5MB")
-    else:
-        return value
-
-
-def validate_file_size_twenty(value):
-    filesize = value.size
-
-    if filesize > TWENTY_SIZE_LIMIT:
-        raise ValidationError("El archivo PDF no debe exceder los 20MB")
-    else:
-        return value
+from .functions import validate_file_size_five, validate_file_size_twenty
 
 
 class Program(models.Model):
@@ -129,10 +107,6 @@ class Project(models.Model):
         PrioritizedTag, blank=False, verbose_name='Tag proyecto priorizado')
 
     # checklist = models.ManyToManyField(ChecklistDocuments, verbose_name='Checklist de documentos obligatorios')
-
-    def get_comunas_by_region(self):
-        if self.region:
-            return self.region.comunas
 
     objects = ProjectsManager()
 

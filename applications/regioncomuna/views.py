@@ -2,12 +2,12 @@ from .models import Region, Comuna
 #
 from rest_framework.generics import ListAPIView
 #
-from .serializer import ComunaSerializer
+from .serializer import RegionSerializer
 
 
 class RegionComunaView(ListAPIView):
 
-    serializer_class = ComunaSerializer
+    serializer_class = RegionSerializer
 
     def get_queryset(self):
-        return Comuna.objects.all()
+        return Region.objects.all()
