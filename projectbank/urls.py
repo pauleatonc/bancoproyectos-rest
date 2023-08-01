@@ -27,6 +27,7 @@ urlpatterns = [
     re_path('', include('applications.projects.urls')),
     re_path('', include('applications.home.urls')),
     re_path('', include('applications.users.urls')),
+    re_path('', include('applications.regioncomuna.urls')),
     
     
 
