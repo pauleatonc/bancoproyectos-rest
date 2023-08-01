@@ -240,13 +240,6 @@
   letter-spacing: normal;
 }
 
-.Rectangle {
-  width: auto;
-  height: 28px;
-  flex-grow: 0;
-  background-color: var(--color-gray-373737);
-}
-
 .text-title-navbar {
   position: absolute;
   font-size: 20px;
@@ -262,12 +255,20 @@
   color: var(--color-gray-373737);
 }
 
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+}
+
+
 .blue {
   width: 58px;
   height: 8px;
   background-color: #0f69c4;
   position: absolute;
-  left: 0;
   top: 0;
   bottom: 0;
 }
@@ -281,6 +282,8 @@
   top: 0;
   bottom: 0;
 }
+
+
 
 .navegation {
   display: flex;

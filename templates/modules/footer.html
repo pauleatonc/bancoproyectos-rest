@@ -3,22 +3,27 @@
   <div class="container">
     <div class="line"></div>
     <div class="row">
-      <div class="col-md-2 a11y-fonts-col-12">
-        <img class="w-100 mb-3" src="{% static 'images/color_SubDesarrollo.png' %}" />
+      <div class="col-md-2 a11y-fonts-col-12 d-block d-md-none">
+        <img class="mb-3 img-fluid w-50 " src="{% static 'images/color_SubDesarrollo.png' %}" />
+      </div>
+      <div class="col-md-2 a11y-fonts-col-12 d-none d-md-block">
+        <img class="mb-3 w-100 " src="{% static 'images/color_SubDesarrollo.png' %}" />
       </div>
       <div class="col-md-2 m-2 a11y-fonts-col-12">
         <div class=" mb-2">Secciones:</div>
         <a href="/">Inicio</a>
         <a href="{% url 'projects_app:project-list' %}">Banco de Proyectos</a>
       </div>
-      <div class="col-md-4 a11y-fonts-col-12">
+      <div class="col-md-4 m-2 a11y-fonts-col-12">
         <div class="mb-2">Enlaces de Interes:</div>
-        <a href="http://www.subdere.gov.cl/programas/divisi%C3%B3n-municipalidades/programa-mejoramiento-urbano-y-equipamiento-comunal-pmu" target="_blank">Programa Mejoramiento Urbano</a>
-        <a href="http://www.subdere.gov.cl/programas/divisi%C3%B3n-municipalidades/programa-mejoramiento-de-barrios-pmb" target="_blank">Programa Mejoramiento de Barrios</a>
+        <a href="http://www.subdere.gov.cl/programas/divisi%C3%B3n-municipalidades/programa-mejoramiento-urbano-y-equipamiento-comunal-pmu"
+          target="_blank">Programa Mejoramiento Urbano</a>
+        <a href="http://www.subdere.gov.cl/programas/divisi%C3%B3n-municipalidades/programa-mejoramiento-de-barrios-pmb"
+          target="_blank">Programa Mejoramiento de Barrios</a>
         <a href="https://www.subdere.gob.cl/" target="_blank">Region y Administrativo SUBDERE</a>
         <a href="https://www.interior.gob.cl/" target="_blank">Ministerio del Interior y Seguridad Pública</a>
       </div>
-      <div class="col-md-3 a11y-fonts-col-12">
+      <div class="col-md-3 m-2 a11y-fonts-col-12">
         <div class="mb-2">Dirección:</div>
         <p class="d-block mt-3 font-base">Teatinos 92 - Pisos 2 y 3. Santiago,</p>
         <p class="d-block mt-3 font-base">Chile </p>
