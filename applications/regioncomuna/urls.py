@@ -1,8 +1,11 @@
 from django.urls import path
-from .views import seleccionar_locacion 
+from . import views
 
 
 urlpatterns = [
-    path('', seleccionar_locacion,
-        name='seleccionar-locacion'),
+    path(
+        'api/region-comuna/',
+        views.RegionComunaView.as_view(),
+        name = 'region-comuna'
+    ),
 ]
