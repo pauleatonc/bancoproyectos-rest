@@ -13,6 +13,7 @@ const ErrorLayout = React.lazy(() => import('./layout/errorLayout'));
 const Error404 = React.lazy(() => import('./views/Error/error404'));
 const Error500 = React.lazy(() => import('./views/Error/error500'));
 const Error503 = React.lazy(() => import('./views/Error/error503'));
+const Prueba = React.lazy(() => import('./views/Landing/prueba'));
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="bancodeproyectos" element={<BancoProyectos />} />
           <Route path="proyecto" element={<Proyecto />} />
           <Route path="*" element={<Navigate to="/error/error404" />} />
+          <Route path="prueba" element={<Prueba />} />
         </Route>
         <Route path="error" element={<ErrorLayout />}>
           <Route path="error404" element={<Error404 />} />
