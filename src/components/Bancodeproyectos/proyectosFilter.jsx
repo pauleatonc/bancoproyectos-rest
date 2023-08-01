@@ -10,7 +10,7 @@ import { getAllRegionComunas } from '../../api/RegionComuna/regioncomuna.api';
 const FiltroProyectos = () => {
 
   const [regionComunas, setRegionComunas] = useState([]);
-  const [selectedRegion, setSelectedRegion] = useState('');
+  const [selectedRegion, setSelectedRegion] = useState([]);
   const [selectedComunas, setSelectedComunas] = useState([]);
 
   useEffect(() => {
