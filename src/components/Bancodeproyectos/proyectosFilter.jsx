@@ -2,22 +2,47 @@ import "../../static/styles/proyectosFilter.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { useEffect, useState } from 'react';
+import Select from 'react-select';
 
 import { getAllRegionComunas } from '../../api/RegionComuna/regioncomuna.api';
 
 
 const FiltroProyectos = () => {
+
   const [regionComunas, setRegionComunas] = useState([]);
+  const [selectedRegion, setSelectedRegion] = useState('');
+  const [selectedComunas, setSelectedComunas] = useState([]);
 
   useEffect(() => {
-    async function loadRegionComuna(){
-        const res = await getAllRegionComunas();
-        setRegionComunas(res.data);
+    async function loadRegionComuna() {
+      const response = await getAllRegionComunas();
+      setRegionComunas(response.data);
     }
     loadRegionComuna();
   }, []);
 
+  // Function to handle region selection
+  const handleRegionChange = (event) => {
+    const selectedRegion = event.target.value;
+    setSelectedRegion(selectedRegion);
+    // Find the selected region object from the API data
+    const selectedRegionData = regionComunas.find((data) => data.region === selectedRegion);
+    if (selectedRegionData) {
+      // Set the selected comunas for the selected region
+      setSelectedComunas(selectedRegionData.comunas);
+    } else {
+      setSelectedComunas([]); // If no region is selected or comunas are available, reset the selected comunas
+    }
+  };
+
+  // Function to handle clearing the selected region
+  const handleClearRegion = () => {
+    setSelectedRegion(''); // Reset the selected region to empty string
+    setSelectedComunas([]); // Reset the selected comunas to an empty array
+  };
+
     return (
+
       <div className="mb-md-4" id="filter-container">
         <div className="container d-flex justify-content-between my-3 p-0">
             <p className="font-level-3">Filtrar</p>
@@ -50,32 +75,32 @@ const FiltroProyectos = () => {
       <div className="mt-3">
         <div className="container d-flex justify-content-between align-items-start px-1">
           <p>¿En qué región?</p>
-          <button className="btn-limpiar">
+          <button className="btn-limpiar" onClick={handleClearRegion}>
             Borrar <FontAwesomeIcon icon={faTrashCan} />
           </button>
         </div>
 
-        <select className="container selectores mb-4 text-underline text-muted">
-          <option className="" value=''>Elige una o más regiones</option>
-          {/* Map over the regionComunas state to create options */}
-          {regionComunas.map((data, index) => (
-            <option key={index} value={data.region.region}>
-              {data.region.region}
-            </option>
-          ))}
-        </select>
+        <select className="container selectores mb-4 text-underline text-muted" onChange={handleRegionChange} value={selectedRegion}>
+        <option className="" value=''>Elige una o más regiones</option>
+        {/* Map over the regionComunas state to create options */}
+        {regionComunas.map((data, index) => (
+          <option key={index} value={data.region}>
+            {data.region}
+          </option>
+        ))}
+      </select>
 
-        {/* Comuna select */}
-        <p className="px-1">Elige una o más comunas</p>
-        <select className="container selectores text-underline text-muted">
-          <option value=''>Elige una opción</option>
-          {/* Map over the regionComunas state to create options */}
-          {regionComunas.map((data, index) => (
-            <option key={index} value={data.comuna}>
-              {data.comuna}
-            </option>
-          ))}
-        </select>
+      {/* Comuna select */}
+      <p className="px-1">Elige una o más comunas</p>
+      <select className="container selectores text-underline text-muted">
+        <option value=''>Elige una opción</option>
+        {/* Map over the selectedComunas state to create options */}
+        {selectedComunas.map((comuna, index) => (
+          <option key={index} value={comuna.comuna}>
+            {comuna.comuna}
+          </option>
+        ))}
+      </select>
 
         </div>
 
