@@ -1,4 +1,3 @@
-import "../../static/styles/proyectoCard.css"
 
 const ProyectoCard = () => {
   return (
@@ -6,12 +5,12 @@ const ProyectoCard = () => {
       <div className="card-img container mt-2"></div>
 
       <div className="d-flex flex-row justify-content-between p-3">
-        <p>Región: Araucanía</p>
-        <p>Comuna: Cholol</p>
+        <p className="text-sans-h5 text-muted">Región: Araucanía</p>
+        <p className="text-sans-h5 text-muted">Comuna: Cholol</p>
       </div>
 
-      <p className="h2 text-underline ml-3 mb-3">Paneles Solares para sectores aislados en Cholchol</p>
-      <p className="mx-3">El presente proyecto busca mejorar la calidad de vida de los beneficiarios por intermedio del 
+      <p className="text-serif-h2 text-decoration-underline ml-3 mb-3 mx-3">Paneles Solares para sectores aislados en Cholchol</p>
+      <p className="text-sans-p mx-3">El presente proyecto busca mejorar la calidad de vida de los beneficiarios por intermedio del 
       suministro de energía eléctrica de sistema ...
       </p>
 
@@ -21,7 +20,7 @@ const ProyectoCard = () => {
         <p className="tag p-1">Plazas y Áreas Verdes</p>
       </div>
       <div className="d-flex justify-content-end p-3">
-        <button className="font-level-4 card-btn text-underline">Ver más &gt; </button>
+        <button className="font-level-4 card-btn text-decoration-underline">Ver más &gt; </button>
       </div>
     </div>
   );
