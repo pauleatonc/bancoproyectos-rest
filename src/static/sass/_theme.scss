@@ -1,0 +1,53 @@
+:root {
+    --primary-color: #006FB3;
+    --secondary-color: #FE6565;
+    --tertiary-color: #0A132D;
+    --accent-color: #A8B7c7;
+    --neutral-color: #EEEEEE;
+    --grey-a-color: #4A4A4A;
+    --grey-b-color: #8a8a8a;
+    --black-color: #111111;
+}
+
+// Estilos texto con serifa
+@mixin font-serif ($fontSize) {
+    font-family: 'Roboto Slab';
+    color:#373737;
+    font-size: $fontSize;
+}
+.text-serif-h1{
+    @include font-serif(49px);
+}
+.text-serif-h2{
+    @include font-serif(24px);
+}
+
+// Estilos texto sin serifa
+@mixin font-sans ($fontSize, $fontWeight) {
+    font-family: 'Roboto';
+    color:#373737;
+    font-size: $fontSize;
+    font-weight: $fontWeight;
+}
+.text-sans-h1{
+    @include font-sans(39px, 500);
+}
+.text-sans-h2{
+    @include font-sans(31px, 500);
+}
+.text-sans-h3{
+    @include font-sans(25px, 500);
+}
+.text-sans-h4{
+    @include font-sans(20px, 600);
+}
+.text-sans-h5{
+    @include font-sans(14px, 400);
+}
+.text-sans-h5-bold{
+    @include font-sans(14px, 700);
+}
+.text-sans-p{
+    @include font-sans(16px, 400);
+    line-height: 30px;
+}
