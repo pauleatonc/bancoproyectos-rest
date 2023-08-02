@@ -92,10 +92,32 @@ const Proyecto = () => {
       </div>
 
       <p className="text-sans-h2 container">Documentos del proyecto</p>
-      <div className="container border border-warning">componente? tabla? ver como</div>
+      <div className="container d-flex justify-content-between my-4 font-weight-bold">
+        <div>#</div>
+        <div>Documento</div>
+        <div>Formato</div>
+        <div>Acción</div>
+      </div>
+      <div className="container d-flex justify-content-between my-3">
+        <div>1</div>
+        <div>Planimetría</div>
+        <div>PDF</div>
+        <a href="#">Descargar</a>
+      </div>
 
       <p className="text-sans-h2 container">Documentos con normativa de uso general</p>
-      <div className="container border border-warning">componente? tabla? ver como</div>
+      <div className="container d-flex justify-content-between my-4 font-weight-bold">
+        <div>#</div>
+        <div>Documento</div>
+        <div>Formato</div>
+        <div>Acción</div>
+      </div>
+      <div className="container d-flex justify-content-between my-3">
+        <div>1</div>
+        <div>Guía Operativa PMU</div>
+        <div>PDF</div>
+        <a href="#">Descargar</a>
+      </div>
 
       <p className="text-sans-h2 container">Proyectos relacionados</p>
       <div className="container border border-warning">componente?</div>
