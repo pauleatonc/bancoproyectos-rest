@@ -1,2 +1,4 @@
 @import "theme";
-// tambien se puede poner como @use, ver diferencia
+@import "landing";
+
+// desde este archivo SASS compila los estilos en una hoja CSS
