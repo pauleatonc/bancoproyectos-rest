@@ -37,7 +37,7 @@ const Home = () => {
 
       {/* Que es el Banco de Proyectos */}
       <div className="container col-md-8 px-4 mb-4">
-        <h2 className="text-sans-h2">¿Qué es el Banco de Proyectos?</h2>
+        <h2 className="text-sans-h2 my-4">¿Qué es el Banco de Proyectos?</h2>
         <p className="text-sans-p"> El <strong> Banco de Proyectos </strong> de la Subsecretaría de Desarrollo Regional y Administrativo es un
           <strong> repositorio de proyectos ya ejecutados por distintas municipalidades </strong>a lo largo del país, que tiene por objetivo
           <strong> poner a disposición diversas iniciativas y su documentación </strong>asociada al momento de postular a los
@@ -75,7 +75,7 @@ const Home = () => {
 
       {/* Quienes somos */}
       <div className="container col-md-8 px-4">
-        <h2 className="text-sans-h2 text-center">¿Quiénes somos?</h2>
+        <h2 className="text-sans-h2 text-center my-4">¿Quiénes somos?</h2>
         <p className="text-sans-p">El Banco de Proyectos es una iniciativa directa de la  Subsecretaría de Desarrollo Regional y Administrativo, cuya información está en permanente actualización.</p>
       </div>
 
