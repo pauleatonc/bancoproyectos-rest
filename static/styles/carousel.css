@@ -86,4 +86,22 @@
   object-fit: cover;
 }
 
+.carousel-item {
+  position: relative;
+}
 
+.image-counter {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%; /* covers the entire width of the parent */
+  height: 100%; /* covers the entire height of the parent */
+  background: rgba(0, 0, 0, 0.5);
+  color: #fff;
+  display: none; /* hidden by default, move this before display: flex; */
+  display: flex; /* added for centering the text */
+  justify-content: center; /* centers the text horizontally */
+  align-items: center; /* centers the text vertically */
+  font-size: 2em; /* increases the font size */
+}
