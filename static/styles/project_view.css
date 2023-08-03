@@ -4,48 +4,34 @@
 }
 
 .card-description {
-  width: 1110px;
+  width: 100%;
   height: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
-  margin: 36px 0 36px 0;
-  padding: 15px 15px 15px 15px;
+  padding: 10px 15px 10px 15px;
   background-color: #eeeeee;
 }
 
-.images-project-detail {
-  width: 1110px;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 40px;
-  padding: 20px 50px;
-}
-
 .before-after {
-  width: 1110px;
-  height: 458px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 21px;
-  margin: 31px 165px 47px;
+  justify-content: space-between;
+  gap: 10px;
   padding: 0;
 }
-.images-project-detail img {
-  width: 500px;
-  height: 390px;
-  flex-grow: 0;
+
+.before-after .my-col {
+  width: 300px; /* make sure the column takes the full width */
+  height: 400px;
+  overflow: hidden;
+}
+
+.before-after .img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   border-radius: 5px;
 }
 
 .video-project {
-  width: 1110px;
+  width: 100%;
   height: 548px;
   display: flex;
   flex-direction: column;
@@ -57,7 +43,7 @@
 }
 
 .table-details {
-  width: 1108px;
+  width: 100%;
   height: auto;
   flex-grow: 0;
   display: flex;
@@ -71,10 +57,10 @@
 
 .table-title {
   color: #ffffff;
-  width: 1108px;
+  width: 100%;
   height: auto;
   flex-grow: 0;
-  padding: 12px 530px 14px 15px;
+  padding: 10px 15px 10px 15px;
   background-color: rgb(15, 105, 196);
 }
 
