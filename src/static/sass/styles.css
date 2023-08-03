@@ -71,6 +71,24 @@
   line-height: 30px;
 }
 
+.line {
+  width: 80%;
+  height: 3px;
+  display: flex;
+}
+
+.blue {
+  width: 50%;
+  height: 100%;
+  background-color: #006FB3;
+}
+
+.red {
+  width: 50%;
+  height: 100%;
+  background-color: #FE6565;
+}
+
 .categorias-circle {
   border: 1px solid #0F69C4;
   width: 65px;
