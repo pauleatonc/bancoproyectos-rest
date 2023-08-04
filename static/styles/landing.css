@@ -16,6 +16,23 @@
 }
 
 
+#btn-pmu:hover #icon-pmu{
+    fill: #0F69C4;
+    filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%) brightness(100%);
+
+}
+
+#btn-pmb:hover #icon-pmb {
+  fill: #0F69C4;
+  filter: invert(100%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(100%) contrast(100%) brightness(100%);
+}
+
+#btn-list:hover #icon-list{
+  filter:brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7499%) hue-rotate(262deg) brightness(103%) contrast(102%); 
+}
+
+
+
 .section-card {
   width: auto;
   height: auto;
@@ -33,6 +50,7 @@
 
 
 .cards {
+  height:auto;
   display: flex;
   flex-direction: row;
   justify-content: center;

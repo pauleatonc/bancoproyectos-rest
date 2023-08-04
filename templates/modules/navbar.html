@@ -2,9 +2,9 @@
 <nav class="navbar navbar-light navbar-expand-lg  navbar-lines">
   <div class="cols-12 column ">
     <a class="navbar-brand ml-3 " href="/">
-        <div class="blue" ></div>
-        <div class="red"></div>
-        <p class="font-level-6 font-weight-bold mt-1">
+      <div class="blue"></div>
+      <div class="red"></div>
+      <p class="font-level-6 font-weight-bold mt-1">
         Subsecretaría de <br class="d-md-none"> Desarrollo <br class="d-none d-sm-none d-md-block"> Regional y <br
           class="d-sm-none"> Administrativo
       </p>
@@ -18,8 +18,8 @@
   </button>
   <div class="navbar-collapse collapse" id="navbarLightExampleCollapse">
     <ul class="navbar-nav  mx-lg-5 my-lg-3 mx-lg-4 ">
-        {% if user.is_authenticated %}
-        {% if user.is_staff %}
+      {% if user.is_authenticated %}
+      {% if user.is_staff %}
       <li class="nav-item m-2 my-md-1">Hola, {{ user.nombres }}</li>
       <li class="nav-item my-1"><a class="btn btn-block btn-outline-primary mx-2"
           href="{% url 'users_app:admin-home' %}">Ir
@@ -42,7 +42,7 @@
       </form>
       {% endif %}
     </ul>
-    <ul class="navbar-nav my-1 mr-5 d-none d-md-block">
+    <ul class="navbar-nav my-1 mr-5 d-none d-lg-block">
       <form class="simple-search search" style="border: solid 1px #373737; width: 365px; height: 48px;"
         action="{% url 'projects_app:project-list' %}" id="search-form" action="{% url 'projects_app:project-list' %}"
         id="search-form">
@@ -56,8 +56,8 @@
     </ul>
     <ul class="navbar-nav align-self-start">
       <li class="nav-item"><a class="nav-link" href="{% url 'home_app:index' %}">Inicio</a></li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarLinesLightExampleDropdown" href="#" role="button" 
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="navbarLinesLightExampleDropdown" href="#" role="button"
           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Banco de Proyectos</a>
         <div class="dropdown-menu" aria-labelledby="navbarLinesLightExampleDropdown">
           {% for program in programs %}

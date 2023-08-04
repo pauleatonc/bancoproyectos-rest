@@ -1,169 +1,209 @@
-{% extends "projects/base_projects.html" %} 
-{% load static %} 
+{% extends "projects/base_projects.html" %}
+{% load static %}
 {% block content%}
 {% include "modules/navbar.html" %}
-
-<section class="projects-search">
-    <div class="m-5 ">
-        <div class="title d-flex justify-content-center">
-            <div class="line">
-                <p class="h1 font-weight-bold" id="inicio-banco-proyectos">
-                    Banco de Proyectos
-                </p>
-            </div>
-        </div>
-        <nav aria-label="breadcrumb">
-            <ol class=" breadcrumb ml-5 pl-3">
-                <li class="breadcrumb-item">
-                    <a href="{% url 'home_app:index' %}">Inicio</a>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">
-                    Banco de proyectos
-                </li>
-            </ol>
-        </nav>
-    </div>
-
-    <!-- Barra de búsqueda -->
-    <section class="m-5">
-        <div class="text-center m-3 h-4 text-muted">
-            Acceder al buscador de proyectos escribiendo palabra clave
-        </div>
-        <form class="search mx-auto" method="GET" id="search-form">
-            {% csrf_token %}
-            <input class="form-control" type="text" name="search_query" id="search_query" placeholder="Buscar proyecto"
-                aria-label="Buscar proyectos" aria-describedby="searchAction" />
-            <div class="search-action">
-                <button class="btn btn-outline-search" id="searchAction" type="submit">
-                    <i class="icon cl cl-search"></i>
-                </button>
-            </div>
-        </form>
-    </section>
-
-    <section class="projects">
-        <div class="container-projects">
-            <div class="cols-12 row mx-0">
-                <!-- Agrega el formulario de filtro -->
-                <div class="col-4">
-                    {% include "modules/browser.html" %}
+<div class="container-fluid mt-3">
+    <div class="cols-12">
+        <div class="row">
+            <div class="col-12">
+                <div class="title d-flex justify-content-center">
+                    <div class="line">
+                        <p class="h1 font-weight-bold">
+                            Banco de <br class="d-block d-md-none" />
+                            Proyectos
+                        </p>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <nav aria-label="breadcrumb ">
+                        <ol class="breadcrumb ml-lg-5 pl-lg-5">
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'home_app:index' %}">Inicio</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                Banco de proyectos
+                            </li>
+                        </ol>
+                    </nav>
                 </div>
 
-                <!-- Agrega bloque de proyectos -->
-                <div class="col-8">
-                    <!-- Agrega el filtro ordenar por -->
-                    <div class="dropdown-sort d-flex justify-content-end">
-                        <button class="btn-sort dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                <!-- Barra de búsqueda -->
+                <div class="mt-5 mb-2 mx-4">
+                    <div class="container">
+                        <div class="text-center m-3 h-4 text-muted">
+                            Acceder al buscador de proyectos <br class="d-block d-md-none" />
+                            escribiendo palabra clave
+                        </div>
+                        <form class="search mx-auto" method="GET" id="search-form">
+                            {% csrf_token %}
+                            <input class="form-control" type="text" name="search_query" id="search_query"
+                                placeholder="Buscar proyecto" aria-label="Buscar proyectos"
+                                aria-describedby="searchAction" />
+                            <div class="search-action">
+                                <button class="btn btn-outline-search" id="searchAction" type="submit">
+                                    <i class="icon cl cl-search"></i>
+                                </button>
+                            </div>
+                        </form>
+                        <!-- filtros vista mobile -->
+                        <div class="d-block d-lg-none d-flex justify-content-md-between">
+                            <div class="d-block d-lg-none my-2 flex-fill">
+                                {% include "modules/browser_mobile.html" %}
+                            </div>
+                            <!-- Agrega el filtro ordenar por mobile-->
+                            <div class="d-block d-lg-none my-2 ml-1">
+                                <button class="btn btn-outline-dark btn-sm btn-md flex-fill dropdown-toggle"
+                                    type="button" data-toggle="dropdown" aria-expanded="false">
+                                    <u>Ordenar por</u>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item {% if sort_by == 'id' %}active{% endif %}"
+                                        href="{% url 'projects_app:project-list' %}?{% if cache_key %}cache_key={{ cache_key }}&{% endif %}search_query={{ search_query }}{% for p in selected_programs %}&program={{ p }}{% endfor %}{% for r in selected_regions %}&region={{ r }}{% endfor %}{% for c in selected_comunas %}&comuna={{ c }}{% endfor %}{% for t in selected_types %}&type={{ t }}{% endfor %}{% for y in selected_years %}&year={{ y }}{% endfor %}&sort_by=id">Más
+                                        reciente</a>
+                                    <a class="dropdown-item {% if sort_by == 'year' %}active{% endif %}"
+                                        href="{% url 'projects_app:project-list' %}?{% if cache_key %}cache_key={{ cache_key }}&{% endif %}search_query={{ search_query }}{% for p in selected_programs %}&program={{ p }}{% endfor %}{% for r in selected_regions %}&region={{ r }}{% endfor %}{% for c in selected_comunas %}&comuna={{ c }}{% endfor %}{% for t in selected_types %}&type={{ t }}{% endfor %}{% for y in selected_years %}&year={{ y }}{% endfor %}&sort_by=year">Año</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cols-12 row mx-0">
+            <div class="col-lg-4 d-none d-lg-block">
+                {% include "modules/browser.html" %}
+            </div>
+            <div class="col-md-12 col-lg-8 col-xl-8">
+                <div class="d-none d-lg-block">
+                    <div class="dropdown-sort d-flex justify-content-end mr-5 pr-5">
+                        <button class="btn-sort dropdown-toggle" type="button" data-toggle="dropdown"
+                            aria-expanded="false">
                             Ordenar por
                         </button>
                         <div class="dropdown-menu">
-                            <a class="dropdown-item {% if sort_by == 'id' %}active{% endif %}" href="{% url 'projects_app:project-list' %}?{% if cache_key %}cache_key={{ cache_key }}&{% endif %}search_query={{ search_query }}{% for p in selected_programs %}&program={{ p }}{% endfor %}{% for r in selected_regions %}&region={{ r }}{% endfor %}{% for c in selected_comunas %}&comuna={{ c }}{% endfor %}{% for t in selected_types %}&type={{ t }}{% endfor %}{% for y in selected_years %}&year={{ y }}{% endfor %}&sort_by=id">Más reciente</a>
-                            <a class="dropdown-item {% if sort_by == 'year' %}active{% endif %}" href="{% url 'projects_app:project-list' %}?{% if cache_key %}cache_key={{ cache_key }}&{% endif %}search_query={{ search_query }}{% for p in selected_programs %}&program={{ p }}{% endfor %}{% for r in selected_regions %}&region={{ r }}{% endfor %}{% for c in selected_comunas %}&comuna={{ c }}{% endfor %}{% for t in selected_types %}&type={{ t }}{% endfor %}{% for y in selected_years %}&year={{ y }}{% endfor %}&sort_by=year">Año</a>
+                            <a class="dropdown-item {% if sort_by == 'id' %}active{% endif %}"
+                                href="{% url 'projects_app:project-list' %}?{% if cache_key %}cache_key={{ cache_key }}&{% endif %}search_query={{ search_query }}{% for p in selected_programs %}&program={{ p }}{% endfor %}{% for r in selected_regions %}&region={{ r }}{% endfor %}{% for c in selected_comunas %}&comuna={{ c }}{% endfor %}{% for t in selected_types %}&type={{ t }}{% endfor %}{% for y in selected_years %}&year={{ y }}{% endfor %}&sort_by=id">Más
+                                reciente</a>
+                            <a class="dropdown-item {% if sort_by == 'year' %}active{% endif %}"
+                                href="{% url 'projects_app:project-list' %}?{% if cache_key %}cache_key={{ cache_key }}&{% endif %}search_query={{ search_query }}{% for p in selected_programs %}&program={{ p }}{% endfor %}{% for r in selected_regions %}&region={{ r }}{% endfor %}{% for c in selected_comunas %}&comuna={{ c }}{% endfor %}{% for t in selected_types %}&type={{ t }}{% endfor %}{% for y in selected_years %}&year={{ y }}{% endfor %}&sort_by=year">Año</a>
                         </div>
                     </div>
-                    <!-- Agrega las cards de proyectos -->
-                    {% if projects %}
-                    <div class="projects-list">
-                        <div class="cols-12 row">
-                            {% for project in projects %}
-                            <div class="col-6 ">
-                                <div class="card-project">
-                                    <div class="card-img-project">
-                                        <img class="img-project" src="{{ project.portada.url }}" alt="img-miniatura" />
-                                    </div>
-                                    <div class="location-project d-flex justify-content-between w-100 h-20">
-                                        <p class=" font-level-8 m-0">
-                                            Region: {{ project.comuna.region }}
-                                        </p>
-                                        <p class=" font-level-8 m-0">
-                                            Comuna: {{ project.comuna }}
-                                        </p>
-                                    </div>
-                                    <div class="body-project ">
-                                        <p class="h2">{{ project.name }}</p>
-                                        <p class="description-project font-base text-sm-left">
-                                            {{ project.description }}
-                                        </p>
-                                        <div class="tags-project row ">
-                                            <div class="col-auto pb-2">
-                                                <div class="badge border border-primary font-level-7">
-                                                    {{project.program.sigla}}
-                                                </div>
+                </div>
+                <!-- Agrega las cards de proyectos -->
+                {% if projects %}
+                <div class="container-fluid ">
+                    <div class="cols-12 row">
+                        {% for project in projects %}
+                        <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 my-2">
+                            <div class="card-project mw-100 mx-auto">
+                                <div class="card-img-project w-100">
+                                    <img class="img-project" src="{{ project.portada.url }}" alt="img-miniatura" />
+                                </div>
+                                <div class="location-project d-flex justify-content-between w-100 h-20">
+                                    <p class="font-level-8 m-0">
+                                        Region: {{ project.comuna.region }}
+                                    </p>
+                                    <p class="font-level-8 m-0">Comuna: {{ project.comuna }}</p>
+                                </div>
+                                <div class="body-project">
+                                    <p class="h2">{{ project.name }}</p>
+                                    <p class="description-project font-base text-sm-left">
+                                        {{ project.description }}
+                                    </p>
+                                    <div class="tags-project row">
+                                        <div class="col-auto pb-2">
+                                            <div class="badge border border-primary font-level-7">
+                                                {{project.program.sigla}}
                                             </div>
-                                            <div class="col-auto pb-2">
-                                                <div class="badge border  border-primary font-level-7">
-                                                    {{project.year.number}}
-                                                </div>
+                                        </div>
+                                        <div class="col-auto pb-2">
+                                            <div class="badge border border-primary font-level-7">
+                                                {{project.year.number}}
                                             </div>
-                                            <div class="col-auto pb-2">
-                                                <div class="badge border  border-primary font-level-7 ">
-                                                    {{project.type.name}}
-                                                </div>
+                                        </div>
+                                        <div class="col-auto pb-2">
+                                            <div class="badge border border-primary font-level-7">
+                                                {{project.type.name}}
                                             </div>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="my-4">
                                     <a class="btn-more" href="{% url 'projects_app:project-detail' project.id %}">Ver
-                                        más ></a>
+                                        más
+                                        ></a>
                                 </div>
                             </div>
-                            {% endfor %}
                         </div>
+                        {% endfor %}
                     </div>
-                    <nav class="pagination-container flex-column flex-sm-row justify-content-start a11y-fonts-flex-column a11y-fonts-flex-lg-row">
-                        <p class="text-start mr-5">
-                            {{ search_projects }} resultados de {{ total_projects }} proyectos
-                        </p>
-                        <ul class="pagination justify-content-center align-items-center active">
-                            {% if is_paginated %}
-                                {% if page_obj.has_previous %}
-                                    <li class="page-item">
-                                        <a class="page-link border-0 text-decoration-none font-level-1" href="?{% if cache_key %}cache_key={{ cache_key }}&{% endif %}search_query={{ search_query }}{% for p in selected_programs %}&program={{ p }}{% endfor %}{% for r in selected_regions %}&region={{ r }}{% endfor %}{% for c in selected_comunas %}&comuna={{ c }}{% endfor %}{% for t in selected_types %}&type={{ t }}{% endfor %}{% for y in selected_years %}&year={{ y }}{% endfor %}&sort_by={{ sort_by }}&page={{ page_obj.previous_page_number }}">
-                                            &lt;
-                                        </a>
-                                    </li>
-                                {% endif %}
-                                {% for num in page_obj.paginator.page_range %}
-                                    {% if page_obj.number == num %}
-                                        <li class="page-item active">
-                                            <a class="page-link border-0 text-decoration-none" href="?{% if cache_key %}cache_key={{ cache_key }}&{% endif %}search_query={{ search_query }}{% for p in selected_programs %}&program={{ p }}{% endfor %}{% for r in selected_regions %}&region={{ r }}{% endfor %}{% for c in selected_comunas %}&comuna={{ c }}{% endfor %}{% for t in selected_types %}&type={{ t }}{% endfor %}{% for y in selected_years %}&year={{ y }}{% endfor %}&sort_by={{ sort_by }}&page={{ num }}">{{ num }}</a>
-                                        </li>
-                                    {% else %}
-                                        <li class="page-item">
-                                            <a class="page-link border-0 text-decoration-none" href="?{% if cache_key %}cache_key={{ cache_key }}&{% endif %}search_query={{ search_query }}{% for p in selected_programs %}&program={{ p }}{% endfor %}{% for r in selected_regions %}&region={{ r }}{% endfor %}{% for c in selected_comunas %}&comuna={{ c }}{% endfor %}{% for t in selected_types %}&type={{ t }}{% endfor %}{% for y in selected_years %}&year={{ y }}{% endfor %}&sort_by={{ sort_by }}&page={{ num }}">{{ num }}</a>
-                                        </li>
-                                    {% endif %}
-                                {% endfor %}
-                                {% if page_obj.has_next %}
-                                    <li class="page-item">
-                                        <a class="page-link border-0 font-level-1 text-decoration-none" href="?{% if cache_key %}cache_key={{ cache_key }}&{% endif %}search_query={{ search_query }}{% for p in selected_programs %}&program={{ p }}{% endfor %}{% for r in selected_regions %}&region={{ r }}{% endfor %}{% for c in selected_comunas %}&comuna={{ c }}{% endfor %}{% for t in selected_types %}&type={{ t }}{% endfor %}{% for y in selected_years %}&year={{ y }}{% endfor %}&sort_by={{ sort_by }}&page={{ page_obj.next_page_number }}">
-                                            &gt;
-                                        </a>
-                                    </li>
-                                {% endif %}
-                            {% endif %}
-                        </ul>
-                    </nav>
                 </div>
+
+                <nav
+                    class="pagination-container flex-column flex-sm-row justify-content-center a11y-fonts-flex-column a11y-fonts-flex-lg-row my-4">
+                    <p class="mr-md-5 align-items-center">
+                        {{ search_projects }} resultados de {{ total_projects }} proyectos
+                    </p>
+                    <ul class="pagination justify-content-center align-items-center active">
+                        {% if is_paginated %} {% if page_obj.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link border-0 text-decoration-none font-level-1"
+                                href="?{% if cache_key %}cache_key={{ cache_key }}&{% endif %}search_query={{ search_query }}{% for p in selected_programs %}&program={{ p }}{% endfor %}{% for r in selected_regions %}&region={{ r }}{% endfor %}{% for c in selected_comunas %}&comuna={{ c }}{% endfor %}{% for t in selected_types %}&type={{ t }}{% endfor %}{% for y in selected_years %}&year={{ y }}{% endfor %}&sort_by={{ sort_by }}&page={{ page_obj.previous_page_number }}">
+                                &lt;
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% for num in page_obj.paginator.page_range %}
+                        {% if page_obj.number == num %}
+                        <li class="page-item active">
+                            <a class="page-link border-0 text-decoration-none"
+                                href="?{% if cache_key %}cache_key={{ cache_key }}&{% endif %}search_query={{ search_query }}{% for p in selected_programs %}&program={{ p }}{% endfor %}{% for r in selected_regions %}&region={{ r }}{% endfor %}{% for c in selected_comunas %}&comuna={{ c }}{% endfor %}{% for t in selected_types %}&type={{ t }}{% endfor %}{% for y in selected_years %}&year={{ y }}{% endfor %}&sort_by={{ sort_by }}&page={{ num }}">{{
+                                num }}</a>
+                        </li>
+                        {% else %}
+                        <li class="page-item">
+                            <a class="page-link border-0 text-decoration-none"
+                                href="?{% if cache_key %}cache_key={{ cache_key }}&{% endif %}search_query={{ search_query }}{% for p in selected_programs %}&program={{ p }}{% endfor %}{% for r in selected_regions %}&region={{ r }}{% endfor %}{% for c in selected_comunas %}&comuna={{ c }}{% endfor %}{% for t in selected_types %}&type={{ t }}{% endfor %}{% for y in selected_years %}&year={{ y }}{% endfor %}&sort_by={{ sort_by }}&page={{ num }}">{{
+                                num }}</a>
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+                        {% if page_obj.has_next %}
+                        <li class="page-item">
+                            <a class="page-link border-0 font-level-1 text-decoration-none"
+                                href="?{% if cache_key %}cache_key={{ cache_key }}&{% endif %}search_query={{ search_query }}{% for p in selected_programs %}&program={{ p }}{% endfor %}{% for r in selected_regions %}&region={{ r }}{% endfor %}{% for c in selected_comunas %}&comuna={{ c }}{% endfor %}{% for t in selected_types %}&type={{ t }}{% endfor %}{% for y in selected_years %}&year={{ y }}{% endfor %}&sort_by={{ sort_by }}&page={{ page_obj.next_page_number }}">
+                                &gt;
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% endif %}
+                    </ul>
+                </nav>
                 {% else %}
+                <div class=" h-100 mb-5 pb-5 ">
                 <p class="alert alert-warning" role="alert">
-                    No hay proyectos que coincidan con la búsqueda.
-                </p>
+                        No hay proyectos que coincidan con la búsqueda.
+                    </p>
+                </div>
                 {% endif %}
             </div>
         </div>
-    </section>
-    {% include "modules/footer.html" %}
+    </div>
+</div>
+{% include "modules/footer.html" %}
 
-    <!-- Script que carga la página con el ID del div escogido -->
-    <script>
-        window.addEventListener("DOMContentLoaded", function ()
+<!-- Script que carga la página con el ID del div escogido -->
+<script>
+    window.addEventListener("DOMContentLoaded", function ()
+    {
+        let targetElement = document.getElementById("inicio-banco-proyectos");
+        if (targetElement)
         {
-            var targetElement = document.getElementById("inicio-banco-proyectos");
-            if (targetElement)
-            {
-                targetElement.scrollIntoView();
-            }
-        });
-    </script>
-    {% endblock content %}
-</section>
+            targetElement.scrollIntoView();
+        }
+    });
+
+
+
+</script>
+{% endblock content %}

@@ -1,4 +1,4 @@
-@import url('banco_proyectos.css');
+@import url("banco_proyectos.css");
 
 .Frame-221 {
   width: 650px;
@@ -13,25 +13,25 @@
 }
 
 .form-group-contact {
-    text-align: left;
-    width: 100%;
-    position: relative;
-    margin-bottom: 30px
-    }
+  text-align: left;
+  width: 100%;
+  position: relative;
+  margin-bottom: 30px;
+}
 
 .form-group-contact label {
-    margin-left: 15px;
-    position: absolute;
-    top: -10px;
-    background-color: var(--color-gray-ffffff);
+  margin-left: 15px;
+  position: absolute;
+  top: -10px;
+  background-color: var(--color-gray-ffffff);
 }
 
 .custom-input {
-    width: 100%;
-    height: 60px;
-    padding: 15px 14px;
-    border: solid 1px var(--color-gray-373737);
-    background-color: var(--color-gray-ffffff);
+  width: 100%;
+  height: 60px;
+  padding: 15px 14px;
+  border: solid 1px var(--color-gray-373737);
+  background-color: var(--color-gray-ffffff);
 }
 
 .custom-select {
@@ -49,11 +49,11 @@
 }
 
 .custom-textarea {
-    width: 100%;
-    height: 150px;
-    padding: 15px 14px;
-    border: solid 1px var(--color-gray-373737);
-    background-color: var(--color-gray-ffffff);
+  width: 100%;
+  height: 150px;
+  padding: 15px 14px;
+  border: solid 1px var(--color-gray-373737);
+  background-color: var(--color-gray-ffffff);
 }
 
 .card-contact {
@@ -61,4 +61,45 @@
   height: 800px;
   margin: 69px 435px 206px 69px;
   padding: 0 0 18px;
+}
+
+/* Mobile (320px to 480px) */
+@media (min-width: 320px) and (max-width: 480px) {
+  .card-contact {
+    width: 90%;
+    margin: 0 auto;
+  }
+
+  .form-group-contact {
+    margin-left: 0;
+    top: -2px;
+  }
+}
+
+/* Small (481px to 767px) */
+@media (min-width: 481px) and (max-width: 767px) {
+  .card-contact {
+    width: 90%;
+    margin: 0 auto;
+  }
+  .form-group-contact label {
+    margin-left: 0;
+    top: -2px;
+  }
+}
+
+/* Medium (768px to 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+  .card-contact {
+    width: 90%;
+    margin: 0 auto;
+  }
+}
+
+/* Large (992px to 1399px) */
+@media (min-width: 992px) and (max-width: 1399px) {
+  .card-contact {
+    width: 90%;
+    margin: 0 auto;
+  }
 }
