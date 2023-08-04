@@ -1,9 +1,8 @@
 {% load static %}
 {% load cache %}
-
-<form class="filter-form" method="get" action="{% url 'projects_app:project-list' %}?{{ request.GET.urlencode }}">
+<form class="filter-form mb-5" method="get" action="{% url 'projects_app:project-list' %}?{{ request.GET.urlencode }}">
   {% csrf_token %}
-  <div class="filter">
+  <div class="filter ml-lg-auto">
     <div class="filter-head">
       <p class="font-level-2 my-1">Filtrar</p>
       <a
@@ -124,5 +123,7 @@
     $('.selectpicker').selectpicker();
     $('.selectpicker').selectpicker('val', [{% for region in selected_regions %}"{{ region }}", {% endfor %}]);
     $('.selectpicker').selectpicker('val', [{% for year in selected_years %}"{{ year }}", {% endfor %}]);
+
+    
   });
 </script>

@@ -4,76 +4,87 @@
 {% block content %}
 
 {% include "modules/navbar.html" %}
-<section>
-    <div class="m-5 ">
-        <div class="title d-flex justify-content-center">
-            <div class="line">
-                <p class="h1 font-weight-bold ">Banco de Proyectos</p>
-            </div>
-        </div>
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb ml-5 pl-3">
-                <li class="breadcrumb-item"><a href="{% url 'home_app:index' %}">Inicio</a></li>
-                <li class="breadcrumb-item active" aria-current="page">
-                    Contacto
-                </li>
-            </ol>
-        </nav>
-    </div>
+<section class="container-fluid mt-3 px-0">
+    <div class="cols-12">
+        <div class="row">
+            <div class="col-12">
+                <div class="title d-flex justify-content-center">
+                    <div class="line">
+                        <p class="h1 font-weight-bold">
+                            Banco de <br class="d-block d-md-none" />
+                            Proyectos
+                        </p>
+                    </div>
+                </div>
+                <div class="container-fluid">
+                    <nav aria-label="breadcrumb ">
+                        <ol class="breadcrumb ml-lg-5 pl-lg-5">
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'home_app:index' %}">Inicio</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                Contacto
+                            </li>
+                        </ol>
+                    </nav>
+                </div>
 
-</section>
+                <div class="col-12 col-md-9 col-lg-8 mx-auto">
+                    <div class="d-flex justify-content-center">
+                        <div class="d-flex justify-content-center border-fr-grey">
+                            <div class="card-contact rounded m-5">
+                                <p class="font-level-2 text-center m-3 font-weight-bold">Formulario de Contacto</p>
 
-<section>
-    <div class="container-login">
-        <div class="d-flex justify-content-center">
-            <div class="d-flex justify-content-center border-fr-grey">
-                <div class="card-contact rounded m-5">
-                    <p class="font-level-2 text-center m-3 font-weight-bold">Formulario de Contacto</p>
+                                <form id="contact-form" class="form cols-12 m-5 text-center" method="POST"
+                                    action="{% url 'home_app:add-contact' %}">
+                                    {% csrf_token %}
+                                    {{ form.non_field_errors }}
 
-                    <form id="contact-form" class="form cols-12 m-5 text-center" method="POST" action="{% url 'home_app:add-contact' %}">
-                        {% csrf_token %}
-                        {{ form.non_field_errors }}
+                                    <div class="form-group-contact">
+                                        {{ form.full_name.label_tag }}
+                                        {{ form.full_name }}
+                                        {{ form.full_name.errors }}
+                                    </div>
 
-                        <div class="form-group-contact">
-                            {{ form.full_name.label_tag }}
-                            {{ form.full_name }}
-                            {{ form.full_name.errors }}
+                                    <div class="form-group-contact">
+                                        {{ form.email.label_tag }}
+                                        {{ form.email }}
+                                        {{ form.email.errors }}
+                                    </div>
+
+                                    <div class="form-group-contact">
+                                        {{ form.organization.label_tag }}
+                                        {{ form.organization }}
+                                        {{ form.organization.errors }}
+                                    </div>
+
+                                    <div class="form-group-contact">
+                                        {{ form.contact_reason.label_tag }}
+                                        {{ form.contact_reason }}
+                                        {{ form.contact_reason.errors }}
+                                    </div>
+
+                                    <div class="form-group-contact">
+                                        {{ form.message.label_tag }}
+                                        {{ form.message }}
+                                        <div style="text-align:right"><span id="message-word-count" style="color:gray">0
+                                                / 250 palabras.</span></div>
+                                        {{ form.message.errors }}
+                                    </div>
+
+                                    <div class="form-group-contact">
+                                        {{ form.captcha }}
+                                    </div>
+
+                                    <div class="d-flex flex-column align-items-center">
+                                        <button id="submitButton" type="submit" class="btn btn-primary btn-default-size"
+                                            style="width: 100%">Enviar formulario</button>
+                                    </div>
+                                </form>
+
+                            </div>
                         </div>
-
-                        <div class="form-group-contact">
-                            {{ form.email.label_tag }}
-                            {{ form.email }}
-                            {{ form.email.errors }}
-                        </div>
-
-                        <div class="form-group-contact">
-                            {{ form.organization.label_tag }}
-                            {{ form.organization }}
-                            {{ form.organization.errors }}
-                        </div>
-
-                        <div class="form-group-contact">
-                            {{ form.contact_reason.label_tag }}
-                            {{ form.contact_reason }}
-                            {{ form.contact_reason.errors }}
-                        </div>
-
-                        <div class="form-group-contact">
-                            {{ form.message.label_tag }}
-                            {{ form.message }}
-                            <div style="text-align:right"><span id="message-word-count" style="color:gray">0 / 250 palabras.</span></div>
-                            {{ form.message.errors }}
-                        </div>
-
-                        <div class="form-group-contact">
-                            {{ form.captcha }}
-                        </div>
-
-                        <div class="d-flex flex-column align-items-center">
-                            <button id="submitButton" type="submit" class="btn btn-primary btn-default-size" style="width: 100%">Enviar formulario</button>
-                        </div>
-                    </form>
-
+                    </div>
                 </div>
             </div>
         </div>
@@ -81,7 +92,8 @@
 </section>
 
 <script>
-    function countWords() {
+    function countWords()
+    {
         const messageInput = document.getElementById("id_message");
         const wordCountElement = document.getElementById("message-word-count");
 
