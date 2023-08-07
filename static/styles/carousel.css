@@ -6,12 +6,17 @@
     border-radius: 5px;
 }
 
+
 /* Tamaño para dispositivos extra pequeños (xs) */
 .img-carousel {
     max-width: 106px;
     max-height: 106px;
     margin-right: 6px;
     margin-bottom: 6px;
+}
+
+.img-carousel:hover {
+     opacity: 0.9;
 }
 
 /* Flex containers will wrap by default in xs and smaller devices */
@@ -26,6 +31,15 @@
 @media (min-width: 576px) {
     .flex-container {
         flex-wrap: nowrap;
+    }
+}
+
+@media (max-width: 576px) {
+    .modal-buttons {
+        position: relative;
+        top: 220px;
+        margin: 0px;
+        padding: -10px;
     }
 }
 
@@ -92,6 +106,10 @@
   object-fit: cover;
 }
 
+.image-portada:hover {
+     opacity: 0.9;
+}
+
 .carousel-item {
   position: relative;
 }
@@ -111,4 +129,68 @@
   align-items: center; /* centers the text vertically */
   font-size: 2em; /* increases the font size */
   pointer-events: none;
+}
+
+.modal-content {
+    background-color: transparent;
+    border: none;
+}
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 1,
+  'wght' 900,
+  'GRAD' 0,
+  'opsz' 60
+}
+
+.modal-body {
+    position: relative;
+}
+
+.button-container {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    width: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.circle-btn {
+    background-color: #D9D9D9;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-header {
+    border: none;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.close{
+    color: white;
+    font-family: 'Roboto', sans-serif;
+    font-size: 16px;
+}
+
+#imageInModal {
+    transition: transform 0.4s ease-in-out;
+    transform: translateX(100%); /* Move the image to the right initially */
+    max-width: 100%; /* Ensuring image doesn't exceed container width */
+}
+
+#imageModal .modal-body {
+    overflow: hidden; /* Ensure the sliding images don't overflow */
 }
