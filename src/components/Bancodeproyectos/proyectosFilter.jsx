@@ -73,7 +73,7 @@ const FiltroProyectos = () => {
         {/* Region select */}
         <div className="mt-3">
         <div className="container d-flex justify-content-between align-items-start px-1">
-          <p className="text-sans-p">¿En qué región?</p>
+          <p className="text-sans-p me-1">¿En qué región?</p>
           <button className="btn-limpiar" onClick={handleClearRegion}>
             Borrar <FontAwesomeIcon icon={faTrashCan} />
           </button>

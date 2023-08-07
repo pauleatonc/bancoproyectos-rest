@@ -21,7 +21,8 @@
 }
 
 .divider{
-    height: 1px;
-    width: 90%;
-    background-color: $white-color;
+    width: 97%;
+    height: 17px;
+    flex-shrink: 0;
+    border-bottom: 1px solid $white-color;
 }
