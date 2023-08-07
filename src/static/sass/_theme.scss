@@ -1,57 +1,63 @@
 // Paleta de color
-:root {
-    --primary-color: #006FB3;
-    --secondary-color: #FE6565;
-    --tertiary-color: #0A132D;
-    --accent-color: #A8B7c7;
-    --neutral-color: #EEEEEE;
-    --grey-a-color: #4A4A4A;
-    --grey-b-color: #8a8a8a;
-    --black-color: #111111;
-}
+$primary-color: #006FB3;
+$secondary-color: #FE6565;
+$tertiary-color: #001C41;
+$grey-a-color: #373737;
+$white-color: #FFF;
+
+$accent-color: #A8B7c7;
+$neutral-color: #EEEEEE;
+$grey-b-color: #8a8a8a;
+$black-color: #111111;
+
 
 // Estilos texto con serifa
-@mixin font-serif ($fontSize) {
+@mixin font-serif ($fontSize, $fontColor) {
     font-family: 'Roboto Slab';
-    color:#373737;
+    color: $fontColor;
     font-size: $fontSize;
 }
 .text-serif-h1{
-    @include font-serif(49px);
+    @include font-serif(49px, $grey-a-color);
 }
 .text-serif-h2{
-    @include font-serif(24px);
+    @include font-serif(24px, $grey-a-color);
 }
 
 // Estilos texto sin serifa
-@mixin font-sans ($fontSize, $fontWeight) {
+@mixin font-sans ($fontSize, $fontWeight, $fontColor) {
     font-family: 'Roboto';
-    color:#373737;
+    color: $fontColor;
     font-size: $fontSize;
     font-weight: $fontWeight;
 }
 .text-sans-h1{
-    @include font-sans(39px, 500);
+    @include font-sans(39px, 500, $grey-a-color);
 }
 .text-sans-h2{
-    @include font-sans(31px, 500);
+    @include font-sans(31px, 500, $grey-a-color);
 }
 .text-sans-h3{
-    @include font-sans(25px, 500);
+    @include font-sans(25px, 500, $grey-a-color);
 }
 .text-sans-h4{
-    @include font-sans(20px, 600);
+    @include font-sans(20px, 600, $grey-a-color);
 }
 .text-sans-h5{
-    @include font-sans(14px, 400);
+    @include font-sans(14px, 400, $grey-a-color);
 }
 .text-sans-h5-bold{
-    @include font-sans(14px, 700);
+    @include font-sans(14px, 700, $grey-a-color);
 }
 .text-sans-p{
-    @include font-sans(16px, 400);
+    @include font-sans(16px, 400, $grey-a-color);
     line-height: 30px;
 }
+.text-sans-p-white{
+    @include font-sans(16px, 400, $white-color);
+    line-height: 35px;
+}
+
 
 .line{
     width: 80%;
@@ -61,10 +67,10 @@
 .blue{
     width: 50%;
     height: 100%;
-    background-color: #006FB3;
+    background-color: $primary-color;
 }
 .red{
     width: 50%;
     height: 100%;
-    background-color: #FE6565;
+    background-color: $secondary-color;
 }

@@ -1,0 +1,24 @@
+.footer-container{
+    background-color: $tertiary-color;
+    position: relative;
+}
+
+.deco-line {
+    height: 10px;
+    width: 150px;
+    position: absolute;
+    bottom: 0;
+    left: 40px; 
+    display:flex;
+}
+.azul {
+    width: 40%;
+    height: 100%;
+    background-color: $primary-color;
+
+}  
+.rojo {
+    width: 60%;
+    height: 100%;
+    background-color:$secondary-color;
+}
