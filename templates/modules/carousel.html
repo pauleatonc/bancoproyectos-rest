@@ -87,8 +87,8 @@ $(document).ready(function() {
 
 <script>
 $(document).ready(function() {
-  var currentImageIndex = 0; // to keep track of current image
-  var images = []; // to store all the images
+  var currentImageIndex = 0;
+  var images = [];
 
   // Collect all images from the carousel, the cover image, and the miniature image
   $('.carousel-item img, .image-portada img, .portada-miniature').each(function() {
@@ -98,78 +98,70 @@ $(document).ready(function() {
     }
   });
 
-  function changeImage(index) {
+  function updateImageCounter() {
+    $('#image-counter').text((currentImageIndex + 1) + ' de ' + images.length + ' imágenes');
+  }
+
+  function changeImage(index, requireAnimation = true) {
     var modalImage = $('#imageInModal');
 
-    // Determine the slide direction
-    var direction = index > currentImageIndex ? -100 : 100;
+    if (!requireAnimation) {
+      modalImage.attr('src', images[index]);
+      modalImage.css('transform', 'translateX(0)');
+      currentImageIndex = index;
+      updateImageCounter();
+      return;
+    }
 
-    // Start the slide out in the appropriate direction
+    var direction = index > currentImageIndex ? -100 : 100;
     modalImage.css('transform', 'translateX(' + direction + '%)');
 
     setTimeout(function() {
-        modalImage.attr('src', images[index]);
-        // Reset the position without the transition for immediate "teleportation"
-        modalImage.css({
-            'transition': 'none',
-            'transform': 'translateX(' + (-direction) + '%)' // Slide from the opposite side
-        });
+      modalImage.attr('src', images[index]);
+      modalImage.css({
+          'transition': 'none',
+          'transform': 'translateX(' + (-direction) + '%)'
+      });
 
-        // Force a repaint
-        modalImage.offset();
+      modalImage.offset();
 
-        // Re-enable the transition and slide the image in
-        modalImage.css({
-            'transition': 'transform 0.3s ease-in-out',
-            'transform': 'translateX(0)'
-        });
+      modalImage.css({
+          'transition': 'transform 0.4s ease-in-out',
+          'transform': 'translateX(0)'
+      });
 
-        currentImageIndex = index;
-    }, 300); // Match this with your CSS transition time
-}
+      currentImageIndex = index;
+      updateImageCounter();
+    }, 300);
+  }
 
-  // Show clicked image in modal
   $('.carousel-item img, .image-portada img, .portada-miniature').on('click', function() {
     var imgSrc = $(this).attr('src');
-    var index = images.indexOf(imgSrc);  // Get the index of the clicked image from the array
-    changeImage(index);
+    var index = images.indexOf(imgSrc);
+    var animate = index !== 0;
+    changeImage(index, animate);
     $('#imageModal').modal('show');
-    $('#image-counter').text((index + 1) + ' de ' + images.length + ' imágenes');
   });
 
-  // Handle previous and next buttons
   $('#previousImage').on('click', function() {
     var newIndex = (currentImageIndex - 1 + images.length) % images.length;
     changeImage(newIndex);
-    $('#image-counter').text((currentImageIndex + 1) + ' de ' + images.length + ' imágenes');
   });
 
   $('#nextImage').on('click', function() {
     var newIndex = (currentImageIndex + 1) % images.length;
     changeImage(newIndex);
-    $('#image-counter').text((currentImageIndex + 1) + ' de ' + images.length + ' imágenes');
   });
 
-   // Keyboard controls
-    $(document).on('keydown', function(e) {
-        if ($('#imageModal').hasClass('show')) {  // Check if the modal is open
-            if (e.keyCode == 37) {  // Left arrow key
-                var newIndex = (currentImageIndex - 1 + images.length) % images.length;
-                changeImage(newIndex);
-                $('#image-counter').text((currentImageIndex + 1) + ' de ' + images.length + ' imágenes');
-            } else if (e.keyCode == 39) {  // Right arrow key
-                var newIndex = (currentImageIndex + 1) % images.length;
-                changeImage(newIndex);
-                $('#image-counter').text((currentImageIndex + 1) + ' de ' + images.length + ' imágenes');
-            }
-        }
-    });
+  $(document).on('keydown', function(e) {
+    if ($('#imageModal').hasClass('show')) {
+      var newIndex = (e.keyCode == 37) ?
+                    (currentImageIndex - 1 + images.length) % images.length :
+                    (e.keyCode == 39) ?
+                    (currentImageIndex + 1) % images.length : currentImageIndex;
+      changeImage(newIndex);
+    }
+  });
 });
 
-</script>
-
-<script>
-  window.addEventListener('load', function() {
-    baguetteBox.run('#carousel');
-    });
 </script>
