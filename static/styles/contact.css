@@ -70,9 +70,17 @@
     margin: 0 auto;
   }
 
-  .form-group-contact {
-    margin-left: 0;
-    top: -2px;
+  .form-group-contact  label{
+    margin-left: 0px;
+    top: -10px;
+  }
+
+  .custom-input {
+    width: 100%;
+    height: 60px;
+    padding: 0px 0px;
+    border: solid 1px var(--color-gray-373737);
+    background-color: var(--color-gray-ffffff);
   }
 }
 
@@ -83,8 +91,16 @@
     margin: 0 auto;
   }
   .form-group-contact label {
-    margin-left: 0;
-    top: -2px;
+    margin-left: 0px;
+    top: -10px;
+  }
+
+  .custom-input {
+    width: 100%;
+    height: 60px;
+    padding: 0px 0px;
+    border: solid 1px var(--color-gray-373737);
+    background-color: var(--color-gray-ffffff);
   }
 }
 
@@ -94,6 +110,7 @@
     width: 90%;
     margin: 0 auto;
   }
+
 }
 
 /* Large (992px to 1399px) */

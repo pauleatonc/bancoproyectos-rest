@@ -157,14 +157,17 @@
                         {% if page_obj.number == num %}
                         <li class="page-item active">
                             <a class="page-link border-0 text-decoration-none"
-                                href="?{% if cache_key %}cache_key={{ cache_key }}&{% endif %}search_query={{ search_query }}{% for p in selected_programs %}&program={{ p }}{% endfor %}{% for r in selected_regions %}&region={{ r }}{% endfor %}{% for c in selected_comunas %}&comuna={{ c }}{% endfor %}{% for t in selected_types %}&type={{ t }}{% endfor %}{% for y in selected_years %}&year={{ y }}{% endfor %}&sort_by={{ sort_by }}&page={{ num }}">{{
-                                num }}</a>
+                                href="?{% if cache_key %}cache_key={{ cache_key }}&{% endif %}search_query={{ search_query }}{% for p in selected_programs %}&program={{ p }}{% endfor %}{% for r in selected_regions %}&region={{ r }}
+                                {% endfor %}{% for c in selected_comunas %}&comuna={{ c }}{% endfor %}{% for t in selected_types %}&type={{ t }}{% endfor %}{% for y in selected_years %}&year={{ y }}
+                                {% endfor %}&sort_by={{ sort_by }}&page={{ num }}">{{ num }}</a>
                         </li>
                         {% else %}
                         <li class="page-item">
                             <a class="page-link border-0 text-decoration-none"
-                                href="?{% if cache_key %}cache_key={{ cache_key }}&{% endif %}search_query={{ search_query }}{% for p in selected_programs %}&program={{ p }}{% endfor %}{% for r in selected_regions %}&region={{ r }}{% endfor %}{% for c in selected_comunas %}&comuna={{ c }}{% endfor %}{% for t in selected_types %}&type={{ t }}{% endfor %}{% for y in selected_years %}&year={{ y }}{% endfor %}&sort_by={{ sort_by }}&page={{ num }}">{{
-                                num }}</a>
+                                href="?{% if cache_key %}cache_key={{ cache_key }}&{% endif %}search_query={{ search_query }}{% for p in selected_programs %}&program={{ p }}
+                                {% endfor %}{% for r in selected_regions %}&region={{ r }}{% endfor %}{% for c in selected_comunas %}&comuna={{ c }}
+                                {% endfor %}{% for t in selected_types %}&type={{ t }}{% endfor %}{% for y in selected_years %}&year={{ y }}
+                                {% endfor %}&sort_by={{ sort_by }}&page={{ num }}">{{ num }}</a>
                         </li>
                         {% endif %}
                         {% endfor %}

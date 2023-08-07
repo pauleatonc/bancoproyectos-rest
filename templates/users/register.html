@@ -4,154 +4,173 @@
 {% block content %}
 {% include "modules/navbar.html" %}
 
-<section class="register-users">
-    <div>
-        <div class="title d-flex justify-content-center">
-            <div class="line">
-                <p class="h1 font-weight-bold ">Banco de Proyectos</p>
-            </div>
-        </div>
-        <nav aria-label="breadcrumb">
-            <ol class=" breadcrumb ml-5 pl-3">
-                <li class="breadcrumb-item">
-                    <a href="{% url 'home_app:index' %}">Inicio</a>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">
-                    <a href="{% url 'users_app:admin-home' %}">Home Administrador</a>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">
-                    <a>Gestion de Usuarios</a>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">
-                    <a>Crear usuario</a>
-                </li>
-            </ol>
-        </nav>
-    </div>
-    <div class="d-flex flex-column align-items-center">
-        <div class="container-register-users d-flex flex-column  m-5 w-50">
-            <div class="card-divider my-2 mx-5">
-                <span class="font-level-2 ">Formulario de creación de usuario</s>
-            </div>
-
-            <form id="user-register-form" class="form cols-12 m-5 text-center" method="POST" action="{% url 'users_app:user-register' %}">
-                {% csrf_token %}
-
-                {% if form.non_field_errors %}
-                    <div class="form-group-contact">
-                        <ul class="errorlist">
-                            {% for error in form.non_field_errors %}
-                                <li>{{ error }}</li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                {% endif %}
-
-                <div class="form-group-contact">
-                    {{ form.rut.label_tag }}
-                    {{ form.rut }}
-                    {{ form.rut.errors }}
-                </div>
-
-                <div class="form-group-contact">
-                    {{ form.nombres.label_tag }}
-                    {{ form.nombres }}
-                    {{ form.nombres.errors }}
-                </div>
-
-                <div class="form-group-contact">
-                    {{ form.primer_apellido.label_tag }}
-                    {{ form.primer_apellido }}
-                    {{ form.primer_apellido.errors }}
-                </div>
-
-                <div class="form-group-contact">
-                    {{ form.segundo_apellido.label_tag }}
-                    {{ form.segundo_apellido }}
-                    {{ form.segundo_apellido.errors }}
-                </div>
-
-                <div class="form-group-contact">
-                    {{ form.institucion.label_tag }}
-                    {{ form.institucion }}
-                    {{ form.institucion.errors }}
-                </div>
-
-                <div class="form-group-contact">
-                    {{ form.email.label_tag }}
-                    {{ form.email }}
-                    {{ form.email.errors }}
-                </div>
-
-                <div class="col-12 my-3 ">
-                    <span class="row justify-content-start">{{ form.is_staff.label_tag }}</span>
-                    <div class="btn-group btn-group-toggle d-flex  justify-self-start col-6 pl-0" data-toggle="buttons">
-                        {% for radio in form.is_staff %}
-                        <label
-                            class="btn btn-outline-primary my-3  mr-3 {% if radio.choice_value == form.is_staff.value %}active{% endif %}">
-                            {{ radio.choice_label }}
-                            {{ radio.tag }}
-                        </label>
-                        {% endfor %}
-                        {{ form.is_staff.errors }}
+<section class="container-fluid mt-3">
+    <div class="cols-12">
+        <div class="row">
+            <div class="col-12 px-0">
+                <div class="title d-flex justify-content-center">
+                    <div class="line">
+                        <p class="h1 font-weight-bold">
+                            Banco de <br class="d-block d-md-none" />
+                            Proyectos
+                        </p>
                     </div>
                 </div>
-
-                <div class="form-group-contact">
-                    <input type="password" name="{{ form.password1.name }}" id="{{ form.password1.id_for_label }}"
-                           class="custom-input" placeholder="Contraseña">
-                    <button class="toggle-password" type="button">
-                        <img src="{% static 'images/Close_eye.svg' %}" alt="Toggle Password">
-                    </button>
-                    {% for error in form.password1.errors %}
-                        <span class="text-danger">{{ error }}</span>
-                    {% endfor %}
+                <div class="container-fluid px-0">
+                    <nav aria-label="breadcrumb ">
+                        <ol class="breadcrumb ml-lg-5 pl-lg-4">
+                            <li class="breadcrumb-item">
+                                <a href="{% url 'home_app:index' %}">Inicio</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                <a href="{% url 'users_app:admin-home' %}">Home Administrador</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                <a>Gestion de Usuarios</a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                <a>Crear usuario</a>
+                            </li>
+                        </ol>
+                    </nav>
                 </div>
+            </div>
+            <div class="col-12 col-md-9 col-lg-8 mx-md-auto my-5  px-0">
+                <div class="d-flex justify-content-center">
+                    <div class="d-flex justify-content-center border-fr-grey">
+                        <div class="card-register rounded m-0 m-sm-0 m-md-5 m-lg-5">
+                            <p class="font-level-2 text-center my-5 font-weight-bold">Formulario creación de usuario
+                            </p>
+                            <form id="user-register-form" class="form cols-12 m-0 m-sm-1 m-md-2 m-lg-5  text-center"
+                                method="POST" action="{% url 'users_app:user-register' %}">
+                                {% csrf_token %}
 
-                <div class="form-group-contact">
-                    <input type="password" name="{{ form.password2.name }}" id="{{ form.password2.id_for_label }}"
-                           class="custom-input" placeholder="Confirmar Contraseña">
-                    <button class="toggle-password" type="button">
-                        <img src="{% static 'images/Close_eye.svg' %}" alt="Toggle Password">
-                    </button>
-                    {% for error in form.password2.errors %}
-                        <span class="text-danger">{{ error }}</span>
-                    {% endfor %}
+                                {% if form.non_field_errors %}
+                                <div class="form-group-contact">
+                                    <ul class="errorlist">
+                                        {% for error in form.non_field_errors %}
+                                        <li>{{ error }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                {% endif %}
+
+                                <div class="form-group-contact">
+                                    {{ form.rut.label_tag }}
+                                    {{ form.rut }}
+                                    {{ form.rut.errors }}
+                                </div>
+
+                                <div class="form-group-contact">
+                                    {{ form.nombres.label_tag }}
+                                    {{ form.nombres }}
+                                    {{ form.nombres.errors }}
+                                </div>
+
+                                <div class="form-group-contact">
+                                    {{ form.primer_apellido.label_tag }}
+                                    {{ form.primer_apellido }}
+                                    {{ form.primer_apellido.errors }}
+                                </div>
+
+                                <div class="form-group-contact">
+                                    {{ form.segundo_apellido.label_tag }}
+                                    {{ form.segundo_apellido }}
+                                    {{ form.segundo_apellido.errors }}
+                                </div>
+
+                                <div class="form-group-contact">
+                                    {{ form.institucion.label_tag }}
+                                    {{ form.institucion }}
+                                    {{ form.institucion.errors }}
+                                </div>
+
+                                <div class="form-group-contact">
+                                    {{ form.email.label_tag }}
+                                    {{ form.email }}
+                                    {{ form.email.errors }}
+                                </div>
+
+                                <div class="col-12 my-3 ">
+                                    <span class="row justify-content-start">{{ form.is_staff.label_tag }}</span>
+                                    <div class="btn-group btn-group-toggle d-flex  justify-self-start col-6 pl-0"
+                                        data-toggle="buttons">
+                                        {% for radio in form.is_staff %}
+                                        <label
+                                            class="btn btn-outline-primary my-3  mr-3 {% if radio.choice_value == form.is_staff.value %}active{% endif %}">
+                                            {{ radio.choice_label }}
+                                            {{ radio.tag }}
+                                        </label>
+                                        {% endfor %}
+                                        {{ form.is_staff.errors }}
+                                    </div>
+                                </div>
+
+                                <div class="form-group-contact">
+                                    <input type="password" name="{{ form.password1.name }}"
+                                        id="{{ form.password1.id_for_label }}" class="custom-input"
+                                        placeholder="Contraseña">
+                                    <button class="toggle-password" type="button">
+                                        <img src="{% static 'images/Close_eye.svg' %}" alt="Toggle Password">
+                                    </button>
+                                    {% for error in form.password1.errors %}
+                                    <span class="text-danger">{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="form-group-contact">
+                                    <input type="password" name="{{ form.password2.name }}"
+                                        id="{{ form.password2.id_for_label }}" class="custom-input"
+                                        placeholder="Confirmar Contraseña">
+                                    <button class="toggle-password" type="button">
+                                        <img src="{% static 'images/Close_eye.svg' %}" alt="Toggle Password">
+                                    </button>
+                                    {% for error in form.password2.errors %}
+                                    <span class="text-danger">{{ error }}</span>
+                                    {% endfor %}
+                                </div>
+
+                                <div class="d-flex flex-column align-items-center">
+                                    <button id="submitButton" type="submit" class="btn btn-primary btn-default-size"
+                                        style="width: 100%">Crear
+                                        usuario</button>
+                                </div>
+
+
+                            </form>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="d-flex flex-column align-items-center">
-                    <button id="submitButton" type="submit" class="btn btn-primary btn-default-size" style="width: 100%">Crear
-                        usuario</button>
-                </div>
-
-
-            </form>
+            </div>
 
         </div>
     </div>
 </section>
-
 {% include "modules/footer.html" %}
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        // Ocultar el campo de contraseña al cargar la página
-        $('input[type="password"]').attr('type', 'password');
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function ()
+        {
+            // Ocultar el campo de contraseña al cargar la página
+            $('input[type="password"]').attr('type', 'password');
 
-        $('.toggle-password').click(function() {
-            var passwordInput = $(this).prev('input');
-            var icon = $(this).find('img');
+            $('.toggle-password').click(function ()
+            {
+                var passwordInput = $(this).prev('input');
+                var icon = $(this).find('img');
 
-            if (passwordInput.attr('type') === 'password') {
-                passwordInput.attr('type', 'text');
-                icon.attr('src', '{% static 'images/Eye.svg' %}');
-            } else {
-                passwordInput.attr('type', 'password');
-                icon.attr('src', '{% static 'images/Close_eye.svg' %}');
-            }
+                if (passwordInput.attr('type') === 'password')
+                {
+                    passwordInput.attr('type', 'text');
+                    icon.attr('src', '{% static 'images / Eye.svg' %}');
+                } else
+                {
+                    passwordInput.attr('type', 'password');
+                    icon.attr('src', '{% static 'images / Close_eye.svg' %}');
+                }
+            });
         });
-    });
-</script>
+    </script>
 
-{% endblock content %}
+    {% endblock content %}
