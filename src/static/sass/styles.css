@@ -118,13 +118,11 @@
 
 .footer-container {
   background-color: #001C41;
-  position: relative;
 }
 
 .deco-line {
   height: 10px;
   width: 150px;
-  position: absolute;
   bottom: 0;
   left: 40px;
   display: flex;
@@ -140,4 +138,9 @@
   width: 60%;
   height: 100%;
   background-color: #FE6565;
+}
+
+.divider {
+  height: 1px;
+  background-color: #FFF;
 }/*# sourceMappingURL=styles.css.map */
