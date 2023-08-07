@@ -1,8 +1,8 @@
 
 const ProyectoCard = () => {
   return (
-    <div className="card my-3">
-      <div className="card-img container mt-2"></div>
+    <div className="proyect-card my-3">
+      <div className="card-img mt-2"></div>
 
       <div className="d-flex flex-row justify-content-between p-3">
         <p className="text-sans-h5 text-muted">Región: Araucanía</p>
@@ -20,7 +20,7 @@ const ProyectoCard = () => {
         <p className="tag p-1">Plazas y Áreas Verdes</p>
       </div>
       <div className="d-flex justify-content-end p-3">
-        <button className="font-level-4 card-btn text-decoration-underline">Ver más &gt; </button>
+        <button className="font-level-4 btn-principal-s text-decoration-underline px-3">Ver más &gt; </button>
       </div>
     </div>
   );

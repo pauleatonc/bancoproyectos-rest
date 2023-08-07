@@ -10,7 +10,6 @@ $neutral-color: #EEEEEE;
 $grey-b-color: #8a8a8a;
 $black-color: #111111;
 
-
 // Estilos texto con serifa
 @mixin font-serif ($fontSize, $fontColor) {
     font-family: 'Roboto Slab';
@@ -36,6 +35,9 @@ $black-color: #111111;
 }
 .text-sans-h2{
     @include font-sans(31px, 500, $grey-a-color);
+}
+.text-sans-h2-white{
+    @include font-sans(31px, 500, $white-color);
 }
 .text-sans-h3{
     @include font-sans(25px, 500, $grey-a-color);
@@ -73,4 +75,26 @@ $black-color: #111111;
     width: 50%;
     height: 100%;
     background-color: $secondary-color;
+}
+
+// Botones
+@mixin btn-principal ($btnSize){
+    width: $btnSize;
+    background-color:#0F69C4;
+    border: none;
+    color:#FFFFFF;
+    padding: 13px;
+}
+.btn-principal-s{
+   @include btn-principal(fit-content); 
+}
+.btn-principal-l{
+    @include btn-principal(90%); 
+ }
+
+// Tags
+.tag{
+    border: 1px solid #0F69C4;
+    background-color: transparent;
+    color: #0F69C4;
 }

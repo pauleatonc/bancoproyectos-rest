@@ -41,8 +41,8 @@ const ProyectosContainer = () => {
   const totalProjects = allProjects.length;
 
   return (
-    <div className="container p-0 d-flex flex-column align-items-center">
-      <div className="card-container d-flex flex-wrap justify-content-between">
+    <div className="container p-0 d-flex flex-column align-items-center ">
+      <div className="card-container d-flex flex-wrap justify-content-evenly">
         {currentProjects.map((project) => (
           <ProyectoCard key={project.id} project={project} />
         ))}

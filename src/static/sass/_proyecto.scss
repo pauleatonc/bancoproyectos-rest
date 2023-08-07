@@ -9,7 +9,7 @@
 }
 .img-proyecto{
     background-color: grey;
-    width: 100%;
+    width: 95%;
     height: 350px;
     flex-shrink: 0;
     border-radius: 5px;
@@ -18,10 +18,7 @@
     background-color: #0F69C4;
     height: 41px;
 }
-.detalles-del-proyecto p{
-    color: white;
-    text-align: center;
-}
+
 .parent {
     display: grid;
     grid-template-columns: repeat(9, 1fr);

@@ -10,7 +10,7 @@ const Proyecto = () => {
           <button className="volver-btn d-none d-lg-block"> &lt; volver</button>
           <p className="m-0 d-none d-lg-block">|</p>
           <nav aria-label="breadcrumb">
-            <ol className="breadcrumb breadcrumb-style m-0">
+            <ol className="breadcrumb m-0">
               <li className="breadcrumb-item"><a href="/" >Inicio</a></li>
               <li className="breadcrumb-item"><a href="/bancodeproyectos" >Banco de Proyectos</a></li>
               <li className="breadcrumb-item active d-none d-lg-block border border-danger" aria-current="page">Como hacer dinamico esto?</li>
@@ -34,7 +34,7 @@ const Proyecto = () => {
       {/* Tabla detalles del proyecto */}
       <div className="container">
         <div className="container detalles-del-proyecto mt-md-5">
-            <p className="text-sans-h2 pt-2 pt-md-0 my-md-2 ml-md-1">Detalles del proyecto</p>
+            <p className="text-sans-h2-white pt-2 pt-md-0 my-md-2 ml-md-1">Detalles del proyecto</p>
         </div>
       </div>
       <div className="parent container my-4 my-md-5">
