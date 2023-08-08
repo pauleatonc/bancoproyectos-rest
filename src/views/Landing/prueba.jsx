@@ -1,34 +1,29 @@
-import BuscadorProyectos from "../../components/Commons/buscadorproyectos";
-import "../../static/styles/landing.css"
+import useApiRegionComuna  from "../../hooks/useApiRegionComuna";
 
-import { useEffect, useState } from 'react';
+const SelectRegionComuna = () => {
+  const {data, loading , error } = useApiRegionComuna();
 
-import { getAllRegionComunas } from '../../api/RegionComuna/regioncomuna.api';
-
-const Home = () => {
-  const [regionComunas, setRegionComunas] = useState([]);
-
-  useEffect(() => {
-    async function loadRegionComuna(){
-        const res = await getAllRegionComunas();
-        setRegionComunas(res.data);
-    }
-    loadRegionComuna();
-  }, []);
+  if (loading) {
+    return  <div>Loading...</div>
+  }
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
 
   return (
-    <>
-
-        {regionComunas.map(comuna =>(
-            <div>
-                <h4>{comuna.comuna}</h4>
-                <p>{comuna.region.region}</p>
-            </div>
-        ))}
-
-
-    </>
+    <div>
+    {data.map((regionData) => (
+      <div key={regionData.region}>
+        <h2>Region: {regionData.region}</h2>
+        <ul>
+          {regionData.comunas.map((comunaData) => (
+            <li key={comunaData.comuna}>{comunaData.comuna}</li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
   );
 };
-  
-  export default Home;
+
+export default SelectRegionComuna; 
