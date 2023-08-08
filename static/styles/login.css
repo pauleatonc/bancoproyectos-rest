@@ -50,21 +50,47 @@
   text-align: left;
   width: 100%;
   position: relative;
-
 }
 
 .input-with-toggle {
-    position: relative;
+  position: relative;
 }
 
 .toggle-password {
-    position: absolute;
-    right: 10px;
-    top: 50%;
-    transform: translateY(-50%);
-    background-color: transparent;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    vertical-align: middle;
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  vertical-align: middle;
+}
+
+/* Mobile (320px to 480px) */
+@media (min-width: 320px) and (max-width: 480px) {
+  .card-login {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Small (481px to 767px) */
+@media (min-width: 481px) and (max-width: 767px) {
+  .card-login {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Medium (768px to 991px) */
+@media (min-width: 768px) and (max-width: 991px) {
+  .card-login {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
 }

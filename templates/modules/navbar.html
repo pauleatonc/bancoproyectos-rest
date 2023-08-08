@@ -2,24 +2,24 @@
 <nav class="navbar navbar-light navbar-expand-lg  navbar-lines">
   <div class="cols-12 column ">
     <a class="navbar-brand ml-3 " href="/">
-        <div class="blue" ></div>
-        <div class="red"></div>
-        <p class="font-level-6 font-weight-bold mt-1">
+      <div class="blue"></div>
+      <div class="red"></div>
+      <p class="font-level-6 font-weight-bold mt-1">
         Subsecretaría de <br class="d-md-none"> Desarrollo <br class="d-none d-sm-none d-md-block"> Regional y <br
           class="d-sm-none"> Administrativo
       </p>
     </a>
   </div>
-  <button class="navbar-toggler collapsed text-gray-600 " type="button" data-toggle="collapse"
-    data-target="#navbarLightExampleCollapse" aria-controls="navbarCollapse" aria-expanded="false"
+  <button class="navbar-toggler collapsed " type="button" data-toggle="collapse"
+    data-target="#navbarLinesLightExampleCollapse" aria-controls="navbarCollapse" aria-expanded="false"
     aria-label="Toggle navigation">
-    <u>Menú</u>
+    <u class="text-gray-600">Menú</u>
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="navbar-collapse collapse" id="navbarLightExampleCollapse">
+  <div class="navbar-collapse collapse" id="navbarLinesLightExampleCollapse">
     <ul class="navbar-nav  mx-lg-5 my-lg-3 mx-lg-4 ">
-        {% if user.is_authenticated %}
-        {% if user.is_staff %}
+      {% if user.is_authenticated %}
+      {% if user.is_staff %}
       <li class="nav-item m-2 my-md-1">Hola, {{ user.nombres }}</li>
       <li class="nav-item my-1"><a class="btn btn-block btn-outline-primary mx-2"
           href="{% url 'users_app:admin-home' %}">Ir
@@ -42,7 +42,7 @@
       </form>
       {% endif %}
     </ul>
-    <ul class="navbar-nav my-1 mr-5 d-none d-md-block">
+    <ul class="navbar-nav my-1 mr-5 d-none d-lg-block">
       <form class="simple-search search" style="border: solid 1px #373737; width: 365px; height: 48px;"
         action="{% url 'projects_app:project-list' %}" id="search-form" action="{% url 'projects_app:project-list' %}"
         id="search-form">
@@ -51,24 +51,21 @@
               class="icon cl cl-search" style="color:#373737; border: 0"></i></button>
         </div>
         <input class="form-control" type="text" name="search" placeholder="Buscar" aria-label="search"
-          aria-describedby="searchLineAction" style="border: 0" />
+          aria-describedby="searchLineAction" />
       </form>
     </ul>
     <ul class="navbar-nav align-self-start">
       <li class="nav-item"><a class="nav-link" href="{% url 'home_app:index' %}">Inicio</a></li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" id="navbarLinesLightExampleDropdown" href="#" role="button" 
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" id="navbarLinesLightExampleDropdown" href="#" role="button"
           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Banco de Proyectos</a>
         <div class="dropdown-menu" aria-labelledby="navbarLinesLightExampleDropdown">
           {% for program in programs %}
-          <a class="dropdown-item" href="{% url 'projects_app:project-list' %}?program={{ program.id }}">{{ program.name
-            }}</a>
-          {% endfor %}
-          <div class="dropdown-divider"></div>
-          {% for type in types %}
-          <a class="dropdown-item" href="{% url 'projects_app:project-list' %}?type={{ type.id }}">{{ type.name }}</a>
+          <a class="dropdown-item" href="{% url 'projects_app:project-list' %}?program={{ program.id }}">
+            {{program.name}}</a>
           {% endfor %}
         </div>
+      </li>
       <li class="nav-item"><a class="nav-link" href="{% url 'home_app:add-contact' %}">Contacto</a></li>
     </ul>
   </div>
