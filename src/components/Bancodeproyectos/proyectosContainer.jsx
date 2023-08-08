@@ -42,7 +42,7 @@ const ProyectosContainer = () => {
 
   return (
     <div className="container p-0 d-flex flex-column align-items-center ">
-      <div className="card-container d-flex flex-wrap justify-content-evenly">
+      <div className="card-container d-flex flex-wrap justify-content-between">
         {currentProjects.map((project) => (
           <ProyectoCard key={project.id} project={project} />
         ))}
