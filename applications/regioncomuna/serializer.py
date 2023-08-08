@@ -12,6 +12,14 @@ class ComunaSerializer(serializers.ModelSerializer):
         fields = ('comuna',)
 
 
+class ComunaRegionSerializer(serializers.ModelSerializer):
+    region = serializers.CharField(source='region.region')
+
+    class Meta:
+        model = Comuna
+        fields = ('comuna', 'region')
+
+
 class RegionSerializer(serializers.ModelSerializer):
     comunas = ComunaSerializer(many=True)
 

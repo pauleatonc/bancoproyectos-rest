@@ -1,12 +1,16 @@
+# standard library
+from datetime import timedelta, datetime
+#
 from django.db import models
-from imagekit.models import ImageSpecField
+from django.core.validators import FileExtensionValidator
+from django.template.defaultfilters import slugify
+#
+from applications.regioncomuna.models import Comuna
+from .managers import ProjectsManager
+from .functions import validate_file_size_five, validate_file_size_twenty
+# apps de terceros
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill, ResizeToFit
-from applications.regioncomuna.models import Region, Comuna
-from .managers import ProjectsManager
-from django.core.validators import FileExtensionValidator
-from django.core.exceptions import ValidationError
-from .functions import validate_file_size_five, validate_file_size_twenty
 
 
 class Program(models.Model):
@@ -103,8 +107,12 @@ class Project(models.Model):
     comuna = models.ForeignKey(
         Comuna, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Comuna')
 
+    slug = models.SlugField(editable=False, max_length=300)
+
     prioritized_tag = models.ManyToManyField(
         PrioritizedTag, blank=False, verbose_name='Tag proyecto priorizado')
+
+
 
     # checklist = models.ManyToManyField(ChecklistDocuments, verbose_name='Checklist de documentos obligatorios')
 
@@ -112,6 +120,20 @@ class Project(models.Model):
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        now = datetime.now()
+        total_time = timedelta(
+            hours=now.hour,
+            minutes=now.minute,
+            seconds=now.second
+        )
+        seconds = int(total_time.total_seconds())
+        slug_unique = '%s %s' % (self.name, str(seconds))
+
+        self.slug = slugify(slug_unique)
+
+        super(Project, self).save(*args, **kwargs)
 
 
 class Projectimage(models.Model):

@@ -1,7 +1,23 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
-from .models import Project, Program, Type
 from django.core.cache import cache
+#
+from django.views.generic import ListView, DetailView
+#
+from rest_framework.generics import (
+    ListAPIView,
+    CreateAPIView,
+    RetrieveAPIView,
+    DestroyAPIView,
+    UpdateAPIView,
+    RetrieveUpdateAPIView
+)
+#
+from .models import Project, Program, Type
+#
+from .serializer import (
+    ProjectListSerializer,
+    ProjectDetailSerializer
+)
 
 
 class ProjectsListView(ListView):
@@ -153,3 +169,19 @@ class CheckListProgramView(ListView):
     model = Project
     template_name = 'projects/checklist_program.html'
     context_object_name = 'project'
+
+
+class ProjectListApiView(ListAPIView):
+
+    serializer_class = ProjectListSerializer
+
+    def get_queryset(self):
+        return Project.objects.all()
+
+
+class ProjectdetailApiView(RetrieveAPIView):
+
+    serializer_class = ProjectDetailSerializer
+
+    def get_queryset(self):
+        return Project.objects.all()
