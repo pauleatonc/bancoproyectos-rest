@@ -1,5 +1,3 @@
-
-
 .title-hero-landing {
   display: flex;
   justify-self: center;
@@ -9,12 +7,25 @@
   width: 800px;
 }
 
-
 .line-height {
   line-height: 30px;
   font-weight: 500;
 }
 
+#btn-pmu:hover #icon-pmu {
+  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7499%)
+  hue-rotate(262deg) brightness(103%) contrast(102%);
+}
+
+#btn-pmb:hover #icon-pmb {
+  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7499%)
+  hue-rotate(262deg) brightness(103%) contrast(102%);
+}
+
+#btn-list:hover #icon-list {
+  filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7499%)
+    hue-rotate(262deg) brightness(103%) contrast(102%);
+}
 
 .section-card {
   width: auto;
@@ -28,11 +39,8 @@
   padding: 40px 0;
 }
 
-
-
-
-
 .cards {
+  height: auto;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -51,7 +59,7 @@
 
 .group {
   width: 200px;
-  height:auto;
+  height: auto;
   margin: 0 54px 25px 54.5px;
   padding: 5px 20px 0px 7px;
 }
@@ -108,4 +116,3 @@
   text-align: left;
   color: #373737;
 }
-

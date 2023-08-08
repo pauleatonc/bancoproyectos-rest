@@ -2,47 +2,47 @@
 {% load static %}
 {% block content %}
 {%include "modules/navbar.html" %}
-<section class='container-fluid px-0 my-md-4'>
+<section class='container-fluid px-0  mt-3'>
   <div class='title d-flex justify-content-center '>
     <div class="line">
       <p class="h1 font-weight-bold">Banco de <br class="d-block  d-md-none "> Proyectos</p>
     </div>
   </div>
-  <div class="mx-3 my-1">
-    <div class="text-center m-3 h-4 text-muted"> Acceder al buscador de proyectos escribiendo palabra clave</div>
-    <form class="search mx-auto" method="GET" action="{% url 'projects_app:project-list' %}" id="search-form">
+  <div class="container-fluid my-1">
+    <div class="text-center m-3 h-4 text-muted"> Acceder al buscador de proyectos  escribiendo palabra clave</div>
+    <form class="search mx-auto px-md-5 w-70" method="GET" action="{% url 'projects_app:project-list' %}" id="search-form">
       <input class="form-control" type="text" name="search_query" id="search_query" placeholder="Buscar proyecto"
-        aria-label="Buscar proyectos" aria-describedby="searchAction" />
+      aria-label="Buscar proyectos" aria-describedby="searchAction" />
       <div class="search-action">
         <button class="btn btn-outline-search" id="searchAction" type="submit"><i
-            class="icon cl cl-search"></i></button>
-      </div>
-    </form>
+          class="icon cl cl-search"></i></button>
+      </form>
+    </div>
 
     <div class="container justify-content-md-around">
       <p class="font-level-2 text-center mx-3  my-5 font-weight-bold">Categorías <br class="d-block d-md-none">
         principales</p>
       <div class="cols-12 cols-lg-6">
         <div class="row justify-content-lg-center">
-          <div class="col-4 col-sm-4 col-lg-3 mx-lg-2  text-center">
-            <a class="" href="{% url 'projects_app:project-list' %}?program=1"> <img
-                src="{% static 'images/icon_PMU.svg' %}" id="icon-pmu" /></a>
+          <div class="col-4 col-sm-4 col-lg-3 mx-lg-2  text-center pt-2">
+            <a class="btn btn-outline-primary rounded-circle px-1  " href="{% url 'projects_app:project-list' %}?program=1" id="btn-pmu"> <img
+                src="{% static 'images/PMU.svg' %}" id="icon-pmu" /></a>
             <br>
             <span>Programa <br class="d-none d-md-block">Mejoramiento<br class="d-none d-md-block"> Urbano</span>
           </div>
-          <div class="col-4 col-sm-4  col-lg-3  mx-lg-2 text-center">
-            <a href="{% url 'projects_app:project-list' %}?program=2"> <img src="{% static 'images/icon_PMB.svg' %}"
+          <div class="col-4 col-sm-4 col-lg-3 mx-lg-2  text-center pt-2">
+            <a class="btn btn-outline-primary rounded-circle px-1 "href="{% url 'projects_app:project-list' %}?program=2" id="btn-pmb"> <img src="{% static 'images/PMB.svg' %}"
                 id="icon-pmb" />
             </a>
             <br>
             <span>Programa  <br class="d-none d-md-block">Mejoramiento <br class="d-none d-md-block">de Barrios</span>
           </div>
-          <div class="col-4 col-sm-4 col-lg-3 mx-lg-2  text-center">
-            <a class="btn btn-outline-primary rounded-circle p-1"
-              href="{% url 'projects_app:project-list' %}?show_all=true">
-              <img src="{% static 'images/icon_list.svg' %}" id="icon-ist" /></a>
+          <div class="col-4 col-sm-4 col-lg-3 mx-lg-2  text-center pt-2">
+            <a class="btn btn-outline-primary rounded-circle p-1 "
+              href="{% url 'projects_app:project-list' %}?show_all=true" id="btn-list">
+              <img src="{% static 'images/icon_list.svg' %}" id="icon-list" /></a>
             <br>
-            <span> Ver <br class="d-block d-md-none"> todos los <br class="d-none d-md-block">proyectos</span>
+            <span class="mt-3"> Ver <br class="d-block d-md-none"> todos los <br class="d-none d-md-block">proyectos</span>
           </div>
         </div>
       </div>
