@@ -10,13 +10,13 @@
       </p>
     </a>
   </div>
-  <button class="navbar-toggler collapsed text-gray-600 " type="button" data-toggle="collapse"
-    data-target="#navbarLightExampleCollapse" aria-controls="navbarCollapse" aria-expanded="false"
+  <button class="navbar-toggler collapsed " type="button" data-toggle="collapse"
+    data-target="#navbarLinesLightExampleCollapse" aria-controls="navbarCollapse" aria-expanded="false"
     aria-label="Toggle navigation">
-    <u>Menú</u>
+    <u class="text-gray-600">Menú</u>
     <span class="navbar-toggler-icon"></span>
   </button>
-  <div class="navbar-collapse collapse" id="navbarLightExampleCollapse">
+  <div class="navbar-collapse collapse" id="navbarLinesLightExampleCollapse">
     <ul class="navbar-nav  mx-lg-5 my-lg-3 mx-lg-4 ">
       {% if user.is_authenticated %}
       {% if user.is_staff %}
@@ -51,7 +51,7 @@
               class="icon cl cl-search" style="color:#373737; border: 0"></i></button>
         </div>
         <input class="form-control" type="text" name="search" placeholder="Buscar" aria-label="search"
-          aria-describedby="searchLineAction" style="border: 0" />
+          aria-describedby="searchLineAction" />
       </form>
     </ul>
     <ul class="navbar-nav align-self-start">
@@ -61,14 +61,11 @@
           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Banco de Proyectos</a>
         <div class="dropdown-menu" aria-labelledby="navbarLinesLightExampleDropdown">
           {% for program in programs %}
-          <a class="dropdown-item" href="{% url 'projects_app:project-list' %}?program={{ program.id }}">{{ program.name
-            }}</a>
-          {% endfor %}
-          <div class="dropdown-divider"></div>
-          {% for type in types %}
-          <a class="dropdown-item" href="{% url 'projects_app:project-list' %}?type={{ type.id }}">{{ type.name }}</a>
+          <a class="dropdown-item" href="{% url 'projects_app:project-list' %}?program={{ program.id }}">
+            {{program.name}}</a>
           {% endfor %}
         </div>
+      </li>
       <li class="nav-item"><a class="nav-link" href="{% url 'home_app:add-contact' %}">Contacto</a></li>
     </ul>
   </div>
