@@ -7,25 +7,25 @@ const Home = () => {
 
       {/* Categorias principales */}
       <div className="container my-4 mb-md-5">
-        <p className="text-sans-h1 my-3 text-center">Categorías principales</p>
+        <h1 className="text-sans-h1 my-3 text-center">Categorías principales</h1>
         <div className="container d-flex flex-row justify-content-center">
 
           <div className="col-md-2 d-flex flex-column mx-md-5 align-items-center">
-            <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-md-3">
-              <span className="categorias-siglas h4 font-weight-bold mt-2">PMU</span>
+            <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-3">
+              <span className="categorias-siglas fw-bold">PMU</span>
             </div>
             <p className="text-sans-p text-center">Programa Mejoramiento Urbano</p>
           </div>
           
           <div className="col-md-2 d-flex flex-column mx-md-5 align-items-center">
-            <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-md-3">
-              <span className="categorias-siglas h4 font-weight-bold mt-2">PMB</span>
+            <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-3">
+              <span className="categorias-siglas fw-bold">PMB</span>
             </div>
             <p className="text-sans-p text-center">Programa Mejoramiento de Barrios</p>
           </div>
 
           <div className="col-md-2 d-flex flex-column mx-md-5 align-items-center">
-            <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-md-3">
+            <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-3">
               <img src="src/static/img/icon_categorias_landing.png" alt="Icono"/>
             </div>
             <p className="text-sans-p text-center">Ver todos los proyectos</p>
@@ -37,7 +37,7 @@ const Home = () => {
 
       {/* Que es el Banco de Proyectos */}
       <div className="container col-md-8 px-4 mb-4">
-        <p className="text-sans-h2">¿Qué es el Banco de Proyectos?</p>
+        <h2 className="text-sans-h2 my-4">¿Qué es el Banco de Proyectos?</h2>
         <p className="text-sans-p"> El <strong> Banco de Proyectos </strong> de la Subsecretaría de Desarrollo Regional y Administrativo es un
           <strong> repositorio de proyectos ya ejecutados por distintas municipalidades </strong>a lo largo del país, que tiene por objetivo
           <strong> poner a disposición diversas iniciativas y su documentación </strong>asociada al momento de postular a los
@@ -46,8 +46,8 @@ const Home = () => {
           sus valores y aspectos normativos</strong>
         </p>
 
-        <div className="container d-md-flex my-md-5">
-          <div className="col-md-4 d-flex flex-column mx-md-2 align-items-center">
+        <div className="container d-lg-flex my-md-5">
+          <div className="col-lg-4 d-flex flex-column mx-lg-2 align-items-center">
             <div className="que-es-circle rounded-circle d-flex align-items-center justify-content-center mb-md-4 my-4" >
               <img src="src/static/img/que_es_1.png" alt="Imagen" className="que-es-img img-fluid rounded-circle h-100 " />
             </div>
@@ -55,7 +55,7 @@ const Home = () => {
             <p className="text-sans-p text-center my-3 my-md-4">Dirigido a todo profesional municipal encargado de la formulación de proyectos que se enmarquen en los programas PMU y PMB.</p>
           </div>
 
-          <div className="col-md-4 d-flex flex-column mx-md-2 align-items-center">
+          <div className="col-lg-4 d-flex flex-column mx-lg-2 align-items-center">
             <div className="que-es-circle rounded-circle d-flex align-items-center justify-content-center mb-md-4 my-4" >
               <img src="src/static/img/que_es_2.png" alt="Imagen" className="que-es-img img-fluid rounded-circle h-100" />
             </div>
@@ -63,7 +63,7 @@ const Home = () => {
             <p className="text-sans-p text-center my-3 my-md-4">Podrás filtrar proyectos por tipo de programa, revisar antecedentes y descargar documentación referencial para postular proyectos adecuados a la realidad de tu comuna.</p>
           </div>
 
-          <div className="col-md-4 d-flex flex-column mx-md-2 align-items-center">
+          <div className="col-lg-4 d-flex flex-column mx-lg-2 align-items-center">
             <div className="que-es-circle rounded-circle d-flex align-items-center justify-content-center mb-md-4 my-4" >
               <img src="src/static/img/que_es_3.png" alt="Imagen" className="que-es-img img-fluid rounded-circle" />
             </div>
@@ -75,7 +75,7 @@ const Home = () => {
 
       {/* Quienes somos */}
       <div className="container col-md-8 px-4">
-        <p className="text-sans-h2 text-center">¿Quiénes somos?</p>
+        <h2 className="text-sans-h2 text-center my-4">¿Quiénes somos?</h2>
         <p className="text-sans-p">El Banco de Proyectos es una iniciativa directa de la  Subsecretaría de Desarrollo Regional y Administrativo, cuya información está en permanente actualización.</p>
       </div>
 

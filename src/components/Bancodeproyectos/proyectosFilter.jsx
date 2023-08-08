@@ -56,13 +56,13 @@ const FiltroProyectos = () => {
         <div className="container d-flex justify-content-around mx-0 p-0">
           <div className="col-md-2 d-flex flex-column align-items-center mr-5">
             <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-md-3">
-              <span className="categorias-siglas h4 font-weight-bold mt-2">PMU</span>
+              <span className="categorias-siglas font-weight-bold">PMU</span>
             </div>
             <p className="text-sans-h5-bold text-center">Programa Mejoramiento Urbano</p>
           </div>
           <div className="col-md-2 d-flex flex-column  align-items-center">
             <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-md-3">
-              <span className="categorias-siglas h4 font-weight-bold mt-2">PMB</span>
+              <span className="categorias-siglas font-weight-bold">PMB</span>
             </div>
             <p className="text-sans-h5-bold text-center">Programa Mejoramiento de Barrios</p>
           </div>
@@ -73,7 +73,7 @@ const FiltroProyectos = () => {
         {/* Region select */}
         <div className="mt-3">
         <div className="container d-flex justify-content-between align-items-start px-1">
-          <p className="text-sans-p">¿En qué región?</p>
+          <p className="text-sans-p me-1">¿En qué región?</p>
           <button className="btn-limpiar" onClick={handleClearRegion}>
             Borrar <FontAwesomeIcon icon={faTrashCan} />
           </button>
@@ -172,7 +172,7 @@ const FiltroProyectos = () => {
       </div>
 
       <div className="d-flex justify-content-center">
-        <button className="btn-resultados mb-4">Mostrar resultados</button>
+        <button className="btn-principal-l mb-4">Mostrar resultados</button>
       </div>
 
     </div>

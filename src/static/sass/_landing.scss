@@ -1,12 +1,12 @@
 .categorias-circle{
-    border: 1px solid #0F69C4;
+    border: 1px solid $primary-color;
     width: 65px; 
     height: 65px;
 }
 .categorias-siglas{
-    color: #0F69C4;
+    color: $primary-color;
+    font-size: 25px;
 }
-
 .que-es-circle{
     background-color: rgba(27, 103, 178, .4);
     width: 200px;
@@ -22,9 +22,3 @@
     object-fit: cover;
     object-position: center;
 }
-
-.text-body {
-    line-height: 30px;
-    color: #373737;
-  }
-  
