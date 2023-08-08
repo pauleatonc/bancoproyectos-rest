@@ -3,7 +3,7 @@ import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { useEffect, useState } from 'react';
 //import Select from 'react-select';
 
-import { getAllRegionComunas } from '../../api/RegionComuna/regioncomuna.api';
+import apiRegionComuna from '../../services/RegionComuna/regioncomuna.api';
 
 
 const FiltroProyectos = () => {
@@ -14,7 +14,7 @@ const FiltroProyectos = () => {
 
   useEffect(() => {
     async function loadRegionComuna() {
-      const response = await getAllRegionComunas();
+      const response = await apiRegionComuna();
       setRegionComunas(response.data);
     }
     loadRegionComuna();
