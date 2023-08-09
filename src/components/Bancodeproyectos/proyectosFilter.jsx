@@ -44,7 +44,7 @@ const FiltroProyectos = () => {
 
       <div className="mb-md-4" id="filter-container">
         <div className="container d-flex justify-content-between my-3 p-0">
-          <p className="text-sans-h3">Filtrar</p>
+          <p className="text-sans-h3 me-2">Filtrar</p>
           <button className="text-sans-p btn-limpiar p-2">
             Limpiar filtro <FontAwesomeIcon icon={faTrashCan} />
           </button>
@@ -80,14 +80,14 @@ const FiltroProyectos = () => {
         </div>
 
         <select className="container selectores mb-4 text-underline text-muted" onChange={handleRegionChange} value={selectedRegion}>
-        <option className="" value=''>Elige una o más regiones</option>
-        {/* Map over the regionComunas state to create options */}
-        {regionComunas.map((data, index) => (
-          <option key={index} value={data.region}>
-            {data.region}
-          </option>
-        ))}
-      </select>
+          <option className="" value=''>Elige una o más regiones</option>
+          {/* Map over the regionComunas state to create options */}
+          {regionComunas.map((data, index) => (
+            <option key={index} value={data.region}>
+              {data.region}
+            </option>
+          ))}
+        </select>
 
       {/* Comuna select */}
       <p className="text-sans-p px-1">¿En qué comuna?</p>
