@@ -4,9 +4,9 @@ import FiltroProyectos from "../../../components/Bancodeproyectos/proyectosFilte
 import SortProyectos from "../../../components/Bancodeproyectos/proyectosSort";
 import ProyectosContainer from "../../../components/Bancodeproyectos/proyectosContainer";
 
-const BancoProyectos = () => {
+  const BancoProyectos = () => {
     return (
-      <div className="">
+      <div className="container col-md-10">
 
         <nav className="container" aria-label="breadcrumb">
           <ol className="breadcrumb breadcrumb-style">
@@ -16,6 +16,7 @@ const BancoProyectos = () => {
         </nav>
 
         <BuscadorProyectos />
+        
         <div className="container d-flex flex-column flex-md-row">
           <FiltroProyectos />
           <div className="ml-md-5">
@@ -29,5 +30,5 @@ const BancoProyectos = () => {
       </div>
     );
   };
-  
   export default BancoProyectos;
+

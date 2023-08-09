@@ -44,13 +44,13 @@ const FiltroProyectos = () => {
 
       <div className="mb-md-4" id="filter-container">
         <div className="container d-flex justify-content-between my-3 p-0">
-          <p className="text-sans-h3">Filtrar</p>
+          <p className="text-sans-h3 me-2">Filtrar</p>
           <button className="text-sans-p btn-limpiar p-2">
             Limpiar filtro <FontAwesomeIcon icon={faTrashCan} />
           </button>
         </div>
 
-        <p className="text-sans-p">¿En qué programa está el proyecto que buscas?</p>
+        <h3 className="text-sans-p">¿En qué programa está el proyecto que buscas?</h3>
         <p className="text-sans-h5">Puedes elegir más de uno.</p>
 
         <div className="container d-flex justify-content-around mx-0 p-0">
@@ -73,24 +73,24 @@ const FiltroProyectos = () => {
         {/* Region select */}
         <div className="mt-3">
         <div className="container d-flex justify-content-between align-items-start px-1">
-          <p className="text-sans-p me-1">¿En qué región?</p>
+          <h3 className="text-sans-p me-1">¿En qué región?</h3>
           <button className="btn-limpiar" onClick={handleClearRegion}>
             Borrar <FontAwesomeIcon icon={faTrashCan} />
           </button>
         </div>
 
         <select className="container selectores mb-4 text-underline text-muted" onChange={handleRegionChange} value={selectedRegion}>
-        <option className="" value=''>Elige una o más regiones</option>
-        {/* Map over the regionComunas state to create options */}
-        {regionComunas.map((data, index) => (
-          <option key={index} value={data.region}>
-            {data.region}
-          </option>
-        ))}
-      </select>
+          <option className="" value=''>Elige una o más regiones</option>
+          {/* Map over the regionComunas state to create options */}
+          {regionComunas.map((data, index) => (
+            <option key={index} value={data.region}>
+              {data.region}
+            </option>
+          ))}
+        </select>
 
       {/* Comuna select */}
-      <p className="text-sans-p px-1">¿En qué comuna?</p>
+      <h3 className="text-sans-p px-1">¿En qué comuna?</h3>
       <select className="container selectores text-underline text-muted">
         <option value=''>Elige una o más comunas</option>
         {/* Map over the selectedComunas state to create options */}
@@ -107,7 +107,7 @@ const FiltroProyectos = () => {
 
       <div>
         <div className="container d-flex justify-content-between align-items-start px-1 mb-3">
-          <p>¿Qué tipo de proyecto es?</p>
+          <h3>¿Qué tipo de proyecto es?</h3>
           <button className="btn-limpiar">
             Borrar <FontAwesomeIcon icon={faTrashCan} />
           </button>
@@ -161,7 +161,7 @@ const FiltroProyectos = () => {
 
       <div className="container filter-line"></div>
 
-      <p className="text-sans-p mt-3 px-1">¿Qué años de construcción quieres ver?</p>
+      <h3 className="text-sans-p mt-3 px-1">¿Qué años de construcción quieres ver?</h3>
       <div className="mb-4">
         <input className="mx-2" type="checkbox" />
         <label>2019</label> <br />

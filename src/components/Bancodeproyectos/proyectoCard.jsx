@@ -9,7 +9,7 @@ const ProyectoCard = () => {
         <p className="text-sans-h5 text-muted">Comuna: Cholol</p>
       </div>
 
-      <p className="text-serif-h2 text-decoration-underline ml-3 mb-3 mx-3">Paneles Solares para sectores aislados en Cholchol</p>
+      <h2 className="text-serif-h2 text-decoration-underline ml-3 mb-3 mx-3">Paneles Solares para sectores aislados en Cholchol</h2>
       <p className="text-sans-p mx-3">El presente proyecto busca mejorar la calidad de vida de los beneficiarios por intermedio del 
       suministro de energía eléctrica de sistema ...
       </p>
