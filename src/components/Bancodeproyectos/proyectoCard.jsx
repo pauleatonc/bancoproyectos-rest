@@ -1,7 +1,7 @@
 
 const ProyectoCard = () => {
   return (
-    <div className="proyect-card my-3">
+    <div className="proyect-card my-3 ms-lg-3">
       <div className="card-img mt-2"></div>
 
       <div className="d-flex flex-row justify-content-between p-3">

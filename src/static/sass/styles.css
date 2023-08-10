@@ -193,13 +193,6 @@
   height: 60px;
 }
 
-.filter-line {
-  width: 97%;
-  height: 17px;
-  flex-shrink: 0;
-  border-bottom: 1px solid #BBB;
-}
-
 .btn-limpiar {
   border: 1px solid #871A1A;
   color: #871A1A;
@@ -251,4 +244,24 @@
 .detalles-del-proyecto {
   background-color: #0F69C4;
   height: 41px;
+}
+
+.img-portada {
+  max-height: 450px;
+  overflow: hidden;
+  border-radius: 5px;
+}
+
+.miniatura {
+  height: 100px;
+  width: 100px;
+  border-radius: 5px;
+  background-color: grey;
+}
+
+@media (min-width: 750px) {
+  .miniatura {
+    height: 200px;
+    width: 200px;
+  }
 }/*# sourceMappingURL=styles.css.map */
