@@ -19,6 +19,7 @@ class ProgramSerializer(serializers.ModelSerializer):
         model = Program
         fields = (
             'name',
+            'sigla'
         )
 
 
