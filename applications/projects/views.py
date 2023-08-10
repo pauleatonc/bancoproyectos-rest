@@ -179,9 +179,10 @@ class ProjectListApiView(ListAPIView):
         return Project.objects.all()
 
 
-class ProjectdetailApiView(RetrieveAPIView):
+class ProjectDetailApiView(RetrieveAPIView):
 
     serializer_class = ProjectDetailSerializer
+    lookup_field = 'slug'
 
     def get_queryset(self):
         return Project.objects.all()

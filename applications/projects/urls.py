@@ -22,8 +22,8 @@ urlpatterns = [
          views.ProjectListApiView.as_view(),
          name='api-project-list'
          ),
-    path('api/project/<slug>/',
-         views.ProjectListApiView.as_view(),
+    path('api/project/v1/<slug:slug>/',
+         views.ProjectDetailApiView.as_view(),
          name='api-project-detail'
          ),
 ]
