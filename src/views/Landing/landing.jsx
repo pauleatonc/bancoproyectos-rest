@@ -1,4 +1,4 @@
-import BuscadorProyectos from "../../components/Commons/buscadorproyectos";
+import { BuscadorProyectos } from '../../components/Bancodeproyectos'; 
 
 const Home = () => {
   return (
@@ -25,9 +25,9 @@ const Home = () => {
           </div>
 
           <div className="col-md-2 d-flex flex-column mx-md-5 align-items-center">
-            <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-3">
+            <a type="button" href="/bancodeproyectos"  className="categorias-circle btn btn-outline-primary rounded-circle d-flex align-items-center justify-content-center my-3">
               <img src="src/static/img/icon_categorias_landing.png" alt="Icono"/>
-            </div>
+            </a>
             <p className="text-sans-p text-center">Ver todos los proyectos</p>
           </div>
 

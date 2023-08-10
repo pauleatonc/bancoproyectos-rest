@@ -1,9 +1,9 @@
 const Title = () => {
     return (
         <div className="container d-flex flex-column my-4 my-md-5">
-            <p className="text-serif-h1 text-center fw-bold">Banco de Proyectos</p>
+            <p className="text-serif-h1 text-center">Banco de Proyectos</p>
             <div className="container line">
-                <div className="blue"/> <div className="red"/>
+                <div className="blue" /> <div className="red" />
             </div>
         </div>
 

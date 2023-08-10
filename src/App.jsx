@@ -1,8 +1,5 @@
 import React , { Suspense } from 'react';
 import { Route, Routes, Navigate } from 'react-router-dom';
-
-import 'bootstrap/dist/css/bootstrap.min.css';
-
 const MainLayout = React.lazy(() => import('./layout/mainLayout'));
 const Landing = React.lazy(() => import('./views/Landing/landing'));
 const Contacto = React.lazy(() => import('./views/Landing/contacto'));
@@ -25,7 +22,7 @@ function App() {
           <Route path="login" element={<Login />} />
           <Route path="bancodeproyectos" element={<BancoProyectos />} />
           <Route path="proyecto" element={<Proyecto />} />
-          <Route path="*" element={<Navigate to="/error/error404" />} />
+          <Route path="*" element={<Navigate to="/error/error404" />} /> 
           <Route path="prueba" element={<Prueba />} />
         </Route>
         <Route path="error" element={<ErrorLayout />}>

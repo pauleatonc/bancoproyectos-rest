@@ -1,7 +1,7 @@
 import { useState , useEffect} from 'react';
 import apiRegionComuna from '../services/RegionComuna/regioncomuna.api';
 
-const useApiRegionComuna = () => {
+export const useApiRegionComuna = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading ] = useState(true);
   const [ error, setError ] = useState(null);
@@ -22,5 +22,3 @@ const useApiRegionComuna = () => {
 
   return { data, loading, error };
 };
-
-export default  useApiRegionComuna;

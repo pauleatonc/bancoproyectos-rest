@@ -1,10 +1,25 @@
 import "../../../static/styles/bancodeproyectos.css";
-import BuscadorProyectos from "../../../components/Commons/buscadorproyectos";
-import FiltroProyectos from "../../../components/Bancodeproyectos/proyectosFilter";
-import SortProyectos from "../../../components/Bancodeproyectos/proyectosSort";
-import ProyectosContainer from "../../../components/Bancodeproyectos/proyectosContainer";
+import {ProyectoContainer , ProyectosFilter, ProyectosSort , BuscadorProyectos} from '../../../components/Bancodeproyectos'; 
+import useProjectFilter from '../../../hooks/useProjectFilter'; 
+import useApiProjects from "../../../hooks/useApiProjects";
 
   const BancoProyectos = () => {
+
+    const {selectedRegion, projectRegions, filteredComunas, isLoading, hasError, handleRegionChange }= useProjectFilter(); 
+
+    const { dataProject, loadingProject, errorProject } = useApiProjects();
+
+
+    if (loadingProject || isLoading)
+    {
+      return <div>CARGANDO DATOS...</div>
+    }
+    if (errorProject|| hasError)
+    {
+      return <div>Error de conexion</div>
+    }
+  
+    
     return (
       <div className="container col-md-10">
 
@@ -18,12 +33,16 @@ import ProyectosContainer from "../../../components/Bancodeproyectos/proyectosCo
         <BuscadorProyectos />
         
         <div className="container d-flex flex-column flex-md-row">
-          <FiltroProyectos />
+          <ProyectosFilter  
+          selectedRegion={selectedRegion}
+          projectRegions={projectRegions}
+          filteredComunas={filteredComunas}
+          handleRegionChange={handleRegionChange}/>
           <div className="ml-md-5">
             <div className="d-flex justify-content-end mb-1">
-              <SortProyectos />
+              <ProyectosSort/>
             </div>
-            <ProyectosContainer />
+            <ProyectoContainer data={dataProject}/>
           </div>
         </div>
         

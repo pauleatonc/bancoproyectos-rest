@@ -69,7 +69,6 @@ const Proyecto = () => {
         </div>
       </div>
       
-     
       {/* Imágenes del proyecto */}
       <h2 className="text-sans-h2 my-5">Imágenes del proyecto</h2>
       <div className=" border border-danger">carrusel de fotos</div>
