@@ -1,3 +1,5 @@
+import Carrusel from "../../../components/Proyecto/carrusel";
+
 const Proyecto = () => {
   return (
     <div className="container col-10">
@@ -71,7 +73,8 @@ const Proyecto = () => {
       
       {/* Imágenes del proyecto */}
       <h2 className="text-sans-h2 my-5">Imágenes del proyecto</h2>
-      <div className=" border border-danger">carrusel de fotos</div>
+      
+      <Carrusel />
 
       <div className=" p-0 d-md-flex justify-content-between my-4">
         <div className="col-md-6">
