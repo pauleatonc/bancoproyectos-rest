@@ -1,6 +1,6 @@
 from rest_framework import serializers
 #
-from .models import (
+from applications.projects.models import (
     Program,
     Guide,
     Type,
@@ -14,7 +14,7 @@ from .models import (
 from applications.regioncomuna.serializer import ComunaRegionSerializer
 
 
-class ProgramSerializer(serializers.ModelSerializer):
+class ProgramSerializerV1(serializers.ModelSerializer):
     class Meta:
         model = Program
         fields = (
@@ -23,7 +23,7 @@ class ProgramSerializer(serializers.ModelSerializer):
         )
 
 
-class YearSerializer(serializers.ModelSerializer):
+class YearSerializerV1(serializers.ModelSerializer):
     class Meta:
         model = Year
         fields = (
@@ -31,7 +31,7 @@ class YearSerializer(serializers.ModelSerializer):
         )
 
 
-class GuideSerializer(serializers.ModelSerializer):
+class GuideSerializerV1(serializers.ModelSerializer):
     class Meta:
         model = Guide
         fields = (
@@ -40,9 +40,9 @@ class GuideSerializer(serializers.ModelSerializer):
         )
 
 
-class TypeSerializer(serializers.ModelSerializer):
+class TypeSerializerV1(serializers.ModelSerializer):
 
-    guides = GuideSerializer(many=True)
+    guides = GuideSerializerV1(many=True)
 
     class Meta:
         model = Type
@@ -52,7 +52,7 @@ class TypeSerializer(serializers.ModelSerializer):
         )
 
 
-class TypeListSerializer(serializers.ModelSerializer):
+class TypeListSerializerV1(serializers.ModelSerializer):
     class Meta:
         model = Type
         fields = (
@@ -60,7 +60,7 @@ class TypeListSerializer(serializers.ModelSerializer):
         )
 
 
-class PrioritizedTagSerializer(serializers.ModelSerializer):
+class PrioritizedTagSerializerV1(serializers.ModelSerializer):
     class Meta:
         model = PrioritizedTag
         fields = (
@@ -68,13 +68,13 @@ class PrioritizedTagSerializer(serializers.ModelSerializer):
         )
 
 
-class ProjectImageSerializer(serializers.ModelSerializer):
+class ProjectImageSerializerV1(serializers.ModelSerializer):
     class Meta:
         model = Projectimage
         fields = ('image_carousel',)
 
 
-class ProjectFileSerializer(serializers.ModelSerializer):
+class ProjectFileSerializerV1(serializers.ModelSerializer):
     class Meta:
         model = Projectfile
         fields = (
@@ -83,12 +83,12 @@ class ProjectFileSerializer(serializers.ModelSerializer):
         )
 
 
-class ProjectListSerializer(serializers.ModelSerializer):
+class ProjectListSerializerV1(serializers.ModelSerializer):
 
-    program = ProgramSerializer()
-    year = YearSerializer()
-    type = TypeListSerializer()
-    prioritized_tag = PrioritizedTagSerializer(many=True)
+    program = ProgramSerializerV1()
+    year = YearSerializerV1()
+    type = TypeListSerializerV1()
+    prioritized_tag = PrioritizedTagSerializerV1(many=True)
     comuna = ComunaRegionSerializer()
 
     class Meta:
@@ -109,15 +109,15 @@ class ProjectListSerializer(serializers.ModelSerializer):
         )
 
 
-class ProjectDetailSerializer(serializers.ModelSerializer):
+class ProjectDetailSerializerV1(serializers.ModelSerializer):
 
-    program = ProgramSerializer()
-    year = YearSerializer()
-    type = TypeSerializer()
-    prioritized_tag = PrioritizedTagSerializer(many=True)
+    program = ProgramSerializerV1()
+    year = YearSerializerV1()
+    type = TypeSerializerV1()
+    prioritized_tag = PrioritizedTagSerializerV1(many=True)
     comuna = ComunaRegionSerializer()
-    images = ProjectImageSerializer(many=True)
-    files = ProjectFileSerializer(many=True)
+    images = ProjectImageSerializerV1(many=True)
+    files = ProjectFileSerializerV1(many=True)
 
     class Meta:
         model = Project

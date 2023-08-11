@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include, re_path
 from django.conf.urls.static import static
 from django.conf import settings
 from . import views
@@ -22,8 +22,9 @@ urlpatterns = [
          views.ProjectListApiView.as_view(),
          name='api-project-list'
          ),
-    path('api/project/v1/<slug:slug>/',
+    path('api/project/<slug:slug>/',
          views.ProjectDetailApiView.as_view(),
          name='api-project-detail'
          ),
+    re_path('', include('applications.projects.api.v1.urls'))
 ]
