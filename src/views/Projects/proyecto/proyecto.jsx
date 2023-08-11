@@ -1,4 +1,4 @@
-import useApiProjectsDetail from '../../hooks/useApiProjectsDetail';
+import useApiProjectsDetail from "../../../hooks/useApiProjectsDetail";
 import { useParams } from 'react-router-dom';
 
 const Proyecto = () => {
@@ -9,7 +9,7 @@ const Proyecto = () => {
     return  <div>Loading...</div>
   }
   if (errorProject) {
-    return <div>Error: {errorProject.message}</div>;
+    return <div>Error: {errorProject}</div>;
   }
 
   return (
@@ -27,14 +27,12 @@ const Proyecto = () => {
         </nav>
       </div>
 
-      <h1 className="text-sans-h1 my-md-5">cu</h1>
+      <h1 className="text-sans-h1 my-md-5">{dataProject.name}</h1>
 
       {/* Descripcion del proyecto */}
       <div className="descripcion-container py-3 px-3">
         <h2 className="text-sans-h2 my-2">Descripción del proyecto</h2>
-        <p className="text-sans-p">El permanente crecimiento de la comuna ha llevado a un desarrollo desigual con carencia en servicios de equipamiento e infraestructura a diversos sectores de articulaciones y de integración, 
-          es por ello que, con esta iniciativa de inversión se busca consolidar áreas de integración social en espacios públicos y de equipamiento urbano, que mejoren de manera sostenible espacios de encuentro y de esparcimiento del área urbana.
-        </p>
+        <p className="text-sans-p">{dataProject.description}</p>
       </div>
       
       {/* Tabla detalles del proyecto */}
@@ -45,40 +43,40 @@ const Proyecto = () => {
         <div className="row">
           <div className="col">
             <p className="text-sans-p"><strong>Nombre del proyecto</strong></p>
-            <p className="text-sans-p">Mejoramiento Integral Plaza El Olivar</p>
+            <p className="text-sans-p">{dataProject.name}</p>
           </div>
 
           <div className="col">
             <p className="text-sans-p"><strong>Programa</strong></p>
-            <p className="text-sans-p">Programa de Mejoramiento Urbano (PMU)</p>
+            <p className="text-sans-p">{dataProject.program.name}</p>
           </div>
 
           <div className="col">
             <p className="text-sans-p"><strong>Tipo de proyecto</strong></p>
-            <p className="text-sans-p">Plazas y Áreas Verdes</p>
+            <p className="text-sans-p">{dataProject.type.name}</p>
           </div>
         </div>
 
         <div className="row">
           <div className="col">
             <p className="text-sans-p"><strong>Región</strong></p>
-            <p className="text-sans-p">Valparaíso</p>
+            <p className="text-sans-p">{dataProject.comuna.region}</p>
           </div>
 
           <div className="col">
             <p className="text-sans-p"><strong>Comuna</strong></p>
-            <p className="text-sans-p">Algarrobo</p>
+            <p className="text-sans-p">{dataProject.comuna.comuna}</p>
           </div>
 
           <div className="col">
             <p className="text-sans-p"><strong>Año de construcción</strong></p>
-            <p className="text-sans-p">2018</p>
+            <p className="text-sans-p">{dataProject.year.number}</p>
           </div>
         </div>
         
         <div className="row">
           <p className="text-sans-p"><strong>Código de identificación SUBDERE</strong></p>
-          <p className="text-sans-p">1-C-2018-93</p>
+          <p className="text-sans-p">{dataProject.id_subdere}</p>
         </div>
       </div>
       
@@ -89,17 +87,17 @@ const Proyecto = () => {
       <div className=" p-0 d-md-flex justify-content-between my-4">
         <div className="col-md-6">
           <h3 className="text-sans-h3">Antes del proyecto</h3>
-          <div className="img-proyecto"></div>
+            <img src={dataProject.beforeimage} className="img-fluid p-1" alt='fotografía de antes del proyecto'/>
         </div>
         <div className="col-md-6">
           <h3 className="text-sans-h3">Después del proyecto</h3>
-          <div className="img-proyecto" />
+          <img src={dataProject.afterimage} className="img-fluid p-1" alt='fotografía de después del proyecto'/>
         </div>
       </div>
 
       <h3 className="text-sans-h3">Video del proyecto</h3>
       <div className="d-flex justify-content-center mb-md-5">
-        <div className="col-md-7 img-proyecto" />
+        <img src={dataProject.video} className="img-fluid p-1" alt='Video del proyecto'/>
       </div>
 
       <h2 className="text-sans-h2 my-4">Documentos del proyecto</h2>
