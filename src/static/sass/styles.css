@@ -59,6 +59,13 @@
   font-weight: 700;
 }
 
+.text-sans-h5-blue {
+  font-family: "Roboto";
+  color: #006FB3;
+  font-size: 14px;
+  font-weight: 400;
+}
+
 .text-sans-p {
   font-family: "Roboto";
   color: #373737;
@@ -206,6 +213,10 @@
   border-radius: 5px;
   background-color: transparent;
   height: 48px;
+}
+
+.info-circle {
+  color: #006FB3;
 }
 
 .proyect-card {

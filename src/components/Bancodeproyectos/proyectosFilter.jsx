@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
+import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 
 
 const FiltroProyectos = ({ selectedRegion, projectRegions, filteredComunas, handleRegionChange }) =>
@@ -32,7 +33,7 @@ const FiltroProyectos = ({ selectedRegion, projectRegions, filteredComunas, hand
         </div>
       </div>
 
-      <div className="container filter-line"></div>
+      <hr className="col-11 my-4"/>
 
       {/* Region select */}
       <div className="mt-3">
@@ -66,14 +67,17 @@ const FiltroProyectos = ({ selectedRegion, projectRegions, filteredComunas, hand
             </option>
           ))}
         </select>
-
+        <div className="row my-4 d-flex align-items-center">
+          <div className="col-2 info-circle pb-3"><FontAwesomeIcon icon={faCircleInfo} /></div>
+          <p className="col-10 text-sans-h5-blue">Solo encontrarás las regiones y comunas que tengan proyectos en este banco. </p>
+        </div>
       </div>
 
-      <div className="container filter-line my-3"></div>
+      <hr className="col-11 my-4"/>
 
       <div>
         <div className="container d-flex justify-content-between align-items-start px-1 mb-3">
-          <h3>¿Qué tipo de proyecto es?</h3>
+          <h3 className="text-sans-p">¿Qué tipo de proyecto es?</h3>
           <button className="btn-limpiar">
             Borrar <FontAwesomeIcon icon={faTrashCan} />
           </button>
@@ -125,7 +129,7 @@ const FiltroProyectos = ({ selectedRegion, projectRegions, filteredComunas, hand
         </div>
       </div>
 
-      <div className="container filter-line"></div>
+      <hr className="col-11 my-4"/>
 
       <h3 className="text-sans-p mt-3 px-1">¿Qué años de construcción quieres ver?</h3>
       <div className="mb-4">
