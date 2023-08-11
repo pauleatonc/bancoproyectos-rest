@@ -1,4 +1,17 @@
+import useApiProjectsDetail from '../../hooks/useApiProjectsDetail';
+import { useParams } from 'react-router-dom';
+
 const Proyecto = () => {
+  const { slug } = useParams();
+  const { dataProject, loadingProject, errorProject } = useApiProjectsDetail(slug);
+
+  if (loadingProject) {
+    return  <div>Loading...</div>
+  }
+  if (errorProject) {
+    return <div>Error: {errorProject.message}</div>;
+  }
+
   return (
     <div className="container col-10">
       {/* Boton volver y breadcrumbs */}
@@ -14,7 +27,7 @@ const Proyecto = () => {
         </nav>
       </div>
 
-      <h1 className="text-sans-h1 my-md-5">Mejoramiento Integral Plaza El Olivar</h1>
+      <h1 className="text-sans-h1 my-md-5">cu</h1>
 
       {/* Descripcion del proyecto */}
       <div className="descripcion-container py-3 px-3">

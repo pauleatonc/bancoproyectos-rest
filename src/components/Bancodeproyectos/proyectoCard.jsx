@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 const ProyectoCard = ({ project }) =>
 {
 
@@ -20,7 +22,11 @@ const ProyectoCard = ({ project }) =>
         <p className="tag p-1">{project.year.number}</p>
       </div>
       <div className="d-flex justify-content-end p-3">
-        <button className="font-level-4 btn-principal-s text-decoration-underline px-3" >Ver más &gt; </button>
+        <button className="font-level-4 btn-principal-s text-decoration-underline px-3">
+            <Link to={`/project/${project.slug}/`} className="font-level-4 btn-principal-s text-decoration-underline px-3">
+                Ver más &gt;
+            </Link>
+        </button>
       </div>
     </div>
   );

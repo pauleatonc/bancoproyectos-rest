@@ -4,7 +4,7 @@ import { useApiRegionComuna } from './useApiRegionComuna';
 
 const useProjectFilter = () =>
 {
-  const { data: projectData, loading: projectLoading, error: projectError } = useApiProjects();
+  const { data: projectData, loading: projectLoading, error: projectError } = useApiProjectsList();
   const { data: regionComunaData, loading: regionComunaLoading, error: regionComunaError } = useApiRegionComuna();
   const [ selectedRegion, setSelectedRegion ] = useState(null);
   const [ filteredComunas, setFilteredComunas ] = useState([]);
