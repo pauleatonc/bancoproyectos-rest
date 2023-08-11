@@ -1,6 +1,6 @@
 const Carrusel = () => {
     return (
-      <div className="container text-center my-4">
+      <div className="container text-center">
         {/* Imagen portada */}
         <div className="row d-none d-lg-block img-portada my-4">
           <div className="col d-flex justify-content-center">
@@ -9,7 +9,7 @@ const Carrusel = () => {
         </div>
 
         {/* Miniaturas */}
-        <div className="container mini-container d-flex flex-wrap ">
+        <div className="container mini-container d-flex flex-wrap justify-content-center">
             <div className="miniatura m-1">
                 <div>img</div>
             </div>
@@ -25,14 +25,13 @@ const Carrusel = () => {
             <div className="miniatura m-1">
                 <div>img</div>
             </div>
-            <div className="miniatura mx-1">
+            <div className="miniatura m-1">
                 <div>img</div>
             </div>
-            <div className="miniatura">
+            <div className="miniatura m-1">
                 <div>img</div>
             </div>
-        </div>
-        
+        </div>    
       </div>
     );
   };
