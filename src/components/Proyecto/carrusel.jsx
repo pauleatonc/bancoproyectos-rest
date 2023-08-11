@@ -65,7 +65,7 @@ const Carrusel = () => {
       </div>
 
       {hiddenThumbnails > 0 && (
-        <p>{hiddenThumbnails} miniaturas ocultas</p>
+        <p className="d-none d-md-block">{hiddenThumbnails} miniaturas ocultas</p>
       )}
 
     </div>
