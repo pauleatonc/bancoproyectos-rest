@@ -1,32 +1,36 @@
 const Carrusel = () => {
     return (
-      <div className="container text-center">
+      <div className="container text-center my-4">
         {/* Imagen portada */}
         <div className="row d-none d-lg-block img-portada my-4">
           <div className="col d-flex justify-content-center">
             <div className="img-proyecto col-lg-7">Portada</div>
           </div>
         </div>
+
         {/* Miniaturas */}
-        <div className="row">
-          <div className="col border border-secondary">
-            <div className="miniatura">img1</div>
-          </div>
-          <div className="col border border-secondary">
-            <div className="miniatura">img2</div>
-          </div>
-          <div className="col border border-secondary">
-            <div className="miniatura">img3</div>
-          </div>
-          <div className="col border border-secondary">
-            <div className="miniatura">img4</div>
-          </div>
-          <div className="col border border-secondary">
-            <div className="miniatura">img5</div>
-          </div>
-          <div className="col border border-secondary">
-            <div className="miniatura">img6</div>
-          </div>
+        <div className="container mini-container d-flex flex-wrap ">
+            <div className="miniatura m-1">
+                <div>img</div>
+            </div>
+            <div className="miniatura m-1">
+                <div>img</div>
+            </div>
+            <div className="miniatura m-1">
+                <div>img</div>
+            </div>
+            <div className="miniatura m-1">
+                <div>img</div>
+            </div>
+            <div className="miniatura m-1">
+                <div>img</div>
+            </div>
+            <div className="miniatura mx-1">
+                <div>img</div>
+            </div>
+            <div className="miniatura">
+                <div>img</div>
+            </div>
         </div>
         
       </div>

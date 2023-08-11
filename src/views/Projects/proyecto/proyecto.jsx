@@ -75,7 +75,7 @@ const Proyecto = () => {
       <h2 className="text-sans-h2 my-5">Imágenes del proyecto</h2>
       
       <Carrusel />
-
+  
       <div className=" p-0 d-md-flex justify-content-between my-4">
         <div className="col-md-6">
           <h3 className="text-sans-h3">Antes del proyecto</h3>

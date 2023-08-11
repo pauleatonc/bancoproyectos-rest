@@ -252,6 +252,10 @@
   border-radius: 5px;
 }
 
+.mini-container {
+  height: 103px;
+}
+
 .miniatura {
   height: 100px;
   width: 100px;
@@ -259,7 +263,11 @@
   background-color: grey;
 }
 
-@media (min-width: 750px) {
+@media (min-width: 768px) {
+  .mini-container {
+    height: 203px;
+    overflow: hidden;
+  }
   .miniatura {
     height: 200px;
     width: 200px;
