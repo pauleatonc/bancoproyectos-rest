@@ -272,11 +272,11 @@
 
 @media (min-width: 768px) {
   .mini-container {
-    height: 203px;
+    height: 183px;
     overflow: hidden;
   }
   .miniatura {
-    height: 200px;
-    width: 200px;
+    height: 180px;
+    width: 180px;
   }
 }/*# sourceMappingURL=styles.css.map */
