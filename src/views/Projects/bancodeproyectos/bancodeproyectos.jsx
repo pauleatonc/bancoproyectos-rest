@@ -1,13 +1,13 @@
 import "../../../static/styles/bancodeproyectos.css";
 import {ProyectoContainer , ProyectosFilter, ProyectosSort , BuscadorProyectos} from '../../../components/Bancodeproyectos'; 
 import useProjectFilter from '../../../hooks/useProjectFilter'; 
-import useApiProjects from "../../../hooks/useApiProjects";
+import useApiProjectsList from "../../../hooks/useApiProjectsList";
 
   const BancoProyectos = () => {
 
     const {selectedRegion, projectRegions, filteredComunas, isLoading, hasError, handleRegionChange }= useProjectFilter(); 
 
-    const { dataProject, loadingProject, errorProject } = useApiProjects();
+    const { dataProject, loadingProject, errorProject } = useApiProjectsList();
 
 
     if (loadingProject || isLoading)
