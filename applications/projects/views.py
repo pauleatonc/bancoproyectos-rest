@@ -13,11 +13,6 @@ from rest_framework.generics import (
 )
 #
 from .models import Project, Program, Type
-#
-from .serializer import (
-    ProjectListSerializer,
-    ProjectDetailSerializer
-)
 
 
 class ProjectsListView(ListView):
@@ -169,20 +164,3 @@ class CheckListProgramView(ListView):
     model = Project
     template_name = 'projects/checklist_program.html'
     context_object_name = 'project'
-
-
-class ProjectListApiView(ListAPIView):
-
-    serializer_class = ProjectListSerializer
-
-    def get_queryset(self):
-        return Project.objects.all()
-
-
-class ProjectDetailApiView(RetrieveAPIView):
-
-    serializer_class = ProjectDetailSerializer
-    lookup_field = 'slug'
-
-    def get_queryset(self):
-        return Project.objects.all()

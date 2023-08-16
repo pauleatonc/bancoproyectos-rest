@@ -116,7 +116,7 @@ class Project(models.Model):
 
     # checklist = models.ManyToManyField(ChecklistDocuments, verbose_name='Checklist de documentos obligatorios')
 
-    objects = ProjectsManager()
+    # objects = ProjectsManager()
 
     def __str__(self):
         return self.name

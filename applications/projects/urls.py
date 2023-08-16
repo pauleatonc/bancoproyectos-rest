@@ -18,13 +18,6 @@ urlpatterns = [
          views.CheckListProgramView.as_view(),
          name='project_checklist'
          ),
-    path('api/project/list/',
-         views.ProjectListApiView.as_view(),
-         name='api-project-list'
-         ),
-    path('api/project/<slug:slug>/',
-         views.ProjectDetailApiView.as_view(),
-         name='api-project-detail'
-         ),
+
     re_path('', include('applications.projects.api.v1.urls'))
 ]

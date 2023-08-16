@@ -1,9 +1,8 @@
-from django.shortcuts import render
-from django.core.cache import cache
-#
-from django.views.generic import ListView, DetailView
-#
+from rest_framework.response import Response
+from django.db.models import Count
+
 from rest_framework.generics import (
+    GenericAPIView,
     ListAPIView,
     CreateAPIView,
     RetrieveAPIView,
@@ -12,11 +11,24 @@ from rest_framework.generics import (
     RetrieveUpdateAPIView
 )
 #
-from applications.projects.models import Project
+from applications.projects.models import (
+    Program,
+    Guide,
+    Type,
+    Year,
+    PrioritizedTag,
+    Project,
+)
 #
-from .serializer import (
+from .projectListSerializer import (
     ProjectListSerializerV1,
-    ProjectDetailSerializerV1
+    YearSerializerV1,
+    ProgramSerializerV1,
+    TypeListSerializerV1,
+)
+
+from .projectDetailSerializer import (
+    ProjectDetailSerializerV1,
 )
 
 
@@ -35,3 +47,26 @@ class ProjectDetailApiViewV1(RetrieveAPIView):
 
     def get_queryset(self):
         return Project.objects.all()
+
+
+class FilterOptionsAPIViewV1(GenericAPIView):
+    def get(self, request):
+        # Obtener años únicos que están asociados con al menos un proyecto
+        unique_years = Year.objects.annotate(num_projects=Count('project_set')).filter(num_projects__gt=0).order_by('number')
+
+        # Obtener programas únicos que están asociados con al menos un proyecto
+        unique_programs = Program.objects.annotate(num_projects=Count('project_set')).filter(num_projects__gt=0).order_by('name')
+
+        # Obtener tipos únicos que están asociados con al menos un proyecto
+        unique_types = Type.objects.annotate(num_projects=Count('project_set')).filter(num_projects__gt=0).order_by('name')
+
+        # Serializar los datos
+        years_data = YearSerializerV1(unique_years, many=True).data
+        programs_data = ProgramSerializerV1(unique_programs, many=True).data
+        types_data = TypeListSerializerV1(unique_types, many=True).data
+
+        return Response({
+            'years': years_data,
+            'programs': programs_data,
+            'types': types_data,
+        })

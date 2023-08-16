@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, re_path, include
+from rest_framework.documentation import include_docs_urls
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -24,6 +25,7 @@ from applications.home.views import Error404 , Error500 , Error503
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('docs/', include_docs_urls(title='Banco de Proyectos API')),
     re_path('', include('applications.projects.urls')),
     re_path('', include('applications.home.urls')),
     re_path('', include('applications.users.urls')),
