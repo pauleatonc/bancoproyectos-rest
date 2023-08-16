@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import ImageModal from './modal';
 
 const Carrusel = () => {
   const miniContainerRef = useRef(null); // Referencia al contenedor de miniaturas.
@@ -66,10 +67,16 @@ const Carrusel = () => {
         <div className="miniatura m-1">
           <div>img</div>
           <div className="thumbnail-counter d-none d-md-block"></div>
+          <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#imageModal">
+            View Image
+          </button>
         </div>
         <div className="miniatura m-1">
           <div>img</div>
           <div className="thumbnail-counter d-none d-md-block"></div>
+          <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#imageModal">
+            View Image
+          </button>
         </div>
         <div className="miniatura m-1">
           <div>img</div>
@@ -96,6 +103,9 @@ const Carrusel = () => {
           <div className="thumbnail-counter d-none d-md-block"></div>
         </div>
       </div>
+
+      {/* Modal  */}
+      < ImageModal imagenUrl="../static/img/que_es_1.png"/>
 
     </div>
   );
