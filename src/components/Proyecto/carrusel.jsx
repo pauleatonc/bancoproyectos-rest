@@ -1,9 +1,10 @@
 import { useEffect, useRef } from 'react';
 import ImageModal from './modal';
 
-const Carrusel = () => {
+const Carrusel = ({ data }) => {
   const miniContainerRef = useRef(null); // Referencia al contenedor de miniaturas.
   const thumbnailsRef = useRef([]); // Referencia a las miniaturas individuales.
+  console.log(data);
 
   useEffect(() => {
     // Obtiene referencia al contenedor de miniaturas.
@@ -58,7 +59,7 @@ const Carrusel = () => {
       {/* Imagen portada */}
       <div className="row d-none d-md-block img-portada my-4">
         <div className="col d-flex justify-content-center">
-          <div className="img-proyecto col-lg-10">Portada</div>
+          <img src={data[0]} />
         </div>
       </div>
 
