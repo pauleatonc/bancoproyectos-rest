@@ -9,7 +9,10 @@ from .models import (
 class ComunaSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comuna
-        fields = ('comuna',)
+        fields = (
+            'id',
+            'comuna',
+        )
 
 
 class ComunaRegionSerializer(serializers.ModelSerializer):
@@ -24,4 +27,7 @@ class RegionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Region
-        fields = ('region',)
+        fields = (
+            'id',
+            'region',
+        )
