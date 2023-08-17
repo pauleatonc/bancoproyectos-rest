@@ -65,6 +65,7 @@ class ProjectListSerializerV1(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = (
+            'id',
             'name',
             'id_subdere',
             'description',
