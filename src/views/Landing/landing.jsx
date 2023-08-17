@@ -1,6 +1,13 @@
 import { BuscadorProyectos } from '../../components/Bancodeproyectos'; 
+import IconPMU from '../../static/img/icons/PMU.svg';
+import IconPMB from '../../static/img/icons/PMB.svg'; 
+import IconList from '../../static/img/icons/Blueprint.svg'; 
+import '../../static/styles/bancodeproyectos.css'; 
+
 
 const Home = () => {
+
+
   return (
     <>
       <BuscadorProyectos />
@@ -11,22 +18,22 @@ const Home = () => {
         <div className="container d-flex flex-row justify-content-center">
 
           <div className="col-md-2 d-flex flex-column mx-md-5 align-items-center">
-            <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-3">
-              <span className="categorias-siglas fw-bold">PMU</span>
-            </div>
+            <a   type="button"   id='btn-icon' className="categorias-circle  btn btn-outline-primary  border-2 rounded-circle d-flex align-items-center justify-content-center my-3">
+            <img src={IconPMU} alt='iconPMU'  id='btnIcon' />
+            </a>
             <p className="text-sans-p text-center">Programa Mejoramiento Urbano</p>
           </div>
           
           <div className="col-md-2 d-flex flex-column mx-md-5 align-items-center">
-            <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-3">
-              <span className="categorias-siglas fw-bold">PMB</span>
-            </div>
+            <a  type="button"  id='btn-icon' className="categorias-circle btn btn-outline-primary  rounded-circle border-2 d-flex align-items-center justify-content-center my-3">
+            <img src={IconPMB} alt='iconPMU' id='btnIcon' />
+            </a>
             <p className="text-sans-p text-center">Programa Mejoramiento de Barrios</p>
           </div>
 
           <div className="col-md-2 d-flex flex-column mx-md-5 align-items-center">
-            <a type="button" href="/bancodeproyectos"  className="categorias-circle btn btn-outline-primary rounded-circle d-flex align-items-center justify-content-center my-3">
-              <img src="src/static/img/icon_categorias_landing.png" alt="Icono"/>
+            <a type="button" href="/bancodeproyectos" id='btn-icon' className="categorias-circle btn btn-outline-primary  border-2 rounded-circle d-flex align-items-center justify-content-center my-3">
+            <img src={IconList} alt='iconList' id='btnIcon' />
             </a>
             <p className="text-sans-p text-center">Ver todos los proyectos</p>
           </div>
