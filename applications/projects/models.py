@@ -16,6 +16,7 @@ from imagekit.processors import ResizeToFill, ResizeToFit
 class Program(models.Model):
     name = models.CharField(max_length=200, verbose_name='Nombre', unique=True)
     sigla = models.CharField(max_length=200, verbose_name='Sigla', unique=True)
+    icon_program = models.FileField(upload_to='icon-program/', null=True, blank=True, default=None)
 
     def __str__(self):
         return self.sigla

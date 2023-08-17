@@ -17,7 +17,9 @@ class ProgramSerializerV1(serializers.ModelSerializer):
         model = Program
         fields = (
             'name',
-            'sigla'
+            'sigla',
+            'icon_program'
+            
         )
 
 
