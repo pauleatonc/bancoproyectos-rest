@@ -32,12 +32,19 @@ class YearSerializerV1(serializers.ModelSerializer):
 
 
 class GuideSerializerV1(serializers.ModelSerializer):
+    guide_format = serializers.SerializerMethodField()
+
     class Meta:
         model = Guide
         fields = (
             'name',
-            'guide'
+            'guide',
+            'guide_format'
         )
+
+    def get_guide_format(self, obj):
+        # Retorna la extensión del archivo sin el punto
+        return obj.guide.name.split('.')[-1].upper()
 
 
 class TypeSerializerV1(serializers.ModelSerializer):
@@ -67,12 +74,18 @@ class ProjectImageSerializerV1(serializers.ModelSerializer):
 
 
 class ProjectFileSerializerV1(serializers.ModelSerializer):
+    file_format = serializers.SerializerMethodField()
     class Meta:
         model = Projectfile
         fields = (
             'name',
-            'file'
+            'file',
+            'file_format'
         )
+
+    def get_file_format(self, obj):
+        # Retorna la extensión del archivo sin el punto
+        return obj.file.name.split('.')[-1].upper()
 
 
 class ProjectDetailSerializerV1(serializers.ModelSerializer):
