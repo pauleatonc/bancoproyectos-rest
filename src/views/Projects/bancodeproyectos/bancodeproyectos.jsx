@@ -1,11 +1,11 @@
 import "../../../static/styles/bancodeproyectos.css";
-import {ProyectoContainer , ProyectosFilter, ProyectosSort , BuscadorProyectos} from '../../../components/Bancodeproyectos'; 
-import useProjectFilter from '../../../hooks/useProjectFilter'; 
+import {ProyectoContainer , ProyectosFilter, ProyectosSort , BuscadorProyectos} from '../../../components/Bancodeproyectos';
+import useProjectFilter from '../../../hooks/useProjectFilter';
 import useApiProjectsList from "../../../hooks/useApiProjectsList";
 
   const BancoProyectos = () => {
 
-    const {selectedRegion, projectRegions, filteredComunas, isLoading, hasError, handleRegionChange }= useProjectFilter(); 
+    const {selectedRegion, projectRegions, filteredComunas, isLoading, hasError, handleRegionChange }= useProjectFilter();
 
     const { dataProject, loadingProject, errorProject } = useApiProjectsList();
 
@@ -33,7 +33,7 @@ import useApiProjectsList from "../../../hooks/useApiProjectsList";
         <BuscadorProyectos />
         
         <div className="container d-flex flex-column flex-md-row">
-          <ProyectosFilter  
+          <ProyectosFilter
           selectedRegion={selectedRegion}
           projectRegions={projectRegions}
           filteredComunas={filteredComunas}

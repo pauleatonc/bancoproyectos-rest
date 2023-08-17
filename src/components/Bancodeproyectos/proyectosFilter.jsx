@@ -1,9 +1,18 @@
+import useApiFilter from "../../hooks/useApiFilter";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
+import React, { useState } from 'react';
 
 
-const FiltroProyectos = ({ selectedRegion, projectRegions, filteredComunas, handleRegionChange }) =>
-{
+const FiltroProyectos = () => {
+  const { dataFilter, loadingProject } = useApiFilter();
+  const [selectedRegion, setSelectedRegion] = useState('');
+  const [selectedComuna, setSelectedComuna] = useState('');
+
+  if (loadingProject) {
+    return  <div>Loading...</div>
+  }
+
   return (
 
     <div className="mb-md-4" id="filter-container">
@@ -38,17 +47,17 @@ const FiltroProyectos = ({ selectedRegion, projectRegions, filteredComunas, hand
       <div className="mt-3">
         <div className="container d-flex justify-content-between align-items-start px-1">
           <h3 className="text-sans-p me-1">¿En qué región?</h3>
-          <button className="btn-limpiar" onClick={handleRegionChange}>
+          <button className="btn-limpiar" >
             Borrar <FontAwesomeIcon icon={faTrashCan} />
           </button>
         </div>
 
         <select className="container selectores mb-4 text-underline text-muted" 
-        onChange={handleRegionChange}
+        onChange={(e) => setSelectedRegion(e.target.value)}
         value={selectedRegion}>
           <option className="" value=''>Elige una o más regiones</option>
           {/* Map over the regionComunas state to create options */}
-          {projectRegions.map((region) => (
+          {dataFilter.regiones.map((region) => (
             <option key={region.id} value={region.region}>
               {region.region}
             </option>
@@ -57,10 +66,12 @@ const FiltroProyectos = ({ selectedRegion, projectRegions, filteredComunas, hand
 
         {/* Comuna select */}
         <h3 className="text-sans-p px-1">¿En qué comuna?</h3>
-        <select className="container selectores text-underline text-muted">
-          <option value=''>Elige una o más comunas</option>
+        <select className="container selectores text-underline text-muted"
+        onChange={(e) => setSelectedComuna(e.target.value)}
+        value={selectedComuna}>
+          <option className="" value=''>Elige una o más comunas</option>
           {/* Map over the selectedComunas state to create options */}
-          {filteredComunas.map((comuna) => (
+          {dataFilter.comunas.map((comuna) => (
             <option key={comuna.id} value={comuna.comuna}>
               {comuna.comuna}
             </option>
