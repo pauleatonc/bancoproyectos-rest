@@ -84,7 +84,7 @@ if (errorProject) {
       {/* Imágenes del proyecto */}
       <h2 className="text-sans-h2 my-5">Imágenes del proyecto</h2>
       
-      <Carrusel data={[dataProject.portada, dataProject.images]}/>
+      <Carrusel data={dataProject}/>
   
       <div className=" p-0 d-md-flex justify-content-between my-4">
         <div className="col-md-6">

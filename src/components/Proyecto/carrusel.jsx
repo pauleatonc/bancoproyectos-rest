@@ -4,7 +4,6 @@ import ImageModal from './modal';
 const Carrusel = ({ data }) => {
   const miniContainerRef = useRef(null); // Referencia al contenedor de miniaturas.
   const thumbnailsRef = useRef([]); // Referencia a las miniaturas individuales.
-  console.log(data);
 
   useEffect(() => {
     // Obtiene referencia al contenedor de miniaturas.
@@ -59,54 +58,30 @@ const Carrusel = ({ data }) => {
       {/* Imagen portada */}
       <div className="row d-none d-md-block img-portada my-4">
         <div className="col d-flex justify-content-center">
-          <img src={data[0]} />
+          <img src={data.portada} />
         </div>
       </div>
 
       {/* Miniaturas */}
       <div className="container mini-container d-flex flex-wrap justify-content-center" ref={miniContainerRef}>
-        <div className="miniatura m-1">
-          <div>img</div>
-          <div className="thumbnail-counter d-none d-md-block"></div>
-          <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#imageModal">
-            View Image
-          </button>
-        </div>
-        <div className="miniatura m-1">
-          <div>img</div>
-          <div className="thumbnail-counter d-none d-md-block"></div>
-          <button type="button" className="btn btn-primary" data-bs-toggle="modal" data-bs-target="#imageModal">
-            View Image
-          </button>
-        </div>
-        <div className="miniatura m-1">
-          <div>img</div>
-          <div className="thumbnail-counter d-none d-md-block"></div>
-        </div>
-        <div className="miniatura m-1">
-          <div>img</div>
-          <div className="thumbnail-counter d-none d-md-block"></div>
-        </div>
-        <div className="miniatura m-1">
-          <div>img</div>
-          <div className="thumbnail-counter d-none d-md-block"></div>
-        </div>
-        <div className="miniatura m-1">
-          <div>img</div>
-          <div className="thumbnail-counter d-none d-md-block"></div>
-        </div>
-        <div className="miniatura m-1">
-          <div>img</div>
-          <div className="thumbnail-counter d-none d-md-block"></div>
-        </div>
-        <div className="miniatura m-1">
-          <div>img</div>
-          <div className="thumbnail-counter d-none d-md-block"></div>
-        </div>
+      <div className="m-1">
+            <a type="button" data-bs-toggle="modal" data-bs-target="#imageModal">
+              <img className="miniatura" src={data.portada} />
+              <div className="thumbnail-counter d-none d-md-block" />
+            </a>
+          </div>
+        {data.images.map((image, index) => (
+          <div className="m-1" key={index}>
+            <a type="button" data-bs-toggle="modal" data-bs-target="#imageModal">
+              <img className="miniatura" src={image.image_carousel} alt={`Thumbnail ${index}`} />
+              <div className="thumbnail-counter d-none d-md-block" />
+            </a>
+          </div>
+        ))}
       </div>
 
       {/* Modal  */}
-      < ImageModal imagenUrl="../static/img/que_es_1.png"/>
+      <ImageModal data={data} />
 
     </div>
   );

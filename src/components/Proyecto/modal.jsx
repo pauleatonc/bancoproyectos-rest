@@ -1,4 +1,4 @@
-const ImageModal = () => {
+const ImageModal = ({data}) => {
   return (
     <div className="modal fade" id="imageModal" tabIndex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
       <div className="modal-dialog modal-dialog-centered">
@@ -10,14 +10,15 @@ const ImageModal = () => {
             <div id="carouselExampleControls" className="carousel slide" data-bs-ride="carousel">
               <div className="carousel-inner">
                 <div className="carousel-item active">
-                  <div className="d-block w-100" style={{ height: '300px', backgroundColor: 'gray' }}></div>
+                  <img className="d-block w-100" src={data.portada} alt="Portada" />
                 </div>
-                <div className="carousel-item">
-                  <div className="d-block w-100" style={{ height: '300px', backgroundColor: 'red' }}></div>
-                </div>
-                <div className="carousel-item">
-                  <div className="d-block w-100" style={{ height: '300px', backgroundColor: 'black' }}></div>
-                </div>
+
+                {data.images.map((image, index) => (
+                  <div className={`carousel-item ${index === 0 ? 'active' : ''}`} key={index}>
+                    <img className="d-block w-100" src={image.image_carousel} alt={`Image ${index}`} />
+                  </div>
+                ))}
+                
               </div>
               <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
                 <span className="carousel-control-prev-icon" aria-hidden="true"></span>
