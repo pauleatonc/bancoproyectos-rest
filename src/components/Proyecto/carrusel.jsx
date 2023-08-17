@@ -1,9 +1,11 @@
 import { useEffect, useRef } from 'react';
 import ImageModal from './modal';
 
-const Carrusel = ({ data }) => {
+const Carrusel = ({ imgPortada, imgGeneral }) => {
   const miniContainerRef = useRef(null); // Referencia al contenedor de miniaturas.
   const thumbnailsRef = useRef([]); // Referencia a las miniaturas individuales.
+  
+  const imgArray = [imgPortada, ...imgGeneral.map(img => img.image_carousel)];
 
   useEffect(() => {
     // Obtiene referencia al contenedor de miniaturas.
@@ -58,30 +60,28 @@ const Carrusel = ({ data }) => {
       {/* Imagen portada */}
       <div className="row d-none d-md-block img-portada my-4">
         <div className="col d-flex justify-content-center">
-          <img src={data.portada} />
+          <img src={imgPortada} />
         </div>
       </div>
 
       {/* Miniaturas */}
       <div className="container mini-container d-flex flex-wrap justify-content-center" ref={miniContainerRef}>
-      <div className="m-1">
-            <a type="button" data-bs-toggle="modal" data-bs-target="#imageModal">
-              <img className="miniatura" src={data.portada} />
-              <div className="thumbnail-counter d-none d-md-block" />
-            </a>
-          </div>
-        {data.images.map((image, index) => (
+      
+        {imgArray.map((image, index) => (
           <div className="m-1" key={index}>
             <a type="button" data-bs-toggle="modal" data-bs-target="#imageModal">
-              <img className="miniatura" src={image.image_carousel} alt={`Thumbnail ${index}`} />
+              <img className="miniatura" src={image} alt={`Thumbnail ${index}`} />
               <div className="thumbnail-counter d-none d-md-block" />
+
             </a>
           </div>
         ))}
+
+        {/* Modal  */}
+        <ImageModal img={imgArray} />
       </div>
 
-      {/* Modal  */}
-      <ImageModal data={data} />
+
 
     </div>
   );

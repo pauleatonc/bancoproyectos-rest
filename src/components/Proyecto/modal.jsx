@@ -1,4 +1,4 @@
-const ImageModal = ({data}) => {
+const ImageModal = ({img}) => {
   return (
     <div className="modal fade" id="imageModal" tabIndex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
       <div className="modal-dialog modal-dialog-centered">
@@ -9,15 +9,15 @@ const ImageModal = ({data}) => {
           <div className="modal-body">
             <div id="carouselExampleControls" className="carousel slide" data-bs-ride="carousel">
               <div className="carousel-inner">
-                <div className="carousel-item active">
-                  <img className="d-block w-100" src={data.portada} alt="Portada" />
-                </div>
-
-                {data.images.map((image, index) => (
+              
+                {img.map((image, index) => (
                   <div className={`carousel-item ${index === 0 ? 'active' : ''}`} key={index}>
-                    <img className="d-block w-100" src={image.image_carousel} alt={`Image ${index}`} />
+                    <img className="d-block w-100" src={image} alt={`Image ${index}`} />
                   </div>
                 ))}
+
+                {console.log(img)}
+                
                 
               </div>
               <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
