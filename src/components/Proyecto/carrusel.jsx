@@ -1,10 +1,11 @@
-import { useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import ImageModal from './modal';
 
 const Carrusel = ({ imgPortada, imgGeneral }) => {
   const miniContainerRef = useRef(null); // Referencia al contenedor de miniaturas.
   const thumbnailsRef = useRef([]); // Referencia a las miniaturas individuales.
-  
+  const [selectedImageIndex, setSelectedImageIndex] = useState(0); // Estado para almacenar el índice de la imagen seleccionada
+
   const imgArray = [imgPortada, ...imgGeneral.map(img => img.image_carousel)];
 
   useEffect(() => {
@@ -66,19 +67,22 @@ const Carrusel = ({ imgPortada, imgGeneral }) => {
 
       {/* Miniaturas */}
       <div className="container mini-container d-flex flex-wrap justify-content-center" ref={miniContainerRef}>
-      
         {imgArray.map((image, index) => (
           <div className="m-1" key={index}>
-            <a type="button" data-bs-toggle="modal" data-bs-target="#imageModal">
+            <a 
+            type="button" 
+            data-bs-toggle="modal" 
+            data-bs-target="#imageModal"
+            onClick={() => setSelectedImageIndex(index)}
+            >
               <img className="miniatura" src={image} alt={`Thumbnail ${index}`} />
               <div className="thumbnail-counter d-none d-md-block" />
-
             </a>
           </div>
         ))}
 
         {/* Modal  */}
-        <ImageModal img={imgArray} />
+        <ImageModal img={imgArray} selectedImageIndex={selectedImageIndex} setSelectedImageIndex={setSelectedImageIndex}/>
       </div>
 
 
