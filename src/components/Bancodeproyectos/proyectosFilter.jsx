@@ -44,7 +44,7 @@ const FiltroProyectos = ({ selectedRegion, projectRegions, filteredComunas, hand
         </div>
 
         <select className="container selectores mb-4 text-underline text-muted" 
-        onChange={handleRegionChange} 
+        onChange={handleRegionChange}
         value={selectedRegion}>
           <option className="" value=''>Elige una o más regiones</option>
           {/* Map over the regionComunas state to create options */}
