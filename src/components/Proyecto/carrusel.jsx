@@ -1,66 +1,17 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import ImageModal from './modal';
 
 const Carrusel = ({ imgPortada, imgGeneral }) => {
   const miniContainerRef = useRef(null); // Referencia al contenedor de miniaturas.
-  const thumbnailsRef = useRef([]); // Referencia a las miniaturas individuales.
   const [selectedImageIndex, setSelectedImageIndex] = useState(0); // Estado para almacenar el índice de la imagen seleccionada
 
   const imgArray = [imgPortada, ...imgGeneral.map(img => img.image_carousel)];
-
-  useEffect(() => {
-    // Obtiene referencia al contenedor de miniaturas.
-    const miniContainer = miniContainerRef.current;
-    // Selecciona todas las mini y las guarda en la referencia.
-    const thumbnails = Array.from(miniContainer.querySelectorAll('.miniatura'));
-    thumbnailsRef.current = thumbnails;
-
-    // Funcion para actualizar contador de miniaturas ocultas.
-    const updateHiddenThumbnails = () => {
-      // Obtiene el estilo de la primera mini para calcular su tamano.
-      const miniaturaStyles = getComputedStyle(thumbnails[0]);
-      const miniaturaWidth = thumbnails[0].offsetWidth + parseFloat(miniaturaStyles.marginLeft) + parseFloat(miniaturaStyles.marginRight);
-      // Calcula el ancho del contenedor y la cantidad de mini visibles.
-      const containerWidth = miniContainer.offsetWidth;
-      const visibleThumbnailsCount = Math.floor(containerWidth / miniaturaWidth);
-
-      // Limpia los contadores individuales de todas las mini.
-      thumbnails.forEach((thumbnail) => {
-        const counterElement = thumbnail.querySelector('.thumbnail-counter');
-        if (counterElement) {
-          counterElement.textContent = '';
-        }
-      });
-
-      // Calcula cantidad total de mini y mini ocultas.
-      const totalThumbnailsCount = thumbnails.length;
-      const hiddenThumbnailsCount = totalThumbnailsCount - visibleThumbnailsCount;
-
-      // Muestra contador en ultima mini visible, en caso de haber mini ocultas.
-      if (hiddenThumbnailsCount > 0) {
-        const lastVisibleIndex = visibleThumbnailsCount - 1;
-        const lastVisibleThumbnail = thumbnails[lastVisibleIndex];
-        const counterElement = lastVisibleThumbnail.querySelector('.thumbnail-counter');
-        if (counterElement) {
-          counterElement.textContent = '+' + hiddenThumbnailsCount;
-        }
-      }
-    };
-
-    // Actualiza contadores al cargar pagina o redimensionar ventana.
-    updateHiddenThumbnails();
-    window.addEventListener('resize', updateHiddenThumbnails);
-
-    return () => {
-      window.removeEventListener('resize', updateHiddenThumbnails);
-    };
-  }, []);
   
   return (
     <div className="container text-center mb-md-5">
       {/* Imagen portada */}
-      <div className="row d-none d-md-block img-portada my-4">
-        <div className="col d-flex justify-content-center">
+      <div className=" d-none d-md-block img-portada my-4">
+        <div className=" d-flex justify-content-center">
           <img src={imgPortada} />
         </div>
       </div>
@@ -69,14 +20,9 @@ const Carrusel = ({ imgPortada, imgGeneral }) => {
       <div className="container mini-container d-flex flex-wrap justify-content-center" ref={miniContainerRef}>
         {imgArray.map((image, index) => (
           <div className="m-1" key={index}>
-            <a 
-            type="button" 
-            data-bs-toggle="modal" 
-            data-bs-target="#imageModal"
-            onClick={() => setSelectedImageIndex(index)}
-            >
+            <a data-bs-toggle="modal" data-bs-target="#imageModal" onClick={() => setSelectedImageIndex(index)}>
               <img className="miniatura" src={image} alt={`Thumbnail ${index}`} />
-              <div className="thumbnail-counter d-none d-md-block" />
+              {console.log(index)}
             </a>
           </div>
         ))}
@@ -84,9 +30,6 @@ const Carrusel = ({ imgPortada, imgGeneral }) => {
         {/* Modal  */}
         <ImageModal img={imgArray} selectedImageIndex={selectedImageIndex} setSelectedImageIndex={setSelectedImageIndex}/>
       </div>
-
-
-
     </div>
   );
 };
