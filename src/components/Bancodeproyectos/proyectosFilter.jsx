@@ -1,24 +1,73 @@
+import React, { useState } from 'react';
 import useApiFilter from "../../hooks/useApiFilter";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
-import React, { useState } from 'react';
+import apiProjectsList from '../../services/project/projectsList.api';
 
 
-const FiltroProyectos = () => {
-  const { dataFilter, loadingProject } = useApiFilter();
+const FiltroProyectos = (props) => {
+  const { dataFilter, loading, error } = useApiFilter();
   const [selectedRegion, setSelectedRegion] = useState('');
   const [selectedComuna, setSelectedComuna] = useState('');
+  const [selectedYear, setSelectedYear] = useState('');
+  
 
-  if (loadingProject) {
+  if (loading) {
     return  <div>Loading...</div>
   }
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
+  const handleClearFilter = () => {
+    setSelectedRegion('');
+    setSelectedComuna('');
+    setSelectedYear('');
+    // También debes resetear cualquier otro estado relacionado con los filtros aquí
+
+    fetchAllProjects();
+  };
+
+  const fetchAllProjects = async () => {
+    try {
+        const response = await apiProjectsList.get('/');
+
+        if (response.status === 200) {
+            const allProjects = response.data;
+            props.onFilter(allProjects); // Pasar todos los proyectos a BancoProyectos
+        }
+    } catch (error) {
+        console.error('Error al obtener todos los proyectos:', error);
+    }
+  };
+
+  const handleSubmit = async () => {
+    const queryParams = new URLSearchParams({
+        region: selectedRegion,
+        comuna: selectedComuna,
+        year: selectedYear,
+        // ... añadir otros filtros
+    });
+
+    try {
+        const endpoint = '/?' + queryParams.toString(); 
+        const response = await apiProjectsList.get(endpoint);
+
+        if (response.status === 200) {
+            const filteredProjects = response.data;
+            props.onFilter(filteredProjects); // Pasar los proyectos filtrados a BancoProyectos
+        }
+    } catch (error) {
+        console.error('Error al filtrar proyectos:', error);
+    }
+  };
 
   return (
 
     <div className="mb-md-4" id="filter-container">
       <div className="container d-flex justify-content-between my-3 p-0">
         <p className="text-sans-h3 me-2">Filtrar</p>
-        <button className="text-sans-p btn-limpiar p-2">
+        <button className="text-sans-p btn-limpiar p-2" onClick={handleClearFilter}>
           Limpiar filtro <FontAwesomeIcon icon={faTrashCan} />
         </button>
       </div>
@@ -27,18 +76,14 @@ const FiltroProyectos = () => {
       <p className="text-sans-h5">Puedes elegir más de uno.</p>
 
       <div className="container d-flex justify-content-around mx-0 p-0">
-        <div className="col-md-2 d-flex flex-column align-items-center mr-5">
-          <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-md-3">
-            <span className="categorias-siglas font-weight-bold">PMU</span>
+        {dataFilter.programs.map((programa) => (
+          <div className="col-md-2 d-flex flex-column align-items-center mr-5" key={programa.id}>
+            <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-md-3">
+              <span className="categorias-siglas font-weight-bold">{programa.sigla}</span>
+            </div>
+            <p className="text-sans-h5-bold text-center">{programa.name}</p>
           </div>
-          <p className="text-sans-h5-bold text-center">Programa Mejoramiento Urbano</p>
-        </div>
-        <div className="col-md-2 d-flex flex-column  align-items-center">
-          <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-md-3">
-            <span className="categorias-siglas font-weight-bold">PMB</span>
-          </div>
-          <p className="text-sans-h5-bold text-center">Programa Mejoramiento de Barrios</p>
-        </div>
+        ))}
       </div>
 
       <div className="container filter-line"></div>
@@ -91,65 +136,35 @@ const FiltroProyectos = () => {
         </div>
 
         <div className="d-flex flex-wrap">
-          <div className="col-5 d-flex flex-column mx-2 align-items-center">
-            <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-md-3">
-              <img src="src/static/img/icon_categorias_landing.png" alt="Icono" />
+          {dataFilter.types.map((tipo) => (
+            <div className="col-5 d-flex flex-column mx-2 align-items-center" key={tipo.id}>
+              <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-md-3">
+                <img src={tipo.icon_type} alt={tipo.name} />
+              </div>
+              <p className="text-sans-h5-bold text-center">{tipo.name}</p>
             </div>
-            <p className="text-sans-h5-bold text-center">Plazas y Áreas Verdes</p>
-          </div>
-          <div className="col-5 d-flex flex-column mx-2 align-items-center">
-            <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-md-3">
-              <img src="src/static/img/icon_categorias_landing.png" alt="Icono" />
-            </div>
-            <p className="text-sans-h5-bold text-center">Infraestructura Deportiva</p>
-          </div>
-          <div className="col-5 d-flex flex-column mx-2 align-items-center">
-            <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-md-3">
-              <img src="src/static/img/icon_categorias_landing.png" alt="Icono" />
-            </div>
-            <p className="text-sans-h5-bold text-center">Centros de Salud</p>
-          </div>
-          <div className="col-5 d-flex flex-column mx-2 align-items-center">
-            <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-md-3">
-              <img src="src/static/img/icon_categorias_landing.png" alt="Icono" />
-            </div>
-            <p className="text-sans-h5-bold text-center">Luminarias</p>
-          </div>
-          <div className="col-5 d-flex flex-column mx-2 align-items-center">
-            <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-md-3">
-              <img src="src/static/img/icon_categorias_landing.png" alt="Icono" />
-            </div>
-            <p className="text-sans-h5-bold text-center">Reciclaje</p>
-          </div>
-          <div className="col-5 d-flex flex-column mx-2 align-items-center">
-            <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-md-3">
-              <img src="src/static/img/icon_categorias_landing.png" alt="Icono" />
-            </div>
-            <p className="text-sans-h5-bold text-center">Energía</p>
-          </div>
-          <div className="col-5 d-flex flex-column mx-2 align-items-center">
-            <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-md-3">
-              <img src="src/static/img/icon_categorias_landing.png" alt="Icono" />
-            </div>
-            <p className="text-sans-h5-bold text-center">Desarrollo Técnológico</p>
-          </div>
+          ))}
         </div>
       </div>
 
       <div className="container filter-line"></div>
 
-      <h3 className="text-sans-p mt-3 px-1">¿Qué años de construcción quieres ver?</h3>
-      <div className="mb-4">
-        <input className="mx-2" type="checkbox" />
-        <label>2019</label> <br />
-        <input className="mx-2" type="checkbox" />
-        <label>2020</label> <br />
-        <input className="mx-2" type="checkbox" />
-        <label>2021</label>
-      </div>
+      {/* año select */}
+      <h3 className="text-sans-p px-1">¿Qué años de construcción quieres ver?</h3>
+        <select className="container selectores text-underline text-muted"
+        onChange={(e) => setSelectedYear(e.target.value)}
+        value={selectedYear}>
+          <option className="" value=''>Elige el año</option>
+          {/* Map over the selectedComunas state to create options */}
+          {dataFilter.years.map((year) => (
+            <option key={year.id} value={year.number}>
+              {year.number}
+            </option>
+          ))}
+        </select>
 
       <div className="d-flex justify-content-center">
-        <button className="btn-principal-l mb-4">Mostrar resultados</button>
+        <button className="btn-principal-l mb-4" onClick={handleSubmit}>Mostrar resultados</button>
       </div>
 
     </div>

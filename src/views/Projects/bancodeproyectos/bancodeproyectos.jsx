@@ -2,12 +2,20 @@ import "../../../static/styles/bancodeproyectos.css";
 import {ProyectoContainer , ProyectosFilter, ProyectosSort , BuscadorProyectos} from '../../../components/Bancodeproyectos';
 import useProjectFilter from '../../../hooks/useProjectFilter';
 import useApiProjectsList from "../../../hooks/useApiProjectsList";
+import React, { useState } from 'react';
+
 
   const BancoProyectos = () => {
 
-    const {selectedRegion, projectRegions, filteredComunas, isLoading, hasError, handleRegionChange }= useProjectFilter();
-
+    const { isLoading, hasError }= useProjectFilter();
     const { dataProject, loadingProject, errorProject } = useApiProjectsList();
+    const [filteredProjects, setFilteredProjects] = useState([]);
+    const [hasResults, setHasResults] = useState(true);
+
+    const handleFilter = (projects) => {
+        setFilteredProjects(projects);
+        setHasResults(projects.length > 0);
+    };
 
 
     if (loadingProject || isLoading)
@@ -33,16 +41,18 @@ import useApiProjectsList from "../../../hooks/useApiProjectsList";
         <BuscadorProyectos />
         
         <div className="container d-flex flex-column flex-md-row">
-          <ProyectosFilter
-          selectedRegion={selectedRegion}
-          projectRegions={projectRegions}
-          filteredComunas={filteredComunas}
-          handleRegionChange={handleRegionChange}/>
+          <ProyectosFilter onFilter={handleFilter}/>
           <div className="ml-md-5">
             <div className="d-flex justify-content-end mb-1">
               <ProyectosSort/>
             </div>
-            <ProyectoContainer data={dataProject}/>
+            {hasResults ? (
+                  <ProyectoContainer data={filteredProjects.length > 0 ? filteredProjects : dataProject} />
+              ) : (
+                  <div className="d-flex justify-content-center mt-4">
+                      <p className="text-muted">No hay proyectos que coincidan con los criterios seleccionados.</p>
+                  </div>
+              )}
           </div>
         </div>
         

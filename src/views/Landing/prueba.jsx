@@ -1,7 +1,8 @@
-import useApiProjectsList from "../../hooks/useApiProjectsList";
+import React from 'react';
+import useApiFilter from "../../hooks/useApiFilter";
 
-const SelectRegionComuna = () => {
-  const { data, loading, error } = useApiRegionComuna();
+const Filters = () => {
+  const { dataFilter, loading, error } = useApiFilter();
 
   if (loading) {
     return  <div>Loading...</div>
@@ -11,35 +12,43 @@ const SelectRegionComuna = () => {
   }
 
   return (
-    <div>
     <div className="container">
-    {data.map((regionData) => (
-      <div key={regionData.region}>
-        <h2>Region: {regionData.region}</h2>
         <ul>
-          {regionData.comunas.map((comunaData) => (
-            <li key={comunaData.comuna}>{comunaData.comuna}</li>
-          ))}
-        </ul>
-      </div>
-    ))}
+          <li>
+            Years:
+            <ul>
+              {dataFilter.years.map(year => (
+                <li key={year.number}>{year.number}</li>
+              ))}
+            </ul>
+          </li>
+          <li>
+            Programs:
+            <ul>
+              {dataFilter.programs.map(program => (
+                <li key={program.sigla}>{program.name} ({program.sigla})</li>
+              ))}
+            </ul>
+          </li>
+          <li>
+            Types:
+            <ul>
+              {dataFilter.types.map(type => (
+                <li key={type.name}>{type.name} ({type.icon_type})</li>
+              ))}
+            </ul>
+          </li>
+          <li>
+            Comunas:
+            <ul>
+              {dataFilter.comunas.map(comuna => (
+                <li key={comuna.id}>{comuna.comuna}</li>
+              ))}
+            </ul>
+          </li>
+        </ul>   
     </div>
-    <div className="container">
-    {dataProject.map((projectData) => (
-      <div key={projectData.id_subdere}>
-        <h2> Proyecto: {projectData.name}</h2>
-        <ul>
-          <li>{projectData.description}</li>
-          <li>{projectData.year.number}</li>
-          <li>{projectData.program.name}</li>
-          <li>{projectData.comuna.comuna}</li>
-        </ul>
-      </div>
-    ))}
-
-    </div>
-  </div>
   );
 };
 
-export default SelectRegionComuna; 
+export default Filters; 
