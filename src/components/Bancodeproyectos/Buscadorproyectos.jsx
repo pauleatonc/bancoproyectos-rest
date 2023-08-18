@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import useProjectSearch from '../../hooks/useProjectSearch';
 
-const BuscadorProyectos = ({ onSearch }) => {
+const BuscadorProyectos = () => {
   const { searchResults, loadingSearch, errorSearch, searchProjects } = useProjectSearch();
   const [searchQuery, setSearchQuery] = useState('');
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    const results = await searchProjects(searchQuery);
+    const results = searchProjects(searchQuery);
     onSearch(results);
   };
 
