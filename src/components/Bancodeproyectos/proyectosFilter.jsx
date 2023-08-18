@@ -72,6 +72,7 @@ const FiltroProyectos = (props) => {
         </button>
       </div>
 
+      {/* programa select */}
       <h3 className="text-sans-p">¿En qué programa está el proyecto que buscas?</h3>
       <p className="text-sans-h5">Puedes elegir más de uno.</p>
 
@@ -125,8 +126,8 @@ const FiltroProyectos = (props) => {
 
       </div>
 
+      {/* tipo select */}
       <div className="container filter-line my-3"></div>
-
       <div>
         <div className="container d-flex justify-content-between align-items-start px-1 mb-3">
           <h3>¿Qué tipo de proyecto es?</h3>
@@ -139,7 +140,7 @@ const FiltroProyectos = (props) => {
           {dataFilter.types.map((tipo) => (
             <div className="col-5 d-flex flex-column mx-2 align-items-center" key={tipo.id}>
               <div className="categorias-circle rounded-circle d-flex align-items-center justify-content-center my-md-3">
-                <img src={tipo.icon_type} alt={tipo.name} />
+                <i class="material-symbols-rounded mx-2">{ tipo.icon_type }</i>
               </div>
               <p className="text-sans-h5-bold text-center">{tipo.name}</p>
             </div>
