@@ -1,32 +1,20 @@
 import "../../../static/styles/bancodeproyectos.css";
 import {ProyectoContainer , ProyectosFilter, ProyectosSort , BuscadorProyectos} from '../../../components/Bancodeproyectos';
-import useProjectFilter from '../../../hooks/useProjectFilter';
+import useApiFilter from '../../../hooks/useApiFilter';
 import useApiProjectsList from "../../../hooks/useApiProjectsList";
-import React, { useState } from 'react';
+
 
 
   const BancoProyectos = () => {
-
-    const { isLoading, hasError }= useProjectFilter();
     const { dataProject, loadingProject, errorProject } = useApiProjectsList();
-    const [filteredProjects, setFilteredProjects] = useState([]);
-    const [hasResults, setHasResults] = useState(true);
+    const { loading, error, filteredProjects, hasResults, handleFilter } = useApiFilter();
 
-    const handleFilter = (projects) => {
-        setFilteredProjects(projects);
-        setHasResults(projects.length > 0);
-    };
-
-
-    if (loadingProject || isLoading)
-    {
+    if (loadingProject || loading) {
       return <div>CARGANDO DATOS...</div>
     }
-    if (errorProject|| hasError)
-    {
+    if (errorProject || error) {
       return <div>Error de conexion</div>
     }
-  
     
     return (
       <div className="container col-md-10">
