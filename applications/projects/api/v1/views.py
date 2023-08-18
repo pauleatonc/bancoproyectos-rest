@@ -47,7 +47,31 @@ class ProjectListApiViewV1(ListAPIView):
     serializer_class = ProjectListSerializerV1
 
     def get_queryset(self):
-        return Project.objects.all()
+        queryset = Project.objects.all()
+
+        region = self.request.query_params.get('region', None)
+        comuna = self.request.query_params.get('comuna', None)
+        year = self.request.query_params.get('year', None)
+        program = self.request.query_params.get('program', None)
+        type_ = self.request.query_params.get('type', None)
+
+        if region:
+            regions_list = region.split(',')
+            queryset = queryset.filter(comuna__region__region__in=regions_list)
+        if comuna:
+            comunas_list = comuna.split(',')
+            queryset = queryset.filter(comuna__comuna__in=comunas_list)
+        if year:
+            years_list = [int(y) for y in year.split(',')]
+            queryset = queryset.filter(year__number__in=years_list)
+        if program:
+            programs_list = program.split(',')
+            queryset = queryset.filter(program__name__in=programs_list)
+        if type_:
+            types_list = type_.split(',')
+            queryset = queryset.filter(type__name__in=types_list)
+
+        return queryset
 
 
 class ProjectDetailApiViewV1(RetrieveAPIView):
@@ -71,10 +95,10 @@ class FilterOptionsApiViewV1(GenericAPIView):
         unique_types = Type.objects.annotate(num_projects=Count('project')).filter(num_projects__gt=0).order_by('name')
 
         # Obtener comunas únicas que están asociados con al menos un proyecto
-        unique_comunas = Comuna.objects.annotate(num_projects=Count('project')).filter(num_projects__gt=0).order_by('comuna')
+        unique_comunas = Comuna.objects.annotate(num_projects=Count('project')).filter(num_projects__gt=0).order_by('id')
 
         # A partir de las comunas, obtener las regiones únicas
-        unique_regiones = Region.objects.filter(comunas__in=unique_comunas).distinct().order_by('region')
+        unique_regiones = Region.objects.filter(comunas__in=unique_comunas).distinct().order_by('id')
 
         # Serializar los datos
         years_data = YearSerializerV1(unique_years, many=True).data

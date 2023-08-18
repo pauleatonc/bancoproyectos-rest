@@ -16,6 +16,7 @@ class ProgramSerializerV1(serializers.ModelSerializer):
     class Meta:
         model = Program
         fields = (
+            'id',
             'name',
             'sigla'
         )
@@ -43,6 +44,7 @@ class TypeListSerializerV1(serializers.ModelSerializer):
         model = Type
         fields = (
             'name',
+            'icon_type'
         )
 
 
