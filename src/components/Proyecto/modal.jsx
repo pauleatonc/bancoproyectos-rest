@@ -12,11 +12,12 @@ const ImageModal = ({img, selectedImageIndex, setSelectedImageIndex}) => {
     <div className="modal fade" id="imageModal" tabIndex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
       <div className="modal-dialog modal-lg modal-dialog-centered">
         <div className="modal-content border border-secondary">
-          <div className="modal-header d-flex justify-content-end">
+          <div className="d-flex justify-content-end">
             <button type="button" className=" custom-close-button" data-bs-dismiss="modal" aria-label="Close" onClick={handleModalClose}>
               Cerrar <FontAwesomeIcon icon={faTimes}/>
             </button>
           </div>
+          
           <div className="modal-body">
             <div id="carouselExampleControls" className="carousel slide"  key={selectedImageIndex}>
             <div className="carousel-inner">

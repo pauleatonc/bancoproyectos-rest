@@ -258,7 +258,7 @@
 }
 
 .img-portada {
-  max-height: 450px;
+  max-width: 950px;
   overflow: hidden;
   border-radius: 5px;
 }
@@ -268,6 +268,8 @@
   width: 100px;
   border-radius: 5px;
   background-color: grey;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 @media (min-width: 768px) {
@@ -280,9 +282,13 @@
     width: 180px;
   }
 }
-.custom-close-button {
-  border: none;
-  background-color: transparent;
-  align-self: flex-end;
-  color: grey;
+.custom-modal {
+  position: fixed;
+  top: 3%;
+  left: 4;
+  margin-bottom: 100px;
+}
+
+.modal-container {
+  background-color: black;
 }/*# sourceMappingURL=styles.css.map */
