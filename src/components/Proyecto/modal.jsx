@@ -23,8 +23,9 @@ const ImageModal = ({ img, selectedImageIndex, setSelectedImageIndex }) => {
     <div className="modal fade" id="imageModal" tabIndex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
       <div className="modal-dialog modal-lg modal-dialog-centered">
         <div className="modal-content border border-secondary">
-          <div className="d-flex justify-content-end">
-            <button type="button" className=" custom-close-button" data-bs-dismiss="modal" aria-label="Close" onClick={handleClose}>
+          <div className="d-flex justify-content-between p-2">
+          <div className="image-indicator">{imageIndicator}</div>
+            <button type="button" className="custom-close-button" data-bs-dismiss="modal" aria-label="Close" onClick={handleClose}>
               Cerrar <FontAwesomeIcon icon={faTimes}/>
             </button>
           </div>
@@ -39,7 +40,7 @@ const ImageModal = ({ img, selectedImageIndex, setSelectedImageIndex }) => {
               ))}
             </div>
 
-            <div className="image-indicator">{imageIndicator}</div>
+            {/* <div className="image-indicator">{imageIndicator}</div> */}
 
               <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev" onClick={() => handleCarouselSlide((currentImageIndex - 1 + img.length) % img.length)}>
                 <span className="carousel-btn carousel-control-prev-icon" aria-hidden="true"></span>

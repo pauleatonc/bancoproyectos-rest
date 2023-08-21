@@ -250,6 +250,9 @@
   height: 350px;
   flex-shrink: 0;
   border-radius: 5px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  overflow: hidden;
 }
 
 .detalles-del-proyecto {
@@ -261,6 +264,16 @@
   max-width: 950px;
   overflow: hidden;
   border-radius: 5px;
+}
+
+.thumbnail-counter {
+  font-family: "Roboto Slab";
+  height: 100px;
+  color: black;
+  font-size: 49px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 61.04px;
 }
 
 .miniatura {
@@ -282,13 +295,9 @@
     width: 180px;
   }
 }
-.custom-modal {
-  position: fixed;
-  top: 3%;
-  left: 4;
-  margin-bottom: 100px;
-}
-
-.modal-container {
-  background-color: black;
+.custom-close-button {
+  border: none;
+  background-color: transparent;
+  align-self: flex-end;
+  color: grey;
 }/*# sourceMappingURL=styles.css.map */
