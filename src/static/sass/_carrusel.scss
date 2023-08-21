@@ -1,18 +1,8 @@
 .img-portada{
     max-width: 950px;
-    overflow: hidden;
+    //overflow: hidden;
     border-radius: 5px;
 }
-// .thumbnail-counter {
-//     font-family: 'Roboto Slab';
-//     height: 100px;
-//     color: black;
-//     font-size: 49px;
-//     font-style: normal;
-//     font-weight: 700;
-//     line-height: 61.04px;    
-//     // padding: 40px; 
-//   }
 
 .miniatura{
     height: 100px;
@@ -20,7 +10,18 @@
     border-radius: 5px;
     background-color: grey;
     object-fit: cover;
+    position: relative;
 }
+.thumbnail-counter-overlay {
+    position: absolute;
+    top: 0; // Ajusta este valor según tu diseño
+    right: 0; // Ajusta este valor según tu diseño
+    background-color: rgba(0, 0, 0, 0.7); // Fondo semi-transparente para el contador
+    color: white; // Color del texto del contador
+    padding: 4px 8px; // Espaciado dentro del contador
+    border-radius: 4px; // Bordes redondeados
+  }
+  
 
 @media (min-width: 768px) {
     .mini-container{
