@@ -51,6 +51,9 @@ $black-color: #111111;
 .text-sans-h5-bold{
     @include font-sans(14px, 700, $grey-a-color);
 }
+.text-sans-h5-blue{
+    @include font-sans(14px, 400, $primary-color);
+}
 .text-sans-p{
     @include font-sans(16px, 400, $grey-a-color);
     line-height: 30px;
