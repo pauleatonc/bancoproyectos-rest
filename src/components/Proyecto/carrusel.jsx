@@ -53,16 +53,17 @@ const Carrusel = ({ imgPortada, imgGeneral }) => {
         <img className="img-fluid" src={imgPortada} /> 
       </div>
 
+      <div className="thumbnail-counter d-none d-md-block border border-primary p-4">+{hiddenThumbnailsCount}</div>
+
       {/* Miniaturas */}
       <div className="container-fluid container-md mini-container d-flex flex-wrap justify-content-center" ref={miniContainerRef}>
-      {imgArray.map((image, index) => (
-        <div className={`m-1 m-md-2 miniatura ${index >= imgArray.length - hiddenThumbnailsCount ? 'visible' : ''}`} key={index}>
-          <a data-bs-toggle="modal" data-bs-target="#imageModal" onClick={() => setSelectedImageIndex(index)}>
-            <img className="miniatura" src={image} alt={`Thumbnail ${index}`} />
-            <div className="thumbnail-counter d-none d-md-block">+{hiddenThumbnailsCount}</div>
-          </a>
-        </div>
-      ))}
+        {imgArray.map((image, index) => (
+          <div className={`m-1 m-md-2 miniatura`} key={index}>
+            <a data-bs-toggle="modal" data-bs-target="#imageModal" onClick={() => setSelectedImageIndex(index)}>
+              <img className="miniatura" src={image} alt={`Thumbnail ${index}`} />
+            </a>
+          </div>
+        ))}
       
 
         {/* Modal  */}
@@ -71,5 +72,5 @@ const Carrusel = ({ imgPortada, imgGeneral }) => {
     </div>
   );
 };
-    
+  
 export default Carrusel;
