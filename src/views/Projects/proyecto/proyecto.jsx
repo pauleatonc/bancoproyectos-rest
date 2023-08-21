@@ -104,18 +104,40 @@ if (errorProject) {
       </div>
 
       <h2 className="text-sans-h2 my-4">Documentos del proyecto</h2>
-      <div className=" d-flex justify-content-between my-4 font-weight-bold">
-        <div>#</div>
-        <div>Documento</div>
-        <div>Formato</div>
-        <div>Acción</div>
-      </div>
-      <div className="d-flex justify-content-between my-3">
-        <div>1</div>
-        <div>Planimetría</div>
-        <div>PDF</div>
-        <a href="#">Descargar</a>
-      </div>
+        <div className=" d-flex justify-content-between my-4 font-weight-bold">
+            <div>#</div>
+            <div>Documento</div>
+            <div>Formato</div>
+            <div>Acción</div>
+        </div>
+
+        {/* Especificaciones Técnicas */}
+        <div className="d-flex justify-content-between my-3">
+            <div>1</div>
+            <div>Especificaciones Técnicas</div>
+            <div>PDF</div>
+            <a href={dataProject.eett} target="_blank" rel="noopener noreferrer">Descargar</a>
+        </div>
+
+        {/* Presupuesto */}
+        <div className="d-flex justify-content-between my-3">
+            <div>2</div>
+            <div>Presupuesto</div>
+            <div>PDF</div>
+            <a href={dataProject.presupuesto} target="_blank" rel="noopener noreferrer">Descargar</a>
+        </div>
+
+        {
+            dataProject.files.map((file, index) => (
+                <div key={index} className="d-flex justify-content-between my-3">
+                    <div>{index + 3}</div>  {/* Comenzamos desde el índice 3 porque ya mostramos 2 documentos anteriormente */}
+                    <div>{file.name}</div>
+                    <div>{file.file_format}</div>
+                    <a href={file.file} target="_blank" rel="noopener noreferrer">Descargar</a>
+                </div>
+            ))
+        }
+
 
       <h2 className="text-sans-h2 my-4">Documentos con normativa de uso general</h2>
       <div className="d-flex justify-content-between my-4 font-weight-bold">
@@ -124,12 +146,16 @@ if (errorProject) {
         <div>Formato</div>
         <div>Acción</div>
       </div>
-      <div className="d-flex justify-content-between my-3">
-        <div>1</div>
-        <div>Guía Operativa PMU</div>
-        <div>PDF</div>
-        <a href="#">Descargar</a>
-      </div>
+      {
+            dataProject.type.guides.map((guide, index) => (
+                <div key={index} className="d-flex justify-content-between my-3">
+                    <div>{index + 1}</div>
+                    <div>{guide.name}</div>
+                    <div>{guide.guide_format}</div>
+                    <a href={guide.guide} target="_blank" rel="noopener noreferrer">Descargar</a>
+                </div>
+            ))
+        }
 
       <h2 className="text-sans-h2 my-4">Proyectos relacionados</h2>
       <div className=" border border-warning">componente?</div>

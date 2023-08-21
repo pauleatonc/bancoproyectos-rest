@@ -2,8 +2,8 @@ import useApiRegionComuna  from "../../hooks/useApiRegionComuna";
 import useApiProjectsList from "../../hooks/useApiProjectsList";
 
 const SelectRegionComuna = () => {
-  const { data, loading , error } = useApiRegionComuna();
-  const { dataProject, loadingProject, errorProject } = useApiProjectsList(); 
+  const { data, loading, error } = useApiRegionComuna();
+  const { dataProject, loadingProject, errorProject } = useApiProjectsList();
 
   if (loading) {
     return  <div>Loading...</div>
