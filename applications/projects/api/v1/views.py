@@ -1,5 +1,6 @@
 from rest_framework.response import Response
 from django.db.models import Count
+from django.db.models import Q
 
 from rest_framework.generics import (
     GenericAPIView,
@@ -70,6 +71,14 @@ class ProjectListApiViewV1(ListAPIView):
         if type_:
             types_list = type_.split(',')
             queryset = queryset.filter(type__name__in=types_list)
+
+        search = self.request.query_params.get('search', None)
+        if search:
+            # Aquí puedes ajustar los campos en los que quieres buscar.
+            queryset = queryset.filter(
+                Q(name__icontains=search) |
+                Q(description__icontains=search)
+            )
 
         return queryset
 
