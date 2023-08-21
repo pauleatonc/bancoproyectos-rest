@@ -1,0 +1,34 @@
+.img-portada{
+    max-width: 950px;
+    overflow: hidden;
+    border-radius: 5px;
+}
+.thumbnail-counter {
+    font-family: 'Roboto Slab';
+    height: 100px;
+    color: black;
+    font-size: 49px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 61.04px;    
+    // padding: 40px; 
+  }
+
+.miniatura{
+    height: 100px;
+    width: 100px;
+    border-radius: 5px;
+    background-color: grey;
+    object-fit: cover;
+}
+
+@media (min-width: 768px) {
+    .mini-container{
+        height:183px;
+        overflow: hidden;
+    }
+    .miniatura{
+        height: 180px;
+        width: 180px;
+    }
+}

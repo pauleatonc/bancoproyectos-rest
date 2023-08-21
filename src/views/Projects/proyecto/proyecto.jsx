@@ -1,16 +1,17 @@
+import { useParams } from "react-router-dom";
 import useApiProjectsDetail from "../../../hooks/useApiProjectsDetail";
-import { useParams } from 'react-router-dom';
+import Carrusel from "../../../components/Proyecto/carrusel";
 
 const Proyecto = () => {
-  const { slug } = useParams();
-  const { dataProject, loadingProject, errorProject } = useApiProjectsDetail(slug);
+const { slug } = useParams();
+const { dataProject, loadingProject, errorProject } = useApiProjectsDetail(slug);
 
-  if (loadingProject) {
-    return  <div>Loading...</div>
-  }
-  if (errorProject) {
-    return <div>Error: {errorProject}</div>;
-  }
+if (loadingProject) {
+  return <div>CARGANDO DATOS...</div>
+}
+if (errorProject) {
+  return <div>Error de conexión: {errorProject}</div>
+}
 
   return (
     <div className="container col-10">
@@ -22,7 +23,7 @@ const Proyecto = () => {
           <ol className="breadcrumb m-0">
             <li className="breadcrumb-item"><a href="/" >Inicio</a></li>
             <li className="breadcrumb-item"><a href="/bancodeproyectos" >Banco de Proyectos</a></li>
-            <li className="breadcrumb-item active d-none d-lg-block border border-danger" aria-current="page">Como hacer dinamico esto?</li>
+            <li className="breadcrumb-item active d-none d-lg-block" aria-current="page">{dataProject.name}</li>
           </ol>
         </nav>
       </div>
@@ -82,22 +83,24 @@ const Proyecto = () => {
       
       {/* Imágenes del proyecto */}
       <h2 className="text-sans-h2 my-5">Imágenes del proyecto</h2>
-      <div className=" border border-danger">carrusel de fotos</div>
-
+      
+      <Carrusel imgPortada={dataProject.portada} imgGeneral={dataProject.images}/>
+      
+  
       <div className=" p-0 d-md-flex justify-content-between my-4">
         <div className="col-md-6">
           <h3 className="text-sans-h3">Antes del proyecto</h3>
-            <img src={dataProject.beforeimage} className="img-fluid p-1" alt='fotografía de antes del proyecto'/>
+          <img src={dataProject.beforeimage} className="img-proyecto"/>
         </div>
         <div className="col-md-6">
           <h3 className="text-sans-h3">Después del proyecto</h3>
-          <img src={dataProject.afterimage} className="img-fluid p-1" alt='fotografía de después del proyecto'/>
+          <img src={dataProject.afterimage} className="img-proyecto"/>
         </div>
       </div>
 
       <h3 className="text-sans-h3">Video del proyecto</h3>
       <div className="d-flex justify-content-center mb-md-5">
-        <img src={dataProject.video} className="img-fluid p-1" alt='Video del proyecto'/>
+        <div className="col-md-7 img-proyecto" src={dataProject.video} />
       </div>
 
       <h2 className="text-sans-h2 my-4">Documentos del proyecto</h2>
