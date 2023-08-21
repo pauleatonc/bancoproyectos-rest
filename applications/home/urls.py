@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, re_path, include
 
 from . import views
 
@@ -20,5 +20,7 @@ urlpatterns = [
         views.ContactSuccess.as_view(),
         name = 'contact_success'
     ),
+
+    re_path('', include('applications.home.api.v1.urls'))
     
 ]

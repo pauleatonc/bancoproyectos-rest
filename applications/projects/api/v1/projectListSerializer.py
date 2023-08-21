@@ -16,6 +16,7 @@ class ProgramSerializerV1(serializers.ModelSerializer):
     class Meta:
         model = Program
         fields = (
+            'id',
             'name',
             'sigla',
             'icon_program'
@@ -27,6 +28,7 @@ class YearSerializerV1(serializers.ModelSerializer):
     class Meta:
         model = Year
         fields = (
+            'id',
             'number',
         )
 
@@ -35,6 +37,7 @@ class GuideSerializerV1(serializers.ModelSerializer):
     class Meta:
         model = Guide
         fields = (
+            'id',
             'name',
             'guide'
         )
@@ -44,7 +47,9 @@ class TypeListSerializerV1(serializers.ModelSerializer):
     class Meta:
         model = Type
         fields = (
+            'id',
             'name',
+            'icon_type'
         )
 
 
@@ -52,6 +57,7 @@ class PrioritizedTagSerializerV1(serializers.ModelSerializer):
     class Meta:
         model = PrioritizedTag
         fields = (
+            'id',
             'prioritized_tag',
         )
 

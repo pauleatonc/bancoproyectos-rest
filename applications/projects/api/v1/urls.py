@@ -12,7 +12,7 @@ urlpatterns = [
          views.ProjectDetailApiViewV1.as_view(),
          name='api-project-detail-v1'
          ),
-    path('api/project/filter/v1',
+    path('api/project/filter/v1/',
          views.FilterOptionsApiViewV1.as_view(),
          name='api-project-filter-v1'
          ),
