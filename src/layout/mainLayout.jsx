@@ -1,9 +1,8 @@
-import {Outlet} from 'react-router-dom';
-import Footer from "../components/Footer/footer";
-import Navbar from "../components/Navbar/navbar";
-import Title from '../components/Title/title';
+import { Outlet } from 'react-router-dom';
+import { Navbar, Footer, Title } from '../components/Layout'; 
 
-const MainLayout = () => {
+const MainLayout = () =>
+{
   return (
     <>
       <Navbar />

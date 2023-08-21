@@ -59,6 +59,13 @@
   font-weight: 700;
 }
 
+.text-sans-h5-blue {
+  font-family: "Roboto";
+  color: #006FB3;
+  font-size: 14px;
+  font-weight: 400;
+}
+
 .text-sans-p {
   font-family: "Roboto";
   color: #373737;
@@ -208,6 +215,10 @@
   height: 48px;
 }
 
+.info-circle {
+  color: #006FB3;
+}
+
 .proyect-card {
   border: 2px solid #006FB3;
   border-radius: 0px;
@@ -239,6 +250,9 @@
   height: 350px;
   flex-shrink: 0;
   border-radius: 5px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  overflow: hidden;
 }
 
 .detalles-del-proyecto {
@@ -247,9 +261,19 @@
 }
 
 .img-portada {
-  max-height: 450px;
+  max-width: 950px;
   overflow: hidden;
   border-radius: 5px;
+}
+
+.thumbnail-counter {
+  font-family: "Roboto Slab";
+  height: 100px;
+  color: black;
+  font-size: 49px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 61.04px;
 }
 
 .miniatura {
@@ -257,11 +281,23 @@
   width: 100px;
   border-radius: 5px;
   background-color: grey;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
-@media (min-width: 750px) {
-  .miniatura {
-    height: 200px;
-    width: 200px;
+@media (min-width: 768px) {
+  .mini-container {
+    height: 183px;
+    overflow: hidden;
   }
+  .miniatura {
+    height: 180px;
+    width: 180px;
+  }
+}
+.custom-close-button {
+  border: none;
+  background-color: transparent;
+  align-self: flex-end;
+  color: grey;
 }/*# sourceMappingURL=styles.css.map */

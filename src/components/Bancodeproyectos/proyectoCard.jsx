@@ -1,29 +1,35 @@
+import { Link } from 'react-router-dom';
 
-const ProyectoCard = () => {
+const ProyectoCard = ({ project }) =>
+{
+
   return (
-    <div className="proyect-card my-3 ms-lg-3">
-      <div className="card-img mt-2"></div>
-
+    <div className="proyect-card my-3" >
+      <div className="card-img" >
+        <img src={project.portada} className="img-fluid p-1" alt={project.name}/>
+      </div>
       <div className="d-flex flex-row justify-content-between p-3">
-        <p className="text-sans-h5 text-muted">Región: Araucanía</p>
-        <p className="text-sans-h5 text-muted">Comuna: Cholol</p>
+        <p className="text-sans-h5 text-muted">Región: {project.comuna.region}</p>
+        <p className="text-sans-h5 text-muted">Comuna: {project.comuna.comuna}</p>
       </div>
 
-      <h2 className="text-serif-h2 text-decoration-underline ml-3 mb-3 mx-3">Paneles Solares para sectores aislados en Cholchol</h2>
-      <p className="text-sans-p mx-3">El presente proyecto busca mejorar la calidad de vida de los beneficiarios por intermedio del 
-      suministro de energía eléctrica de sistema ...
-      </p>
+      <h2 className="text-serif-h2 text-decoration-underline ml-3 mb-3 mx-3">{project.name}</h2>
+      <p className="text-sans-p mx-3">{project.description}</p>
 
       <div className="container d-flex justify-content-between">
-        <p className="tag p-1">PMU</p>
-        <p className="tag p-1">2018</p>
-        <p className="tag p-1">Plazas y Áreas Verdes</p>
+        <p className="tag p-1">{project.program.sigla}</p>
+        <p className="tag p-1">{project.type.name}</p>
+        <p className="tag p-1">{project.year.number}</p>
       </div>
       <div className="d-flex justify-content-end p-3">
-        <button className="font-level-4 btn-principal-s text-decoration-underline px-3">Ver más &gt; </button>
+        <button className="font-level-4 btn-principal-s text-decoration-underline px-3">
+            <Link to={`/project/${project.slug}/`} className="font-level-4 btn-principal-s text-decoration-underline px-3">
+                Ver más &gt;
+            </Link>
+        </button>
       </div>
     </div>
   );
 };
-  
+
 export default ProyectoCard;

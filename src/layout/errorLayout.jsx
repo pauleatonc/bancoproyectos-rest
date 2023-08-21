@@ -1,8 +1,8 @@
-import {Outlet} from 'react-router-dom';
-import Navbar from '../components/Navbar/navbar'
-import Footer from '../components/Footer/footer';
+import { Outlet } from 'react-router-dom';
+import { Navbar , Footer } from '../components/Layout'; 
 
-const ErrorLayout = () => {
+const ErrorLayout = () =>
+{
   return (
     <>
       <Navbar />

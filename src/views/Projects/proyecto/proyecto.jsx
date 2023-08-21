@@ -1,7 +1,18 @@
-import Carousel from "../../../components/Proyecto/carouselBT";
+import { useParams } from "react-router-dom";
+import useApiProjectsDetail from "../../../hooks/useApiProjectsDetail";
 import Carrusel from "../../../components/Proyecto/carrusel";
 
 const Proyecto = () => {
+const { slug } = useParams();
+const { dataProject, loadingProject, errorProject } = useApiProjectsDetail(slug);
+
+if (loadingProject) {
+  return <div>CARGANDO DATOS...</div>
+}
+if (errorProject) {
+  return <div>Error de conexión: {errorProject}</div>
+}
+
   return (
     <div className="container col-10">
       {/* Boton volver y breadcrumbs */}
@@ -12,19 +23,17 @@ const Proyecto = () => {
           <ol className="breadcrumb m-0">
             <li className="breadcrumb-item"><a href="/" >Inicio</a></li>
             <li className="breadcrumb-item"><a href="/bancodeproyectos" >Banco de Proyectos</a></li>
-            <li className="breadcrumb-item active d-none d-lg-block border border-danger" aria-current="page">Como hacer dinamico esto?</li>
+            <li className="breadcrumb-item active d-none d-lg-block" aria-current="page">{dataProject.name}</li>
           </ol>
         </nav>
       </div>
 
-      <h1 className="text-sans-h1 my-md-5">Mejoramiento Integral Plaza El Olivar</h1>
+      <h1 className="text-sans-h1 my-md-5">{dataProject.name}</h1>
 
       {/* Descripcion del proyecto */}
       <div className="descripcion-container py-3 px-3">
         <h2 className="text-sans-h2 my-2">Descripción del proyecto</h2>
-        <p className="text-sans-p">El permanente crecimiento de la comuna ha llevado a un desarrollo desigual con carencia en servicios de equipamiento e infraestructura a diversos sectores de articulaciones y de integración, 
-          es por ello que, con esta iniciativa de inversión se busca consolidar áreas de integración social en espacios públicos y de equipamiento urbano, que mejoren de manera sostenible espacios de encuentro y de esparcimiento del área urbana.
-        </p>
+        <p className="text-sans-p">{dataProject.description}</p>
       </div>
       
       {/* Tabla detalles del proyecto */}
@@ -35,80 +44,100 @@ const Proyecto = () => {
         <div className="row">
           <div className="col">
             <p className="text-sans-p"><strong>Nombre del proyecto</strong></p>
-            <p className="text-sans-p">Mejoramiento Integral Plaza El Olivar</p>
+            <p className="text-sans-p">{dataProject.name}</p>
           </div>
 
           <div className="col">
             <p className="text-sans-p"><strong>Programa</strong></p>
-            <p className="text-sans-p">Programa de Mejoramiento Urbano (PMU)</p>
+            <p className="text-sans-p">{dataProject.program.name}</p>
           </div>
 
           <div className="col">
             <p className="text-sans-p"><strong>Tipo de proyecto</strong></p>
-            <p className="text-sans-p">Plazas y Áreas Verdes</p>
+            <p className="text-sans-p">{dataProject.type.name}</p>
           </div>
         </div>
 
         <div className="row">
           <div className="col">
             <p className="text-sans-p"><strong>Región</strong></p>
-            <p className="text-sans-p">Valparaíso</p>
+            <p className="text-sans-p">{dataProject.comuna.region}</p>
           </div>
 
           <div className="col">
             <p className="text-sans-p"><strong>Comuna</strong></p>
-            <p className="text-sans-p">Algarrobo</p>
+            <p className="text-sans-p">{dataProject.comuna.comuna}</p>
           </div>
 
           <div className="col">
             <p className="text-sans-p"><strong>Año de construcción</strong></p>
-            <p className="text-sans-p">2018</p>
+            <p className="text-sans-p">{dataProject.year.number}</p>
           </div>
         </div>
         
         <div className="row">
           <p className="text-sans-p"><strong>Código de identificación SUBDERE</strong></p>
-          <p className="text-sans-p">1-C-2018-93</p>
+          <p className="text-sans-p">{dataProject.id_subdere}</p>
         </div>
       </div>
       
-     
       {/* Imágenes del proyecto */}
       <h2 className="text-sans-h2 my-5">Imágenes del proyecto</h2>
       
-      <Carrusel />
-      <hr />
-      <Carousel />
-
+      <Carrusel imgPortada={dataProject.portada} imgGeneral={dataProject.images}/>
+      
+  
       <div className=" p-0 d-md-flex justify-content-between my-4">
         <div className="col-md-6">
           <h3 className="text-sans-h3">Antes del proyecto</h3>
-          <div className="img-proyecto"></div>
+          <img src={dataProject.beforeimage} className="img-proyecto"/>
         </div>
         <div className="col-md-6">
           <h3 className="text-sans-h3">Después del proyecto</h3>
-          <div className="img-proyecto" />
+          <img src={dataProject.afterimage} className="img-proyecto"/>
         </div>
       </div>
 
       <h3 className="text-sans-h3">Video del proyecto</h3>
       <div className="d-flex justify-content-center mb-md-5">
-        <div className="col-md-7 img-proyecto" />
+        <div className="col-md-7 img-proyecto" src={dataProject.video} />
       </div>
 
       <h2 className="text-sans-h2 my-4">Documentos del proyecto</h2>
-      <div className=" d-flex justify-content-between my-4 font-weight-bold">
-        <div>#</div>
-        <div>Documento</div>
-        <div>Formato</div>
-        <div>Acción</div>
-      </div>
-      <div className="d-flex justify-content-between my-3">
-        <div>1</div>
-        <div>Planimetría</div>
-        <div>PDF</div>
-        <a href="#">Descargar</a>
-      </div>
+        <div className=" d-flex justify-content-between my-4 font-weight-bold">
+            <div>#</div>
+            <div>Documento</div>
+            <div>Formato</div>
+            <div>Acción</div>
+        </div>
+
+        {/* Especificaciones Técnicas */}
+        <div className="d-flex justify-content-between my-3">
+            <div>1</div>
+            <div>Especificaciones Técnicas</div>
+            <div>PDF</div>
+            <a href={dataProject.eett} target="_blank" rel="noopener noreferrer">Descargar</a>
+        </div>
+
+        {/* Presupuesto */}
+        <div className="d-flex justify-content-between my-3">
+            <div>2</div>
+            <div>Presupuesto</div>
+            <div>PDF</div>
+            <a href={dataProject.presupuesto} target="_blank" rel="noopener noreferrer">Descargar</a>
+        </div>
+
+        {
+            dataProject.files.map((file, index) => (
+                <div key={index} className="d-flex justify-content-between my-3">
+                    <div>{index + 3}</div>  {/* Comenzamos desde el índice 3 porque ya mostramos 2 documentos anteriormente */}
+                    <div>{file.name}</div>
+                    <div>{file.file_format}</div>
+                    <a href={file.file} target="_blank" rel="noopener noreferrer">Descargar</a>
+                </div>
+            ))
+        }
+
 
       <h2 className="text-sans-h2 my-4">Documentos con normativa de uso general</h2>
       <div className="d-flex justify-content-between my-4 font-weight-bold">
@@ -117,12 +146,16 @@ const Proyecto = () => {
         <div>Formato</div>
         <div>Acción</div>
       </div>
-      <div className="d-flex justify-content-between my-3">
-        <div>1</div>
-        <div>Guía Operativa PMU</div>
-        <div>PDF</div>
-        <a href="#">Descargar</a>
-      </div>
+      {
+            dataProject.type.guides.map((guide, index) => (
+                <div key={index} className="d-flex justify-content-between my-3">
+                    <div>{index + 1}</div>
+                    <div>{guide.name}</div>
+                    <div>{guide.guide_format}</div>
+                    <a href={guide.guide} target="_blank" rel="noopener noreferrer">Descargar</a>
+                </div>
+            ))
+        }
 
       <h2 className="text-sans-h2 my-4">Proyectos relacionados</h2>
       <div className=" border border-warning">componente?</div>
