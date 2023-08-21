@@ -1,94 +1,48 @@
-import { useState } from 'react';
+import useContactForm from '../../hooks/useContactForm';
+import apiCreatecontact from '../../services/home/createContact';
+
 
 const ContactForm = () => {
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    organization: '',
-    reason: '',
-    comment: ''
-  });
 
-  const [formErrors, setFormErrors] = useState({
-    fullNameError: '',
-    emailError: '',
-    organizationError: '',
-    reasonError: '',
-    commentError: ''
-  });
-
-  const validateForm = () => {
-    let isValid = true;
-    const errors = {
-      fullNameError: '',
-      emailError: '',
-      organizationError: '',
-      reasonError: '',
-      commentError: ''
-    };
-
-    if (formData.fullName.trim() === '') {
-      errors.fullNameError = 'Por favor, introduce tu nombre completo.';
-      isValid = false;
-    }
-
-    if (formData.email.trim() === '') {
-      errors.emailError = 'Por favor, introduce tu correo electrónico.';
-      isValid = false;
-    }
-
-    if (formData.organization.trim() === '') {
-      errors.organizationError = 'Por favor, introduce tu organización.';
-      isValid = false;
-    }
-
-    if (formData.reason.trim() === '') {
-      errors.reasonError = 'Por favor, indica la razón de tu contacto.';
-      isValid = false;
-    }
-
-    if (formData.comment.trim() === '') {
-      errors.commentError = 'Por favor, deja un comentario.';
-      isValid = false;
-    }
-
-    setFormErrors(errors);
-    return isValid;
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (validateForm()) {
-      // Aquí enviar los datos al backend
-      console.log('Formulario válido. Enviar datos al backend:', formData);
-    } else {
-      console.log('Formulario inválido. Por favor, completa todos los campos.');
+  const submitForm = async (formData) => {
+    try {
+        const response = await apiCreatecontact.post('/', formData);
+        if (response.status === 200) {
+            console.log('Form data submitted successfully:', response.data);
+            // You can add additional logic here, e.g., showing a success message, redirecting, etc.
+        } else {
+            console.log('Failed to submit form data:', response.data);
+        }
+    } catch (error) {
+        console.error('Error submitting form data:', error);
+        // Handle errors appropriately, e.g., showing an error message to the user.
     }
   };
 
-  const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+  const {
+      formData,
+      formErrors,
+      handleChange,
+      handleSubmit
+  } = useContactForm(submitForm);
+
 
   return (
     <form 
         id='formularioContacto'
         onSubmit={handleSubmit}>
       <div className='inputFormulario'>
-        <label htmlFor='fullName'>Nombre Completo (Obligatorio)</label>
+        <label htmlFor='full_name'>Nombre Completo (Obligatorio)</label>
         <input
           className='campo'
           type='text'
-          id='fullName'
-          name='fullName'
+          id='full_name'
+          name='full_name'
           placeholder='Ingresa tu nombre.'
-          value={formData.fullName}
+          value={formData.full_name}
           onChange={handleChange}
         />
-        {formErrors.fullNameError && <span>{formErrors.fullNameError}</span>}
+        {formErrors.full_nameError && <span>{formErrors.full_nameError}</span>}
       </div>
       <div className='inputFormulario'>
         <label htmlFor='email'>Correo electrónico institucional (Obligatorio)</label>
@@ -117,33 +71,34 @@ const ContactForm = () => {
         {formErrors.organizationError && <span>{formErrors.organizationError}</span>}
       </div>
       <div className='inputFormulario'>
-        <label htmlFor='reason'>Razón de contacto (Obligatorio)</label>
+        <label htmlFor='contact_reason'>Razón de contacto (Obligatorio)</label>
         <select
             className='campo'
-            id='reason'
-            name='reason'
-            value={formData.reason}
+            id='contact_reason'
+            name='contact_reason'
+            value={formData.contact_reason}
             onChange={handleChange}>
             <option value=''>Elije una opción</option>
-            <option value='opcion1'>Opción 1</option>
-            <option value='opcion2'>Opción 2</option>
-            <option value='opcion3'>Opción 3</option>
+            <option value='sugerencia'>Sugerencia</option>
+            <option value='consulta'>Consulta por programa</option>
+            <option value='documento'>Falta un documento</option>
+            <option value='falla'>Falla en la plataforma</option>
         </select>
-        {formErrors.reasonError && <span>{formErrors.reasonError}</span>}
+        {formErrors.contact_reasonError && <span>{formErrors.contact_reasonError}</span>}
       </div>
       <div className='inputFormulario'>
-        <label htmlFor='comment'>Comentario (Obligatorio)</label>
+        <label htmlFor='message'>Comentario (Obligatorio)</label>
         <textarea
         className='campocomentario'
-          id='comment'
-          name='comment'
-          value={formData.comment}
+          id='message'
+          name='message'
+          value={formData.message}
           onChange={handleChange}
         ></textarea>
-        {formErrors.commentError && <span>{formErrors.commentError}</span>}
+        {formErrors.messageError && <span>{formErrors.messageError}</span>}
       </div>
       <div className="contadorCaracteres">
-    ({formData.comment.length}/250)
+    ({formData.message.length}/500)
   </div>
       <button className='btn' type='submit'>Enviar</button>
     </form>

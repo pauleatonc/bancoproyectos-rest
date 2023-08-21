@@ -1,26 +1,36 @@
 import { useState, useEffect } from 'react';
 import apiFilterList from '../services/project/projectsFilter.api';
 
-const useApiFilterList = () => {
-  const [ dataFilter, setDataFilter ] = useState([]);
-  const [ loadingProject, setLoadingProject ] = useState(true);
-  const [ errorProject, setErrorProject ] = useState(null);
+const useApiFilter = () => {
+  const [dataFilter, setDataFilter] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  
+  const [filteredProjects, setFilteredProjects] = useState([]);
+  const [hasResults, setHasResults] = useState(true);
 
-  useEffect( ()=>{
+  const handleFilter = (projects) => {
+    setFilteredProjects(projects);
+    setHasResults(projects.length > 0);
+  };
+
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await apiFilterList.get('/');
         setDataFilter(response.data);
-        setLoadingProject(false);
+        setLoading(false);
+
       } catch (error) {
-        setErrorProject(error);
-        setLoadingProject(false);
+        console.error("Error fetching data:", error); 
+        setError(error);
+        setLoading(false);
       }
     };
     fetchData();
   }, []);
 
-  return { dataFilter, loadingProject, errorProject};
+  return { dataFilter, loading, error, filteredProjects, hasResults, handleFilter };
 }
 
-export default useApiFilterList;
+export default useApiFilter;
