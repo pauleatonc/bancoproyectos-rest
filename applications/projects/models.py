@@ -111,7 +111,7 @@ class Project(models.Model):
     slug = models.SlugField(editable=False, max_length=300)
 
     prioritized_tag = models.ManyToManyField(
-        PrioritizedTag, blank=False, verbose_name='Tag proyecto priorizado')
+        PrioritizedTag, blank=True, verbose_name='Tag proyecto priorizado')
 
 
 
