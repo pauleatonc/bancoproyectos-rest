@@ -26,7 +26,7 @@ const ImageModal = ({ img, selectedImageIndex, setSelectedImageIndex }) => {
           <div className="d-flex justify-content-between p-2">
           <div className="image-indicator">{imageIndicator}</div>
             <button type="button" className="custom-close-button" data-bs-dismiss="modal" aria-label="Close" onClick={handleClose}>
-              Cerrar <FontAwesomeIcon icon={faTimes}/>
+              Cerrar <FontAwesomeIcon icon={faTimes} className="fa-xl"/>
             </button>
           </div>
           
