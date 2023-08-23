@@ -1,27 +1,14 @@
 import { Link } from 'react-router-dom';
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = () =>{  
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const menuRef = useRef(null); // Referencia al menu desplegable
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-
-  const handleOutsideClick = (event) => {
-    if (menuRef.current && !menuRef.current.contains(event.target)){
-      setIsMenuOpen(false); //Cierra menu al hacer click fuera de el
-    }
-  }
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleOutsideClick);
-
-    return () => {
-      document.removeEventListener('mousedown', handleOutsideClick);
-    };
-  }, []);
 
   return (
   <>
@@ -46,6 +33,7 @@ const Navbar = () =>{
             <i className="cl cl-claveunica"/> 
             <span className="text-underline mx-1"> Iniciar sesión </span>
           </button>
+          {/* Boton menu vista mobile */}
           <button className="d-md-none" onClick={toggleMenu}> Menu </button>
         </div>
       </div>
@@ -64,20 +52,32 @@ const Navbar = () =>{
 
     {/* Menu Desplegable */}
     {isMenuOpen && (
-      <div className="col" ref={menuRef}>
-        {/* nagevacion */}
-        <Link to="/" className="link text-black text-underline mx-md-3"> Inicio </Link>
-        <Link to="/bancodeproyectos" className="link text-black text-underline mx-md-3"> Banco de Proyectos </Link>
-        <Link to="/bancodeproyectos" className="link text-black text-underline mx-md-3"> Type something </Link>
-        <Link to="/bancodeproyectos" className="link text-black text-underline mx-md-3"> Type something </Link>
-        <Link to="/contacto" className="link text-black text-underline mx-md-3">Contacto</Link>
+      <div className={`menu-modal ${isMenuOpen ? 'open' : ''}`}>
+        <div className="d-flex justify-content-end my-4 me-2">
+          <button className="btn-close-modal"onClick={toggleMenu}> Cerrar
+            <FontAwesomeIcon icon={faTimes} className="fa-xl ms-2"/> 
+          </button>
+        </div>
 
-        <hr />
+        {/* nagevacion */}
+        <div className="d-flex flex-column ms-3">
+          <Link to="/" className="link text-sans-p-white text-underline my-2"> Inicio </Link>
+          <Link to="/bancodeproyectos" className="link text-sans-p-white text-underline my-2"> Banco de Proyectos </Link>
+          <Link to="/bancodeproyectos" className="link text-sans-p-white text-underline my-2"> Type something </Link>
+          <Link to="/bancodeproyectos" className="link text-sans-p-white text-underline my-2"> Type something </Link>
+          <Link to="/contacto" className="link text-sans-p-white text-underline my-2">Contacto</Link>
+        </div>
+
+        <hr id="menu-divider"/>
+
         {/* Inicio Sesion  */}
-        <button className="btn-principal-l mt-4 me-md-5" type="button">
+        <div className="d-flex justify-content-center">
+          <button className="btn-principal-l" type="button">
             <i className="cl cl-claveunica"/> 
             <span className="text-underline mx-1"> Iniciar sesión </span>
           </button>
+        </div>
+
       </div>
     )}
 
