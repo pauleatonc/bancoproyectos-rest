@@ -107,6 +107,8 @@
   border: none;
   color: #FFFFFF;
   padding: 13px;
+  height: -moz-fit-content;
+  height: fit-content;
 }
 
 .btn-principal-l {
@@ -121,6 +123,41 @@
   border: 1px solid #0F69C4;
   background-color: transparent;
   color: #0F69C4;
+}
+
+#barraGris {
+  width: 100%;
+  height: 28px;
+  background-color: #373737;
+}
+
+.line-container {
+  position: absolute;
+  top: 28px;
+  bottom: 0;
+  left: 100px;
+}
+
+#lineBlue {
+  width: 58px;
+  height: 8px;
+  background-color: #0f69c4;
+}
+
+#lineRed {
+  width: 82px;
+  height: 8px;
+  background-color: #e22c2c;
+}
+
+.logo-subdere {
+  font-family: "Roboto";
+  color: #373737;
+  font-size: 20px;
+  font-weight: 700;
+  width: 280px;
+  margin-left: 75px;
+  text-decoration: none;
 }
 
 .categorias-circle {
