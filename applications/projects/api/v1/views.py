@@ -108,10 +108,11 @@ class ProjectViewSet(viewsets.ModelViewSet):
             num_comunas_with_projects__gt=0).order_by('id')
 
         # Serializar los datos
-        years_data = YearSerializerV1(unique_years, many=True).data
-        programs_data = ProgramSerializerV1(unique_programs, many=True).data
-        types_data = TypeSerializerV1(unique_types, many=True).data
-        region_data = RegionWithComunasSerializer(unique_regiones, many=True).data
+        serializer_context = {'request': request}
+        years_data = YearSerializerV1(unique_years, many=True, context=serializer_context).data
+        programs_data = ProgramSerializerV1(unique_programs, many=True, context=serializer_context).data
+        types_data = TypeSerializerV1(unique_types, many=True, context=serializer_context).data
+        region_data = RegionWithComunasSerializer(unique_regiones, many=True, context=serializer_context).data
 
         return Response({
             'years': years_data,
