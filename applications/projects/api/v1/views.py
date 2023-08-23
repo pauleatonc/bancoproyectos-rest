@@ -1,15 +1,18 @@
+from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from rest_framework.reverse import reverse
+from rest_framework import renderers
+from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework import permissions
+#
 from django.db.models import Count
 from django.db.models import Q
 
 from rest_framework.generics import (
     GenericAPIView,
     ListAPIView,
-    CreateAPIView,
-    RetrieveAPIView,
-    DestroyAPIView,
-    UpdateAPIView,
-    RetrieveUpdateAPIView
+    RetrieveUpdateDestroyAPIView
 )
 #
 from applications.projects.models import (
@@ -26,28 +29,32 @@ from applications.regioncomuna.models import (
     Comuna
 )
 #
-from .projectListSerializer import (
-    ProjectListSerializerV1,
+from .projectSerializer import (
+    ProjectDetailSerializerV1,
     YearSerializerV1,
     ProgramSerializerV1,
-    TypeListSerializerV1,
-)
-
-from .projectDetailSerializer import (
-    ProjectDetailSerializerV1,
+    TypeSerializerV1,
 )
 
 from applications.regioncomuna.serializer import (
     RegionWithComunasSerializer,
-    ComunaSerializer
 )
 
 
-class ProjectListApiViewV1(ListAPIView):
+'''@api_view(['GET'])
+def api_root(request, format=None):
+    return Response({
+        'projects': reverse('project-list', request=request, format=format),
+    })'''
 
-    serializer_class = ProjectListSerializerV1
+
+class ProjectViewSet(viewsets.ModelViewSet):
+
+    serializer_class = ProjectDetailSerializerV1
+    lookup_field = 'slug'
 
     def get_queryset(self):
+        ''' Listado de proyectos para filtrar '''
         queryset = Project.objects.all()
 
         region = self.request.query_params.get('region', None)
@@ -82,34 +89,28 @@ class ProjectListApiViewV1(ListAPIView):
 
         return queryset
 
-
-class ProjectDetailApiViewV1(RetrieveAPIView):
-
-    serializer_class = ProjectDetailSerializerV1
-    lookup_field = 'slug'
-
-    def get_queryset(self):
-        return Project.objects.all()
-
-
-class FilterOptionsApiViewV1(GenericAPIView):
-    def get(self, request):
+    @action(detail=False, methods=['GET'])
+    def filter_options(self, request):
         # Obtener años únicos que están asociados con al menos un proyecto
-        unique_years = Year.objects.annotate(num_projects=Count('project')).filter(num_projects__gt=0).order_by('number')
+        unique_years = Year.objects.annotate(num_projects=Count('project')).filter(num_projects__gt=0).order_by(
+            'number')
 
         # Obtener programas únicos que están asociados con al menos un proyecto
-        unique_programs = Program.objects.annotate(num_projects=Count('project')).filter(num_projects__gt=0).order_by('name')
+        unique_programs = Program.objects.annotate(num_projects=Count('project')).filter(num_projects__gt=0).order_by(
+            'name')
 
         # Obtener tipos únicos que están asociados con al menos un proyecto
         unique_types = Type.objects.annotate(num_projects=Count('project')).filter(num_projects__gt=0).order_by('name')
 
         # A partir de las comunas, obtener las regiones únicas
-        unique_regiones = Region.objects.annotate(num_comunas_with_projects=Count('comunas__project', distinct=True)).filter(num_comunas_with_projects__gt=0).order_by('id')
+        unique_regiones = Region.objects.annotate(
+            num_comunas_with_projects=Count('comunas__project', distinct=True)).filter(
+            num_comunas_with_projects__gt=0).order_by('id')
 
         # Serializar los datos
         years_data = YearSerializerV1(unique_years, many=True).data
         programs_data = ProgramSerializerV1(unique_programs, many=True).data
-        types_data = TypeListSerializerV1(unique_types, many=True).data
+        types_data = TypeSerializerV1(unique_types, many=True).data
         region_data = RegionWithComunasSerializer(unique_regiones, many=True).data
 
         return Response({
