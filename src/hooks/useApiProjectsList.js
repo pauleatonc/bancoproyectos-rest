@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import apiProjectsList from '../services/project/projectsList.api';
+import apiProjects from '../services/project/projects.api';
 
 const useApiProjectsList = () => {
   const [ dataProject, setDataProject ] = useState([]);
@@ -9,7 +9,7 @@ const useApiProjectsList = () => {
   useEffect( ()=>{
     const fetchData = async () => {
       try {
-        const response = await apiProjectsList.get('/');
+        const response = await apiProjects.get('v1/');
         setDataProject(response.data);
         setLoadingProject(false);
       } catch (error) {

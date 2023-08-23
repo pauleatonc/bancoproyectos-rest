@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import useApiFilter from "../../hooks/useApiFilter";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-regular-svg-icons';
-import apiProjectsList from '../../services/project/projectsList.api';
+import apiProjects from '../../services/project/projects.api';
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
 
 
@@ -32,7 +32,7 @@ const FiltroProyectos = (props) => {
 
   const fetchAllProjects = async () => {
     try {
-        const response = await apiProjectsList.get('/');
+        const response = await apiProjects.get('v1/');
 
         if (response.status === 200) {
             const allProjects = response.data;
@@ -53,7 +53,7 @@ const FiltroProyectos = (props) => {
 
     try {
         const endpoint = '/?' + queryParams.toString(); 
-        const response = await apiProjectsList.get(endpoint);
+        const response = await apiProjects.get(endpoint);
 
         if (response.status === 200) {
             const filteredProjects = response.data;
@@ -119,9 +119,9 @@ const FiltroProyectos = (props) => {
         value={selectedComuna}>
           <option className="" value=''>Elige una o más comunas</option>
           {/* Map over the selectedComunas state to create options */}
-          {dataFilter.comunas.map((comuna) => (
-            <option key={comuna.id} value={comuna.comuna}>
-              {comuna.comuna}
+          {dataFilter.regiones.map((region) => (
+            <option key={region.id} value={region.region}>
+              {region.region}
             </option>
           ))}
         </select>
@@ -131,13 +131,10 @@ const FiltroProyectos = (props) => {
         </div>
       </div>
 
-<<<<<<< src/components/Bancodeproyectos/proyectosFilter.jsx
       {/* tipo select */}
       <div className="container filter-line my-3"></div>
-=======
       <hr className="col-11 my-4"/>
 
->>>>>>> src/components/Bancodeproyectos/proyectosFilter.jsx
       <div>
         <div className="container d-flex justify-content-between align-items-start px-1 mb-3">
           <h3 className="text-sans-p">¿Qué tipo de proyecto es?</h3>
