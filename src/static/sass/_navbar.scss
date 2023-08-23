@@ -8,7 +8,7 @@
     position:absolute;
     top: 28px;
     bottom: 0;
-    left: 100px;
+    left: 45px;
 }
 @mixin deco-line ($widthsize, $bgcolor){
     width: $widthsize;
@@ -22,12 +22,21 @@
     @include deco-line(82px, #e22c2c);
 }
 .logo-subdere{
-    @include font-sans(20px, 700, $grey-a-color);
-    width: 280px;
-    margin-left: 75px;
+    @include font-sans(16px, 700, $grey-a-color);
+    width: 210px;
+    margin-left: 20px;
     text-decoration: none;
 }
 
+@mixin menu-btns ($color){
+    border: none;
+    background-color: transparent;
+    color: $color;
+    text-decoration: underline;
+}
+.menu-btn{
+    @include menu-btns($grey-a-color)
+}
 .menu-modal {
     display: none;
     position: absolute;
@@ -42,11 +51,19 @@
     display: block;
   }
 .btn-close-modal{
-    border: none;
-    background-color: transparent;
-    color: $white-color;
-    text-decoration: underline;
+    @include menu-btns($white-color)
 }
 #menu-divider{
     color: $white-color;
+}
+
+@media (min-width: 792px) {
+    .logo-subdere{
+        @include font-sans(20px, 700, $grey-a-color);
+        width: 280px;
+        margin-left: 75px;
+    } 
+    .line-container{
+        left: 100px;
+    } 
 }

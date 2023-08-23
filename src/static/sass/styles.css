@@ -137,7 +137,7 @@
   position: absolute;
   top: 28px;
   bottom: 0;
-  left: 100px;
+  left: 45px;
 }
 
 #lineBlue {
@@ -155,11 +155,18 @@
 .logo-subdere {
   font-family: "Roboto";
   color: #373737;
-  font-size: 20px;
+  font-size: 16px;
   font-weight: 700;
-  width: 280px;
-  margin-left: 75px;
+  width: 210px;
+  margin-left: 20px;
   text-decoration: none;
+}
+
+.menu-btn {
+  border: none;
+  background-color: transparent;
+  color: #373737;
+  text-decoration: underline;
 }
 
 .menu-modal {
@@ -188,6 +195,19 @@
   color: #FFF;
 }
 
+@media (min-width: 792px) {
+  .logo-subdere {
+    font-family: "Roboto";
+    color: #373737;
+    font-size: 20px;
+    font-weight: 700;
+    width: 280px;
+    margin-left: 75px;
+  }
+  .line-container {
+    left: 100px;
+  }
+}
 .categorias-circle {
   border: 1px solid #006FB3;
   width: 65px;

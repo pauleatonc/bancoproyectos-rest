@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = () =>{  
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -15,8 +16,8 @@ const Navbar = () =>{
     <div id="barraGris"></div>
     <nav className="container-fluid">
 
-      <div className="row border border-primary">
-        <div className="col border border-secondary">
+      <div className="row">
+        <div className="col">
           {/* Logo subdere */}
           <Link to="/" className="text-decoration-none">
             <div className="line-container row">
@@ -27,19 +28,21 @@ const Navbar = () =>{
           </Link>
         </div>
 
-        <div className="col d-flex justify-content-end  border border-secondary">
+        <div className="col d-flex justify-content-end">
           {/* Inicio sesion */}
           <button className="btn-principal-s mt-4 me-md-5 d-none d-md-block" type="button">
             <i className="cl cl-claveunica"/> 
             <span className="text-underline mx-1"> Iniciar sesión </span>
           </button>
           {/* Boton menu vista mobile */}
-          <button className="d-md-none" onClick={toggleMenu}> Menu </button>
+          <button className="d-md-none menu-btn" onClick={toggleMenu}> Menu
+            <FontAwesomeIcon icon={faBars} className="fa-lg ms-2" /> 
+          </button>
         </div>
       </div>
     </nav>  
 
-    <div className="row border border-primary">
+    <div className="row mt-4">
       {/* Navegacion */}
       <div className="mx-md-auto mx-lg-auto mx-xl-auto d-flex flex-column flex-md-row justify-content-center">
         <Link to="/" className="link text-black text-underline mx-md-3 d-none d-md-block"> Inicio </Link>
