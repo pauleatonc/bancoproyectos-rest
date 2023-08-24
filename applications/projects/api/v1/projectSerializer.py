@@ -60,6 +60,7 @@ class TypeSerializerV1(serializers.ModelSerializer):
         fields = (
             'id',
             'name',
+            'icon_type',
             'guides'
         )
 
