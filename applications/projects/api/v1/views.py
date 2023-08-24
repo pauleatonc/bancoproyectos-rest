@@ -57,7 +57,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
     lookup_field = 'slug'
     filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ['comuna__region', 'comuna', 'year', 'program', 'type']
-    search_fields = ['name', 'id_subdere']
+    search_fields = ['name', 'id_subdere', 'description']
     ordering_fields = ['year']
     ordering = ['year']
 
