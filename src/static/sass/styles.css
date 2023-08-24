@@ -1,3 +1,4 @@
+@charset "UTF-8";
 .text-serif-h1 {
   font-family: "Roboto Slab";
   color: #373737;
@@ -107,6 +108,8 @@
   border: none;
   color: #FFFFFF;
   padding: 13px;
+  height: -moz-fit-content;
+  height: fit-content;
 }
 
 .btn-principal-l {
@@ -123,6 +126,88 @@
   color: #0F69C4;
 }
 
+#barraGris {
+  width: 100%;
+  height: 28px;
+  background-color: #373737;
+  position: relative;
+}
+
+.line-container {
+  position: absolute;
+  top: 28px;
+  bottom: 0;
+  left: 45px;
+}
+
+#lineBlue {
+  width: 58px;
+  height: 8px;
+  background-color: #0f69c4;
+}
+
+#lineRed {
+  width: 82px;
+  height: 8px;
+  background-color: #e22c2c;
+}
+
+.logo-subdere {
+  font-family: "Roboto";
+  color: #373737;
+  font-size: 16px;
+  font-weight: 700;
+  width: 210px;
+  margin-left: 20px;
+  text-decoration: none;
+}
+
+.menu-btn {
+  border: none;
+  background-color: transparent;
+  color: #373737;
+  text-decoration: underline;
+}
+
+.menu-modal {
+  display: none;
+  position: absolute;
+  top: 28px;
+  right: 0;
+  background-color: #093F75;
+  z-index: 1;
+  padding: 10px;
+  width: 290px; /* Ajusta según sea necesario */
+}
+
+.menu-modal.open {
+  display: block;
+}
+
+.btn-close-modal {
+  border: none;
+  background-color: transparent;
+  color: #FFF;
+  text-decoration: underline;
+}
+
+#menu-divider {
+  color: #FFF;
+}
+
+@media (min-width: 792px) {
+  .logo-subdere {
+    font-family: "Roboto";
+    color: #373737;
+    font-size: 20px;
+    font-weight: 700;
+    width: 280px;
+    margin-left: 75px;
+  }
+  .line-container {
+    left: 100px;
+  }
+}
 .categorias-circle {
   border: 1px solid #006FB3;
   width: 65px;
@@ -250,9 +335,6 @@
   height: 350px;
   flex-shrink: 0;
   border-radius: 5px;
-  -o-object-fit: cover;
-     object-fit: cover;
-  overflow: hidden;
 }
 
 .detalles-del-proyecto {
@@ -262,18 +344,11 @@
 
 .img-portada {
   max-width: 950px;
-  overflow: hidden;
   border-radius: 5px;
 }
 
-.thumbnail-counter {
-  font-family: "Roboto Slab";
-  height: 100px;
-  color: black;
-  font-size: 49px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: 61.04px;
+.img-portada:hover {
+  opacity: 0.9;
 }
 
 .miniatura {
@@ -283,16 +358,43 @@
   background-color: grey;
   -o-object-fit: cover;
      object-fit: cover;
+  position: relative;
 }
 
-@media (min-width: 768px) {
+.miniatura:hover {
+  opacity: 0.9;
+}
+
+.thumbnail-counter-overlay {
+  display: none;
+}
+
+@media (min-width: 792px) {
   .mini-container {
-    height: 183px;
+    height: 190px;
     overflow: hidden;
   }
   .miniatura {
     height: 180px;
     width: 180px;
+  }
+  .thumbnail-counter-overlay {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    padding-top: 35%;
+    border-radius: 4px;
+    font-family: "Roboto Slab";
+    color: #FFF;
+    font-size: 49px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 61.04px;
   }
 }
 .custom-close-button {

@@ -1,0 +1,69 @@
+#barraGris{
+    width: 100%;
+    height: 28px;
+    background-color: #373737;
+    position: relative;  
+}
+.line-container{
+    position:absolute;
+    top: 28px;
+    bottom: 0;
+    left: 45px;
+}
+@mixin deco-line ($widthsize, $bgcolor){
+    width: $widthsize;
+    height: 8px;
+    background-color: $bgcolor;
+}
+#lineBlue {
+    @include deco-line(58px, #0f69c4);
+}
+#lineRed {
+    @include deco-line(82px, #e22c2c);
+}
+.logo-subdere{
+    @include font-sans(16px, 700, $grey-a-color);
+    width: 210px;
+    margin-left: 20px;
+    text-decoration: none;
+}
+
+@mixin menu-btns ($color){
+    border: none;
+    background-color: transparent;
+    color: $color;
+    text-decoration: underline;
+}
+.menu-btn{
+    @include menu-btns($grey-a-color)
+}
+.menu-modal {
+    display: none;
+    position: absolute;
+    top: 28px;
+    right: 0;
+    background-color: #093F75;
+    z-index: 1;
+    padding: 10px;
+    width: 290px; /* Ajusta según sea necesario */
+  }
+  .menu-modal.open {
+    display: block;
+  }
+.btn-close-modal{
+    @include menu-btns($white-color)
+}
+#menu-divider{
+    color: $white-color;
+}
+
+@media (min-width: 792px) {
+    .logo-subdere{
+        @include font-sans(20px, 700, $grey-a-color);
+        width: 280px;
+        margin-left: 75px;
+    } 
+    .line-container{
+        left: 100px;
+    } 
+}
