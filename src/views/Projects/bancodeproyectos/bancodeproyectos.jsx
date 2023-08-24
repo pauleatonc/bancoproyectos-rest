@@ -4,28 +4,30 @@ import "../../../static/styles/bancodeproyectos.css";
 import { ProyectoContainer, ProyectosFilter, ProyectosSort, BuscadorProyectos } from '../../../components/Bancodeproyectos';
 import useApiFilter from '../../../hooks/useApiFilter';
 import useApiProjectsList from "../../../hooks/useApiProjectsList";
+import useOrdering from '../../../hooks/useOrdering';
+import useProjectSearch from '../../../hooks/useProjectSearch';
+
+
 
 const BancoProyectos = () => {
   const { dataProject, loadingProject, errorProject } = useApiProjectsList();
-  const { dataFilter, loading, error, filteredProjects, hasResults, handleFilter } = useApiFilter();
-
-
-  const [searchActivated, setSearchActivated] = useState(false);
-  const [searchResults, setSearchResults] = useState([]);
-
-
-  const handleSearch = (results) => {
-    setSearchResults(results);
-    setSearchActivated(true);
-  };
+  const { dataFilter, loading, error, filteredProjects, handleFilter } = useApiFilter();
+  const { data, loading: orderingLoading, error: orderingError, setOrder } = useOrdering();
+  const { searchResults, searchActivated, handleSearch } = useProjectSearch();
 
   
   const projectsToDisplay = useMemo(() => {
-    return searchActivated ? searchResults : filteredProjects.length > 0 ? filteredProjects : dataProject;
-  }, [searchActivated, searchResults, filteredProjects, dataProject]);
+    if (searchActivated) return searchResults;
+    if (filteredProjects.length > 0) return filteredProjects;
+    if (data && data.length > 0) return data; // datos ordenados
+    return dataProject; // datos originales sin filtrar ni ordenar
+  }, [searchActivated, searchResults, filteredProjects, data, dataProject]); 
   
-  if (loadingProject || loading) return <div>CARGANDO DATOS...</div>;
-  if (errorProject || error) return <div>Error de conexión</div>;
+  const hasResults = projectsToDisplay && projectsToDisplay.length > 0;
+  
+  if (loadingProject || loading || orderingLoading) return <div>CARGANDO DATOS...</div>;
+  if (errorProject || error || orderingError) return <div>Error de conexión</div>;
+
 
 
   return (
@@ -43,7 +45,7 @@ const BancoProyectos = () => {
         <ProyectosFilter onFilter={handleFilter} dataFilter={dataFilter}/>
         <div className="ml-md-5">
           <div className="d-flex justify-content-end mb-1">
-            <ProyectosSort />
+            <ProyectosSort setOrder={setOrder}/>
           </div>
           {hasResults ? (
             <ProyectoContainer data={projectsToDisplay} />

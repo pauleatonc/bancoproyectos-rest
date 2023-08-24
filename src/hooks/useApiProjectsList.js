@@ -6,7 +6,7 @@ const useApiProjectsList = () => {
   const [loadingProject, setLoadingProject] = useState(true);
   const [errorProject, setErrorProject] = useState(null);
 
-  const fetchProjects = async (endpoint = 'v1/') => {
+  const fetchProjects = async (endpoint = '/') => {
     try {
       setLoadingProject(true);
       const response = await apiProjects.get(endpoint);

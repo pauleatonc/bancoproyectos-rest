@@ -5,15 +5,22 @@ const useProjectSearch = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [loadingSearch, setLoadingSearch] = useState(false);
   const [errorSearch, setErrorSearch] = useState(null);
+  const [searchActivated, setSearchActivated] = useState(false);
+
+  const handleSearch = (results) => {
+    setSearchResults(results);
+    setSearchActivated(true);
+  };
 
   const searchProjects = async (query) => {
     setLoadingSearch(true);
     try {
-      const endpoint = `v1/?search=${query}`;
+      const endpoint = `?search=${query}`;
       const response = await apiProjects.get(endpoint);
-
+  
       if (response.status === 200) {
         setSearchResults(response.data);
+        return response.data;  // Ensure you're returning the results
       }
     } catch (error) {
       setErrorSearch(error);
@@ -22,7 +29,7 @@ const useProjectSearch = () => {
     }
   };
 
-  return { searchResults, loadingSearch, errorSearch, searchProjects };
+  return { searchResults, searchActivated, loadingSearch, errorSearch, searchProjects, handleSearch };
 }
 
 export default useProjectSearch;
