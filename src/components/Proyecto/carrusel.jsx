@@ -44,7 +44,7 @@ const Carrusel = ({ imgPortada, imgGeneral }) => {
           <div className={`m-1 m-md-2 miniatura`} key={index}>
             <a data-bs-toggle="modal" data-bs-target="#imageModal" onClick={() => setSelectedImageIndex(index)}>
               <img className="miniatura" src={image} alt={`Thumbnail ${index}`} />
-              {index === imgArray.length - hiddenThumbnailsCount -1 && (
+              {index === imgArray.length - hiddenThumbnailsCount -1 && hiddenThumbnailsCount > 0 && (
                 <div className="thumbnail-counter-overlay">+{hiddenThumbnailsCount}</div>
               )}
             </a>
