@@ -5,9 +5,11 @@ from rest_framework import renderers
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework import permissions
+from rest_framework import filters
 #
 from django.db.models import Count
 from django.db.models import Q
+from django_filters.rest_framework import DjangoFilterBackend
 
 from rest_framework.generics import (
     GenericAPIView,
@@ -50,44 +52,15 @@ def api_root(request, format=None):
 
 class ProjectViewSet(viewsets.ModelViewSet):
 
+    queryset = Project.objects.all()
     serializer_class = ProjectDetailSerializerV1
     lookup_field = 'slug'
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
+    filterset_fields = ['comuna__region', 'comuna', 'year', 'program', 'type']
+    search_fields = ['name', 'id_subdere', 'description']
+    ordering_fields = ['year']
+    ordering = ['year']
 
-    def get_queryset(self):
-        ''' Listado de proyectos para filtrar '''
-        queryset = Project.objects.all()
-
-        region = self.request.query_params.get('region', None)
-        comuna = self.request.query_params.get('comuna', None)
-        year = self.request.query_params.get('year', None)
-        program = self.request.query_params.get('program', None)
-        type_ = self.request.query_params.get('type', None)
-
-        if region:
-            regions_list = region.split(',')
-            queryset = queryset.filter(comuna__region__region__in=regions_list)
-        if comuna:
-            comunas_list = comuna.split(',')
-            queryset = queryset.filter(comuna__comuna__in=comunas_list)
-        if year:
-            years_list = [int(y) for y in year.split(',')]
-            queryset = queryset.filter(year__number__in=years_list)
-        if program:
-            programs_list = program.split(',')
-            queryset = queryset.filter(program__name__in=programs_list)
-        if type_:
-            types_list = type_.split(',')
-            queryset = queryset.filter(type__name__in=types_list)
-
-        search = self.request.query_params.get('search', None)
-        if search:
-            # Aquí puedes ajustar los campos en los que quieres buscar.
-            queryset = queryset.filter(
-                Q(name__icontains=search) |
-                Q(description__icontains=search)
-            )
-
-        return queryset
 
     @action(detail=False, methods=['GET'])
     def filter_options(self, request):
