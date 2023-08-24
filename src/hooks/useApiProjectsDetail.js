@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import apiProjectsDetail from '../services/project/projectsDetail.api';
+import apiProjects from '../services/project/projects.api';
 
 const useApiProjectsDetail = (slug) => {
   const [dataProject, setDataProject] = useState([]);
@@ -9,7 +9,7 @@ const useApiProjectsDetail = (slug) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await apiProjectsDetail.get(`/${slug}`);
+        const response = await apiProjects.get(`v1/${slug}`);
         setDataProject(response.data);
         setLoadingProject(false);
       } catch (error) {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import apiFilterList from '../services/project/projectsFilter.api';
+import apiProject from '../services/project/projects.api';
 
 const useApiFilter = () => {
   const [dataFilter, setDataFilter] = useState(null);
@@ -17,7 +17,7 @@ const useApiFilter = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await apiFilterList.get('/');
+        const response = await apiProject.get('v1/filter_options/');
         setDataFilter(response.data);
         setLoading(false);
 
