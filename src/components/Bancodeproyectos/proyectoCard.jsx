@@ -1,7 +1,11 @@
 import { Link } from 'react-router-dom';
 
-const ProyectoCard = ({ project }) =>
-{
+const ProyectoCard = ({ project }) => {
+
+  const truncateText = (text, maxLength) => {
+    if (text.length <= maxLength) return text;
+    return text.slice(0, maxLength) + "...";
+  };
 
   return (
     <div className="proyect-card my-3" >
@@ -14,7 +18,7 @@ const ProyectoCard = ({ project }) =>
       </div>
 
       <h2 className="text-serif-h2 text-decoration-underline ml-3 mb-3 mx-3">{project.name}</h2>
-      <p className="text-sans-p mx-3">{project.description}</p>
+      <p className="text-sans-p mx-3">{truncateText(project.description, 150)}</p>
 
       <div className="container d-flex justify-content-between">
         <p className="tag p-1">{project.program.sigla}</p>

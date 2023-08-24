@@ -110,7 +110,7 @@ const FiltroProyectos = ({ dataFilter, onFilter }) =>
 
     const queryParams = new URLSearchParams();
     if (selectedPrograms.length) queryParams.append('program', selectedPrograms.join(','));
-    if (selectedRegions.length) queryParams.append('region', selectedRegions.join(','));
+    if (selectedRegions.length) queryParams.append('comuna__region', selectedRegions.join(','));
     if (selectedComunas.length) queryParams.append('comuna', selectedComunas.join(','));
     if (selectedTypes.length) queryParams.append('type', selectedTypes.join(','));
     if (selectedYears.length) queryParams.append('year', selectedYears.join(','));
@@ -165,7 +165,7 @@ const FiltroProyectos = ({ dataFilter, onFilter }) =>
           <option className="" value=''>Elige una o más regiones</option>
           {/* Map over the regionComunas state to create options */}
           {dataFilter.regiones.map((region) => (
-            <option key={region.id} value={region.region} type='checkbox'>
+            <option key={region.id} value={region.id} type='checkbox'>
               {region.region}
             </option>
           ))}
@@ -179,7 +179,7 @@ const FiltroProyectos = ({ dataFilter, onFilter }) =>
           <option className="" value=''>Elige una o más comunas</option>
           {/* Map over the selectedComunas state to create options */}
           {filteredComunas.map((comuna) => (
-            <option key={comuna.id} value={comuna.comuna} type='checkbox'>
+            <option key={comuna.id} value={comuna.id} type='checkbox'>
               {comuna.comuna}
             </option>
           ))}
@@ -229,7 +229,7 @@ const FiltroProyectos = ({ dataFilter, onFilter }) =>
         <option className="" value=''>Elige el año</option>
         {/* Map over the selectedComunas state to create options */}
         {dataFilter.years.map((year) => (
-          <option key={year.id} value={year.number} type='checkbox'>
+          <option key={year.id} value={year.id} type='checkbox'>
             {year.number}
           </option>
         ))}

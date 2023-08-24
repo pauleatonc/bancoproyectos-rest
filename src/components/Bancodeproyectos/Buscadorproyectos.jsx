@@ -1,14 +1,19 @@
 import { useState } from 'react';
 import useProjectSearch from '../../hooks/useProjectSearch';
 
-const BuscadorProyectos = () => {
+const BuscadorProyectos = ( onSearch ) => {
   const { searchResults, loadingSearch, errorSearch, searchProjects } = useProjectSearch();
   const [searchQuery, setSearchQuery] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const results = searchProjects(searchQuery);
-    onSearch(results);
+    searchProjects(searchQuery).then(results => {
+      if (typeof onSearch === 'function') {
+        onSearch(results);
+      } else {
+        console.error('onSearch is not a function', onSearch);
+      }
+    });
   };
 
   return (

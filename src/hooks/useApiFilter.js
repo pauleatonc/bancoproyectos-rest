@@ -17,7 +17,7 @@ const useApiFilter = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await apiProject.get('v1/filter_options/');
+        const response = await apiProject.get('filter_options/');
         setDataFilter(response.data);
         setLoading(false);
 
