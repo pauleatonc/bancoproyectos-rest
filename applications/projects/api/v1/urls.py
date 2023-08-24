@@ -1,19 +1,13 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from . import views
 
 app_name = 'projects_app'
 
+# Create a router and register our viewsets with it.
+router = DefaultRouter()
+router.register(r'v1', views.ProjectViewSet, basename="v1")
+
 urlpatterns = [
-    path('api/project/v1/list/',
-         views.ProjectListApiViewV1.as_view(),
-         name='api-project-list-v1'
-         ),
-    path('api/project/v1/<slug:slug>/',
-         views.ProjectDetailApiViewV1.as_view(),
-         name='api-project-detail-v1'
-         ),
-    path('api/project/filter/v1/',
-         views.FilterOptionsApiViewV1.as_view(),
-         name='api-project-filter-v1'
-         ),
-    ]
+    path('api/project/', include(router.urls)),
+]
