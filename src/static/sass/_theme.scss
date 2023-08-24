@@ -63,6 +63,7 @@ $black-color: #111111;
     line-height: 35px;
 }
 
+
 // Linea decorativa 50/50
 .line{
     width: 80%;
@@ -89,7 +90,8 @@ $black-color: #111111;
     padding: 13px;
 }
 .btn-principal-s{
-   @include btn-principal(fit-content); 
+   @include btn-principal(fit-content);
+   height: fit-content; 
 }
 .btn-principal-l{
     @include btn-principal(90%); 
