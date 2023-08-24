@@ -5,10 +5,11 @@ from rest_framework import renderers
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework import permissions
+from rest_framework import filters
 #
 from django.db.models import Count
 from django.db.models import Q
-import django_filters.rest_framework
+from django_filters.rest_framework import DjangoFilterBackend
 
 from rest_framework.generics import (
     GenericAPIView,
@@ -51,15 +52,15 @@ def api_root(request, format=None):
 
 class ProjectViewSet(viewsets.ModelViewSet):
 
+    queryset = Project.objects.all()
     serializer_class = ProjectDetailSerializerV1
     lookup_field = 'slug'
-    filter_backends = [django_filters.rest_framework.DjangoFilterBackend]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
     filterset_fields = ['comuna__region', 'comuna', 'year', 'program', 'type']
+    search_fields = ['name', 'id_subdere']
+    ordering_fields = ['year']
+    ordering = ['year']
 
-    def get_queryset(self):
-        ''' Listado de proyectos para filtrar '''
-        queryset = Project.objects.all()
-        return queryset
 
     @action(detail=False, methods=['GET'])
     def filter_options(self, request):
