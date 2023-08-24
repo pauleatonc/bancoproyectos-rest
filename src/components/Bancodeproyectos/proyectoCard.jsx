@@ -17,7 +17,7 @@ const ProyectoCard = ({ project }) => {
       <div className="img-container d-flex justify-content-center" >
         <img src={project.portada} className="image p-1" alt={project.name}/>
       </div>
-      <div className="d-flex flex-row justify-content-between p-3">
+      <div className="d-flex flex-row justify-content-between ms-3 my-2">
         <p className="col-6 text-sans-h5 text-muted">Región: {project.comuna.region}</p>
         <p className="col-5 text-sans-h5 text-muted">Comuna: {project.comuna.comuna}</p>
       </div>
