@@ -55,8 +55,17 @@ class ProjectViewSet(viewsets.ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectDetailSerializerV1
     lookup_field = 'slug'
-    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter]
-    filterset_fields = ['comuna__region', 'comuna', 'year', 'program', 'type']
+    filter_backends = [filters.SearchFilter, DjangoFilterBackend, filters.OrderingFilter]
+
+    #El término 'in' es propio de django, puedes encontrar la documentación para otros lookups en
+    # https://docs.djangoproject.com/en/3.2/ref/models/querysets/#field-lookups
+    filterset_fields = {
+        'comuna__region': ['in'],
+        'comuna': ['in'],
+        'year': ['in'],
+        'program': ['in'],
+        'type': ['in']
+    }
     search_fields = ['name', 'id_subdere', 'description']
     ordering_fields = ['year']
     ordering = ['year']
