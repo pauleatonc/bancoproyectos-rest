@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
 import apiProjects from '../services/project/projects.api';
 
-const useOrdering = () => {
-  const [order, setOrder] = useState('');  // Default order
+const useOrdering = () => { 
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [order, setOrder] = useState('-year');  
 
   useEffect(() => {
     const fetchProjects = async () => {

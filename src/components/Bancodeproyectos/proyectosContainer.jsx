@@ -4,7 +4,7 @@ const ProyectosContainer = ({data}) =>
 {
 
   return (
-    <div className="container p-0 d-flex flex-column align-items-center ps-md-5">
+    <div className="container p-0 d-flex flex-column align-items-center ">
       <div className="card-container d-flex flex-wrap justify-content-between">
         {data.map((project) => (
           <ProyectoCard key={project.id} project={project} />
