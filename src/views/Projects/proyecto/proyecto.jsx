@@ -153,13 +153,13 @@ if (errorProject) {
       {/* Normativa por tipo de proyecto */}
       { dataProject.type && dataProject.type.guides && dataProject.type.guides.length > 0 &&
         <>
-          <h2 className="text-sans-h2 my-4">Documentos con normativa de uso general</h2>
-          <div className="d-flex justify-content-between my-4 font-weight-bold">
-            <div>#</div>
-            <div>Documento</div>
-            <div>Formato</div>
-            <div>Acción</div>
-          </div>
+        <h2 className="text-sans-h2 my-4 mt-5">Documentos con normativa de uso general</h2>
+        <div className="row my-4 fw-bold border-top">
+          <div className="col-1 mt-3">#</div>
+          <div className="col mt-3">Documento</div>
+          <div className="col mt-3">Formato</div>
+          <div className="col mt-3">Acción</div>
+        </div>
           {
             dataProject.type.guides.map((guide, index) => (
                 <div key={index} className={`row border-top ${index % 2 === 0 ? 'grey-table-line' : 'white-table-line'}`}>
