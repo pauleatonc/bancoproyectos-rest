@@ -75,6 +75,13 @@
   line-height: 30px;
 }
 
+.text-sans-p-blue {
+  font-family: "Roboto";
+  color: #001C41;
+  font-size: 16px;
+  font-weight: 400;
+}
+
 .text-sans-p-white {
   font-family: "Roboto";
   color: #FFF;
@@ -341,11 +348,21 @@
   height: 350px;
   flex-shrink: 0;
   border-radius: 5px;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .detalles-del-proyecto {
   background-color: #0F69C4;
   height: 41px;
+}
+
+.grey-table-line {
+  background-color: #EEE;
+}
+
+.white-table-line {
+  background-color: transparent;
 }
 
 .img-portada {
@@ -408,4 +425,13 @@
   background-color: transparent;
   align-self: flex-end;
   color: grey;
+}
+
+.imagen {
+  height: 150px;
+  min-width: 150px;
+  border-radius: 5px;
+  background-color: lightblue;
+  -o-object-fit: cover;
+     object-fit: cover;
 }/*# sourceMappingURL=styles.css.map */
