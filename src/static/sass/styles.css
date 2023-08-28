@@ -113,7 +113,7 @@
   width: fit-content;
   background-color: #0F69C4;
   border: none;
-  color: #FFFFFF;
+  color: #FFF;
   padding: 13px;
   height: -moz-fit-content;
   height: fit-content;
@@ -123,8 +123,19 @@
   width: 90%;
   background-color: #0F69C4;
   border: none;
-  color: #FFFFFF;
+  color: #FFF;
   padding: 13px;
+}
+
+.custom-pagination-btn {
+  border: none;
+  background-color: transparent;
+  color: #0F69C4;
+}
+
+.custom-pagination-btn.active {
+  background-color: #0F69C4;
+  color: #FFF;
 }
 
 .tag {
@@ -338,8 +349,15 @@
   width: 90px;
 }
 
+.breadcrumbs {
+  font-family: "Roboto";
+  color: #0F69C4;
+  font-size: 16px;
+  font-weight: 400;
+}
+
 .descripcion-container {
-  background-color: #EEE;
+  background-color: #EEEEEE;
 }
 
 .img-proyecto {
