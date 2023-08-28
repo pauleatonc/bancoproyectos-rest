@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include, re_path
 
 from . import views
 
@@ -70,6 +70,8 @@ urlpatterns = [
         views.PasswordRecoverySuccess.as_view(),
         name='password_recovery_success',
     ),
+
+    re_path('', include('applications.users.api.v1.urls'))
 
     
 ]
