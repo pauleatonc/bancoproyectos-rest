@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import useApiProjectsDetail from "../../../hooks/useApiProjectsDetail";
 import Carrusel from "../../../components/Proyecto/carrusel";
+import ProyectosRelacionados from "../../../components/Proyecto/proyectosRelacionados";
 
 const Proyecto = () => {
 const { slug } = useParams();
@@ -158,7 +159,7 @@ if (errorProject) {
         }
 
       <h2 className="text-sans-h2 my-4">Proyectos relacionados</h2>
-      <div className=" border border-warning">componente?</div>
+      <ProyectosRelacionados />
     </div>
 
   );
