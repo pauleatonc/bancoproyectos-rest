@@ -75,6 +75,13 @@
   line-height: 30px;
 }
 
+.text-sans-p-blue {
+  font-family: "Roboto";
+  color: #001C41;
+  font-size: 16px;
+  font-weight: 400;
+}
+
 .text-sans-p-white {
   font-family: "Roboto";
   color: #FFF;
@@ -348,6 +355,14 @@
 .detalles-del-proyecto {
   background-color: #0F69C4;
   height: 41px;
+}
+
+.grey-table-line {
+  background-color: lightgray;
+}
+
+.white-table-line {
+  background-color: transparent;
 }
 
 .img-portada {
