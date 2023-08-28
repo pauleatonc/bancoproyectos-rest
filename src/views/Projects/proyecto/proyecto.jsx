@@ -175,7 +175,7 @@ if (errorProject) {
 
 
       <h2 className="text-sans-h2 my-4 mt-5">Proyectos relacionados</h2>
-      <ProyectosRelacionados />
+      <ProyectosRelacionados currentSlug={ dataProject.slug } />
     </div>
 
   );
