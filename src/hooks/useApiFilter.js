@@ -7,11 +7,9 @@ const useApiFilter = () => {
   const [error, setError] = useState(null);
   
   const [filteredProjects, setFilteredProjects] = useState([]);
-  const [hasResults, setHasResults] = useState(true);
 
   const handleFilter = (projects) => {
     setFilteredProjects(projects);
-    setHasResults(projects.length > 0);
   };
 
   useEffect(() => {
@@ -30,7 +28,7 @@ const useApiFilter = () => {
     fetchData();
   }, []);
 
-  return { dataFilter, loading, error, filteredProjects, hasResults, handleFilter };
+  return { dataFilter, loading, error, filteredProjects, handleFilter };
 }
 
 export default useApiFilter;

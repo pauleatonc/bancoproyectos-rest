@@ -7,19 +7,24 @@ const useApiProjectsList = () => {
   const [errorProject, setErrorProject] = useState(null);
 
   const fetchProjects = async (endpoint = '/') => {
+    setLoadingProject(true);
     try {
-      setLoadingProject(true);
       const response = await apiProjects.get(endpoint);
       setDataProject(response.data);
-      setLoadingProject(false);
+      setErrorProject(null); 
+      console.log("Endpoint:", endpoint);
+    console.log("Data received:", response.data);
     } catch (error) {
-      setErrorProject(error);
+      setErrorProject(error.response ? error.response.data : error.message);
+    } finally {
       setLoadingProject(false);
     }
   };
 
+
   useEffect(() => {
     fetchProjects();
+    
   }, []);
 
   return { dataProject, loadingProject, errorProject, fetchProjects };

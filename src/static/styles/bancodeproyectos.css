@@ -10,3 +10,13 @@
     filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7499%)
     hue-rotate(262deg) brightness(103%) contrast(102%);
 }
+
+.white-icon {
+    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7499%)
+    hue-rotate(262deg) brightness(103%) contrast(102%);
+}
+
+a:focus-active {
+    outline: 3px solid #0F69C4;
+    border-radius: 3px;
+}
