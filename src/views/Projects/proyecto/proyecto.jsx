@@ -19,11 +19,11 @@ if (errorProject) {
       {/* Boton volver y breadcrumbs */}
       <div className="d-flex align-items-center">
         <button className="volver-btn d-none d-lg-block"> &lt; volver</button>
-        <p className="m-0 d-none d-lg-block">|</p>
+        <p className="m-0 d-none d-lg-block me-3 opacity-50">|</p>
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb m-0">
-            <li className="breadcrumb-item"><a href="/" >Inicio</a></li>
-            <li className="breadcrumb-item"><a href="/bancodeproyectos" >Banco de Proyectos</a></li>
+            <li className="breadcrumb-item "><a className="breadcrumbs" href="/" >Inicio</a></li>
+            <li className="breadcrumb-item"><a className="breadcrumbs" href="/bancodeproyectos" >Banco de Proyectos</a></li>
             <li className="breadcrumb-item active d-none d-lg-block" aria-current="page">{dataProject.name}</li>
           </ol>
         </nav>
