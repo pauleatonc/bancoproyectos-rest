@@ -85,24 +85,35 @@ if (errorProject) {
       <h2 className="text-sans-h2 my-5">Imágenes del proyecto</h2>
       
       <Carrusel imgPortada={dataProject.portada} imgGeneral={dataProject.images}/>
+
       
-  
-      <div className=" p-0 d-md-flex justify-content-between my-4">
-        <div className="col-md-6">
-          <h3 className="text-sans-h3">Antes del proyecto</h3>
-          <img src={dataProject.beforeimage} className="img-proyecto"/>
-        </div>
-        <div className="col-md-6">
-          <h3 className="text-sans-h3">Después del proyecto</h3>
-          <img src={dataProject.afterimage} className="img-proyecto"/>
-        </div>
-      </div>
+      {/* Imágenes antes y después */}
+      { (dataProject.beforeimage && dataProject.afterimage) && 
+        <>
+          <div className=" p-0 d-md-flex justify-content-between my-4">
+            <div className="col-md-6">
+              <h3 className="text-sans-h3">Antes del proyecto</h3>
+              <img src={dataProject.beforeimage} className="img-proyecto"/>
+            </div>
+            <div className="col-md-6">
+              <h3 className="text-sans-h3">Después del proyecto</h3>
+              <img src={dataProject.afterimage} className="img-proyecto"/>
+            </div>
+          </div>
+        </>
+      }
 
-      <h3 className="text-sans-h3">Video del proyecto</h3>
-      <div className="d-flex justify-content-center mb-md-5">
-        <div className="col-md-7 img-proyecto" src={dataProject.video} />
-      </div>
+      {/* Video del proyecto */}
+      { dataProject.video && 
+        <>
+          <h3 className="text-sans-h3">Video del proyecto</h3>
+          <div className="d-flex justify-content-center mb-md-5">
+            <div className="col-md-7 img-proyecto" src={dataProject.video} />
+          </div>
+        </>
+      }
 
+      {/* Tabla documentos del proyecto */}
       <h2 className="text-sans-h2 my-4">Documentos del proyecto</h2>
         <div className=" d-flex justify-content-between my-4 font-weight-bold">
             <div>#</div>
@@ -127,7 +138,7 @@ if (errorProject) {
             <a href={dataProject.presupuesto} target="_blank" rel="noopener noreferrer">Descargar</a>
         </div>
 
-        {
+          {
             dataProject.files.map((file, index) => (
                 <div key={index} className="d-flex justify-content-between my-3">
                     <div>{index + 3}</div>  {/* Comenzamos desde el índice 3 porque ya mostramos 2 documentos anteriormente */}
@@ -136,26 +147,31 @@ if (errorProject) {
                     <a href={file.file} target="_blank" rel="noopener noreferrer">Descargar</a>
                 </div>
             ))
-        }
+          }
 
-
-      <h2 className="text-sans-h2 my-4">Documentos con normativa de uso general</h2>
-      <div className="d-flex justify-content-between my-4 font-weight-bold">
-        <div>#</div>
-        <div>Documento</div>
-        <div>Formato</div>
-        <div>Acción</div>
-      </div>
-      {
+      {/* Normativa por tipo de proyecto */}
+      { dataProject.type && dataProject.type.guides && dataProject.type.guides.length > 0 &&
+        <>
+          <h2 className="text-sans-h2 my-4">Documentos con normativa de uso general</h2>
+          <div className="d-flex justify-content-between my-4 font-weight-bold">
+            <div>#</div>
+            <div>Documento</div>
+            <div>Formato</div>
+            <div>Acción</div>
+          </div>
+          {
             dataProject.type.guides.map((guide, index) => (
-                <div key={index} className="d-flex justify-content-between my-3">
-                    <div>{index + 1}</div>
-                    <div>{guide.name}</div>
-                    <div>{guide.guide_format}</div>
-                    <a href={guide.guide} target="_blank" rel="noopener noreferrer">Descargar</a>
-                </div>
+              <div key={index} className="d-flex justify-content-between my-3">
+                  <div>{index + 1}</div>
+                  <div>{guide.name}</div>
+                  <div>{guide.guide_format}</div>
+                  <a href={guide.guide} target="_blank" rel="noopener noreferrer">Descargar</a>
+              </div>
             ))
-        }
+          }
+        </>
+      }
+
 
       <h2 className="text-sans-h2 my-4">Proyectos relacionados</h2>
       <div className=" border border-warning">componente?</div>
