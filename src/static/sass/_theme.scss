@@ -58,6 +58,9 @@ $black-color: #111111;
     @include font-sans(16px, 400, $grey-a-color);
     line-height: 30px;
 }
+.text-sans-p-blue{
+    @include font-sans(16px, 400, $tertiary-color);
+}
 .text-sans-p-white{
     @include font-sans(16px, 400, $white-color);
     line-height: 35px;
