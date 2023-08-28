@@ -1,3 +1,4 @@
+import random
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
@@ -102,3 +103,32 @@ class ProjectViewSet(viewsets.ModelViewSet):
             'types': types_data,
             'regiones': region_data,
         })
+
+    @action(detail=True, methods=['GET'])
+    def related_projects(self, request, slug=None):
+        """
+        Devuelve proyectos relacionados basados en el tipo de proyecto del proyecto actual (dado por el slug).
+        Excluye el proyecto actual del conjunto de resultados.
+        """
+
+        # Obtener el proyecto actual por slug
+        current_project = self.get_object()
+
+        # Consulta: queremos proyectos del mismo tipo pero que no sean el proyecto actual.
+        related_projects_query = Project.objects.filter(
+            type=current_project.type
+        ).exclude(slug=slug)
+
+        # Selección aleatoria
+        related_slugs = list(related_projects_query.values_list('slug', flat=True))
+        selected_slugs = random.sample(related_slugs, min(len(related_slugs),
+                                                          1))  # Puedes ajustar el 3 a cuántos proyectos quieras obtener
+
+        # Obtener los proyectos seleccionados
+        selected_projects = Project.objects.filter(slug__in=selected_slugs)
+
+        # Serializar los datos
+        serializer_context = {'request': request}
+        related_data = ProjectDetailSerializerV1(selected_projects, many=True, context=serializer_context).data
+
+        return Response(related_data)
