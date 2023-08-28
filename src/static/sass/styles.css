@@ -75,6 +75,13 @@
   line-height: 30px;
 }
 
+.text-sans-p-blue {
+  font-family: "Roboto";
+  color: #001C41;
+  font-size: 16px;
+  font-weight: 400;
+}
+
 .text-sans-p-white {
   font-family: "Roboto";
   color: #FFF;
@@ -106,7 +113,7 @@
   width: fit-content;
   background-color: #0F69C4;
   border: none;
-  color: #FFFFFF;
+  color: #FFF;
   padding: 13px;
   height: -moz-fit-content;
   height: fit-content;
@@ -116,8 +123,19 @@
   width: 90%;
   background-color: #0F69C4;
   border: none;
-  color: #FFFFFF;
+  color: #FFF;
   padding: 13px;
+}
+
+.custom-pagination-btn {
+  border: none;
+  background-color: transparent;
+  color: #0F69C4;
+}
+
+.custom-pagination-btn.active {
+  background-color: #0F69C4;
+  color: #FFF;
 }
 
 .tag {
@@ -312,10 +330,16 @@
   min-width: 321px;
 }
 
-.card-img {
-  height: 150px;
-  width: 95%;
-  background-color: bisque;
+.img-container {
+  height: 175px;
+  width: 100%;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .volver-btn {
@@ -325,8 +349,15 @@
   width: 90px;
 }
 
+.breadcrumbs {
+  font-family: "Roboto";
+  color: #0F69C4;
+  font-size: 16px;
+  font-weight: 400;
+}
+
 .descripcion-container {
-  background-color: #EEE;
+  background-color: #EEEEEE;
 }
 
 .img-proyecto {
@@ -335,11 +366,21 @@
   height: 350px;
   flex-shrink: 0;
   border-radius: 5px;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 .detalles-del-proyecto {
   background-color: #0F69C4;
   height: 41px;
+}
+
+.grey-table-line {
+  background-color: #EEE;
+}
+
+.white-table-line {
+  background-color: transparent;
 }
 
 .img-portada {
@@ -402,4 +443,13 @@
   background-color: transparent;
   align-self: flex-end;
   color: grey;
+}
+
+.imagen {
+  height: 150px;
+  min-width: 150px;
+  border-radius: 5px;
+  background-color: lightblue;
+  -o-object-fit: cover;
+     object-fit: cover;
 }/*# sourceMappingURL=styles.css.map */

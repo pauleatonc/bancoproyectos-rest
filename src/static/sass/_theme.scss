@@ -1,12 +1,13 @@
 // Paleta de color
 $primary-color: #006FB3;
+$blue-color: #0F69C4;
 $secondary-color: #FE6565;
 $tertiary-color: #001C41;
 $grey-a-color: #373737;
 $white-color: #FFF;
+$neutral-color: #EEEEEE;
 
 $accent-color: #A8B7c7;
-$neutral-color: #EEEEEE;
 $grey-b-color: #8a8a8a;
 $black-color: #111111;
 
@@ -58,6 +59,9 @@ $black-color: #111111;
     @include font-sans(16px, 400, $grey-a-color);
     line-height: 30px;
 }
+.text-sans-p-blue{
+    @include font-sans(16px, 400, $tertiary-color);
+}
 .text-sans-p-white{
     @include font-sans(16px, 400, $white-color);
     line-height: 35px;
@@ -84,9 +88,9 @@ $black-color: #111111;
 // Botones
 @mixin btn-principal ($btnSize){
     width: $btnSize;
-    background-color:#0F69C4;
+    background-color: $blue-color;
     border: none;
-    color:#FFFFFF;
+    color: $white-color;
     padding: 13px;
 }
 .btn-principal-s{
@@ -96,6 +100,15 @@ $black-color: #111111;
 .btn-principal-l{
     @include btn-principal(90%); 
  }
+.custom-pagination-btn{
+    border: none;
+    background-color: transparent;
+    color: $blue-color;
+}
+.custom-pagination-btn.active {
+    background-color:$blue-color;
+    color: $white-color;
+  }
 
 // Tags
 .tag{

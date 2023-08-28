@@ -1,11 +1,14 @@
 .volver-btn{
     border:none;
-    color:#0F69C4;
+    color:$blue-color;
     background-color: transparent;
     width: 90px;
 }
+.breadcrumbs{
+    @include font-sans(16px, 400, $blue-color);
+}
 .descripcion-container{
-    background-color: #EEE;
+    background-color: $neutral-color;
 }
 .img-proyecto{
     background-color: grey;
@@ -13,8 +16,15 @@
     height: 350px;
     flex-shrink: 0;
     border-radius: 5px;
+    object-fit: cover;
 }
 .detalles-del-proyecto{
-    background-color: #0F69C4;
+    background-color: $blue-color;
     height: 41px;
+}
+.grey-table-line{
+    background-color: #EEE;   
+}
+.white-table-line{
+    background-color: transparent;   
 }
