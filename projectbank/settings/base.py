@@ -31,6 +31,7 @@ THIRD_PARTY_APPS = [
     'storages',
     'captcha',
     'rest_framework',
+    'coreapi',
     'corsheaders',
 ]
 
@@ -113,4 +114,13 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # cors authorization
-CORS_ALLOWED_ORIGINS = ['http://127.0.0.1:5173']
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+]
+
+#Auto documentation for API's
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+}

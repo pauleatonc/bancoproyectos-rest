@@ -11,7 +11,8 @@ class ProjectsManager(models.Manager):
         if search_query and len(search_query) > 0:
             queryset = queryset.filter(
                 Q(name__icontains=search_query) |
-                Q(id_subdere__icontains=search_query)
+                Q(id_subdere__icontains=search_query) |
+                Q(region__icontains=search_query)
             )
 
         if program and len(program) > 0:
