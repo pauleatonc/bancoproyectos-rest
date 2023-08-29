@@ -100,7 +100,7 @@ class YearAdmin(ImportExportMixin, admin.ModelAdmin):
     resource_class = YearResource
 
 @admin.register(PrioritizedTag)
-class PrioritizedTagAdmin(admin.ModelAdmin):
+class PrioritizedTagAdmin(ImportExportMixin, admin.ModelAdmin):
     resource_class = PrioritizedTagResource
 
 @admin.register(ChecklistDocuments)

@@ -5,6 +5,7 @@ from django.db import models
 from django.core.validators import FileExtensionValidator
 from django.template.defaultfilters import slugify
 #
+from applications.base.models import BaseModel
 from applications.regioncomuna.models import Comuna
 from .managers import ProjectsManager
 from .functions import validate_file_size_five, validate_file_size_twenty
