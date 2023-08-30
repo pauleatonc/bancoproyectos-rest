@@ -87,7 +87,7 @@ class Type(BaseModel):
 
 
 class Year(models.Model):
-    number = models.CharField(max_length=4, verbose_name='Año', unique=True, null=True, blank=True)
+    number = models.CharField(max_length=4, verbose_name='Año', unique=True)
 
     def __str__(self):
         return self.number
@@ -144,9 +144,8 @@ class Project(BaseModel):
     id_subdere = models.CharField(
         max_length=200, verbose_name='ID SUBDERE (obligatorio)', unique=True)
     description = models.TextField(verbose_name='Descripción (obligatorio)')
-    year = models.ForeignKey(Year, null=True, blank=True,
+    year = models.ForeignKey(Year, null=True, blank=False,
                              on_delete=models.SET_NULL, verbose_name='Año (obligatorio)')
-    created_year = models.DateField(verbose_name='Año de creación (obligatorio)')
     program = models.ForeignKey(Program, null=True, blank=False,
                                 on_delete=models.SET_NULL, verbose_name='Programa (obligatorio)')
     type = models.ForeignKey(Type, null=True, blank=False, on_delete=models.SET_NULL,
