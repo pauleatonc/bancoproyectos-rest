@@ -8,6 +8,13 @@
 .text-serif-h2 {
   font-family: "Roboto Slab";
   color: #373737;
+  font-size: 31px;
+  font-weight: 700;
+}
+
+.text-serif-h3 {
+  font-family: "Roboto Slab";
+  color: #373737;
   font-size: 24px;
 }
 
@@ -256,6 +263,16 @@
      object-position: center;
 }
 
+.login-container {
+  border: none;
+}
+
+@media (min-width: 768px) {
+  .login-container {
+    border: 1px solid #373737;
+    border-radius: 5px;
+  }
+}
 .footer-container {
   background-color: #001C41;
 }
