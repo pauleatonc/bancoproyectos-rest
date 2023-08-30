@@ -25,16 +25,14 @@ const ContactForm = () => {
       handleSubmit
   } = useContactForm(submitForm);
 
-
   return (
-    <div className="d-flex justify-content-center">
+    <div className="d-flex justify-content-center my-5">
+      <form id="formularioContacto" className="col-12 col-md-6 p-3 p-md-0" onSubmit={handleSubmit}>
 
-      <form id="formularioContacto" className="col-12 col-md-6" onSubmit={handleSubmit}>
-
-        <div className="">
-          <label htmlFor="full_name">Nombre Completo (Obligatorio)</label>
+        <div className="d-flex flex-column">
+          <label className="text-sans-p" htmlFor="full_name">Nombre Completo (Obligatorio)</label>
           <input
-            className="campo"
+            className="input-s px-2"
             type="text"
             id="full_name"
             name="full_name"
@@ -45,10 +43,10 @@ const ContactForm = () => {
           {formErrors.full_nameError && <span>{formErrors.full_nameError}</span>}
         </div>
 
-        <div className="">
-          <label htmlFor="email">Correo electrónico institucional (Obligatorio)</label>
+        <div className="d-flex flex-column mt-3">
+          <label className="text-sans-p" htmlFor="email">Correo electrónico institucional (Obligatorio)</label>
           <input
-            className="campo"
+            className="input-s px-2"
             type="email"
             id="email"
             name="email"
@@ -59,10 +57,10 @@ const ContactForm = () => {
           {formErrors.emailError && <span>{formErrors.emailError}</span>}
         </div>
 
-        <div className="">
-          <label htmlFor="organization">Organización a la que perteneces (Obligatorio)</label>
+        <div className="d-flex flex-column mt-3">
+          <label className="text-sans-p" htmlFor="organization">Organización a la que perteneces (Obligatorio)</label>
           <input
-            className="campo"
+            className="input-s px-2"
             type="text"
             id="organization"
             name="organization"
@@ -73,10 +71,10 @@ const ContactForm = () => {
           {formErrors.organizationError && <span>{formErrors.organizationError}</span>}
         </div>
 
-        <div className="inputFormulario">
-          <label htmlFor="contact_reason">Razón de contacto (Obligatorio)</label>
+        <div className="d-flex flex-column mt-3">
+          <label className="text-sans-p" htmlFor="contact_reason">Razón de contacto (Obligatorio)</label>
           <select
-              className="campo"
+              className="custom-select px-2"
               id="contact_reason"
               name="contact_reason"
               value={formData.contact_reason}
@@ -90,23 +88,25 @@ const ContactForm = () => {
           {formErrors.contact_reasonError && <span>{formErrors.contact_reasonError}</span>}
         </div>
 
-        <div className="">
-          <label htmlFor="message">Comentario (Obligatorio)</label>
+        <div className="d-flex flex-column mt-3">
+          <label className="text-sans-p" htmlFor="message">Comentario (Obligatorio)</label>
           <textarea
-          className=""
+            className="input-l p-2"
             id="message"
             name="message"
             value={formData.message}
             onChange={handleChange}
+            placeholder="Describe la razón de contacto."
           ></textarea>
           {formErrors.messageError && <span>{formErrors.messageError}</span>}
         </div>
 
-        <div className="">
+        <div className="text-end">
           ({formData.message.length}/500)
         </div>
-
-        <button className="" type="submit">Enviar</button>
+        <div className="container d-flex justify-content-center">
+          <button className="btn-principal-l mt-3" type="submit">Enviar</button>
+        </div>
       </form>
     </div>
     
