@@ -22,7 +22,7 @@ const ProyectoCard = ({ project }) => {
         <p className="col-5 text-sans-h5 text-muted">Comuna: {project.comuna.comuna}</p>
       </div>
 
-      <h2 className="text-serif-h2 text-decoration-underline ml-3 mb-3 mx-3">{project.name}</h2>
+      <h2 className="text-serif-h3 text-decoration-underline ml-3 mb-3 mx-3">{project.name}</h2>
       <p className="text-sans-p mx-3">{truncateText(project.description, 20)}</p>
 
       <div className="container d-flex justify-content-between">

@@ -1,0 +1,10 @@
+.login-container {
+    border: none;
+}
+
+@media (min-width: 768px) {
+    .login-container {
+        border: 1px solid $grey-a-color;
+        border-radius: 5px;
+    }
+}

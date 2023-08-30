@@ -21,6 +21,10 @@ $black-color: #111111;
     @include font-serif(49px, $grey-a-color);
 }
 .text-serif-h2{
+    @include font-serif(31px, $grey-a-color);
+    font-weight: 700;
+}
+.text-serif-h3{
     @include font-serif(24px, $grey-a-color);
 }
 
