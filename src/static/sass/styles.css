@@ -495,4 +495,17 @@
   color: #8a8a8a;
   border: 1px solid #8a8a8a;
   height: 60px;
+}
+
+@media (min-width: 576px) {
+  .input-container {
+    position: relative;
+  }
+  .input-label {
+    position: absolute;
+    top: -12px; /* Ajusta distancia vertical */
+    left: 10px; /* Ajusta distancia horizontal */
+    background-color: #FFF;
+    padding: 0 7px;
+  }
 }/*# sourceMappingURL=styles.css.map */

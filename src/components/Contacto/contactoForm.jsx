@@ -26,13 +26,13 @@ const ContactForm = () => {
   } = useContactForm(submitForm);
 
   return (
-    <div className="d-flex justify-content-center my-5">
-      <form id="formularioContacto" className="col-12 col-md-6 p-3 p-md-0" onSubmit={handleSubmit}>
+    <div className="d-flex justify-content-center mt-4 mb-5">
+      <form id="formularioContacto" className="col-12 col-md-8 col-lg-5 p-3 p-md-0" onSubmit={handleSubmit}>
 
-        <div className="d-flex flex-column">
-          <label className="text-sans-p" htmlFor="full_name">Nombre Completo (Obligatorio)</label>
+        <div className="d-flex flex-column input-container">
+          <label className="text-sans-p input-label ms-3 ms-sm-0" htmlFor="full_name">Nombre Completo (Obligatorio)</label>
           <input
-            className="input-s px-2"
+            className="input-s px-3"
             type="text"
             id="full_name"
             name="full_name"
@@ -43,10 +43,10 @@ const ContactForm = () => {
           {formErrors.full_nameError && <span>{formErrors.full_nameError}</span>}
         </div>
 
-        <div className="d-flex flex-column mt-3">
-          <label className="text-sans-p" htmlFor="email">Correo electrónico institucional (Obligatorio)</label>
+        <div className="d-flex flex-column input-container mt-4">
+          <label className="text-sans-p input-label ms-3 ms-sm-0" htmlFor="email">Correo electrónico institucional (Obligatorio)</label>
           <input
-            className="input-s px-2"
+            className="input-s px-3"
             type="email"
             id="email"
             name="email"
@@ -57,10 +57,10 @@ const ContactForm = () => {
           {formErrors.emailError && <span>{formErrors.emailError}</span>}
         </div>
 
-        <div className="d-flex flex-column mt-3">
-          <label className="text-sans-p" htmlFor="organization">Organización a la que perteneces (Obligatorio)</label>
+        <div className="d-flex flex-column input-container mt-4">
+          <label className="text-sans-p input-label ms-3 ms-sm-0" htmlFor="organization">Organización a la que perteneces (Obligatorio)</label>
           <input
-            className="input-s px-2"
+            className="input-s px-3"
             type="text"
             id="organization"
             name="organization"
@@ -71,10 +71,10 @@ const ContactForm = () => {
           {formErrors.organizationError && <span>{formErrors.organizationError}</span>}
         </div>
 
-        <div className="d-flex flex-column mt-3">
-          <label className="text-sans-p" htmlFor="contact_reason">Razón de contacto (Obligatorio)</label>
+        <div className="d-flex flex-column mt-2">
+          <label className="text-sans-p px-3" htmlFor="contact_reason">Razón de contacto (Obligatorio)</label>
           <select
-              className="custom-select px-2"
+              className="custom-select px-3"
               id="contact_reason"
               name="contact_reason"
               value={formData.contact_reason}
@@ -88,10 +88,10 @@ const ContactForm = () => {
           {formErrors.contact_reasonError && <span>{formErrors.contact_reasonError}</span>}
         </div>
 
-        <div className="d-flex flex-column mt-3">
-          <label className="text-sans-p" htmlFor="message">Comentario (Obligatorio)</label>
+        <div className="d-flex flex-column input-container mt-4">
+          <label className="text-sans-p input-label ms-3 ms-sm-0" htmlFor="message">Comentario (Obligatorio)</label>
           <textarea
-            className="input-l p-2"
+            className="input-l p-3"
             id="message"
             name="message"
             value={formData.message}
@@ -101,8 +101,8 @@ const ContactForm = () => {
           {formErrors.messageError && <span>{formErrors.messageError}</span>}
         </div>
 
-        <div className="text-end">
-          ({formData.message.length}/500)
+        <div className="text-sans-h5 text-end opacity-50 mt-1">
+          {formData.message.length} / 250 palabras
         </div>
         <div className="container d-flex justify-content-center">
           <button className="btn-principal-l mt-3" type="submit">Enviar</button>

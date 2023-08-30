@@ -9,7 +9,7 @@ const Contacto = () => {
             <li className="breadcrumb-item active" aria-current="page">Contacto</li>
           </ol>
         </nav>
-        <h1 className="text-sans-h1 text-center my-4">Formulario de Contacto</h1>
+        <h1 className="text-sans-h1 text-center mt-5">Formulario de Contacto</h1>
         <ContactoForm />
       </div>
     );
