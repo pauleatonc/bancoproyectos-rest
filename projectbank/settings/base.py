@@ -15,6 +15,7 @@ DJANGO_APPS = [
 
 LOCAL_APPS = [
 
+    'applications.base',
     'applications.projects',
     'applications.home',
     'applications.users',
@@ -33,6 +34,7 @@ THIRD_PARTY_APPS = [
     'rest_framework',
     'coreapi',
     'corsheaders',
+    'simple_history',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
