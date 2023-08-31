@@ -6,6 +6,7 @@ import Dropdown from './DropdowSelect';
 
 const FiltroProyectos = ({ dataFilter, onFilter }) =>
 {
+  
   const { fetchProjects, dataProject, errorProject } = useApiProjectsList();
   const [ selectedPrograms, setSelectedPrograms ] = useState([]);
   const [ selectedRegions, setSelectedRegions ] = useState([]);
@@ -71,18 +72,6 @@ const FiltroProyectos = ({ dataFilter, onFilter }) =>
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ selectedPrograms, selectedRegions, selectedComunas, selectedTypes, selectedYears ]);
 
-  useEffect(() =>
-  {
-    if (dataProject && dataProject.length > 0)
-    {
-      onFilter(dataProject);
-    }
-
-    if (errorProject)
-    {
-      console.error('Error al filtrar proyectos:', errorProject);
-    }
-  }, [ dataProject, errorProject, onFilter ]);
 
 
 
@@ -128,27 +117,21 @@ const FiltroProyectos = ({ dataFilter, onFilter }) =>
     );
   };
 
-  useEffect(() =>
-  {
-    if (dataProject && dataProject.length > 0)
-    {
-      onFilter(dataProject);
-    }
-
-    if (errorProject)
-    {
+  useEffect(() => {
+    onFilter(dataProject); // Llama a onFilter sin importar si dataProject está vacío o no
+  
+    if (errorProject) {
       console.error('Error al filtrar proyectos:', errorProject);
     }
-  }, [ dataProject, errorProject, onFilter ]);
+  }, [dataProject, errorProject, onFilter]);
 
-  console.log("Proyectos filtrados:", dataProject);
-
+  
 
   return (
 
     <div className="mb-md-3" id="filter-container">
       <div className="container d-flex justify-content-between my-3 p-0">
-        <p className="text-sans-h3 me-2">Filtrar</p>
+        <h2 className="text-sans-h3 me-2">Filtrar</h2>
         <button className="text-sans-p btn-limpiar p-2" onClick={handleClearFilter}>
           Limpiar filtro <i className="material-symbols-outlined">
             delete
@@ -162,13 +145,14 @@ const FiltroProyectos = ({ dataFilter, onFilter }) =>
 
       <div className="container d-flex justify-content-around mx-0 p-0">
         {dataFilter.programs.map((programa) => (
-          <div className=" container-btnCircle col-md-2 d-flex flex-column align-items-center mr-5" key={programa.id}>
-            <a type="checkbox" id='btn-icon'
-              className={`categorias-circle d-inline-flex focus-ring py-1 px-2 rounded-2 btn  rounded-circle border-2 d-flex align-items-center justify-content-center my-3 ${selectedPrograms.includes(programa.id) ? 'btn-primary' : 'btn-outline-primary'
+          <div tabIndex="0" className="container-btnCircle col-md-2 d-flex flex-column align-items-center mr-5" key={programa.id}>
+            <button
+              className={`categorias-circle d-inline-flex focus-ring py-1 px-2 rounded-2 btn  rounded-circle border-2 d-flex align-items-center justify-content-center my-3 ${selectedPrograms.includes(programa.id) ? 'btn-primary white-text' : 'btn-outline-primary white-text'
                 }`}
-              onClick={() => toggleProgram(programa.id)}>
+              onClick={() => toggleProgram(programa.id)}
+            >
               <img src={programa.icon_program} alt={programa.sigla} id='btnIcon' className={selectedPrograms.includes(programa.id) ? 'white-icon' : ''} />
-            </a>
+            </button>
             <p className="text-sans-h5-bold text-center">{programa.name}</p>
           </div>
 
@@ -181,13 +165,14 @@ const FiltroProyectos = ({ dataFilter, onFilter }) =>
       <div className="mt-3">
         <div className="container d-flex justify-content-between align-items-start px-1">
           <h3 className="text-sans-p me-1">¿En qué región?</h3>
-          <button className="btn-limpiar" onClick={handleClearLocation} >
+          <button role="button" className="btn-limpiar" onClick={handleClearLocation} >
             Borrar <i className="material-symbols-outlined">
               delete
             </i>
           </button>
         </div>
         <Dropdown
+          tabIndex="0"
           items={dataFilter.regiones}
           selectedItems={selectedRegions}
           onItemChange={handleRegionChange}
@@ -198,13 +183,14 @@ const FiltroProyectos = ({ dataFilter, onFilter }) =>
         {/* Comuna select */}
         <h3 className="text-sans-p px-1 mt-4">¿En qué comuna?</h3>
 
-          <Dropdown 
+        <Dropdown
+          tabIndex="0"
           items={filteredComunas}
           selectedItems={selectedComunas}
           onItemChange={handleComunaChange}
           singleItemName="comunas"
           isComuna={true}
-          />
+        />
         <div className="row my-4 d-flex align-items-center">
           <div className="col-2 info-circle pb-3"><span className="material-symbols-outlined" >
             info
@@ -227,14 +213,14 @@ const FiltroProyectos = ({ dataFilter, onFilter }) =>
 
         <div className="d-flex flex-wrap">
           {dataFilter.types.map((tipo) => (
-            <div className=" container-btnCircle px-4 col-5 d-flex flex-column mx-2 align-items-center" key={tipo.id}>
-              <a type="checkbox" id='btn-icon'
+            <div tabIndex="0" className="container-btnCircle px-4 col-5 d-flex flex-column mx-2 align-items-center" key={tipo.id}>
+              <button type="checkbox" id='btn-icon'
                 className={`categorias-circle btn rounded-circle border-2 d-flex align-items-center justify-content-center my-2 ${selectedTypes.includes(tipo.id) ? 'btn-primary' : 'btn-outline-primary'
                   }`}
                 key={tipo.id}
                 onClick={() => toggleType(tipo.id)}>
                 <i className="material-symbols-rounded">{tipo.icon_type}</i>
-              </a>
+              </button>
               <p className="text-sans-h5-bold text-center">{tipo.name}</p>
             </div>
           ))}
@@ -245,6 +231,7 @@ const FiltroProyectos = ({ dataFilter, onFilter }) =>
       <div className='my-4'>
         <h3 className="text-sans-p px-1 ">¿Qué años de construcción quieres ver?</h3>
         <Dropdown
+          tabIndex="0"
           items={dataFilter.years}
           selectedItems={selectedYears}
           onItemChange={handleYearChange}

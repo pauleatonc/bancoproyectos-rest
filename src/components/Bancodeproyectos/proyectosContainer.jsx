@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import { ProyectoCard } from '../../components/Bancodeproyectos'; 
 
-const ProyectosContainer = ({data}) => {
-  const [currentPage, setCurrentPAge] = useState(1);
+const ProyectosContainer = ({ data }) => {
+  const [currentPage, setCurrentPage] = useState(1);
   const projectsPerPage = 6;
 
   const lastProjectIndex = currentPage * projectsPerPage;
   const firstProjectIndex = lastProjectIndex - projectsPerPage;
-  const currentProjects = data.slice(firstProjectIndex, lastProjectIndex)
+  const currentProjects = data.slice(firstProjectIndex, lastProjectIndex);
 
   const handlePageChange = (pageNumber) => {
-    setCurrentPAge(pageNumber);
+    setCurrentPage(pageNumber);
   };
 
   const rangeStart = firstProjectIndex + 1;
