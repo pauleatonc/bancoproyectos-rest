@@ -15,7 +15,7 @@ const Footer = () => {
           <div className="row">
             <div className="col-md-2 col-8 a11y-fonts-col-12 me-5">
               <div className="aspect-ratio ratio-4x3">
-                <img className="mb-3 img-fluid img-sm" src="src/static/img/logo_Subdere.png" />
+                <img className="mb-3 img-fluid img-sm" src="../../src/static/img/logo_Subdere.png" />
               </div>  
             </div>
 
