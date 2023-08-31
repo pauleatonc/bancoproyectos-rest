@@ -21,6 +21,10 @@ $black-color: #111111;
     @include font-serif(49px, $grey-a-color);
 }
 .text-serif-h2{
+    @include font-serif(31px, $grey-a-color);
+    font-weight: 700;
+}
+.text-serif-h3{
     @include font-serif(24px, $grey-a-color);
 }
 
@@ -90,6 +94,7 @@ $black-color: #111111;
     width: $btnSize;
     background-color: $blue-color;
     border: none;
+    border-radius: 4px;
     color: $white-color;
     padding: 13px;
 }
@@ -99,6 +104,9 @@ $black-color: #111111;
 }
 .btn-principal-l{
     @include btn-principal(90%); 
+ }
+ .btn-principal-xl{
+    @include btn-principal(100%); 
  }
 .custom-pagination-btn{
     border: none;

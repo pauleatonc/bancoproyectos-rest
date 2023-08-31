@@ -8,6 +8,13 @@
 .text-serif-h2 {
   font-family: "Roboto Slab";
   color: #373737;
+  font-size: 31px;
+  font-weight: 700;
+}
+
+.text-serif-h3 {
+  font-family: "Roboto Slab";
+  color: #373737;
   font-size: 24px;
 }
 
@@ -113,6 +120,7 @@
   width: fit-content;
   background-color: #0F69C4;
   border: none;
+  border-radius: 4px;
   color: #FFF;
   padding: 13px;
   height: -moz-fit-content;
@@ -123,6 +131,16 @@
   width: 90%;
   background-color: #0F69C4;
   border: none;
+  border-radius: 4px;
+  color: #FFF;
+  padding: 13px;
+}
+
+.btn-principal-xl {
+  width: 100%;
+  background-color: #0F69C4;
+  border: none;
+  border-radius: 4px;
   color: #FFF;
   padding: 13px;
 }
@@ -256,6 +274,16 @@
      object-position: center;
 }
 
+.login-container {
+  border: none;
+}
+
+@media (min-width: 768px) {
+  .login-container {
+    border: 1px solid #373737;
+    border-radius: 5px;
+  }
+}
 .footer-container {
   background-color: #001C41;
 }
@@ -452,4 +480,32 @@
   background-color: lightblue;
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+.input-s {
+  height: 60px;
+}
+
+.input-l {
+  height: 150px;
+}
+
+.custom-select {
+  background-color: transparent;
+  color: #8a8a8a;
+  border: 1px solid #8a8a8a;
+  height: 60px;
+}
+
+@media (min-width: 576px) {
+  .input-container {
+    position: relative;
+  }
+  .input-label {
+    position: absolute;
+    top: -12px; /* Ajusta distancia vertical */
+    left: 10px; /* Ajusta distancia horizontal */
+    background-color: #FFF;
+    padding: 0 7px;
+  }
 }/*# sourceMappingURL=styles.css.map */
