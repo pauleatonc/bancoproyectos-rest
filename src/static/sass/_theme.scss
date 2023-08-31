@@ -94,6 +94,7 @@ $black-color: #111111;
     width: $btnSize;
     background-color: $blue-color;
     border: none;
+    border-radius: 4px;
     color: $white-color;
     padding: 13px;
 }
@@ -103,6 +104,9 @@ $black-color: #111111;
 }
 .btn-principal-l{
     @include btn-principal(90%); 
+ }
+ .btn-principal-xl{
+    @include btn-principal(100%); 
  }
 .custom-pagination-btn{
     border: none;

@@ -1,0 +1,25 @@
+
+.input-s{
+    height: 60px;  
+}
+.input-l{
+    height: 150px;
+}
+.custom-select{
+    background-color: transparent;
+    color: $grey-b-color;
+    border: 1px solid $grey-b-color;
+    height: 60px;
+}
+@media (min-width: 576px) {
+    .input-container{
+        position: relative;
+    }
+    .input-label{
+        position: absolute;
+        top: -12px; /* Ajusta distancia vertical */
+        left: 10px; /* Ajusta distancia horizontal */
+        background-color: $white-color;
+        padding: 0 7px;
+    }
+}
