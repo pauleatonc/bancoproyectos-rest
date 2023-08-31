@@ -19,7 +19,7 @@
     @include deco-line(58px, #0f69c4);
 }
 #lineRed {
-    @include deco-line(82px, #e22c2c);
+    @include deco-line(82px, $secondary-color);
 }
 .logo-subdere{
     @include font-sans(16px, 700, $grey-a-color);

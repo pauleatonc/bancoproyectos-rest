@@ -112,7 +112,7 @@
 .red {
   width: 50%;
   height: 100%;
-  background-color: #FE6565;
+  background-color: #E22C2C;
 }
 
 .btn-principal-s {
@@ -185,7 +185,7 @@
 #lineRed {
   width: 82px;
   height: 8px;
-  background-color: #e22c2c;
+  background-color: #E22C2C;
 }
 
 .logo-subdere {
@@ -288,11 +288,21 @@
   background-color: #001C41;
 }
 
+.line-reference {
+  position: relative;
+}
+
+.logo-container {
+  display: flex;
+  align-items: flex-end;
+}
+
 .deco-line {
   height: 10px;
   width: 150px;
-  bottom: 0;
-  left: 40px;
+  position: absolute;
+  bottom: -48px;
+  left: 20px;
   display: flex;
 }
 
@@ -305,7 +315,7 @@
 .rojo {
   width: 60%;
   height: 100%;
-  background-color: #FE6565;
+  background-color: #EB3C46;
 }
 
 .divider {

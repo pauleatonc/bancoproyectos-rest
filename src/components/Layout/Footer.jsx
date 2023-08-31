@@ -5,17 +5,17 @@ const Footer = () => {
     <footer className="footer-container content-always-on-display position-relative">
       <div className="container py-5">
 
-        {/* linea decorativa?? */}
-        <div className="deco-line position-absolute">
-          <div className="azul"></div>
-          <div className="rojo"></div>
-        </div>
-      
-        <div className="row">
+        <div className="row line-reference">
 
           <div className="col-md-2 col-8 a11y-fonts-col-12 me-5">
             <div className="aspect-ratio ratio-4x3">
-              <img className="mb-3 img-fluid img-sm" src="../../src/static/img/logo_Subdere.png" />
+              <div className="logo-container">
+                <img className="mb-3 img-fluid img-sm" src="../../src/static/img/logo_Subdere.png" />
+                <div className="deco-line">
+                  <div className="azul"></div>
+                  <div className="rojo"></div>
+                </div>
+              </div> 
             </div>  
           </div>
 
