@@ -31,7 +31,7 @@ const Dropdown = ({ items, selectedItems, onItemChange, singleItemName, isComuna
 
   return (
     <div>
-      <button ref={buttonRef} className='select-dropdown mt-3 btn btn-md border border-2 '
+      <button role="button"  tabIndex="0" ref={buttonRef} className='select-dropdown mt-3 btn btn-md border border-2 '
         onClick={() => setDropdownDisplay((prevState) => !prevState)}>
         {getDropdownDisplayMessage()} <i className="material-symbols-outlined pr-0">expand_more</i>
       </button>

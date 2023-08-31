@@ -5,12 +5,12 @@ const useApiFilter = () => {
   const [dataFilter, setDataFilter] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
   const [filteredProjects, setFilteredProjects] = useState([]);
 
   const handleFilter = (projects) => {
     setFilteredProjects(projects);
   };
+  
 
   useEffect(() => {
     const fetchData = async () => {
