@@ -19,5 +19,5 @@ urlpatterns = [
          name='project_checklist'
          ),
 
-    re_path('', include('applications.projects.api.v1.urls'))
+    re_path('', include('applications.projects.api.v1.routers'))
 ]

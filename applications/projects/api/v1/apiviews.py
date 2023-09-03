@@ -44,13 +44,6 @@ from applications.regioncomuna.serializer import (
 )
 
 
-'''@api_view(['GET'])
-def api_root(request, format=None):
-    return Response({
-        'projects': reverse('project-list', request=request, format=format),
-    })'''
-
-
 class ProjectViewSet(viewsets.ModelViewSet):
 
     queryset = Project.objects.all()
@@ -74,6 +67,9 @@ class ProjectViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['GET'])
     def filter_options(self, request):
+        """
+        Devuelve campos filtrados y únicos basados en los proyectos existentes.
+        """
         # Obtener años únicos que están asociados con al menos un proyecto
         unique_years = Year.objects.annotate(num_projects=Count('project')).filter(num_projects__gt=0).order_by(
             'number')
@@ -132,3 +128,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
         related_data = ProjectDetailSerializerV1(selected_projects, many=True, context=serializer_context).data
 
         return Response(related_data)
+
+class ProgramViewSet(viewsets.ModelViewSet):
+    serializer_class = ProgramSerializerV1
+    queryset = Program.objects.all()

@@ -1,4 +1,4 @@
-from rest_framework.views import APIView
+from rest_framework.generics import ListCreateAPIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.conf import settings
@@ -6,11 +6,14 @@ from django.conf import settings
 from .serializers import ContactSerializer
 #
 from applications.home.functions import send_email
+from applications.home.models import Contact
 
-class ContactCreate(APIView):
+class ContactCreate(ListCreateAPIView):
+    serializer_class = ContactSerializer
+    queryset = Contact.objects.all()
 
     def post(self, request):
-        serializer = ContactSerializer(data=request.data)
+        serializer = self.serializer_class(data=request.data)
 
         if serializer.is_valid():
             serializer.save()
