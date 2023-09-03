@@ -1,32 +1,36 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import "../../../static/styles/bancodeproyectos.css";
-import { ProyectoContainer, ProyectosFilter, ProyectosSort, BuscadorProyectos } from '../../../components/Bancodeproyectos';
+import
+{
+  ProyectoContainer,
+  ProyectosFilter,
+  ProyectosSort,
+  BuscadorProyectos
+
+} from '../../../components/Bancodeproyectos';
 import useApiFilter from '../../../hooks/useApiFilter';
 import useApiProjectsList from "../../../hooks/useApiProjectsList";
-import useOrdering from '../../../hooks/useOrdering';
-import useProjectSearch from '../../../hooks/useProjectSearch';
 
-const BancoProyectos = () => {
-  const { dataProject, loadingProject, errorProject } = useApiProjectsList();
+const BancoProyectos = () =>
+{
+  const { loadingProject, errorProject } = useApiProjectsList();
   const { dataFilter, loading, error, filteredProjects, handleFilter } = useApiFilter();
-  const { data, loading: orderingLoading, error: orderingError, setOrder } = useOrdering();
-  const { searchResults, searchActivated, handleSearch } = useProjectSearch();
-  
-  const projectsToDisplay = useMemo(() => {
-    if (searchActivated && searchResults.length > 0) return searchResults;
-    if (filteredProjects && filteredProjects.length > 0) return filteredProjects;
-    if (data && data.length > 0) return data;
-    return dataProject;
-  }, [searchActivated, searchResults, filteredProjects, data, dataProject]);
 
-  const hasResults = (projectsToDisplay && projectsToDisplay.length > 0);
+  const projectsToDisplay = useMemo(() =>
+  {
+    if (filteredProjects.length > 0)
+    {
+      return filteredProjects;
+    }
 
-  console.log("Proyectos a mostrar:", projectsToDisplay);
-  console.log("Valor actualizado de hasResults:", hasResults);
+    return [];
+  }, [ filteredProjects ]);
 
-  if (loadingProject || loading || orderingLoading) return <div>CARGANDO DATOS...</div>;
-  if (errorProject || error || orderingError) return <div>Error de conexión</div>;
+  const hasResults = projectsToDisplay.length > 0;
+
+  if (loadingProject || loading) return <div>CARGANDO DATOS...</div>;
+  if (errorProject || error) return <div>Error de conexión</div>;
 
   return (
     <div className="container col-md-10">
@@ -36,24 +40,27 @@ const BancoProyectos = () => {
           <li className="breadcrumb-item active" aria-current="page">Banco de Proyectos</li>
         </ol>
       </nav>
-
-      <BuscadorProyectos onSearch={handleSearch} />
-
+      <BuscadorProyectos />
       <div className="row">
         <div className="col col-md-4">
           <ProyectosFilter onFilter={handleFilter} dataFilter={dataFilter} />
         </div>
+
         <div className="col col-md-8">
           <div className="d-flex justify-content-end mb-1">
-            <ProyectosSort setOrder={setOrder}  />
+            <ProyectosSort />
           </div>
+
           {hasResults ? (
-        <ProyectoContainer data={projectsToDisplay} />
-      ) : (
-        <div>
-          <p className="text-muted">No hay proyectos que coincidan con los criterios seleccionados.</p>
-        </div>
-      )}
+            <ProyectoContainer data={projectsToDisplay} />
+          ) : (
+            <div className="alert d-flex justify-content-center mt-4 " id='icon-alert'>
+              <i className ="material-symbols-outlined" >
+                info
+              </i>
+              <p className="text-alert fs-5 text-left mx-2 my-auto align-self-center">No encontramos proyectos con los filtros que elegiste. Intenta con otros distintos.</p>
+            </div>
+          )}
         </div>
       </div>
     </div>

@@ -8,6 +8,13 @@
 .text-serif-h2 {
   font-family: "Roboto Slab";
   color: #373737;
+  font-size: 31px;
+  font-weight: 700;
+}
+
+.text-serif-h3 {
+  font-family: "Roboto Slab";
+  color: #373737;
   font-size: 24px;
 }
 
@@ -105,7 +112,7 @@
 .red {
   width: 50%;
   height: 100%;
-  background-color: #FE6565;
+  background-color: #E22C2C;
 }
 
 .btn-principal-s {
@@ -113,6 +120,7 @@
   width: fit-content;
   background-color: #0F69C4;
   border: none;
+  border-radius: 4px;
   color: #FFF;
   padding: 13px;
   height: -moz-fit-content;
@@ -123,6 +131,16 @@
   width: 90%;
   background-color: #0F69C4;
   border: none;
+  border-radius: 4px;
+  color: #FFF;
+  padding: 13px;
+}
+
+.btn-principal-xl {
+  width: 100%;
+  background-color: #0F69C4;
+  border: none;
+  border-radius: 4px;
   color: #FFF;
   padding: 13px;
 }
@@ -167,7 +185,7 @@
 #lineRed {
   width: 82px;
   height: 8px;
-  background-color: #e22c2c;
+  background-color: #E22C2C;
 }
 
 .logo-subdere {
@@ -256,15 +274,35 @@
      object-position: center;
 }
 
+.login-container {
+  border: none;
+}
+
+@media (min-width: 768px) {
+  .login-container {
+    border: 1px solid #373737;
+    border-radius: 5px;
+  }
+}
 .footer-container {
   background-color: #001C41;
+}
+
+.line-reference {
+  position: relative;
+}
+
+.logo-container {
+  display: flex;
+  align-items: flex-end;
 }
 
 .deco-line {
   height: 10px;
   width: 150px;
-  bottom: 0;
-  left: 40px;
+  position: absolute;
+  bottom: -48px;
+  left: 20px;
   display: flex;
 }
 
@@ -277,7 +315,7 @@
 .rojo {
   width: 60%;
   height: 100%;
-  background-color: #FE6565;
+  background-color: #EB3C46;
 }
 
 .divider {
@@ -447,9 +485,37 @@
 
 .imagen {
   height: 150px;
-  min-width: 150px;
+  width: 150px;
   border-radius: 5px;
   background-color: lightblue;
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+.input-s {
+  height: 60px;
+}
+
+.input-l {
+  height: 150px;
+}
+
+.custom-select {
+  background-color: transparent;
+  color: #8a8a8a;
+  border: 1px solid #8a8a8a;
+  height: 60px;
+}
+
+@media (min-width: 576px) {
+  .input-container {
+    position: relative;
+  }
+  .input-label {
+    position: absolute;
+    top: -12px; /* Ajusta distancia vertical */
+    left: 10px; /* Ajusta distancia horizontal */
+    background-color: #FFF;
+    padding: 0 7px;
+  }
 }/*# sourceMappingURL=styles.css.map */

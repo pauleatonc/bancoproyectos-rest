@@ -1,6 +1,5 @@
 .img-portada{
     max-width: 950px;
-    //overflow: hidden;
     border-radius: 5px;
 }
 .img-portada:hover {
@@ -12,8 +11,7 @@
     border-radius: 5px;
     background-color: grey;
     object-fit: cover;
-    position: relative;
-    
+    position: relative;   
 }
 .miniatura:hover {
     opacity: 0.9;
@@ -44,13 +42,11 @@
         height: 100%;
         padding-top: 35%;
         border-radius: 4px;
-
         font-family: 'Roboto Slab';
         color: $white-color;
         font-size: 49px;
         font-style: normal;
         font-weight: 700;
-        line-height: 61.04px;
-    
+        line-height: 61.04px;   
     }
 }

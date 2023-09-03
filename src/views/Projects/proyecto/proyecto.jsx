@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import useApiProjectsDetail from "../../../hooks/useApiProjectsDetail";
 import Carrusel from "../../../components/Proyecto/carrusel";
 import ProyectosRelacionados from "../../../components/Proyecto/proyectosRelacionados";
@@ -6,6 +6,7 @@ import ProyectosRelacionados from "../../../components/Proyecto/proyectosRelacio
 const Proyecto = () => {
 const { slug } = useParams();
 const { dataProject, loadingProject, errorProject } = useApiProjectsDetail(slug);
+const navigate = useNavigate();
 
 if (loadingProject) {
   return <div>CARGANDO DATOS...</div>
@@ -15,10 +16,10 @@ if (errorProject) {
 }
 
   return (
-    <div className="container col-10">
+    <div className="container col-11 col-md-10">
       {/* Boton volver y breadcrumbs */}
       <div className="d-flex align-items-center">
-        <button className="volver-btn d-none d-lg-block"> &lt; volver</button>
+        <button className="volver-btn d-none d-lg-block"onClick={() => navigate(-1)}> &lt; volver</button>
         <p className="m-0 d-none d-lg-block me-3 opacity-50">|</p>
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb m-0">

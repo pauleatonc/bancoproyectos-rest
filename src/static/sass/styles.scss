@@ -1,6 +1,7 @@
 @import "theme";
 @import "navbar";
 @import "landing";
+@import "login";
 @import "footer";
 @import "proyectosFilter";
 @import "proyectoCard";
@@ -8,5 +9,6 @@
 @import "carrusel";
 @import "modal";
 @import "proyectosRelacionados";
+@import "contacto";
 
 // desde este archivo SASS compila los estilos en una hoja CSS.

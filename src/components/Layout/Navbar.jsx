@@ -32,7 +32,7 @@ const Navbar = () =>{
           {/* Inicio sesion */}
           <button className="btn-principal-s mt-4 me-md-5 d-none d-md-block" type="button">
             <i className="cl cl-claveunica"/> 
-            <span className="text-underline mx-1"> Iniciar sesión </span>
+            <Link to="/login" className="text-sans-p-white text-underline mx-md-3 d-none d-md-block">Iniciar sesión</Link>    
           </button>
           {/* Boton menu vista mobile */}
           <button className="d-md-none menu-btn" onClick={toggleMenu}> Menu
