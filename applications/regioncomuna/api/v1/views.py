@@ -1,4 +1,4 @@
-from .models import Region, Comuna
+from ...models import Region, Comuna
 #
 from rest_framework.generics import ListAPIView
 #

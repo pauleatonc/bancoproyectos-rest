@@ -11,7 +11,7 @@ from applications.projects.models import (
     Projectfile    
 )
 #
-from applications.regioncomuna.serializer import ComunaRegionSerializer
+from applications.regioncomuna.api.v1.serializer import ComunaRegionSerializer
 
 
 class ProgramSerializerV1(serializers.ModelSerializer):

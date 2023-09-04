@@ -35,6 +35,8 @@ THIRD_PARTY_APPS = [
     'coreapi',
     'corsheaders',
     'simple_history',
+    'drf_yasg',
+
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS

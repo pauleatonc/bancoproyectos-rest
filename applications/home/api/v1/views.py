@@ -9,10 +9,20 @@ from applications.home.functions import send_email
 from applications.home.models import Contact
 
 class ContactCreate(ListCreateAPIView):
+    """
+    Listado completo de mensajes
+
+    Listado de mensajes enviados a través de Contacto
+    """
     serializer_class = ContactSerializer
     queryset = Contact.objects.all()
 
     def post(self, request):
+        """
+        Api para POST de Contacto
+
+        Endpoint para el POST de la aplicación Contacto
+        """
         serializer = self.serializer_class(data=request.data)
 
         if serializer.is_valid():
