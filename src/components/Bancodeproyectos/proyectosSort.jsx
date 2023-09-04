@@ -1,5 +1,4 @@
 import { useEffect, useState, useRef } from "react";
-import '../../static/styles/proyectosFilter.css';
 
 const SortProyectos = ({ onSort }) => {
   const [dropdownSort, setDropdownSort] = useState(false);

@@ -2,11 +2,8 @@ import { BuscadorProyectos } from '../../components/Bancodeproyectos';
 import IconPMU from '../../static/img/icons/PMU.svg';
 import IconPMB from '../../static/img/icons/PMB.svg'; 
 import IconList from '../../static/img/icons/Blueprint.svg'; 
-import '../../static/styles/bancodeproyectos.css'; 
-
 
 const Home = () => {
-
 
   return (
     <>
@@ -41,7 +38,6 @@ const Home = () => {
         </div>
       </div>
       
-
       {/* Que es el Banco de Proyectos */}
       <div className="container col-md-8 px-4 mb-4">
         <h2 className="text-sans-h2 my-4">¿Qué es el Banco de Proyectos?</h2>
@@ -95,4 +91,4 @@ const Home = () => {
   );
 };
   
-  export default Home;
+export default Home;
