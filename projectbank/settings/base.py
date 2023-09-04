@@ -123,8 +123,13 @@ CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:5173',
 ]
 
-#Auto documentation for API's
+# Configuraciones de Django Rest Framework
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+}
+
+# Configuraciones de documentación en Swagger
+SWAGGER_SETTINGS = {
+    'DOC_EXPANSION': 'none',
 }
