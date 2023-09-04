@@ -1,6 +1,7 @@
 from django.urls import path, include, re_path
 from django.conf.urls.static import static
 from django.conf import settings
+
 from . import views
 
 app_name = 'projects_app'
@@ -19,5 +20,5 @@ urlpatterns = [
          name='project_checklist'
          ),
 
-    re_path('', include('applications.projects.api.v1.urls'))
+    re_path('', include('applications.projects.api.v1.routers'))
 ]

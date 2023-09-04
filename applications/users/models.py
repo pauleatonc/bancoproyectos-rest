@@ -1,12 +1,19 @@
-from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+#
+from django.db import models
 from .functions import validar_rut
 from .managers import UserManager
 from applications.regioncomuna.models import Comuna
+# apps de terceros
+from simple_history.models import HistoricalRecords
 
 
 class Profesion(models.Model):
     ocupation = models.CharField('Profesión', max_length=20, unique=True)
+
+    class Meta:
+        verbose_name= 'Profesión'
+        verbose_name_plural= 'Profesiones'
 
 class User(AbstractBaseUser, PermissionsMixin):
 
@@ -48,3 +55,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         rut_formateado = validar_rut(self.rut)
         self.rut = rut_formateado
         super().save(*args, **kwargs)
+
+    class Meta:
+        verbose_name= 'Usuario'
+        verbose_name_plural= 'Usuarios'

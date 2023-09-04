@@ -39,19 +39,18 @@ from .projectSerializer import (
     TypeSerializerV1,
 )
 
-from applications.regioncomuna.serializer import (
+from applications.regioncomuna.api.v1.serializer import (
     RegionWithComunasSerializer,
 )
 
 
-'''@api_view(['GET'])
-def api_root(request, format=None):
-    return Response({
-        'projects': reverse('project-list', request=request, format=format),
-    })'''
-
-
 class ProjectViewSet(viewsets.ModelViewSet):
+    """
+    Listado y Edición de proyectos
+
+
+    API con CRUD completo para proyectos
+    """
 
     queryset = Project.objects.all()
     serializer_class = ProjectDetailSerializerV1
@@ -74,6 +73,12 @@ class ProjectViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['GET'])
     def filter_options(self, request):
+        """
+        Devuelve campos únicos para filtrado de proyectos
+
+
+        Devuelve campos filtrados y únicos basados en los proyectos existentes.
+        """
         # Obtener años únicos que están asociados con al menos un proyecto
         unique_years = Year.objects.annotate(num_projects=Count('project')).filter(num_projects__gt=0).order_by(
             'number')
@@ -107,6 +112,8 @@ class ProjectViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['GET'])
     def related_projects(self, request, slug=None):
         """
+        Devuelve proyectos relacionados recibiendo un slug
+
         Devuelve proyectos relacionados basados en el tipo de proyecto del proyecto actual (dado por el slug).
         Excluye el proyecto actual del conjunto de resultados.
         """
