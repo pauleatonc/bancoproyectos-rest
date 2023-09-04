@@ -6,10 +6,15 @@ $tertiary-color: #001C41;
 $grey-a-color: #373737;
 $white-color: #FFF;
 $neutral-color: #EEEEEE;
+$alert-danger:#F56B0F;
+$dark-red:#871a1a; 
+$light-blue:#3f87d0;
+$dark-black:#1c1a1a ;
 
 $accent-color: #A8B7c7;
 $grey-b-color: #8a8a8a;
 $black-color: #111111;
+
 
 // Estilos texto con serifa
 @mixin font-serif ($fontSize, $fontColor) {
@@ -126,3 +131,39 @@ $black-color: #111111;
 }
 
 
+#btn-icon:hover  #btnIcon {
+    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7499%)
+    hue-rotate(262deg) brightness(103%) contrast(102%);
+}
+
+#btn-icon:active #btnIcon {
+    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7499%)
+    hue-rotate(262deg) brightness(103%) contrast(102%);
+}
+
+
+.white-icon {
+    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7499%)
+    hue-rotate(262deg) brightness(103%) contrast(102%);
+}
+
+.white-icon:hover {
+    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7499%)
+    hue-rotate(262deg) brightness(103%) contrast(102%);
+}
+
+.alerta {
+    border: 2px solid $alert-danger;
+    border-radius: 0px;
+    padding: 15px ; 
+    }
+    
+#icon-alert i.material-symbols-outlined{
+    font-size:48px;
+    color:$alert-danger; 
+    align-self: flex-start;
+}
+
+.text-alert {
+    color:$tertiary-color;
+}
