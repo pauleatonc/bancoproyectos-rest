@@ -1,12 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import useApiProjectsList from '../../hooks/useApiProjectsList';
-import '../../static/styles/proyectosFilter.css';
-import '../../static/styles/bancodeproyectos.css';
 import Dropdown from './DropdowSelect';
 
 const FiltroProyectos = ({ dataFilter, onFilter }) =>
-{
-  
+{ 
   const { fetchProjects, dataProject, errorProject } = useApiProjectsList();
   const [ selectedPrograms, setSelectedPrograms ] = useState([]);
   const [ selectedRegions, setSelectedRegions ] = useState([]);
@@ -14,7 +11,6 @@ const FiltroProyectos = ({ dataFilter, onFilter }) =>
   const [ selectedTypes, setSelectedTypes ] = useState([]);
   const [ selectedYears, setSelectedYears ] = useState([]);
   const [ filteredComunas, setFilteredComunas ] = useState([]);
-
 
   const handleFilterChange = (setter) => (e) =>
   {
@@ -29,7 +25,6 @@ const FiltroProyectos = ({ dataFilter, onFilter }) =>
   const handleRegionChange = handleFilterChange(setSelectedRegions);
   const handleComunaChange = handleFilterChange(setSelectedComunas);
   const handleYearChange = handleFilterChange(setSelectedYears);
-
 
   useEffect(() =>
   {
@@ -65,15 +60,11 @@ const FiltroProyectos = ({ dataFilter, onFilter }) =>
     fetchProjects(endpoint);
   }, [ selectedPrograms, selectedRegions, selectedComunas, selectedTypes, selectedYears, fetchProjects ]);
 
-
   useEffect(() =>
   {
     updateProjects();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [ selectedPrograms, selectedRegions, selectedComunas, selectedTypes, selectedYears ]);
-
-
-
 
   const handleClearFilter = () =>
   {
@@ -97,7 +88,6 @@ const FiltroProyectos = ({ dataFilter, onFilter }) =>
   {
     setSelectedTypes([]);
   };
-
 
   const toggleProgram = (programId) =>
   {
@@ -124,8 +114,6 @@ const FiltroProyectos = ({ dataFilter, onFilter }) =>
       console.error('Error al filtrar proyectos:', errorProject);
     }
   }, [dataProject, errorProject, onFilter]);
-
-  
 
   return (
 
@@ -179,7 +167,6 @@ const FiltroProyectos = ({ dataFilter, onFilter }) =>
           singleItemName="regiones"
         />
 
-
         {/* Comuna select */}
         <h3 className="text-sans-p px-1 mt-4">¿En qué comuna?</h3>
 
@@ -198,7 +185,6 @@ const FiltroProyectos = ({ dataFilter, onFilter }) =>
           <p className="col-10 text-sans-h5-blue">Solo encontrarás las regiones y comunas que tengan proyectos en este banco. </p>
         </div>
       </div>
-
 
       <div className="container filter-line my-3"></div>
       <div>

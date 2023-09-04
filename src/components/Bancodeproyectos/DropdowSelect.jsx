@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from 'react';
-import '../../static/styles/proyectosFilter.css'
 const Dropdown = ({ items, selectedItems, onItemChange, singleItemName, isComuna = false }) => {
   const [dropdownDisplay, setDropdownDisplay] = useState(false);
   const dropdownRef = useRef(null);
@@ -27,7 +26,6 @@ const Dropdown = ({ items, selectedItems, onItemChange, singleItemName, isComuna
       return `${selectedItems.length} seleccionados`;
     }
   };
-
 
   return (
     <div>
