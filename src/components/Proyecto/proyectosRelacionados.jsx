@@ -8,7 +8,7 @@ const ProyectosRelacionados = ({ currentSlug }) => {
   useEffect(() => {
     async function fetchRelatedProjects() {
       try {
-        const response = await apiProject.get(`${currentSlug}/related_projects/`);
+        const response = await apiProject.get(`projects/v1/${currentSlug}/related_projects/`);
         setRelatedProjects(response.data);
 
       } catch (error) {
