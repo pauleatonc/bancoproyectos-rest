@@ -36,6 +36,7 @@ THIRD_PARTY_APPS = [
     'corsheaders',
     'simple_history',
     'drf_yasg',
+    'rest_framework.authtoken',
 
 ]
 
@@ -133,3 +134,6 @@ REST_FRAMEWORK = {
 SWAGGER_SETTINGS = {
     'DOC_EXPANSION': 'none',
 }
+
+# Configuración de expiración de token de autentificación
+TOKEN_EXPIRED_AFTER_SECONDS = 10 # segundos

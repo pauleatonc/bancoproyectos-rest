@@ -8,6 +8,9 @@ from rest_framework import viewsets
 from applications.users.models import User
 from .serializer import UserSerializer, UserListSerializer
 
+
+
+
 @api_view(['GET', 'POST'])
 def user_api_view(request):
 

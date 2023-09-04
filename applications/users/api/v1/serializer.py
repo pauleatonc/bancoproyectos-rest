@@ -28,3 +28,9 @@ class UserListSerializer(serializers.ModelSerializer):
             'rut': instance['rut'],
             'nombres': instance['nombres']
         }
+
+
+class UserTokenSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ('rut', 'email')

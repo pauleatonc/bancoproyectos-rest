@@ -1,32 +1,24 @@
 from django.urls import path, include, re_path
 
 from . import views
+from .views1 import Login, Logout
 
 app_name = 'users_app'
 
 urlpatterns = [
     path(
-        'register/', 
+        'register/',
         views.UserRegisterView.as_view(),
         name = 'user-register',
         ),
+
     path(
-        'login/', 
-        views.LoginUser.as_view(),
-        name = 'user-login',
-        ),
-    path(
-        'logout/', 
-        views.LogoutView.as_view(),
-        name='user-logout',
-    ),
-    path(
-        'update/', 
+        'update/',
         views.UpdatePasswordView.as_view(),
         name='user-update',
     ),
     path(
-        'user-verification/<pk>/', 
+        'user-verification/<pk>/',
         views.CodeVerificationView.as_view(),
         name='user-verification',
     ),
@@ -71,7 +63,19 @@ urlpatterns = [
         name='password_recovery_success',
     ),
 
-    re_path('', include('applications.users.api.v1.urls'))
+    re_path('', include('applications.users.api.v1.urls')),
+
+    path(
+        'login/',
+        Login.as_view(),
+        name='login',
+    ),
+
+    path(
+        'logout/',
+        Logout.as_view(),
+        name='user-logout',
+    ),
 
     
 ]
