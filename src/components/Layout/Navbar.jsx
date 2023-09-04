@@ -47,8 +47,8 @@ const Navbar = () =>{
       <div className="mx-md-auto mx-lg-auto mx-xl-auto d-flex flex-column flex-md-row justify-content-center">
         <Link to="/" className="link text-black text-underline mx-md-3 d-none d-md-block"> Inicio </Link>
         <Link to="/bancodeproyectos" className="link text-black text-underline mx-md-3 d-none d-md-block"> Banco de Proyectos </Link>
-        <Link to="/bancodeproyectos" className="link text-black text-underline mx-md-3 d-none d-md-block"> Type something </Link>
-        <Link to="/bancodeproyectos" className="link text-black text-underline mx-md-3 d-none d-md-block"> Type something </Link>
+        <Link to="/bancodeideas" className="link text-black text-underline mx-md-3 d-none d-md-block"> Proyectos Innovadores </Link>
+        <Link to="/documentacion" className="link text-black text-underline mx-md-3 d-none d-md-block"> Documentación </Link>
         <Link to="/contacto" className="link text-black text-underline mx-md-3 d-none d-md-block">Contacto</Link>
       </div>
     </div> 

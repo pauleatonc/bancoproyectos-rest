@@ -13,7 +13,7 @@ const Error404 = () => {
         <li className="text-sans-p mt-2">Si copiaste y pegaste la dirección, revisa si copiaste la dirección completa.</li>
       </ul>
       <h2 className="text-sans-p mt-4">Si crees que esto se puede tratar de un error de la plataforma, 
-        <Link to="/contacto" className="text-sans-p-blue mx-1">ingresa un formulario de contacto</Link> 
+        <Link to="/contacto" className="text-sans-p-tertiary mx-1">ingresa un formulario de contacto</Link> 
         explicando la situación, así podremos derivarla al área correspondiente.
       </h2>
     </div>
