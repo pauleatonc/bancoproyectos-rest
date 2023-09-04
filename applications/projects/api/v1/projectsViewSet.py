@@ -129,7 +129,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
         # Selección aleatoria
         related_slugs = list(related_projects_query.values_list('slug', flat=True))
         selected_slugs = random.sample(related_slugs, min(len(related_slugs),
-                                                          1))  # Puedes ajustar el 3 a cuántos proyectos quieras obtener
+                                                          3))  # Puedes ajustar el 3 a cuántos proyectos quieras obtener
 
         # Obtener los proyectos seleccionados
         selected_projects = Project.objects.filter(slug__in=selected_slugs)
