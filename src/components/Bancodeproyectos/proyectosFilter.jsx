@@ -61,7 +61,7 @@ const FiltroProyectos = ({ dataFilter, onFilter }) =>
       }
     }
 
-    const endpoint = '/?' + queryParams.toString();
+    const endpoint = 'projects/v1/?' + queryParams.toString();
     fetchProjects(endpoint);
   }, [ selectedPrograms, selectedRegions, selectedComunas, selectedTypes, selectedYears, fetchProjects ]);
 

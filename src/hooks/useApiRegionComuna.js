@@ -9,7 +9,7 @@ export const useApiRegionComuna = () => {
   useEffect(()=> {
     const fetchData = async () => {
       try {
-        const response = await apiRegionComuna.get('/');
+        const response = await apiRegionComuna.get('region-comuna/v1/');
         setData(response.data);
         setLoading(false);
       }catch (error) {
