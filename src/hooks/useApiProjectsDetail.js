@@ -9,7 +9,7 @@ const useApiProjectsDetail = (slug) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await apiProjects.get(`${slug}`);
+        const response = await apiProjects.get(`projects/v1/${slug}/`);
         setDataProject(response.data);
         setLoadingProject(false);
       } catch (error) {

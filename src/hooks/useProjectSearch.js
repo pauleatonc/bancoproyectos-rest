@@ -15,7 +15,7 @@ const useProjectSearch = () => {
   const searchProjects = async (query) => {
     setLoadingSearch(true);
     try {
-      const endpoint = `?search=${query}`;
+      const endpoint = `projects/v1/?search=${query}/`;
       const response = await apiProjects.get(endpoint);
   
       if (response.status === 200) {

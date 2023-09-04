@@ -11,7 +11,7 @@ const useOrdering = () => {
     const fetchProjects = async () => {
       setLoading(true);
       try {
-        const response = await apiProjects.get(`?ordering=${order}`);
+        const response = await apiProjects.get(`projects/v1/?ordering=${order}/`);
         setData(response.data);
         setLoading(false);
       } catch (err) {
