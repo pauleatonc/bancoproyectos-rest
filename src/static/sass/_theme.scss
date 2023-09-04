@@ -69,6 +69,9 @@ $black-color: #111111;
     line-height: 30px;
 }
 .text-sans-p-blue{
+    @include font-sans(16px, 400, $blue-color);
+}
+.text-sans-p-tertiary{
     @include font-sans(16px, 400, $tertiary-color);
 }
 .text-sans-p-white{
@@ -98,7 +101,7 @@ $black-color: #111111;
     width: $btnSize;
     background-color: $blue-color;
     border: none;
-    border-radius: 4px;
+    // border-radius: 4px;
     color: $white-color;
     padding: 13px;
 }
@@ -112,6 +115,21 @@ $black-color: #111111;
  .btn-principal-xl{
     @include btn-principal(100%); 
  }
+
+@mixin btn-secundario ($btnSize){
+    width: $btnSize;
+    background-color: $white-color;
+    border: 2px solid $blue-color;
+    color: $blue-color;
+    padding: 13px;
+}
+.btn-secundario-s{
+    @include btn-secundario(fit-content);
+}
+.btn-secundario-l{
+    @include btn-secundario(100%);
+}
+
 .custom-pagination-btn{
     border: none;
     background-color: transparent;
@@ -120,7 +138,7 @@ $black-color: #111111;
 .custom-pagination-btn.active {
     background-color:$blue-color;
     color: $white-color;
-  }
+}
 
 // Tags
 .tag{

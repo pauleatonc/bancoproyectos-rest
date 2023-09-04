@@ -129,7 +129,7 @@ if (errorProject) {
             <div className="col-1 p-3">1</div>
             <div className="col p-3">Especificaciones Técnicas</div>
             <div className="col p-3">PDF</div>
-            <a className="col p-3 text-sans-p-blue" href={dataProject.eett} target="_blank" rel="noopener noreferrer">Descargar</a>
+            <a className="col p-3 text-sans-p-tertiary" href={dataProject.eett} target="_blank" rel="noopener noreferrer">Descargar</a>
         </div>
 
         {/* Presupuesto */}
@@ -137,7 +137,7 @@ if (errorProject) {
             <div className="col-1 p-3">2</div>
             <div className="col p-3">Presupuesto</div>
             <div className="col p-3">PDF</div>
-            <a className="col p-3 text-sans-p-blue" href={dataProject.presupuesto} target="_blank" rel="noopener noreferrer">Descargar</a>
+            <a className="col p-3 text-sans-p-tertiary" href={dataProject.presupuesto} target="_blank" rel="noopener noreferrer">Descargar</a>
         </div>
 
           {
@@ -146,7 +146,7 @@ if (errorProject) {
                     <div className="col-1 p-3">{index + 3}</div>  {/* Comenzamos desde el índice 3 porque ya mostramos 2 documentos anteriormente */}
                     <div className="col p-3">{file.name}</div>
                     <div className="col p-3">{file.file_format}</div>
-                    <a  className="col p-3 text-sans-p-blue" href={file.file} target="_blank" rel="noopener noreferrer">Descargar</a>
+                    <a  className="col p-3 text-sans-p-tertiary" href={file.file} target="_blank" rel="noopener noreferrer">Descargar</a>
                 </div>
             ))
           }
@@ -167,7 +167,7 @@ if (errorProject) {
                     <div className="col-1 p-3">{index + 1}</div>
                     <div className="col p-3">{guide.name}</div>
                     <div className="col p-3">{guide.guide_format}</div>
-                    <a className="col p-3 text-sans-p-blue" href={guide.guide} target="_blank" rel="noopener noreferrer">Descargar</a>
+                    <a className="col p-3 text-sans-p-tertiary" href={guide.guide} target="_blank" rel="noopener noreferrer">Descargar</a>
                 </div>
             ))
           }

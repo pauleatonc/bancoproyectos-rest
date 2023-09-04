@@ -1,4 +1,5 @@
-import { BuscadorProyectos } from '../../components/Bancodeproyectos'; 
+import { BuscadorProyectos } from '../../components/Bancodeproyectos';
+import { Link } from 'react-router-dom';
 import IconPMU from '../../static/img/icons/PMU.svg';
 import IconPMB from '../../static/img/icons/PMB.svg'; 
 import IconList from '../../static/img/icons/Blueprint.svg'; 
@@ -73,6 +74,28 @@ const Home = () => {
             <strong className="text-sans-h4 text-center">Entregamos información referencial para la realización de proyectos</strong>
             <p className="text-sans-p text-center my-3 my-md-4">Encontrarás información referencial detallada de proyectos como: planos, especificaciones, presupuestos, e información referencial para su elaboración. </p>
           </div>
+        </div>
+      </div>
+
+      {/* Ideas innoivadoras / Documentacion */}
+      <div className="container col-md-8 px-4 mb-4 d-flex flex-column flex-lg-row justify-content-between">
+        <div className="col p-3 me-lg-5">
+          <h2 className="text-sans-h2">Encuentra ideas innovadoras para tu comuna</h2>
+          <h3 className="text-sans-p mt-3">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s.</h3>
+          <button className="btn-secundario-s mt-3">
+            <Link to={`/bancodeideas`} className="text-sans-p-blue text-decoration-underline px-2">
+              Ver Proyectos Innovadores &gt;
+            </Link>
+          </button>
+        </div>
+        <div className="col p-3 ms-lg-5">
+          <h2 className="text-sans-h2">Revisa la documentación que necesitas para tu postulación</h2>
+          <h3 className="text-sans-p mt-3">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s.</h3>
+          <button className="btn-secundario-s mt-3">
+            <Link to={`/documentacion`} className="text-sans-p-blue text-decoration-underline px-2">
+              Ver Documentación &gt;
+            </Link>
+          </button>
         </div>
       </div>
 
