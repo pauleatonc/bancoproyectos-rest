@@ -1,6 +1,5 @@
 import { useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import "../../../static/styles/bancodeproyectos.css";
 import
 {
   ProyectoContainer,
@@ -54,7 +53,7 @@ const BancoProyectos = () =>
           {hasResults ? (
             <ProyectoContainer data={projectsToDisplay} />
           ) : (
-            <div className="alert d-flex justify-content-center mt-4 " id='icon-alert'>
+            <div className="alerta d-flex justify-content-center mt-4 " id='icon-alert'>
               <i className ="material-symbols-outlined" >
                 info
               </i>
