@@ -4,6 +4,7 @@ from datetime import timedelta, datetime
 from django.db import models
 from django.core.validators import FileExtensionValidator
 from django.template.defaultfilters import slugify
+from django.core.validators import MinLengthValidator
 #
 from applications.base.models import BaseModel
 from applications.regioncomuna.models import Comuna
@@ -155,7 +156,7 @@ class Project(BaseModel):
                              blank=True, verbose_name='Youtube')
     portada = ProcessedImageField(upload_to='projects', processors=[
         ResizeToFill(1200, 630)], format='WEBP', options={'quality': 60}, null=True,
-        blank=False, verbose_name='Foto miniatura (obligatorio)')
+        blank=False, verbose_name='Foto portada (obligatorio)')
     beforeimage = ProcessedImageField(upload_to='projects',
                                       processors=[ResizeToFit(1200, 630)],
                                       format='WEBP',
