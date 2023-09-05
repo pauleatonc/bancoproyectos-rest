@@ -29,9 +29,9 @@ class InnovativeWebSourceSerializerV1(serializers.ModelSerializer):
 
 class InnovativeProjectsSerializerV1(serializers.ModelSerializer):
 
-    program = ProgramSerializerV1()
-    images = InnovativeGalleryImageSerializerV1(many=True)
-    url = InnovativeWebSourceSerializerV1(many=True)
+    program = ProgramSerializerV1(many=True)
+    innovative_gallery_images = InnovativeGalleryImageSerializerV1(many=True)
+    web_sources = InnovativeWebSourceSerializerV1(many=True)
 
     class Meta:
         model = InnovativeProjects
@@ -41,6 +41,6 @@ class InnovativeProjectsSerializerV1(serializers.ModelSerializer):
             'title',
             'description',
             'portada',
-            'images',
-            'url'
+            'innovative_gallery_images',
+            'web_sources'
         )

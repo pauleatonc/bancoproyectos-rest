@@ -3,7 +3,7 @@ from django.urls import path, include
 #
 from . import innovativeProjectsViewSet
 
-app_name = 'projects_app'
+app_name = 'innovative_projects_app'
 
 # Create a router and register our viewsets with it.
 router = DefaultRouter()
