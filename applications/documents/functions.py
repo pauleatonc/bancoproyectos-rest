@@ -1,6 +1,5 @@
 from django.core.exceptions import ValidationError
 
-
 # límite de tamaño para los archivos
 FIVE_SIZE_LIMIT = 5 * 1024 * 1024  # 5 MB
 TWENTY_SIZE_LIMIT = 20 * 1024 * 1024  # 20 MB

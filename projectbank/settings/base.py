@@ -21,7 +21,8 @@ LOCAL_APPS = [
     'applications.users',
     'applications.regioncomuna',
     'applications.innovative_projects',
-    'applications.good_practices'
+    'applications.good_practices',
+    'applications.documents'
 
 ]
 

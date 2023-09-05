@@ -38,6 +38,7 @@ urlpatterns = [
     re_path('', include('applications.regioncomuna.urls')),
     re_path('', include('applications.innovative_projects.urls')),
     re_path('', include('applications.good_practices.urls')),
+    re_path('', include('applications.documents.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
