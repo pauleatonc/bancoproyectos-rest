@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib import admin
-from .models import Project, Program, Type, Guide, Projectimage, Projectfile, Year, PrioritizedTag, ChecklistDocuments, InnovativeProjects, InnovativeGaleryImage, InnovativeWebSource
+from .models import Project, Program, Type, Guide, Projectimage, Projectfile, Year, PrioritizedTag, ChecklistDocuments
 from import_export.admin import ImportExportMixin
 from import_export.resources import ModelResource
 
@@ -41,10 +41,6 @@ class ChecklistDocumentsResource(ModelResource):
     class Meta:
         model = ChecklistDocuments
 
-class InnovativeProjectsResource(ModelResource):
-    class Meta:
-        model = InnovativeProjects
-
 # Modelos tipo inline
 class ProjectfileAdmin(admin.TabularInline):
     model = Projectfile
@@ -52,14 +48,8 @@ class ProjectfileAdmin(admin.TabularInline):
 class ProjectimageAdmin(admin.TabularInline):
     model = Projectimage
 
-class InnovativeGaleryImage(admin.TabularInline):
-    model = InnovativeGaleryImage
-
-class InnovativeWebSource(admin.TabularInline):
-    model = InnovativeWebSource
-
-
 # Modelos disponibles para editar en el admin
+
 @admin.register(Project)
 class ProjectAdmin(ImportExportMixin, admin.ModelAdmin):
     resource_class = ProjectResource
@@ -71,32 +61,6 @@ class ProjectAdmin(ImportExportMixin, admin.ModelAdmin):
     inlines = [
         ProjectimageAdmin,
         ProjectfileAdmin,
-    ]
-
-    # Definir una acción personalizada para editar el campo 'public'
-    def make_public(self, request, queryset):
-        queryset.update(public=True)
-
-    def make_private(self, request, queryset):
-        queryset.update(public=False)
-
-    # Configurar metadatos para la acción personalizada
-    make_public.short_description = "Marcar como público"
-    make_private.short_description = "Marcar como privado"
-
-    # Agregar las acciones personalizadas al administrador
-    actions = [make_public, make_private]
-
-@admin.register(InnovativeProjects)
-class InnovativeProjectsAdmin(ImportExportMixin, admin.ModelAdmin):
-    resource_class = InnovativeProjectsResource
-    list_display = ('id', 'title', 'public')
-    search_fields = ('title', 'program')
-    list_display_links = ('title',)
-    list_per_page = 20
-    inlines = [
-        InnovativeGaleryImage,
-        InnovativeWebSource,
     ]
 
     # Definir una acción personalizada para editar el campo 'public'

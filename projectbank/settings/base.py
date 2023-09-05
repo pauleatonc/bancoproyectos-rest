@@ -20,6 +20,7 @@ LOCAL_APPS = [
     'applications.home',
     'applications.users',
     'applications.regioncomuna',
+    'applications.innovative_projects'
 
 ]
 
