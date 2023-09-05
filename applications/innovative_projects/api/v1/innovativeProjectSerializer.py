@@ -1,22 +1,12 @@
 from rest_framework import serializers
 #
 from applications.innovative_projects.models import (
-    Program,
     InnovativeProjects,
     InnovativeGalleryImage,
     InnovativeWebSource
 )
 
-
-class ProgramSerializerV1(serializers.ModelSerializer):
-    class Meta:
-        model = Program
-        fields = (
-            'id',
-            'name',
-            'sigla',
-            'icon_program'
-        )
+from applications.projects.api.v1.projectSerializer import ProgramSerializerV1
 
 
 class InnovativeGalleryImageSerializerV1(serializers.ModelSerializer):
@@ -47,6 +37,7 @@ class InnovativeProjectsSerializerV1(serializers.ModelSerializer):
         model = InnovativeProjects
         fields = (
             'id',
+            'program',
             'title',
             'description',
             'portada',
