@@ -1,4 +1,5 @@
 from rest_framework import viewsets
+
 #
 from applications.innovative_projects.models import (
     InnovativeProjects,
@@ -11,4 +12,4 @@ from .innovativeProjectSerializer import (
 
 class InnovativeProjectsViewSet(viewsets.ModelViewSet):
     serializer_class = InnovativeProjectsSerializerV1
-    queryset = InnovativeProjects.objects.all()
+    queryset = InnovativeProjects.objects.filter(public=True)
