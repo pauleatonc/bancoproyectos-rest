@@ -86,7 +86,7 @@ class ProjectImageSerializerV1(serializers.ModelSerializer):
         model = Projectimage
         fields = (
             'id',
-            'image_carousel',
+            'image',
         )
 
 

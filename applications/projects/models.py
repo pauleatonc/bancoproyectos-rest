@@ -223,7 +223,7 @@ class Project(BaseModel):
 
 
 class Projectimage(models.Model):
-    image_carousel = ProcessedImageField(upload_to='projects',
+    image = ProcessedImageField(upload_to='projects',
                                          verbose_name='Galeria de imagenes',
                                          processors=[ResizeToFit(1200, 630)],
                                          format='WEBP',
