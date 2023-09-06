@@ -1,19 +1,20 @@
 # standard library
 from datetime import timedelta, datetime
 #
-from django.db import models
 from django.core.validators import FileExtensionValidator
-from django.template.defaultfilters import slugify
-from django.core.validators import MinLengthValidator
 #
-from applications.base.models import BaseModel
-from applications.regioncomuna.models import Comuna
-from .managers import ProjectsManager
-from .functions import validate_file_size_five, validate_file_size_twenty
+from django.db import models
+from django.template.defaultfilters import slugify
 # apps de terceros
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill, ResizeToFit
 from simple_history.models import HistoricalRecords
+#
+from applications.base.models import BaseModel
+from applications.regioncomuna.models import Comuna
+from applications.documents.models import Documents
+from .functions import validate_file_size_five, validate_file_size_twenty
+from .managers import ProjectsManager
 
 
 class Program(BaseModel):
@@ -66,7 +67,8 @@ class Guide(BaseModel):
 class Type(BaseModel):
     name = models.CharField(
         max_length=200, verbose_name='Tipo de Proyecto', unique=True)
-    guides = models.ManyToManyField(Guide, related_name='guides')
+    guides = models.ManyToManyField(Guide, related_name='guides', blank=True)
+    documents = models.ManyToManyField(Documents, related_name='documents', blank=True)
     icon_type = models.CharField(
         verbose_name='Icono ( Nombre icono)', max_length=200, default='other_admission')
     historical = HistoricalRecords()
