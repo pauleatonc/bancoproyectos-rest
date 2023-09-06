@@ -176,7 +176,7 @@ class Project(BaseModel):
         upload_to='project_documents', validators=[
             FileExtensionValidator(['pdf'], message='Solo se permiten archivos PDF.'), validate_file_size_five], null=True, blank=False, verbose_name='Presupuesto')
     comuna = models.ForeignKey(
-        Comuna, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Comuna')
+        Comuna, on_delete=models.SET_NULL, null=True, blank=False, verbose_name='Comuna')
 
     slug = models.SlugField(editable=False, max_length=300)
 
