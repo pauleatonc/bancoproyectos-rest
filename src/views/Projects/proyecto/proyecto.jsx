@@ -152,7 +152,7 @@ if (errorProject) {
           }
 
       {/* Normativa por tipo de proyecto */}
-      { dataProject.type && dataProject.type.guides && dataProject.type.guides.length > 0 &&
+      { dataProject.type && dataProject.type.documents && dataProject.type.documents.length > 0 &&
         <>
         <h2 className="text-sans-h2 my-4 mt-5">Documentos con normativa de uso general</h2>
         <div className="row my-4 fw-bold border-top">
@@ -162,19 +162,19 @@ if (errorProject) {
           <div className="col mt-3">Acción</div>
         </div>
           {
-            dataProject.type.guides.map((guide, index) => (
+            dataProject.type.documents.map((documents, index) => (
                 <div key={index} className={`row border-top ${index % 2 === 0 ? 'grey-table-line' : 'white-table-line'}`}>
                     <div className="col-1 p-3">{index + 1}</div>
-                    <div className="col p-3">{guide.name}</div>
-                    <div className="col p-3">{guide.guide_format}</div>
-                    <a className="col p-3 text-sans-p-tertiary" href={guide.guide} target="_blank" rel="noopener noreferrer">Descargar</a>
+                    <div className="col p-3">{documents.title}</div>
+                    <div className="col p-3">{documents.document_format}</div>
+                    <a className="col p-3 text-sans-p-tertiary" href={documents.document} target="_blank" rel="noopener noreferrer">Descargar</a>
                 </div>
             ))
           }
         </>
       }
 
-
+      {/* Proyectos Relacionados */}
       <h2 className="text-sans-h2 my-4 mt-5">Proyectos relacionados</h2>
       <ProyectosRelacionados currentSlug={ dataProject.slug } />
     </div>

@@ -6,7 +6,7 @@ const Carrusel = ({ imgPortada, imgGeneral }) => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [hiddenThumbnailsCount, setHiddenThumbnailsCount] = useState(0);
 
-  const imgArray = [imgPortada, ...imgGeneral.map(img => img.image_carousel)];
+  const imgArray = [imgPortada, ...imgGeneral.map(img => img.image)];
 
   useEffect(() => {
     const miniContainer = miniContainerRef.current;
