@@ -11,4 +11,4 @@ from .goodPracticesSerializer import (
 
 class GoodPracticesViewSet(viewsets.ModelViewSet):
     serializer_class = GoodPracticesSerializerV1
-    queryset = GoodPractices.objects.all()
+    queryset = GoodPractices.objects.filter(public=True)

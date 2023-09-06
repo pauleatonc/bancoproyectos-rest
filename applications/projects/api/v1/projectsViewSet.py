@@ -52,7 +52,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
     API con CRUD completo para proyectos
     """
 
-    queryset = Project.objects.all()
+    queryset = Project.objects.filter(public=True)
     serializer_class = ProjectDetailSerializerV1
     lookup_field = 'slug'
     filter_backends = [filters.SearchFilter, DjangoFilterBackend, filters.OrderingFilter]
