@@ -1,18 +1,20 @@
 # standard library
 from datetime import timedelta, datetime
 #
-from django.db import models
 from django.core.validators import FileExtensionValidator
-from django.template.defaultfilters import slugify
 #
-from applications.base.models import BaseModel
-from applications.regioncomuna.models import Comuna
-from .managers import ProjectsManager
-from .functions import validate_file_size_five, validate_file_size_twenty
+from django.db import models
+from django.template.defaultfilters import slugify
 # apps de terceros
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill, ResizeToFit
 from simple_history.models import HistoricalRecords
+#
+from applications.base.models import BaseModel
+from applications.regioncomuna.models import Comuna
+from applications.documents.models import Documents
+from .functions import validate_file_size_five, validate_file_size_twenty
+from .managers import ProjectsManager
 
 
 class Program(BaseModel):
@@ -65,7 +67,8 @@ class Guide(BaseModel):
 class Type(BaseModel):
     name = models.CharField(
         max_length=200, verbose_name='Tipo de Proyecto', unique=True)
-    guides = models.ManyToManyField(Guide, related_name='guides')
+    guides = models.ManyToManyField(Guide, related_name='guides', blank=True)
+    documents = models.ManyToManyField(Documents, related_name='documents', blank=True)
     icon_type = models.CharField(
         verbose_name='Icono ( Nombre icono)', max_length=200, default='other_admission')
     historical = HistoricalRecords()
@@ -155,7 +158,7 @@ class Project(BaseModel):
                              blank=True, verbose_name='Youtube')
     portada = ProcessedImageField(upload_to='projects', processors=[
         ResizeToFill(1200, 630)], format='WEBP', options={'quality': 60}, null=True,
-        blank=False, verbose_name='Foto miniatura (obligatorio)')
+        blank=False, verbose_name='Foto portada (obligatorio)')
     beforeimage = ProcessedImageField(upload_to='projects',
                                       processors=[ResizeToFit(1200, 630)],
                                       format='WEBP',
@@ -173,7 +176,7 @@ class Project(BaseModel):
         upload_to='project_documents', validators=[
             FileExtensionValidator(['pdf'], message='Solo se permiten archivos PDF.'), validate_file_size_five], null=True, blank=False, verbose_name='Presupuesto')
     comuna = models.ForeignKey(
-        Comuna, on_delete=models.SET_NULL, null=True, blank=True, verbose_name='Comuna')
+        Comuna, on_delete=models.SET_NULL, null=True, blank=False, verbose_name='Comuna')
 
     slug = models.SlugField(editable=False, max_length=300)
 
@@ -220,7 +223,7 @@ class Project(BaseModel):
 
 
 class Projectimage(models.Model):
-    image_carousel = ProcessedImageField(upload_to='projects',
+    image = ProcessedImageField(upload_to='projects',
                                          verbose_name='Galeria de imagenes',
                                          processors=[ResizeToFit(1200, 630)],
                                          format='WEBP',

@@ -1,35 +1,24 @@
 import random
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework.reverse import reverse
-from rest_framework import renderers
-from rest_framework import viewsets
-from rest_framework.decorators import action
-from rest_framework import permissions
-from rest_framework import filters
 #
 from django.db.models import Count
-from django.db.models import Q
 from django_filters.rest_framework import DjangoFilterBackend
-
-from rest_framework.generics import (
-    GenericAPIView,
-    ListAPIView,
-    RetrieveUpdateDestroyAPIView
-)
+from rest_framework import filters
+from rest_framework import viewsets
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework.pagination import PageNumberPagination
 #
 from applications.projects.models import (
     Program,
-    Guide,
     Type,
     Year,
-    PrioritizedTag,
     Project,
 )
-
+from applications.regioncomuna.api.v1.serializer import (
+    RegionWithComunasSerializer,
+)
 from applications.regioncomuna.models import (
-    Region,
-    Comuna
+    Region
 )
 #
 from .projectSerializer import (
@@ -39,9 +28,11 @@ from .projectSerializer import (
     TypeSerializerV1,
 )
 
-from applications.regioncomuna.api.v1.serializer import (
-    RegionWithComunasSerializer,
-)
+
+class CustomPagination(PageNumberPagination):
+    page_size = 6
+    page_size_query_param = 'page_size'
+    max_page_size = 25
 
 
 class ProjectViewSet(viewsets.ModelViewSet):
@@ -52,7 +43,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
     API con CRUD completo para proyectos
     """
 
-    queryset = Project.objects.all()
+    queryset = Project.objects.filter(public=True)
     serializer_class = ProjectDetailSerializerV1
     lookup_field = 'slug'
     filter_backends = [filters.SearchFilter, DjangoFilterBackend, filters.OrderingFilter]
@@ -69,6 +60,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
     search_fields = ['name', 'id_subdere', 'description']
     ordering_fields = ['year']
     ordering = ['year']
+    #pagination_class = CustomPagination
 
 
     @action(detail=False, methods=['GET'])
