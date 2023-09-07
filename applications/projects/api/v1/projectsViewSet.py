@@ -27,6 +27,8 @@ from .projectSerializer import (
     ProgramSerializerV1,
     TypeSerializerV1,
 )
+#
+from applications.users.authentication_mixins import Authentication
 
 
 class CustomPagination(PageNumberPagination):
@@ -35,7 +37,7 @@ class CustomPagination(PageNumberPagination):
     max_page_size = 25
 
 
-class ProjectViewSet(viewsets.ModelViewSet):
+class ProjectViewSet(Authentication,viewsets.ModelViewSet):
     """
     Listado y Edición de proyectos
 

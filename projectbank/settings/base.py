@@ -139,4 +139,4 @@ SWAGGER_SETTINGS = {
 }
 
 # Configuración de expiración de token de autentificación
-TOKEN_EXPIRED_AFTER_SECONDS = 10 # segundos
+TOKEN_EXPIRED_AFTER_SECONDS = 1800 # segundos

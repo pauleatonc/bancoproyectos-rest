@@ -1,7 +1,7 @@
 from django.urls import path, include, re_path
 
 from . import views
-from .views1 import Login, Logout
+from .views1 import Login, Logout, UserToken
 
 app_name = 'users_app'
 
@@ -69,6 +69,12 @@ urlpatterns = [
         'login/',
         Login.as_view(),
         name='login',
+    ),
+
+    path(
+        'refresh_token/',
+        UserToken.as_view(),
+        name='refresh-token',
     ),
 
     path(
