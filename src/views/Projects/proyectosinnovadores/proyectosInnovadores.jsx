@@ -4,6 +4,7 @@ import useApiGoodPractices from '../../../hooks/useApiGoodPractices';
 import IconPMU from '../../../static/img/icons/PMU.svg';
 import IconPMB from '../../../static/img/icons/PMB.svg';
 import Carrusel from '../../../components/Commons/carrusel';
+import SelectorLateral from '../../../components/Commons/selectorLateral';
 
 const ProyectosInnovadores = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -134,7 +135,7 @@ const ProyectosInnovadores = () => {
       <p className="text-sans-p mt-3">Con estas prácticas buscamos promover criterios sustentables a considerar en el diseño actual de los espacios públicos.</p>
       <div className="row">
         <div className="col-md-4">
-          menu con buenas practicas - dropdown vista mobile - PODRIA SER UN COMPONENTE, A REUTILIZAR EN VISTA DOCUMENTOS.
+          < SelectorLateral />
         </div>
         <div className="col">
           detalle practica seleccionada
