@@ -158,12 +158,51 @@
   padding: 13px;
 }
 
+.btn-secundario-s:hover {
+  background-color: #0F69C4;
+  color: #FFF;
+}
+
+.btn-secundario-s:active {
+  background-color: #0F69C4;
+  color: #FFF;
+}
+
 .btn-secundario-l {
   width: 100%;
   background-color: #FFF;
   border: 2px solid #0F69C4;
   color: #0F69C4;
   padding: 13px;
+}
+
+.btn-secundario-l:hover {
+  background-color: #0F69C4;
+  color: #FFF;
+}
+
+.btn-secundario-l:active {
+  background-color: #0F69C4;
+  color: #FFF;
+}
+
+.btn-terciario {
+  width: -moz-fit-content;
+  width: fit-content;
+  background-color: #FFF;
+  color: #0F69C4;
+  border: 2px solid #0F69C4;
+  border-radius: 32px;
+}
+
+.btn-terciario:active {
+  background-color: #0F69C4;
+  color: #FFF;
+}
+
+.btn-terciario:hover {
+  background-color: #0F69C4;
+  color: #FFF;
 }
 
 .custom-pagination-btn {
@@ -173,6 +212,28 @@
 }
 
 .custom-pagination-btn.active {
+  background-color: #0F69C4;
+  color: #FFF;
+}
+
+.select-box {
+  border: 2px solid #373737;
+  border-radius: 5px;
+  background-color: #FFF;
+}
+
+.select-option {
+  border: none;
+  background-color: transparent;
+  color: #373737;
+}
+
+.select-option:active {
+  background-color: #0F69C4;
+  color: #FFF;
+}
+
+.select-option:hover {
   background-color: #0F69C4;
   color: #FFF;
 }
@@ -337,6 +398,12 @@
     border-radius: 5px;
   }
 }
+.carrusel-container {
+  border: 1px solid blue;
+  height: 250px;
+  width: 550px;
+}
+
 .footer-container {
   background-color: #001C41;
 }

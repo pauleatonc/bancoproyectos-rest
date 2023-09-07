@@ -88,7 +88,6 @@ if (errorProject) {
       
       <Carrusel imgPortada={dataProject.portada} imgGeneral={dataProject.images}/>
 
-      
       {/* Imágenes antes y después */}
       { (dataProject.beforeimage && dataProject.afterimage) && 
         <>
