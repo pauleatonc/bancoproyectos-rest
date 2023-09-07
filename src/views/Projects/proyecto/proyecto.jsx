@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import useApiProjectsDetail from "../../../hooks/useApiProjectsDetail";
-import Carrusel from "../../../components/Proyecto/carrusel";
+import Carrusel from "../../../components/Commons/carrusel";
 import ProyectosRelacionados from "../../../components/Proyecto/proyectosRelacionados";
 
 const Proyecto = () => {

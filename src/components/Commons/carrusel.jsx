@@ -1,12 +1,16 @@
 import { useState, useRef, useEffect } from 'react';
-import ImageModal from './modal';
+import ImageModal from '../Commons/modal';
 
 const Carrusel = ({ imgPortada, imgGeneral }) => {
   const miniContainerRef = useRef(null);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [hiddenThumbnailsCount, setHiddenThumbnailsCount] = useState(0);
 
-  const imgArray = [imgPortada, ...imgGeneral.map(img => img.image)];
+  let imgArray = [imgPortada];
+
+  if (Array.isArray(imgGeneral)) {
+    imgArray = [...imgArray, ...imgGeneral.map(img => img.image)];
+  }
 
   useEffect(() => {
     const miniContainer = miniContainerRef.current;
