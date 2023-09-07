@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import useApiInnovativeProjects from '../../../hooks/useApiInnovativeProjects';
+import useApiInnovativeProjectsList from '../../../hooks/useApiInnovativeProjectsList';
 import useApiGoodPractices from '../../../hooks/useApiGoodPractices';
 import IconPMU from '../../../static/img/icons/PMU.svg';
 import IconPMB from '../../../static/img/icons/PMB.svg';
@@ -8,18 +8,13 @@ import SelectorLateral from '../../../components/Commons/selectorLateral';
 
 const ProyectosInnovadores = () => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
-  const {
-    dataInnovativeProjects,
-    loadingInnovativeProjects,
-    errorInnovativeProjects,
-  } = useApiInnovativeProjects();
+  const { dataInnovativeProjects, loadingInnovativeProjects, errorInnovativeProjects } = useApiInnovativeProjectsList();
 
-  const {
+    const {
     dataGoodPractices,
     loadingGoodPractices,
     errorGoodPractices,
@@ -76,15 +71,11 @@ const ProyectosInnovadores = () => {
 
       {/* Selector Proyectos */}
       <div className="container my-3 d-none d-lg-block">
-        <button className="btn-terciario text-decoration-underline px-3 p-2 m-1">Patinódromo</button>
-        <button className="btn-terciario text-decoration-underline px-3 p-2 m-1">Sendas Peatonales</button>
-        <button className="btn-terciario text-decoration-underline px-3 p-2 m-1">Circuitos de Calistenia</button>
-        <button className="btn-terciario text-decoration-underline px-3 p-2 m-1">Espacios Culturales</button>
-        <button className="btn-terciario text-decoration-underline px-3 p-2 m-1">Sitios de Reflexión</button>
-        <button className="btn-terciario text-decoration-underline px-3 p-2 m-1">Espacios Deportivos</button>
-        <button className="btn-terciario text-decoration-underline px-3 p-2 m-1">Humedales</button>
-        <button className="btn-terciario text-decoration-underline px-3 p-2 m-1">Pump Track</button>
-        <button className="btn-terciario text-decoration-underline px-3 p-2 m-1">Áreas Multiuso</button>
+        {dataInnovativeProjects.map((project) => (
+          <button key={project.id} className="btn-terciario text-decoration-underline px-3 p-2 m-1">
+            {project.title}
+          </button>
+        ))}
       </div>
 
       {/* Boton y Dropdown */}
@@ -96,15 +87,11 @@ const ProyectosInnovadores = () => {
 
       <div className={`dropdown-menu ${dropdownOpen ? 'show' : ''}`}>
         <div className="d-flex flex-column">
-          <button className="select-option text-start px-3 p-2 m-1">Patinódromo</button>
-          <button className="select-option text-start px-3 p-2 m-1">Sendas Peatonales</button>
-          <button className="select-option text-start px-3 p-2 m-1">Circuitos de Calistenia</button>
-          <button className="select-option text-start px-3 p-2 m-1">Espacios Culturales</button>
-          <button className="select-option text-start px-3 p-2 m-1">Sitios de Reflexión</button>
-          <button className="select-option text-start px-3 p-2 m-1">Espacios Deportivos</button>
-          <button className="select-option text-start px-3 p-2 m-1">Humedales</button>
-          <button className="select-option text-start px-3 p-2 m-1">Pump Track</button>
-          <button className="select-option text-start px-3 p-2 m-1">Áreas Multiuso</button>
+        {dataInnovativeProjects.map((project) => (
+          <button key={project.id} className="select-option text-start px-3 p-2 m-1">
+            {project.title}
+          </button>
+        ))}
         </div> 
       </div>
 

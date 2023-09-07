@@ -29,7 +29,6 @@ const useApiGoodPractices = () => {
     dataGoodPractices,
     loadingGoodPractices,
     errorGoodPractices,
-    fetchGoodPractices,
   };
 };
 
