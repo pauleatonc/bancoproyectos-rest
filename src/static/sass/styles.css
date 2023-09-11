@@ -84,13 +84,6 @@
 
 .text-sans-p-blue {
   font-family: "Roboto";
-  color: #0F69C4;
-  font-size: 16px;
-  font-weight: 400;
-}
-
-.text-sans-p-tertiary {
-  font-family: "Roboto";
   color: #001C41;
   font-size: 16px;
   font-weight: 400;
@@ -127,6 +120,7 @@
   width: fit-content;
   background-color: #0F69C4;
   border: none;
+  border-radius: 4px;
   color: #FFF;
   padding: 13px;
   height: -moz-fit-content;
@@ -137,6 +131,7 @@
   width: 90%;
   background-color: #0F69C4;
   border: none;
+  border-radius: 4px;
   color: #FFF;
   padding: 13px;
 }
@@ -145,24 +140,8 @@
   width: 100%;
   background-color: #0F69C4;
   border: none;
+  border-radius: 4px;
   color: #FFF;
-  padding: 13px;
-}
-
-.btn-secundario-s {
-  width: -moz-fit-content;
-  width: fit-content;
-  background-color: #FFF;
-  border: 2px solid #0F69C4;
-  color: #0F69C4;
-  padding: 13px;
-}
-
-.btn-secundario-l {
-  width: 100%;
-  background-color: #FFF;
-  border: 2px solid #0F69C4;
-  color: #0F69C4;
   padding: 13px;
 }
 
@@ -225,6 +204,8 @@
 .line-container {
   position: absolute;
   top: 28px;
+  height: -moz-fit-content;
+  height: fit-content;
   bottom: 0;
   left: 45px;
 }
@@ -508,6 +489,15 @@
   color: #006FB3;
 }
 
+#input-search div {
+  border: 2px solid #373737;
+  background: #FFF;
+}
+
+#icon-inputSearch i.material-symbols-outlined {
+  color: #3f87d0;
+}
+
 .proyect-card {
   border: 2px solid #006FB3;
   border-radius: 0px;
@@ -661,9 +651,9 @@
   }
   .input-label {
     position: absolute;
-    top: -12px; /* Ajusta distancia vertical */
-    left: 10px; /* Ajusta distancia horizontal */
+    top: -12px; 
+    left: 10px; 
     background-color: #FFF;
     padding: 0 7px;
   }
-}/*# sourceMappingURL=styles.css.map */
+}

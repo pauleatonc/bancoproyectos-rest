@@ -1,5 +1,12 @@
 import { useState, useRef, useEffect } from 'react';
-const Dropdown = ({ items, selectedItems, onItemChange, singleItemName, isComuna = false }) => {
+
+const Dropdown = ({ 
+  items = [], 
+  selectedItems = [], 
+  onItemChange, 
+  singleItemName = 'ítems', 
+  isComuna = false, 
+}) => {
   const [dropdownDisplay, setDropdownDisplay] = useState(false);
   const dropdownRef = useRef(null);
   const buttonRef = useRef(null);
@@ -17,7 +24,7 @@ const Dropdown = ({ items, selectedItems, onItemChange, singleItemName, isComuna
   }, []);
 
   const getDropdownDisplayMessage = () => {
-    if (selectedItems.length === 0) {
+    if (!Array.isArray(selectedItems) || selectedItems.length === 0) {
       return `Elige uno o más ${singleItemName}`;
     } else if (selectedItems.length === 1) {
       const singleItem = items.find(item => item.id.toString() === selectedItems[0]);
@@ -59,6 +66,7 @@ const Dropdown = ({ items, selectedItems, onItemChange, singleItemName, isComuna
         ))}
       </div>}
     </div>
+
   );
 };
 

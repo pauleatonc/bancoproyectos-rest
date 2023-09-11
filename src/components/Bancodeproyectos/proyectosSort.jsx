@@ -1,12 +1,16 @@
 import { useEffect, useState, useRef } from "react";
 
-const SortProyectos = ({ onSort }) => {
+const SortProyectos = ({ sortOrder, onSortChange }) => {
   const [dropdownSort, setDropdownSort] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("");
-  const options = ["Año de construcción:  Más reciente ", "Año de construcción: Más antiguo"];
+  const [selectedOption, setSelectedOption] = useState("-year"); 
+  const options = ["Más reciente", "Más antiguo"];
+  const optionValues = ["-year", "year"];
   const dropdownRef = useRef(null);
   const buttonRef = useRef(null);
-  const [currentSortOrder, setSortOrder] = useState("asc"); // "asc" for ascending, "desc" for descending
+
+  useEffect(() => {
+    setSelectedOption(sortOrder);
+  }, [sortOrder]);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -26,23 +30,15 @@ const SortProyectos = ({ onSort }) => {
   }, []);
 
   const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
-
-    if (event.target.value === "Año de construcción: Más reciente") {
-      setSortOrder("desc");
-      onSort && onSort("desc");
-    } else if (event.target.value === "Año de construcción: Más antiguo") {
-      setSortOrder("asc");
-      onSort && onSort("asc");
-    }
+    const selectedValue = event.target.value;
+    setSelectedOption(selectedValue);
+    onSortChange(selectedValue);
   };
 
   const getDropdownDisplayMessage = () => {
-    if (selectedOption) {
-      return `Ordenar por ${selectedOption}`;
-    } else {
-      return "Ordenar por";
-    }
+    const selected = options[optionValues.indexOf(selectedOption)];
+      return `Ordenar por: ${selected}`;
+
   };
 
   return (
@@ -52,7 +48,9 @@ const SortProyectos = ({ onSort }) => {
         tabIndex="0"
         ref={buttonRef}
         className="select-dropdown mt-3 btn btn-md border border-2"
-        onClick={() => setDropdownSort((prevState) => !prevState)}
+        onClick={() => {
+          setDropdownSort((prevState) => !prevState);
+        }}
       >
         {getDropdownDisplayMessage()} <i className="material-symbols-outlined pr-0">expand_more</i>
       </button>
@@ -67,9 +65,9 @@ const SortProyectos = ({ onSort }) => {
                     className="form-check-input"
                     id={`option-${index}`}
                     type="radio"
-                    value={option}
+                    value={optionValues[index]}
                     onChange={handleOptionChange}
-                    checked={selectedOption === option}
+                    checked={selectedOption === optionValues[index]}
                   />
                   {option}
                 </label>

@@ -1,38 +1,82 @@
+import { useContext , useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { BuscadorProyectos } from '../../components/Bancodeproyectos';
 import { Link } from 'react-router-dom';
-import IconPMU from '../../static/img/icons/PMU.svg';
-import IconPMB from '../../static/img/icons/PMB.svg'; 
 import IconList from '../../static/img/icons/Blueprint.svg'; 
+import { ApiContext } from '../../context/ProjectContext';
+import useFilterOptions from '../../hooks/useFilterProjects';
 
 const Home = () => {
+  const {
+    setSelectedFilters,
+    updateProjects,
+    selectedFilters,
+    searchTerm,
+    setSearchTerm,
+  } = useContext(ApiContext);
+  const { programs } = useFilterOptions();
+  const navigate = useNavigate();
+  const [isSearching, setIsSearching] = useState(false); 
+
+
+  const handleProgramClick = async (e, programId) => {
+    e.preventDefault();
+    setSelectedFilters((prevFilters) => ({
+      ...prevFilters,
+      program__in: [programId],
+    }));
+    await updateProjects();
+    navigate('/bancodeproyectos');
+  };
+
+  const handleViewAllProjects = () => {
+    setSearchTerm('');
+    setSelectedFilters({});
+    navigate('/bancodeproyectos');
+  };
+
+  useEffect(() => {
+
+  }, [selectedFilters]);
+
+  const handleSearch = (newSearchTerm) => {
+    setSearchTerm(newSearchTerm); 
+    setSelectedFilters({});
+    navigate('/bancodeproyectos'); 
+  };
 
   return (
     <>
-      <BuscadorProyectos />
-
+      <BuscadorProyectos
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        onSearch={handleSearch}
+        isSearching={isSearching} 
+        setIsSearching={setIsSearching}
+      />
       {/* Categorias principales */}
       <div className="container my-4 mb-md-5">
         <h1 className="text-sans-h1 my-3 text-center">Categorías principales</h1>
         <div className="container d-flex flex-row justify-content-center">
 
-          <div className="col-md-2 d-flex flex-column mx-md-5 align-items-center">
-            <a   type="button"   id='btn-icon' className="categorias-circle  btn btn-outline-primary  border-2 rounded-circle d-flex align-items-center justify-content-center my-3">
-            <img src={IconPMU} alt='iconPMU'  id='btnIcon' />
-            </a>
-            <p className="text-sans-p text-center">Programa Mejoramiento Urbano</p>
+        {programs && programs.map((program) => (
+            
+            <div tabIndex="0" className="container-btnCircle col-md-2 d-flex flex-column align-items-center mr-5" key={program.id}>
+            <button
+              className='categorias-circle btn btn-outline-primary  border-2 rounded-circle d-flex align-items-center justify-content-center my-3'
+                onClick={(e) => handleProgramClick(e, program.id)}>
+              <img src={program.icon_program} alt={program.sigla} id='btnIcon'  />
+            </button>
+            <p className="text-sans-h5-bold text-center">{program.name}</p>
           </div>
-          
-          <div className="col-md-2 d-flex flex-column mx-md-5 align-items-center">
-            <a  type="button"  id='btn-icon' className="categorias-circle btn btn-outline-primary  rounded-circle border-2 d-flex align-items-center justify-content-center my-3">
-            <img src={IconPMB} alt='iconPMU' id='btnIcon' />
-            </a>
-            <p className="text-sans-p text-center">Programa Mejoramiento de Barrios</p>
-          </div>
+            
+      
+          ))}
 
-          <div className="col-md-2 d-flex flex-column mx-md-5 align-items-center">
-            <a type="button" href="/bancodeproyectos" id='btn-icon' className="categorias-circle btn btn-outline-primary  border-2 rounded-circle d-flex align-items-center justify-content-center my-3">
+          <div  tabIndex="0" className="container-btnCirclecol-md-2 d-flex flex-column mx-md-5 align-items-center">
+            <button type="button"  onClick={handleViewAllProjects} id='btn-icon' className="categorias-circle btn btn-outline-primary  border-2 rounded-circle d-flex align-items-center justify-content-center my-3">
             <img src={IconList} alt='iconList' id='btnIcon' />
-            </a>
+            </button>
             <p className="text-sans-p text-center">Ver todos los proyectos</p>
           </div>
 
