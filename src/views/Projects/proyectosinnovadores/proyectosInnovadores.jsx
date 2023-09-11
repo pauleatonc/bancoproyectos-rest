@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import useApiInnovativeProjectsList from '../../../hooks/useApiInnovativeProjectsList';
-import useApiGoodPractices from '../../../hooks/useApiGoodPractices';
+//import useApiGoodPractices from '../../../hooks/useApiGoodPractices';
 import IconPMU from '../../../static/img/icons/PMU.svg';
 import IconPMB from '../../../static/img/icons/PMB.svg';
 import Carrusel from '../../../components/Commons/carrusel';
@@ -8,6 +8,7 @@ import SelectorLateral from '../../../components/Commons/selectorLateral';
 
 const ProyectosInnovadores = () => {
   const [selectedProjectType, setSelectedProjectType] = useState(null);
+  const [selectedProject, setSelectedProject] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -15,11 +16,11 @@ const ProyectosInnovadores = () => {
 
   const { dataInnovativeProjects, loadingInnovativeProjects, errorInnovativeProjects } = useApiInnovativeProjectsList();
 
-  const {
-    dataGoodPractices,
-    loadingGoodPractices,
-    errorGoodPractices,
-  } = useApiGoodPractices();
+  // const {
+  //   dataGoodPractices,
+  //   loadingGoodPractices,
+  //   errorGoodPractices,
+  // } = useApiGoodPractices();
 
   const filteredProjects = useMemo(() => {
     if (selectedProjectType === null) {
@@ -43,12 +44,12 @@ const ProyectosInnovadores = () => {
   if (errorInnovativeProjects) {
     return <div>Error: {errorInnovativeProjects}</div>;
   }
-  if (loadingGoodPractices) {
-    return <div>Cargando datos de buenas prácticas...</div>;
-  }
-  if (errorGoodPractices) {
-    return <div>Error en los datos de buenas prácticas: {errorGoodPractices}</div>;
-  }
+  // if (loadingGoodPractices) {
+  //   return <div>Cargando datos de buenas prácticas...</div>;
+  // }
+  // if (errorGoodPractices) {
+  //   return <div>Error en los datos de buenas prácticas: {errorGoodPractices}</div>;
+  // }
 
   return (
     <div className="container col-md-8">
@@ -89,7 +90,11 @@ const ProyectosInnovadores = () => {
       {/* Selector Proyectos */}
       <div className="container my-3 d-none d-lg-block">
         {filteredProjects.map((project) => (
-          <button key={project.id} className="btn-terciario text-decoration-underline px-3 p-2 m-1">
+          <button 
+          key={project.id} 
+          className="btn-terciario text-decoration-underline px-3 p-2 m-1"
+          onClick={() => setSelectedProject(project)}
+          >
             {project.title}
           </button>
         ))}
@@ -104,35 +109,49 @@ const ProyectosInnovadores = () => {
 
       <div className={`dropdown-menu ${dropdownOpen ? 'show' : ''}`}>
         <div className="d-flex flex-column">
-        {dataInnovativeProjects.map((project) => (
-          <button key={project.id} className="select-option text-start px-3 p-2 m-1">
+      
+         {filteredProjects.map((project) => (
+          <button 
+          key={project.id} 
+          className="select-option text-start px-3 p-2 m-1"
+          onClick={() => setSelectedProject(project)}
+          >
             {project.title}
           </button>
         ))}
         </div> 
       </div>
 
+      {/* Datos del proyecto */}
       <div>
-        <h4 className="text-sans-h3 text-center text-md-start mt-5">Patinódromo</h4>
-        <div>
-          <div className="carrusel-container float-md-end m-4"> 
-            <Carrusel imgPortada={dataInnovativeProjects.portada} imgGeneral={dataInnovativeProjects.innovative_gallery_images}/> 
+      {selectedProject ? (
+        <>
+          <h4 className="text-sans-h3 text-center text-md-start mt-5">
+            {selectedProject.title}
+          </h4>
+          <div>
+            <div className="carrusel-container container col-xl-7 float-md-end m-4"> 
+              <Carrusel
+                imgPortada={selectedProject.portada}
+                imgGeneral={selectedProject.innovative_gallery_images}
+              />
+            </div>
+            <p className="text-sans-p mt-3">{selectedProject.description}</p>
           </div>
-          <p className="text-sans-p mt-3">Los Patinódromos son pistas de asfalto que permiten el deslizamiento de patines, fomentan la competencia sana y la vida saludable.
-            Es una infraestructura que no requiere mucha mantención y ofrece una disciplina diferente a los deportes tradicionales como fútbol, basquetbol y tenis. Los Patinódromos son pistas de asfalto que permiten el deslizamiento de patines, fomentan la competencia sana y la vida saludable.
-            Es una infraestructura que no requiere mucha mantención y ofrece una disciplina diferente a los deportes tradicionales como fútbol, basquetbol y tenis.Los Patinódromos son pistas de asfalto que permiten el deslizamiento de patines, fomentan la competencia sana y la vida saludable.
-            Es una infraestructura que no requiere mucha mantención y ofrece una disciplina diferente a los deportes tradicionales como fútbol, basquetbol y tenis.Los Patinódromos son pistas de asfalto que permiten el deslizamiento de patines, fomentan la competencia sana y la vida saludable.
-            Es una infraestructura que no requiere mucha mantención y ofrece una disciplina diferente a los deportes tradicionales como fútbol, basquetbol y tenis.Los Patinódromos son pistas de asfalto que permiten el deslizamiento de patines, fomentan la competencia sana y la vida saludable.
-            Es una infraestructura que no requiere mucha mantención y ofrece una disciplina diferente a los deportes tradicionales como fútbol, basquetbol y tenis.
-          </p>
-        </div>
-        <div className="d-flex flex-column">
-          <a>Visitar fuente 1 </a>
-          <a>Visitar fuente 1 </a>
-        </div>
-      </div>
+          <div className="d-flex flex-column">
+            {selectedProject.web_sources.map((source, index) => (
+              <a key={source.id} href={source.url} target="_blank" rel="noopener noreferrer">
+                Visitar fuente {index + 1}
+              </a>
+            ))}
+          </div>
+        </>
+      ) : (
+        <p className="text-sans-h4 mt-3">Selecciona un proyecto para ver los detalles.</p>
+      )}
+    </div>
 
-      <hr className="my-5" />
+    <hr className="my-5" />
 
       <h2 className="text-sans-h2">Buenas prácticas para el diseño de los espacios públicos</h2>
       <p className="text-sans-p mt-3">Con estas prácticas buscamos promover criterios sustentables a considerar en el diseño actual de los espacios públicos.</p>
@@ -143,7 +162,7 @@ const ProyectosInnovadores = () => {
         <div className="col">
           detalle practica seleccionada
           <div className="border border-alert my-4">
-            <Carrusel imgPortada={dataGoodPractices.portada} imgGeneral={dataGoodPractices.good_practices_gallery_images}/> 
+            {/* <Carrusel imgPortada={dataGoodPractices.portada} imgGeneral={dataGoodPractices.good_practices_gallery_images}/>  */}
           </div>
         </div>
       </div>
