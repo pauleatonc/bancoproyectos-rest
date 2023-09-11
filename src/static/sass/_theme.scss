@@ -159,7 +159,7 @@ $black-color: #111111;
 }
 
 
-.white-icon {
+.white-icon:focus-visible {
     filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(7499%)
     hue-rotate(262deg) brightness(103%) contrast(102%);
 }
