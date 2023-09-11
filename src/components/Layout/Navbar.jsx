@@ -15,7 +15,6 @@ const Navbar = () =>{
   <>
     <div id="barraGris"></div>
     <nav className="container-fluid">
-
       <div className="row">
         <div className="col">
           {/* Logo subdere */}

@@ -1,86 +1,188 @@
-import { useState, useEffect, useCallback } from 'react';
-import useApiProjectsList from '../../hooks/useApiProjectsList';
+import { useEffect, useState, useCallback , useRef} from 'react';
 import Dropdown from './DropdowSelect';
+import useFilterOptions from '../../hooks/useFilterProjects';
+import { useContext } from 'react';
+import { ApiContext } from '../../context/ProjectContext';
+const FiltroProyectos = () =>
+{
+  // Obtener datos del hook personalizado
+  const { years, programs, types, regiones } = useFilterOptions();
+  const { setSelectedFilters, updateProjects, selectedFilters } = useContext(ApiContext);
+  const clearFilterCalled = useRef(false);
 
-const FiltroProyectos = ({ dataFilter, onFilter }) =>
-{ 
-  const { fetchProjects, dataProject, errorProject } = useApiProjectsList();
-  const [ selectedPrograms, setSelectedPrograms ] = useState([]);
-  const [ selectedRegions, setSelectedRegions ] = useState([]);
-  const [ selectedComunas, setSelectedComunas ] = useState([]);
-  const [ selectedTypes, setSelectedTypes ] = useState([]);
-  const [ selectedYears, setSelectedYears ] = useState([]);
-  const [ filteredComunas, setFilteredComunas ] = useState([]);
+  // Estados para almacenar las selecciones del usuario
+  const [ selectedPrograms, setSelectedPrograms ] = useState(() =>
+  {
+    return JSON.parse(localStorage.getItem('selectedPrograms') || '[]');
+  });
 
-  const handleFilterChange = (setter) => (e) =>
+  const [ selectedRegiones, setSelectedRegiones ] = useState(() =>
+  {
+    return JSON.parse(localStorage.getItem('selectedRegiones') || '[]');
+  });
+
+  const [ selectedComunas, setSelectedComunas ] = useState(() =>
+  {
+    return JSON.parse(localStorage.getItem('selectedComunas') || '[]');
+  });
+
+  const [ selectedTypes, setSelectedTypes ] = useState(() =>
+  {
+    return JSON.parse(localStorage.getItem('selectedTypes') || '[]');
+  });
+
+  const [ selectedYears, setSelectedYears ] = useState(() =>
+  {
+    return JSON.parse(localStorage.getItem('selectedYears') || '[]');
+  });
+
+  const [ filteredComunas, setFilteredComunas ] = useState(regiones);
+
+
+
+  // Manejador de cambios generico
+  const handleFilterChange = useCallback((setter) => (e) =>
   {
     const value = e.target.value;
-    setter(prevSelected =>
-      e.target.checked ?
-        [ ...prevSelected, value ] :
-        prevSelected.filter(item => item !== value)
-    );
-  };
+    setter((prevSelected) =>
+    {
+      const isSelected = e.target.checked;
+      if (isSelected)
+      {
+        if (!prevSelected.includes(value))
+        {
+          return [ ...prevSelected, value ];
+        }
+      } else
+      {
+        return prevSelected.filter(item => item !== value);
+      }
+      return prevSelected;
+    });
+  }, []);
 
-  const handleRegionChange = handleFilterChange(setSelectedRegions);
-  const handleComunaChange = handleFilterChange(setSelectedComunas);
+  const createToggleFunction = useCallback((setter) => (id) =>
+  {
+    setter((prevSelected) =>
+    {
+      if (prevSelected.includes(id))
+      {
+        // Filtra el valor si ya está presente
+        return prevSelected.filter(existingId => existingId !== id);
+      } else
+      {
+        // Agrega el valor si no está presente
+        return [ ...prevSelected, id ];
+      }
+    });
+  }, []);
+
+  const toggleProgram = createToggleFunction(setSelectedPrograms);
+  const toggleType = createToggleFunction(setSelectedTypes);
+
+
+
+  // Manejadores de cambios específicos
+  const handleRegionChange = handleFilterChange(setSelectedRegiones);
   const handleYearChange = handleFilterChange(setSelectedYears);
+  const handleComunaChange = handleFilterChange(setSelectedComunas);
 
+
+  // Actualizar comunas basadas en la región seleccionada
   useEffect(() =>
   {
-    if (!selectedRegions.length)
+    if (!selectedRegiones.length)
     {
-      setFilteredComunas(dataFilter.regiones);
+      setFilteredComunas(regiones);
       return;
     }
-    const relatedRegions = dataFilter.regiones.filter(region => selectedRegions.includes(region.id.toString()));
-    setFilteredComunas(relatedRegions);
-  }, [ selectedRegions, dataFilter ]);
+    const relatedRegiones = regiones.filter(region => selectedRegiones.includes(region.id.toString()));
+    setFilteredComunas(relatedRegiones);
+  }, [ selectedRegiones, regiones ]);
 
-  const updateProjects = useCallback(() =>
+  const areObjectsEqual = (obj1, obj2) =>
   {
-    const filters = {
-      program__in: selectedPrograms,
-      comuna__region__in: selectedRegions,
-      comuna__in: selectedComunas,
-      type__in: selectedTypes,
-      year__in: selectedYears
-    };
+    const keys1 = Object.keys(obj1);
+    const keys2 = Object.keys(obj2);
 
-    const queryParams = new URLSearchParams();
-    for (let key in filters)
+    if (keys1.length !== keys2.length) return false;
+
+    for (let key of keys1)
     {
-      if (filters[ key ].length)
-      {
-        queryParams.append(key, filters[ key ].join(','));
-      }
+      if (obj1[ key ] !== obj2[ key ]) return false;
     }
 
-    const endpoint = 'projects/v1/?' + queryParams.toString();
-    fetchProjects(endpoint);
-  }, [ selectedPrograms, selectedRegions, selectedComunas, selectedTypes, selectedYears, fetchProjects ]);
+    return true;
+  };
+
+  const updateFilterProjects = useCallback(() => {
+    const newFilters = {
+      program__in: selectedPrograms,
+      comuna__region__in: selectedRegiones,
+      comuna__in: selectedComunas,
+      type__in: selectedTypes,
+      year__in: selectedYears,
+    };
+
+    if (!areObjectsEqual(newFilters, selectedFilters)) {
+      setSelectedFilters(newFilters);
+    }
+
+    if (Object.values(newFilters).some(arr => arr.length > 0)) {
+      updateProjects();
+    }
+  }, [selectedPrograms, selectedRegiones, selectedComunas, selectedTypes, selectedYears, selectedFilters, setSelectedFilters, updateProjects]);
 
   useEffect(() =>
   {
-    updateProjects();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ selectedPrograms, selectedRegions, selectedComunas, selectedTypes, selectedYears ]);
+    updateFilterProjects();
+  }, [ selectedPrograms, selectedRegiones, selectedComunas, selectedTypes, selectedYears, updateFilterProjects ]);
+
+
+  useEffect(() => {
+    if (clearFilterCalled.current) {
+
+        clearFilterCalled.current = false;
+        return;
+    }
+    
+    if (selectedFilters.program__in && selectedFilters.program__in.length > 0) {
+        setSelectedPrograms(selectedFilters.program__in);
+    }
+}, [selectedFilters]);
+
+
+  useEffect(() => {
+    localStorage.setItem('selectedPrograms', JSON.stringify(selectedPrograms));
+    localStorage.setItem('selectedRegiones', JSON.stringify(selectedRegiones));
+    localStorage.setItem('selectedComunas', JSON.stringify(selectedComunas));
+    localStorage.setItem('selectedTypes', JSON.stringify(selectedTypes));
+    localStorage.setItem('selectedYears', JSON.stringify(selectedYears));
+  }, [selectedPrograms, selectedRegiones, selectedComunas, selectedTypes, selectedYears]);
+
 
   const handleClearFilter = () =>
   {
-    setSelectedRegions([]);
+    setSelectedRegiones([]);
     setSelectedComunas([]);
     setSelectedYears([]);
     setSelectedPrograms([]);
     setSelectedTypes([]);
-    const allComunas = dataFilter.regiones.flatMap(region => region.comunas);
-    setFilteredComunas(allComunas);
-    fetchProjects();
+    setFilteredComunas(regiones);
+    setSelectedFilters({});
+    clearFilterCalled.current = true;
+
+    // Limpia el localStorage
+    localStorage.removeItem('selectedPrograms');
+    localStorage.removeItem('selectedRegiones');
+    localStorage.removeItem('selectedComunas');
+    localStorage.removeItem('selectedTypes');
+    localStorage.removeItem('selectedYears');
   };
 
   const handleClearLocation = () =>
   {
-    setSelectedRegions([]);
+    setSelectedRegiones([]);
     setSelectedComunas([]);
   };
 
@@ -89,38 +191,13 @@ const FiltroProyectos = ({ dataFilter, onFilter }) =>
     setSelectedTypes([]);
   };
 
-  const toggleProgram = (programId) =>
-  {
-    setSelectedPrograms(prevSelected =>
-      prevSelected.includes(programId) ?
-        prevSelected.filter(id => id !== programId) :
-        [ ...prevSelected, programId ]
-    );
-  };
-
-  const toggleType = (typeId) =>
-  {
-    setSelectedTypes(prevSelected =>
-      prevSelected.includes(typeId) ?
-        prevSelected.filter(id => id !== typeId) :
-        [ ...prevSelected, typeId ]
-    );
-  };
-
-  useEffect(() => {
-    onFilter(dataProject); // Llama a onFilter sin importar si dataProject está vacío o no
-  
-    if (errorProject) {
-      console.error('Error al filtrar proyectos:', errorProject);
-    }
-  }, [dataProject, errorProject, onFilter]);
 
   return (
 
     <div className="mb-md-3" id="filter-container">
       <div className="container d-flex justify-content-between my-3 p-0">
         <h2 className="text-sans-h3 me-2">Filtrar</h2>
-        <button className="text-sans-p btn-limpiar p-2" onClick={handleClearFilter}>
+        <button className="text-sans-p btn-limpiar p-2" onClick={handleClearFilter} >
           Limpiar filtro <i className="material-symbols-outlined">
             delete
           </i>
@@ -132,16 +209,17 @@ const FiltroProyectos = ({ dataFilter, onFilter }) =>
       <p className="text-sans-h5">Puedes elegir más de uno.</p>
 
       <div className="container d-flex justify-content-around mx-0 p-0">
-        {dataFilter.programs.map((programa) => (
-          <div tabIndex="0" className="container-btnCircle col-md-2 d-flex flex-column align-items-center mr-5" key={programa.id}>
+
+        {programs.map(program => (
+          <div tabIndex="0" className="container-btnCircle col-md-2 d-flex flex-column align-items-center mr-5" key={program.id}>
             <button
-              className={`categorias-circle d-inline-flex focus-ring py-1 px-2 rounded-2 btn  rounded-circle border-2 d-flex align-items-center justify-content-center my-3 ${selectedPrograms.includes(programa.id) ? 'btn-primary white-text' : 'btn-outline-primary white-text'
+              className={`categorias-circle d-inline-flex focus-ring py-1 px-2 rounded-2 btn  rounded-circle border-2 d-flex align-items-center justify-content-center my-3 ${selectedPrograms.includes(program.id) ? 'btn-primary' : 'btn-outline-primary white-text'
                 }`}
-              onClick={() => toggleProgram(programa.id)}
+              onClick={() => toggleProgram(program.id)}
             >
-              <img src={programa.icon_program} alt={programa.sigla} id='btnIcon' className={selectedPrograms.includes(programa.id) ? 'white-icon' : ''} />
+              <img src={program.icon_program} alt={program.sigla} id='btnIcon' className={selectedPrograms.includes(program.id) ? 'white-icon' : ''} />
             </button>
-            <p className="text-sans-h5-bold text-center">{programa.name}</p>
+            <p className="text-sans-h5-bold text-center">{program.name}</p>
           </div>
 
         ))}
@@ -161,8 +239,8 @@ const FiltroProyectos = ({ dataFilter, onFilter }) =>
         </div>
         <Dropdown
           tabIndex="0"
-          items={dataFilter.regiones}
-          selectedItems={selectedRegions}
+          items={regiones}
+          selectedItems={selectedRegiones}
           onItemChange={handleRegionChange}
           singleItemName="regiones"
         />
@@ -198,17 +276,18 @@ const FiltroProyectos = ({ dataFilter, onFilter }) =>
         </div>
 
         <div className="d-flex flex-wrap">
-          {dataFilter.types.map((tipo) => (
-            <div tabIndex="0" className="container-btnCircle px-4 col-5 d-flex flex-column mx-2 align-items-center" key={tipo.id}>
+          {types.map(type => (
+            <div tabIndex="0" className="container-btnCircle px-4 col-5 d-flex flex-column mx-2 align-items-center" key={type.id}>
               <button type="checkbox" id='btn-icon'
-                className={`categorias-circle btn rounded-circle border-2 d-flex align-items-center justify-content-center my-2 ${selectedTypes.includes(tipo.id) ? 'btn-primary' : 'btn-outline-primary'
+                className={`categorias-circle btn rounded-circle border-2 d-flex align-items-center justify-content-center my-2 ${selectedTypes.includes(type.id) ? 'btn-primary' : 'btn-outline-primary'
                   }`}
-                key={tipo.id}
-                onClick={() => toggleType(tipo.id)}>
-                <i className="material-symbols-rounded">{tipo.icon_type}</i>
+                key={type.id}
+                onClick={() => toggleType(type.id)}>
+                <i className="material-symbols-rounded">{type.icon_type}</i>
               </button>
-              <p className="text-sans-h5-bold text-center">{tipo.name}</p>
+              <p className="text-sans-h5-bold text-center">{type.name}</p>
             </div>
+
           ))}
         </div>
       </div>
@@ -218,10 +297,9 @@ const FiltroProyectos = ({ dataFilter, onFilter }) =>
         <h3 className="text-sans-p px-1 ">¿Qué años de construcción quieres ver?</h3>
         <Dropdown
           tabIndex="0"
-          items={dataFilter.years}
-          selectedItems={selectedYears}
+          items={years}
+          selectedItems={selectedYears} // Usar selectedYears en lugar de filterParams.year
           onItemChange={handleYearChange}
-          singleItemName="años"
         />
       </div>
     </div>
