@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import useApiInnovativeProjectsList from '../../../hooks/useApiInnovativeProjectsList';
 import useApiGoodPractices from '../../../hooks/useApiGoodPractices';
 import IconPMU from '../../../static/img/icons/PMU.svg';
@@ -7,6 +7,7 @@ import Carrusel from '../../../components/Commons/carrusel';
 import SelectorLateral from '../../../components/Commons/selectorLateral';
 
 const ProyectosInnovadores = () => {
+  const [selectedProjectType, setSelectedProjectType] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
@@ -14,19 +15,34 @@ const ProyectosInnovadores = () => {
 
   const { dataInnovativeProjects, loadingInnovativeProjects, errorInnovativeProjects } = useApiInnovativeProjectsList();
 
-    const {
+  const {
     dataGoodPractices,
     loadingGoodPractices,
     errorGoodPractices,
   } = useApiGoodPractices();
 
+  const filteredProjects = useMemo(() => {
+    if (selectedProjectType === null) {
+      return [...dataInnovativeProjects]; // Si no hay filtro, devuelve todos los proyectos
+    }
+    const selectedType = parseInt(selectedProjectType, 10);
+    return dataInnovativeProjects.filter((project) => {
+      const projectId = parseInt(project.program[0].id, 10);
+      return projectId === selectedType;
+    });
+  }, [selectedProjectType, dataInnovativeProjects]);
+
+  useEffect(() => {
+    console.log('selectedProjectType:', selectedProjectType);
+    console.log('filteredProjects:', filteredProjects);
+  }, [selectedProjectType, filteredProjects]);
+
   if (loadingInnovativeProjects) {
     return <div>Cargando datos...</div>;
-  }
+  } 
   if (errorInnovativeProjects) {
     return <div>Error: {errorInnovativeProjects}</div>;
   }
-
   if (loadingGoodPractices) {
     return <div>Cargando datos de buenas prácticas...</div>;
   }
@@ -48,17 +64,18 @@ const ProyectosInnovadores = () => {
       </p>
       <h2 className="text-sans-h2 mt-5">Listado de proyectos innovadores</h2>
       <h3 className="text-sans-h3 mt-3">Primero, elige un programa:</h3>
+
       {/* Tipo de programa */}
       <div className="container d-flex flex-row justify-content-center">
         <div className="col-md-2 d-flex flex-column mx-md-5 align-items-center">
-          <a   type="button"   id='btn-icon' className="categorias-circle  btn btn-outline-primary  border-2 rounded-circle d-flex align-items-center justify-content-center my-3">
+          <a   type="button"   id='btn-icon' className={`categorias-circle btn btn-outline-primary rounded-circle border-2 d-flex align-items-center justify-content-center my-3 ${selectedProjectType === '' ? 'active' : ''}`} onClick={() => setSelectedProjectType('1')}>
             <img src={IconPMU} alt='iconPMU'  id='btnIcon' />
           </a>
           <p className="text-sans-p text-center">Programa Mejoramiento Urbano</p>
         </div>
           
         <div className="col-md-2 d-flex flex-column mx-md-5 align-items-center">
-          <a  type="button"  id='btn-icon' className="categorias-circle btn btn-outline-primary  rounded-circle border-2 d-flex align-items-center justify-content-center my-3">
+          <a  type="button"  id='btn-icon' className={`categorias-circle btn btn-outline-primary rounded-circle border-2 d-flex align-items-center justify-content-center my-3 ${selectedProjectType === '2' ? 'active' : ''}`} onClick={() => setSelectedProjectType('2')}>
             <img src={IconPMB} alt='iconPMU' id='btnIcon' />
           </a>
           <p className="text-sans-p text-center">Programa Mejoramiento de Barrios</p>
@@ -71,7 +88,7 @@ const ProyectosInnovadores = () => {
 
       {/* Selector Proyectos */}
       <div className="container my-3 d-none d-lg-block">
-        {dataInnovativeProjects.map((project) => (
+        {filteredProjects.map((project) => (
           <button key={project.id} className="btn-terciario text-decoration-underline px-3 p-2 m-1">
             {project.title}
           </button>
@@ -108,7 +125,6 @@ const ProyectosInnovadores = () => {
             Es una infraestructura que no requiere mucha mantención y ofrece una disciplina diferente a los deportes tradicionales como fútbol, basquetbol y tenis.Los Patinódromos son pistas de asfalto que permiten el deslizamiento de patines, fomentan la competencia sana y la vida saludable.
             Es una infraestructura que no requiere mucha mantención y ofrece una disciplina diferente a los deportes tradicionales como fútbol, basquetbol y tenis.
           </p>
-          
         </div>
         <div className="d-flex flex-column">
           <a>Visitar fuente 1 </a>
