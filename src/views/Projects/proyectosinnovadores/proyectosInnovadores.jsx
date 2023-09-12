@@ -8,11 +8,12 @@ import SelectorLateral from '../../../components/Commons/selectorLateral';
 const ProyectosInnovadores = () => {
   const { programs } = useFilterOptions();
   const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedPractice, setSelectedPractice] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectedPrograms, setSelectedPrograms] = useState(() => {
     return JSON.parse(localStorage.getItem('selectedPrograms') || '[]');
   });
-  const [selectedGoodPracticesPrograms, setSelectedGoodPracticesPrograms] = useState(() => {
+  const [selectedPracticesPrograms, setSelectedPracticesPrograms] = useState(() => {
     return JSON.parse(localStorage.getItem('selectedGoodPracticesPrograms') || '[]');
   });
 
@@ -25,7 +26,7 @@ const ProyectosInnovadores = () => {
       }
     });
 
-    setSelectedGoodPracticesPrograms((prevSelected) => {
+    setSelectedPracticesPrograms((prevSelected) => {
       if (prevSelected.includes(id)) {
         return prevSelected.filter(existingId => existingId !== id);
       } else {
@@ -36,6 +37,11 @@ const ProyectosInnovadores = () => {
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
+  };
+
+  const onGoodPracticeSelect = (goodPractice) => {
+    setSelectedPractice(goodPractice);
+    console.log('Buena Práctica seleccionada:', goodPractice);
   };
 
   const { 
@@ -64,12 +70,12 @@ const ProyectosInnovadores = () => {
     return filterProjectsByPrograms(dataInnovativeProjects, selectedPrograms);
   }, [selectedPrograms, dataInnovativeProjects]);
 
-  const filteredGoodPractices = useMemo(() => {
-    return filterProjectsByPrograms(dataGoodPractices, selectedGoodPracticesPrograms);
-  }, [selectedGoodPracticesPrograms, dataGoodPractices]);
+  const filteredPractices = useMemo(() => {
+    return filterProjectsByPrograms(dataGoodPractices, selectedPracticesPrograms);
+  }, [selectedPracticesPrograms, dataGoodPractices]);
 
   useEffect(() => {
-  }, [filteredProjects, filteredGoodPractices]);
+  }, [filteredProjects, filteredPractices]);
 
   if (loadingInnovativeProjects) {
     return <div>Cargando datos...</div>;
@@ -187,15 +193,31 @@ const ProyectosInnovadores = () => {
       <p className="text-sans-p mt-3">Con estas prácticas buscamos promover criterios sustentables a considerar en el diseño actual de los espacios públicos.</p>
       <div className="row">
         <div className="col-md-4">
-        <SelectorLateral data={filteredGoodPractices} selectedPrograms={selectedGoodPracticesPrograms} toggleProgram={toggleProgram} />
+        <SelectorLateral 
+        data={filteredPractices} 
+        selectedPrograms={selectedPracticesPrograms} 
+        toggleProgram={toggleProgram}
+        onGoodPracticeSelect={onGoodPracticeSelect} 
+        />
         </div>
         <div className="col">
-          <h2>Titulo</h2>
-          <p>Descripcion del proyecto</p>
-          <div className="border border-alert my-4">
-            {/* <Carrusel imgPortada={dataGoodPractices.portada} imgGeneral={dataGoodPractices.good_practices_gallery_images}/>  */}
-          </div>
+          {selectedPractice ? ( // Comprueba si hay una Buena Práctica seleccionada
+            <>
+              <h2>{selectedPractice.title}</h2>
+              <p>{selectedPractice.description}</p>
+              <div className="my-4">
+                <Carrusel
+                imgPortada={selectedPractice.portada}
+                imgGeneral={selectedPractice.good_practices_gallery_images}
+              />
+              </div>
+            </>
+          ) : (
+            <p className="text-sans-h4 mt-3">Selecciona una buena práctica para ver los detalles.</p>
+          )}
         </div>
+
+     
       </div>
     </div>
   );
