@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
-import useApiInnovativeProjectsList from '../../../hooks/useApiInnovativeProjectsList';
+import useApiInnovativeProjects from '../../../hooks/useApiInnovativeProjects';
 //import useApiGoodPractices from '../../../hooks/useApiGoodPractices';
 import IconPMU from '../../../static/img/icons/PMU.svg';
 import IconPMB from '../../../static/img/icons/PMB.svg';
@@ -14,7 +14,11 @@ const ProyectosInnovadores = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
-  const { dataInnovativeProjects, loadingInnovativeProjects, errorInnovativeProjects } = useApiInnovativeProjectsList();
+  const { 
+    dataInnovativeProjects, 
+    loadingInnovativeProjects, 
+    errorInnovativeProjects 
+  } = useApiInnovativeProjects();
 
   // const {
   //   dataGoodPractices,
@@ -34,8 +38,6 @@ const ProyectosInnovadores = () => {
   }, [selectedProjectType, dataInnovativeProjects]);
 
   useEffect(() => {
-    console.log('selectedProjectType:', selectedProjectType);
-    console.log('filteredProjects:', filteredProjects);
   }, [selectedProjectType, filteredProjects]);
 
   if (loadingInnovativeProjects) {
