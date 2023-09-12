@@ -6,14 +6,24 @@ const Carrusel = ({ imgPortada, imgGeneral, context }) => {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [hiddenThumbnailsCount, setHiddenThumbnailsCount] = useState(0);
 
-  let imgArray = [imgPortada];
+  let imgArray = [];
 
-  if (Array.isArray(imgGeneral)) {
+  if (imgPortada) {
+    imgArray.push(imgPortada);
+  }
+
+  if (Array.isArray(imgGeneral) && imgGeneral.length > 1) {
     imgArray = [...imgArray, ...imgGeneral.map(img => img.image)];
   }
 
   useEffect(() => {
     const miniContainer = miniContainerRef.current;
+
+    if (!miniContainer) {
+      // No hacemos nada si miniContainer es null
+      return;
+    }
+
     const thumbnails = Array.from(miniContainer.querySelectorAll('.miniatura'));
 
     const updateHiddenThumbnails = () => {
@@ -21,7 +31,7 @@ const Carrusel = ({ imgPortada, imgGeneral, context }) => {
       const miniaturaWidth = thumbnails[0].offsetWidth + parseFloat(miniaturaStyles.marginLeft) + parseFloat(miniaturaStyles.marginRight);
       const containerWidth = miniContainer.offsetWidth;
       const visibleThumbnailsCount = Math.floor(containerWidth / miniaturaWidth);
-    
+
       setHiddenThumbnailsCount(Math.max(0, imgArray.length - visibleThumbnailsCount));
     };
 
@@ -36,32 +46,36 @@ const Carrusel = ({ imgPortada, imgGeneral, context }) => {
   return (
     <div className="container text-center mb-md-5 d-flex flex-column align-items-center">
       {/* Portada */}
-      <div className="col-10 d-none d-md-block img-portada my-4 d-flex justify-content-center">
-        <a data-bs-toggle="modal" data-bs-target={`#imageModal-${context}`} onClick={() => setSelectedImageIndex(0)}>
-          <img className="img-fluid" src={imgPortada} />
-        </a>
-      </div>
+      {imgPortada && (
+        <div className="col-10 d-none d-md-block img-portada my-4 d-flex justify-content-center">
+          <a data-bs-toggle="modal" data-bs-target={`#imageModal-${context}`} onClick={() => setSelectedImageIndex(0)}>
+            <img className="img-fluid" src={imgPortada} alt="Portada" />
+          </a>
+        </div>
+      )}
 
       {/* Miniaturas */}
-      <div className="container-fluid container-md mini-container d-flex flex-wrap justify-content-center" ref={miniContainerRef}>
-        {imgArray.map((image, index) => (
-          <div className={`m-1 m-md-2 miniatura`} key={index}>
-            <a data-bs-toggle="modal" data-bs-target={`#imageModal-${context}`} onClick={() => setSelectedImageIndex(index)}>
-              <img className="miniatura" src={image} alt={`Thumbnail ${index}`} />
-              {index === imgArray.length - hiddenThumbnailsCount -1 && hiddenThumbnailsCount > 0 && (
-                <div className="thumbnail-counter-overlay">+{hiddenThumbnailsCount}</div>
-              )}
-            </a>
-          </div>
-        ))}
+      {imgGeneral && imgArray.length > 1 && (
+        <div className="container-fluid container-md mini-container d-flex flex-wrap justify-content-center" ref={miniContainerRef}>
+          {imgArray.map((image, index) => (
+            <div className={`m-1 m-md-2 miniatura`} key={index}>
+              <a data-bs-toggle="modal" data-bs-target={`#imageModal-${context}`} onClick={() => setSelectedImageIndex(index)}>
+                <img className="miniatura" src={image} alt={`Thumbnail ${index}`} />
+                {index === imgArray.length - hiddenThumbnailsCount -1 && hiddenThumbnailsCount > 0 && (
+                  <div className="thumbnail-counter-overlay">+{hiddenThumbnailsCount}</div>
+                )}
+              </a>
+            </div>
+          ))}
 
-        <ImageModal 
-        img={imgArray} 
-        selectedImageIndex={selectedImageIndex} 
-        setSelectedImageIndex={setSelectedImageIndex} 
-        context={context}
-        />
-      </div>
+          <ImageModal 
+            img={imgArray} 
+            selectedImageIndex={selectedImageIndex} 
+            setSelectedImageIndex={setSelectedImageIndex} 
+            context={context}
+          />
+        </div>
+      )}
     </div>
   );
 };
