@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom";
 import useApiProjectsDetail from "../../../hooks/useApiProjectsDetail";
-import Carrusel from "../../../components/Proyecto/carrusel";
+import Carrusel from "../../../components/Commons/carrusel";
 import ProyectosRelacionados from "../../../components/Proyecto/proyectosRelacionados";
 
 const Proyecto = () => {
@@ -88,7 +88,6 @@ if (errorProject) {
       
       <Carrusel imgPortada={dataProject.portada} imgGeneral={dataProject.images}/>
 
-      
       {/* Imágenes antes y después */}
       { (dataProject.beforeimage && dataProject.afterimage) && 
         <>

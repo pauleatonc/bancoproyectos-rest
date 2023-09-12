@@ -6,6 +6,8 @@ const Landing = React.lazy(() => import('./views/Landing/landing'));
 const Contacto = React.lazy(() => import('./views/Landing/contacto'));
 const Login = React.lazy(() => import('./views/Users/login/login'));
 const BancoProyectos = React.lazy(() => import('./views/Projects/bancodeproyectos/bancodeproyectos'));
+const BancoIdeas = React.lazy(() => import('./views/Projects/proyectosinnovadores/proyectosInnovadores'));
+const Documentacion = React.lazy(() => import('./views/Projects/documentacion/documentacion'));
 const Proyecto = React.lazy(() => import('./views/Projects/proyecto/proyecto'));
 const ErrorLayout = React.lazy(() => import('./layout/errorLayout'));
 const Error404 = React.lazy(() => import('./views/Error/error404'));
@@ -21,6 +23,8 @@ function App()
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Landing />} />
             <Route path="bancodeproyectos" element={<BancoProyectos />} />
+            <Route path="bancodeideas" element={<BancoIdeas/>}/>
+            <Route path="documentacion" element={<Documentacion />}/>
             <Route path="project/:slug" element={<Proyecto />} />
             <Route path="contacto" element={<Contacto />} />
             <Route path="login" element={<Login />} />
