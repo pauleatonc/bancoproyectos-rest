@@ -1,15 +1,23 @@
 import { useState } from 'react';
-import { ProyectoCard } from '../../components/Bancodeproyectos'; 
+import { ProyectoCard } from '../../components/Bancodeproyectos';
 
-const ProyectosContainer = ({ data }) => {
-  const [currentPage, setCurrentPage] = useState(1);
+const ProyectosContainer = ({ data = [] }) =>
+{
+  const [ currentPage, setCurrentPage ] = useState(1);
   const projectsPerPage = 6;
+
+  // Verificar si `data` está disponible y es un array
+  if (!data || !Array.isArray(data))
+  {
+    return <div>Cargando Proyectos...</div>;
+  }
 
   const lastProjectIndex = currentPage * projectsPerPage;
   const firstProjectIndex = lastProjectIndex - projectsPerPage;
   const currentProjects = data.slice(firstProjectIndex, lastProjectIndex);
 
-  const handlePageChange = (pageNumber) => {
+  const handlePageChange = (pageNumber) =>
+  {
     setCurrentPage(pageNumber);
   };
 
@@ -18,18 +26,18 @@ const ProyectosContainer = ({ data }) => {
   const totalProjects = data.length;
 
   return (
-    <div className="container p-0 d-flex flex-column align-items-center ">
-      <div className="card-container d-flex flex-wrap justify-content-between">
+    <>
+      <div className={`card-container d-flex flex-wrap ${currentProjects.length === 1 ? 'justify-content-start' : 'justify-content-between'}`}>
         {currentProjects.map((project) => (
           <ProyectoCard key={project.id} project={project} />
         ))}
       </div>
 
-      {/* Paginacion */}
+      {/* Paginación */}
       <div className="mt-5 d-flex flex-column flex-md-row">
-        {/* indice */}
+        {/* Índice */}
         <p className="text-sans-h5">{`${rangeStart} - ${rangeEnd} de ${totalProjects} publicaciones`}</p>
-        {/* paginacion */}
+        {/* Paginación */}
         <nav className="pagination-container">
           <ul className="pagination ms-5">
             <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
@@ -52,7 +60,7 @@ const ProyectosContainer = ({ data }) => {
           </ul>
         </nav>
       </div>
-    </div>
+      </>
   );
 };
 

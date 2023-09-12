@@ -1,35 +1,43 @@
-import { useMemo } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { ApiContext } from '../../../context/ProjectContext';
 import
 {
   ProyectoContainer,
   ProyectosFilter,
   ProyectosSort,
   BuscadorProyectos
-
 } from '../../../components/Bancodeproyectos';
-import useApiFilter from '../../../hooks/useApiFilter';
-import useApiProjectsList from "../../../hooks/useApiProjectsList";
 
 const BancoProyectos = () =>
 {
-  const { loadingProject, errorProject } = useApiProjectsList();
-  const { dataFilter, loading, error, filteredProjects, handleFilter } = useApiFilter();
+  const {
+    listProjects,
+    searchTerm,
+    setSearchTerm,
+    filterParams,
+    setFilterParams,
+    sortOrder,
+    handleSortChange,
+    projects,
+    selectedFilters,
+    updateProjects
+  } = useContext(ApiContext);
 
-  const projectsToDisplay = useMemo(() =>
+  const [ isSearching, setIsSearching ] = useState(false);
+
+  useEffect(() =>
   {
-    if (filteredProjects.length > 0)
-    {
-      return filteredProjects;
-    }
+    updateProjects();
+  }, [ selectedFilters, updateProjects ]);
 
-    return [];
-  }, [ filteredProjects ]);
+  useEffect(() =>
+  {
+    listProjects(searchTerm, filterParams, sortOrder);
+  }, [ searchTerm, filterParams, sortOrder, listProjects ]);
 
-  const hasResults = projectsToDisplay.length > 0;
 
-  if (loadingProject || loading) return <div>CARGANDO DATOS...</div>;
-  if (errorProject || error) return <div>Error de conexión</div>;
+
 
   return (
     <div className="container col-md-10">
@@ -39,27 +47,38 @@ const BancoProyectos = () =>
           <li className="breadcrumb-item active" aria-current="page">Banco de Proyectos</li>
         </ol>
       </nav>
-      <BuscadorProyectos />
+      <BuscadorProyectos
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        isSearching={isSearching}
+        setIsSearching={setIsSearching}
+        onSearch={(newSearchTerm) =>
+        {
+          setSearchTerm(newSearchTerm);
+        }}
+      />
       <div className="row">
         <div className="col col-md-4">
-          <ProyectosFilter onFilter={handleFilter} dataFilter={dataFilter} />
+          <ProyectosFilter filterParams={filterParams} setFilterParams={setFilterParams} selectedFilters={selectedFilters} />
         </div>
-
         <div className="col col-md-8">
           <div className="d-flex justify-content-end mb-1">
-            <ProyectosSort />
+            <ProyectosSort sortOrder={sortOrder} onSortChange={handleSortChange} />
           </div>
-
-          {hasResults ? (
-            <ProyectoContainer data={projectsToDisplay} />
-          ) : (
-            <div className="alerta d-flex justify-content-center mt-4 " id='icon-alert'>
-              <i className ="material-symbols-outlined" >
-                info
-              </i>
-              <p className="text-alert fs-5 text-left mx-2 my-auto align-self-center">No encontramos proyectos con los filtros que elegiste. Intenta con otros distintos.</p>
-            </div>
-          )}
+          {
+            projects && projects.length > 0 ? (
+              <ProyectoContainer data={projects} />
+            ) : (
+              <div className="alerta d-flex justify-content-center mt-4 " id='icon-alert'>
+                <i className="material-symbols-outlined">
+                  info
+                </i>
+                <p className="text-alert fs-5 text-left mx-2 my-auto align-self-center">
+                  No encontramos proyectos con los filtros que elegiste. Intenta con otros distintos.
+                </p>
+              </div>
+            )
+          }
         </div>
       </div>
     </div>

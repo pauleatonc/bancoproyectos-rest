@@ -1,48 +1,52 @@
 import { useEffect, useState, useRef } from "react";
 
-const SortProyectos = ({ onSort }) => {
-  const [dropdownSort, setDropdownSort] = useState(false);
-  const [selectedOption, setSelectedOption] = useState("");
-  const options = ["Año de construcción:  Más reciente ", "Año de construcción: Más antiguo"];
+const SortProyectos = ({ sortOrder, onSortChange }) =>
+{
+  const [ dropdownSort, setDropdownSort ] = useState(false);
+  const [ selectedOption, setSelectedOption ] = useState("-year");
+  const options = [ "Más reciente", "Más antiguo" ];
+  const optionValues = [ "-year", "year" ];
   const dropdownRef = useRef(null);
   const buttonRef = useRef(null);
-  const [currentSortOrder, setSortOrder] = useState("asc"); // "asc" for ascending, "desc" for descending
 
-  useEffect(() => {
-    function handleClickOutside(event) {
+  useEffect(() =>
+  {
+    setSelectedOption(sortOrder);
+  }, [ sortOrder ]);
+
+  useEffect(() =>
+  {
+    function handleClickOutside(event)
+    {
       if (
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target) &&
         !buttonRef.current.contains(event.target)
-      ) {
+      )
+      {
         setDropdownSort(false);
       }
     }
 
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
+    return () =>
+    {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
-  const handleOptionChange = (event) => {
-    setSelectedOption(event.target.value);
-
-    if (event.target.value === "Año de construcción: Más reciente") {
-      setSortOrder("desc");
-      onSort && onSort("desc");
-    } else if (event.target.value === "Año de construcción: Más antiguo") {
-      setSortOrder("asc");
-      onSort && onSort("asc");
-    }
+  const handleOptionChange = (event) =>
+  {
+    const selectedValue = event.target.value;
+    setSelectedOption(selectedValue);
+    onSortChange(selectedValue);
   };
 
-  const getDropdownDisplayMessage = () => {
-    if (selectedOption) {
-      return `Ordenar por ${selectedOption}`;
-    } else {
-      return "Ordenar por";
-    }
+  const getDropdownDisplayMessage = () =>
+  {
+    const selected = options[ optionValues.indexOf(selectedOption) ];
+    return `Ordenar por: ${selected}`;
+
   };
 
   return (
@@ -52,26 +56,30 @@ const SortProyectos = ({ onSort }) => {
         tabIndex="0"
         ref={buttonRef}
         className="select-dropdown mt-3 btn btn-md border border-2"
-        onClick={() => setDropdownSort((prevState) => !prevState)}
-      >
-        {getDropdownDisplayMessage()} <i className="material-symbols-outlined pr-0">expand_more</i>
+        onClick={() =>
+        {
+          setDropdownSort((prevState) => !prevState);
+        }}
+      ><span className="dropdown-content">
+          <u>{getDropdownDisplayMessage()}</u><i className="material-symbols-outlined pr-0">expand_more</i>
+        </span>
       </button>
 
       {dropdownSort && (
         <div ref={dropdownRef} className="panel">
-          <ul className="list-group">
+          <ul className="list-sort">
             {options.map((option, index) => (
-              <li className="list-group-item my-1" key={index}>
-                <label className="form-check-label px-2" htmlFor={`option-${index}`}>
-                  <input
-                    className="form-check-input"
-                    id={`option-${index}`}
-                    type="radio"
-                    value={option}
-                    onChange={handleOptionChange}
-                    checked={selectedOption === option}
-                  />
-                  {option}
+              <li className="items-sort my-1" key={index}>
+                <input
+                  className="form-check-input"
+                  id={`option-${index}`}
+                  type="radio"
+                  value={optionValues[ index ]}
+                  onChange={handleOptionChange}
+                  checked={selectedOption === optionValues[ index ]}
+                />
+                <label className="form-check-label" htmlFor={`option-${index}`}> {/* Note el ml-4 (margin-left) aquí */}
+                  Año de construcción: {option}
                 </label>
               </li>
             ))}
