@@ -4,6 +4,8 @@
     background-color: transparent;
     max-width: 371px;
     min-width: 321px;
+    width: calc(100% / 3 - 20px);  
+    margin: 10px;
 }
 .img-container{
     height: 175px;

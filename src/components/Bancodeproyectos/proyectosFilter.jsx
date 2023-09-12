@@ -208,12 +208,12 @@ const FiltroProyectos = () =>
       <h3 className="text-sans-p">¿En qué programa está el proyecto que buscas?</h3>
       <p className="text-sans-h5">Puedes elegir más de uno.</p>
 
-      <div className="container d-flex justify-content-around mx-0 p-0">
+      <div className="container d-flex justify-content-around">
 
         {programs.map(program => (
-          <div tabIndex="0" className="container-btnCircle col-md-2 d-flex flex-column align-items-center mr-5" key={program.id}>
+          <div tabIndex="0" className="container-btnCircle px-4 col-5 d-flex flex-column mx-2 align-items-center" key={program.id}>
             <button
-              className={`categorias-circle d-inline-flex focus-ring py-1 px-2 rounded-2 btn  rounded-circle border-2 d-flex align-items-center justify-content-center my-3 ${selectedPrograms.includes(program.id) ? 'btn-primary' : 'btn-outline-primary white-text'
+              className={`categorias-circle btn rounded-circle border-2 d-flex align-items-center justify-content-center my-2 ${selectedPrograms.includes(program.id) ? 'btn-primary' : 'btn-outline-primary white-text'
                 }`}
               onClick={() => toggleProgram(program.id)}
             >
@@ -257,9 +257,9 @@ const FiltroProyectos = () =>
           isComuna={true}
         />
         <div className="row my-4 d-flex align-items-center">
-          <div className="col-2 info-circle pb-3"><span className="material-symbols-outlined" >
+          <div className="col-2 info-circle pb-3"><i className="material-symbols-outlined" >
             info
-          </span></div>
+          </i></div>
           <p className="col-10 text-sans-h5-blue">Solo encontrarás las regiones y comunas que tengan proyectos en este banco. </p>
         </div>
       </div>
@@ -298,7 +298,8 @@ const FiltroProyectos = () =>
         <Dropdown
           tabIndex="0"
           items={years}
-          selectedItems={selectedYears} // Usar selectedYears en lugar de filterParams.year
+          selectedItems={selectedYears}
+          singleItemName="años" 
           onItemChange={handleYearChange}
         />
       </div>

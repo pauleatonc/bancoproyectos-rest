@@ -34,16 +34,17 @@ const BuscadorProyectos = ({ searchTerm, onSearch, isSearching, setIsSearching }
   return (
     <div className="container col-md-4 d-flex flex-column my-md-4">
       <p className="text-sans-p text-center my-4">Accede al buscador de proyectos escribiendo palabras clave</p>
-      <div className="input-group border border-2" id='input-search'>
+      <div className="input-group border border-2 d-flex " >
         <input
-          className="form-control border-0"
+          className="form-control border-0 input-search"
           type="text"
           value={searchInput}
           onChange={handleInputChange}
+          placeholder='Buscar proyecto por palabras claves '
         />
         {isSearching && (
-          <button className="btn bg-white border  border-0 " onClick={handleClearSearch} id="icon-inputSearch">
-            <span className="material-symbols-outlined " >close</span>
+          <button className="btn bg-white border  border-0 " onClick={handleClearSearch} id="icon-inputClose">
+            <i className="material-symbols-outlined " >close</i>
           </button>
         )}
         <span className="input-group-append">
