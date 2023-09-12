@@ -1,15 +1,38 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import useApiInnovativeProjects from '../../../hooks/useApiInnovativeProjects';
+import useFilterOptions from '../../../hooks/useFilterProjects';
 //import useApiGoodPractices from '../../../hooks/useApiGoodPractices';
-import IconPMU from '../../../static/img/icons/PMU.svg';
-import IconPMB from '../../../static/img/icons/PMB.svg';
 import Carrusel from '../../../components/Commons/carrusel';
 import SelectorLateral from '../../../components/Commons/selectorLateral';
 
 const ProyectosInnovadores = () => {
-  const [selectedProjectType, setSelectedProjectType] = useState(null);
+  const { programs } = useFilterOptions();
   const [selectedProject, setSelectedProject] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  // Estados para almacenar las selecciones del usuario
+  const [ selectedPrograms, setSelectedPrograms ] = useState(() =>
+  {
+    return JSON.parse(localStorage.getItem('selectedPrograms') || '[]');
+  });
+
+  const createToggleFunction = useCallback((setter) => (id) =>
+  {
+    setter((prevSelected) =>
+    {
+      if (prevSelected.includes(id))
+      {
+        // Filtra el valor si ya está presente
+        return prevSelected.filter(existingId => existingId !== id);
+      } else
+      {
+        // Agrega el valor si no está presente
+        return [ ...prevSelected, id ];
+      }
+    });
+  }, []);
+
+  const toggleProgram = createToggleFunction(setSelectedPrograms);
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
@@ -26,19 +49,25 @@ const ProyectosInnovadores = () => {
   //   errorGoodPractices,
   // } = useApiGoodPractices();
 
-  const filteredProjects = useMemo(() => {
-    if (selectedProjectType === null) {
-      return [...dataInnovativeProjects]; // Si no hay filtro, devuelve todos los proyectos
+  const filterProjectsByPrograms = () => {
+    if (selectedPrograms.length === 0) {
+      // Si no se han seleccionado programas, muestra todos los proyectos
+      return dataInnovativeProjects;
+    } else {
+      // Filtra los proyectos según los programas seleccionados
+      return dataInnovativeProjects.filter((project) =>
+        selectedPrograms.includes(parseInt(project.program[0].id, 10))
+      );
     }
-    const selectedType = parseInt(selectedProjectType, 10);
-    return dataInnovativeProjects.filter((project) => {
-      const projectId = parseInt(project.program[0].id, 10);
-      return projectId === selectedType;
-    });
-  }, [selectedProjectType, dataInnovativeProjects]);
+  };
+
+  const filteredProjects = useMemo(() => {
+    // Llama a la función de filtrado para obtener los proyectos a mostrar
+    return filterProjectsByPrograms();
+  }, [selectedPrograms, dataInnovativeProjects]);
 
   useEffect(() => {
-  }, [selectedProjectType, filteredProjects]);
+  }, [filteredProjects]);
 
   if (loadingInnovativeProjects) {
     return <div>Cargando datos...</div>;
@@ -70,19 +99,17 @@ const ProyectosInnovadores = () => {
 
       {/* Tipo de programa */}
       <div className="container d-flex flex-row justify-content-center">
-        <div className="col-md-2 d-flex flex-column mx-md-5 align-items-center">
-          <a   type="button"   id='btn-icon' className={`categorias-circle btn btn-outline-primary rounded-circle border-2 d-flex align-items-center justify-content-center my-3 ${selectedProjectType === '' ? 'active' : ''}`} onClick={() => setSelectedProjectType('1')}>
-            <img src={IconPMU} alt='iconPMU'  id='btnIcon' />
-          </a>
-          <p className="text-sans-p text-center">Programa Mejoramiento Urbano</p>
-        </div>
-          
-        <div className="col-md-2 d-flex flex-column mx-md-5 align-items-center">
-          <a  type="button"  id='btn-icon' className={`categorias-circle btn btn-outline-primary rounded-circle border-2 d-flex align-items-center justify-content-center my-3 ${selectedProjectType === '2' ? 'active' : ''}`} onClick={() => setSelectedProjectType('2')}>
-            <img src={IconPMB} alt='iconPMU' id='btnIcon' />
-          </a>
-          <p className="text-sans-p text-center">Programa Mejoramiento de Barrios</p>
-        </div>
+        {programs.map((program) => (
+          <div tabIndex="0" className="container-btnCircle col-md-2 d-flex flex-column align-items-center mx-5" key={program.id}>
+            <button
+              className={`categorias-circle d-inline-flex focus-ring py-1 px-2 rounded-2 btn rounded-circle border-2 d-flex align-items-center justify-content-center my-3 ${selectedPrograms.includes(program.id) ? 'btn-primary' : 'btn-outline-primary white-text'}`}
+              onClick={() => toggleProgram(program.id)}
+            >
+              <img src={program.icon_program} alt={program.sigla} id='btnIcon' className={selectedPrograms.includes(program.id) ? 'white-icon' : ''} />
+            </button>
+            <p className="text-sans-p text-center">{program.name}</p>
+          </div>
+        ))}
       </div>
 
       <p className="text-sans-p">Los espacios públicos, al igual que nuestra sociedad, son dinámicos y varían acorde a los tiempos y lugares en los que se encuentran. Es por esto, que la innovación en el espacio urbano se hace fundamental a la hora de entregar a la ciudadanía una mejor, más amplia y moderna oferta de espacio público.
