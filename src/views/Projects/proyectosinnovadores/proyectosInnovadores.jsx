@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import useApiInnovativeProjects from '../../../hooks/useApiInnovativeProjects';
 import useFilterOptions from '../../../hooks/useFilterProjects';
 import useApiGoodPractices from '../../../hooks/useApiGoodPractices';
@@ -8,24 +8,32 @@ import SelectorLateral from '../../../components/Commons/selectorLateral';
 const ProyectosInnovadores = () => {
   const { programs } = useFilterOptions();
   const [selectedProject, setSelectedProject] = useState(null);
-  // const [selectedProgram, setSelectedProgram] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [ selectedPrograms, setSelectedPrograms ] = useState(() => {
+  const [selectedPrograms, setSelectedPrograms] = useState(() => {
     return JSON.parse(localStorage.getItem('selectedPrograms') || '[]');
   });
+  const [selectedGoodPracticesPrograms, setSelectedGoodPracticesPrograms] = useState(() => {
+    return JSON.parse(localStorage.getItem('selectedGoodPracticesPrograms') || '[]');
+  });
 
-  const createToggleFunction = useCallback((setter) => (id) =>
-  {
-    setter((prevSelected) => {
+  const toggleProgram = (id) => {
+    setSelectedPrograms((prevSelected) => {
       if (prevSelected.includes(id)) {
         return prevSelected.filter(existingId => existingId !== id);
       } else {
-        return [ ...prevSelected, id ];
+        return [...prevSelected, id];
       }
     });
-  }, []);
 
-  const toggleProgram = createToggleFunction(setSelectedPrograms);
+    setSelectedGoodPracticesPrograms((prevSelected) => {
+      if (prevSelected.includes(id)) {
+        return prevSelected.filter(existingId => existingId !== id);
+      } else {
+        return [...prevSelected, id];
+      }
+    });
+  };
+
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
@@ -42,29 +50,30 @@ const ProyectosInnovadores = () => {
     errorGoodPractices,
   } = useApiGoodPractices();
 
-  const filterProjectsByPrograms = () => {
+  const filterProjectsByPrograms = (data, selectedPrograms) => {
     if (selectedPrograms.length === 0) {
-      // Si no se han seleccionado programas, muestra todos los proyectos
-      return dataInnovativeProjects;
+      return data;
     } else {
-      // Filtra los proyectos según los programas seleccionados
-      return dataInnovativeProjects.filter((project) =>
-        selectedPrograms.includes(parseInt(project.program[0].id, 10))
+      return data.filter((item) =>
+        selectedPrograms.includes(parseInt(item.program[0].id, 10))
       );
     }
   };
 
   const filteredProjects = useMemo(() => {
-    return filterProjectsByPrograms();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    return filterProjectsByPrograms(dataInnovativeProjects, selectedPrograms);
   }, [selectedPrograms, dataInnovativeProjects]);
 
+  const filteredGoodPractices = useMemo(() => {
+    return filterProjectsByPrograms(dataGoodPractices, selectedGoodPracticesPrograms);
+  }, [selectedGoodPracticesPrograms, dataGoodPractices]);
+
   useEffect(() => {
-  }, [filteredProjects]);
+  }, [filteredProjects, filteredGoodPractices]);
 
   if (loadingInnovativeProjects) {
     return <div>Cargando datos...</div>;
-  } 
+  }
   if (errorInnovativeProjects) {
     return <div>Error: {errorInnovativeProjects}</div>;
   }
@@ -131,7 +140,6 @@ const ProyectosInnovadores = () => {
 
       <div className={`dropdown-menu ${dropdownOpen ? 'show' : ''}`}>
         <div className="d-flex flex-column">
-      
          {filteredProjects.map((project) => (
           <button 
           key={project.id} 
@@ -179,10 +187,11 @@ const ProyectosInnovadores = () => {
       <p className="text-sans-p mt-3">Con estas prácticas buscamos promover criterios sustentables a considerar en el diseño actual de los espacios públicos.</p>
       <div className="row">
         <div className="col-md-4">
-          < SelectorLateral data={dataGoodPractices}  selectedProgram={selectedPrograms}/>
+        <SelectorLateral data={filteredGoodPractices} selectedPrograms={selectedGoodPracticesPrograms} toggleProgram={toggleProgram} />
         </div>
         <div className="col">
-          detalle practica seleccionada
+          <h2>Titulo</h2>
+          <p>Descripcion del proyecto</p>
           <div className="border border-alert my-4">
             {/* <Carrusel imgPortada={dataGoodPractices.portada} imgGeneral={dataGoodPractices.good_practices_gallery_images}/>  */}
           </div>
