@@ -36,15 +36,17 @@ const Dropdown = ({
 
   return (
     <div>
-      <button role="button"  tabIndex="0" ref={buttonRef} className='select-dropdown mt-3 btn btn-md border border-2 '
-        onClick={() => setDropdownDisplay((prevState) => !prevState)}>
-        {getDropdownDisplayMessage()} <i className="material-symbols-outlined pr-0">expand_more</i>
-      </button>
+      <button role="button" tabIndex="0" ref={buttonRef} className='select-dropdown mt-3 btn btn-md border border-2' onClick={() => setDropdownDisplay((prevState) => !prevState)}>
+    <span className="dropdown-content"> 
+        {getDropdownDisplayMessage()}
+        <i className="material-symbols-outlined pr-0">expand_more</i>
+    </span>
+</button>
 
       {dropdownDisplay && <div ref={dropdownRef} className='panel'>
         {isComuna ? items.map(region => (
-          <div key={region.id} className='my-1'>
-            <span className='fw-semibold'>{region.region}</span>
+          <div key={region.id} >
+            <span className='fw-semibold list-group-item'>{region.region}</span>
             {region.comunas.map(comuna => (
               <li className="list-group-item" key={comuna.id}>
                 <input className="form-check-input" id={`comuna-${comuna.id}`} type='checkbox' value={comuna.id}
@@ -56,7 +58,7 @@ const Dropdown = ({
             ))}
           </div>
         )) : items.map(item => (
-          <li className="list-group-item my-1" key={item.id}>
+          <li className="list-group-item " key={item.id}>
             <input className="form-check-input" id={`item-${item.id}`} type='checkbox' value={item.id}
               onChange={(e) => onItemChange(e, item)}
               checked={selectedItems.includes(item.id.toString())} />
