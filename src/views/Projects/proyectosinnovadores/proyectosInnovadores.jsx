@@ -1,32 +1,25 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import useApiInnovativeProjects from '../../../hooks/useApiInnovativeProjects';
 import useFilterOptions from '../../../hooks/useFilterProjects';
-//import useApiGoodPractices from '../../../hooks/useApiGoodPractices';
+import useApiGoodPractices from '../../../hooks/useApiGoodPractices';
 import Carrusel from '../../../components/Commons/carrusel';
 import SelectorLateral from '../../../components/Commons/selectorLateral';
 
 const ProyectosInnovadores = () => {
   const { programs } = useFilterOptions();
   const [selectedProject, setSelectedProject] = useState(null);
+  // const [selectedProgram, setSelectedProgram] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-
-  // Estados para almacenar las selecciones del usuario
-  const [ selectedPrograms, setSelectedPrograms ] = useState(() =>
-  {
+  const [ selectedPrograms, setSelectedPrograms ] = useState(() => {
     return JSON.parse(localStorage.getItem('selectedPrograms') || '[]');
   });
 
   const createToggleFunction = useCallback((setter) => (id) =>
   {
-    setter((prevSelected) =>
-    {
-      if (prevSelected.includes(id))
-      {
-        // Filtra el valor si ya está presente
+    setter((prevSelected) => {
+      if (prevSelected.includes(id)) {
         return prevSelected.filter(existingId => existingId !== id);
-      } else
-      {
-        // Agrega el valor si no está presente
+      } else {
         return [ ...prevSelected, id ];
       }
     });
@@ -43,11 +36,11 @@ const ProyectosInnovadores = () => {
     errorInnovativeProjects 
   } = useApiInnovativeProjects();
 
-  // const {
-  //   dataGoodPractices,
-  //   loadingGoodPractices,
-  //   errorGoodPractices,
-  // } = useApiGoodPractices();
+  const {
+    dataGoodPractices,
+    loadingGoodPractices,
+    errorGoodPractices,
+  } = useApiGoodPractices();
 
   const filterProjectsByPrograms = () => {
     if (selectedPrograms.length === 0) {
@@ -62,8 +55,8 @@ const ProyectosInnovadores = () => {
   };
 
   const filteredProjects = useMemo(() => {
-    // Llama a la función de filtrado para obtener los proyectos a mostrar
     return filterProjectsByPrograms();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedPrograms, dataInnovativeProjects]);
 
   useEffect(() => {
@@ -75,12 +68,12 @@ const ProyectosInnovadores = () => {
   if (errorInnovativeProjects) {
     return <div>Error: {errorInnovativeProjects}</div>;
   }
-  // if (loadingGoodPractices) {
-  //   return <div>Cargando datos de buenas prácticas...</div>;
-  // }
-  // if (errorGoodPractices) {
-  //   return <div>Error en los datos de buenas prácticas: {errorGoodPractices}</div>;
-  // }
+  if (loadingGoodPractices) {
+    return <div>Cargando datos de buenas prácticas...</div>;
+  }
+  if (errorGoodPractices) {
+    return <div>Error en los datos de buenas prácticas: {errorGoodPractices}</div>;
+  }
 
   return (
     <div className="container col-md-8">
@@ -186,7 +179,7 @@ const ProyectosInnovadores = () => {
       <p className="text-sans-p mt-3">Con estas prácticas buscamos promover criterios sustentables a considerar en el diseño actual de los espacios públicos.</p>
       <div className="row">
         <div className="col-md-4">
-          < SelectorLateral />
+          < SelectorLateral data={dataGoodPractices}  selectedProgram={selectedPrograms}/>
         </div>
         <div className="col">
           detalle practica seleccionada
