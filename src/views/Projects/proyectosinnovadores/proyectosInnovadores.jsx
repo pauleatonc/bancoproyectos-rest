@@ -170,6 +170,7 @@ const ProyectosInnovadores = () => {
               <Carrusel
                 imgPortada={selectedProject.portada}
                 imgGeneral={selectedProject.innovative_gallery_images}
+                context="proyectosInnovadores"
               />
             </div>
             <p className="text-sans-p mt-3">{selectedProject.description}</p>
@@ -209,6 +210,7 @@ const ProyectosInnovadores = () => {
                 <Carrusel
                 imgPortada={selectedPractice.portada}
                 imgGeneral={selectedPractice.good_practices_gallery_images}
+                context="buenasPracticas"
               />
               </div>
             </>

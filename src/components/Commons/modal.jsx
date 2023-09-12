@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
-const ImageModal = ({ img, selectedImageIndex, setSelectedImageIndex }) => {
+const ImageModal = ({ img, selectedImageIndex, setSelectedImageIndex, context }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(selectedImageIndex);
 
   const handleCarouselSlide = newIndex => {
@@ -20,7 +20,7 @@ const ImageModal = ({ img, selectedImageIndex, setSelectedImageIndex }) => {
   };
 
   return (
-    <div className="modal fade" id="imageModal" tabIndex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div className="modal fade" id={`imageModal-${context}`} tabIndex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
       <div className="modal-dialog modal-lg modal-dialog-centered">
         <div className="modal-content border border-secondary">
           <div className="d-flex justify-content-between p-2">
