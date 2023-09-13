@@ -238,7 +238,6 @@ const FiltroProyectos = () =>
           </button>
         </div>
         <Dropdown
-          tabIndex="0"
           items={regiones}
           selectedItems={selectedRegiones}
           onItemChange={handleRegionChange}
@@ -249,7 +248,6 @@ const FiltroProyectos = () =>
         <h3 className="text-sans-p px-1 mt-4">¿En qué comuna?</h3>
 
         <Dropdown
-          tabIndex="0"
           items={filteredComunas}
           selectedItems={selectedComunas}
           onItemChange={handleComunaChange}
@@ -296,7 +294,6 @@ const FiltroProyectos = () =>
       <div className='my-4'>
         <h3 className="text-sans-p px-1 ">¿Qué años de construcción quieres ver?</h3>
         <Dropdown
-          tabIndex="0"
           items={years}
           selectedItems={selectedYears}
           singleItemName="años" 

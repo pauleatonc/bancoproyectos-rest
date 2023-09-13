@@ -1,5 +1,5 @@
 import { useState , useEffect} from 'react';
-import apiRegionComuna from '../services/RegionComuna/regioncomuna.api';
+import { apiBancoProyecto} from '../services/bancoproyecto.api.js';
 
 export const useApiRegionComuna = () => {
   const [data, setData] = useState([]);
@@ -9,7 +9,7 @@ export const useApiRegionComuna = () => {
   useEffect(()=> {
     const fetchData = async () => {
       try {
-        const response = await apiRegionComuna.get('region-comuna/v1/');
+        const response = await apiBancoProyecto.get('region-comuna/v1/');
         setData(response.data);
         setLoading(false);
       }catch (error) {

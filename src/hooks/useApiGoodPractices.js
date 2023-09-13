@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import apiGoodPractices from '../services/goodPractices/good_practices.api';
+import { apiBancoProyecto } from '../services/bancoproyecto.api.js'; 
 
 const useApiGoodPractices = () => {
   const [dataGoodPractices, setDataGoodPractices] = useState([]);
@@ -9,7 +9,7 @@ const useApiGoodPractices = () => {
   const fetchGoodPractices = async (endpoint = 'good_practices/v1/') => {
     setLoadingGoodPractices(true);
     try {
-      const response = await apiGoodPractices.get(endpoint);
+      const response = await apiBancoProyecto.get(endpoint);
       setDataGoodPractices(response.data);
       setErrorGoodPractices(null);
     } catch (error) {
