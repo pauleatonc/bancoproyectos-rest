@@ -8,10 +8,14 @@ from rest_framework import status
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 #
-from .api.v1.serializer import UserTokenSerializer
+from applications.users.api.v1.serializer import UserTokenSerializer
+from applications.users.authentication_mixins import Authentication
 
 
-class UserToken(APIView):
+class UserToken(Authentication, APIView):
+    """
+    Return Token for an username sended
+    """
     def get(self, request, *args, **kwargs):
         username = request.GET.get('username')
         try:

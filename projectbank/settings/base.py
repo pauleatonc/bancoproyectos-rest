@@ -1,5 +1,8 @@
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from unipath import Path
+
+import applications.users.authentication_mixins
+
 BASE_DIR = Path(__file__).ancestor(3)
 
 # Application definition
@@ -130,7 +133,8 @@ CORS_ALLOWED_ORIGINS = [
 # Configuraciones de Django Rest Framework
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_AUTHENTICATION_CLASSES': ['applications.users.authentication_mixins.Authentication']
 }
 
 # Configuraciones de documentación en Swagger

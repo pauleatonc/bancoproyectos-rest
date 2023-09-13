@@ -37,7 +37,7 @@ class CustomPagination(PageNumberPagination):
     max_page_size = 25
 
 
-class ProjectViewSet(Authentication,viewsets.ModelViewSet):
+class ProjectViewSet(Authentication, viewsets.ModelViewSet):
     """
     Listado y Edición de proyectos
 
