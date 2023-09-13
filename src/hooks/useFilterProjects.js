@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import axios from 'axios'; 
-import apiProjects from '../services/project/projects.api'; 
+import { apiBancoProyecto } from '../services/bancoproyecto.api.js'; 
 
 const useFilterOptions = () => {
   const [filterOptions, setFilterOptions] = useState(null);
@@ -24,7 +24,7 @@ const useFilterOptions = () => {
         params.comuna__in = selectedComuna; 
       }
 
-      const response = await apiProjects.get('/projects/v1/filter_options/', { 
+      const response = await apiBancoProyecto.get('/projects/v1/filter_options/', { 
         params,
         cancelToken: source.token
       });

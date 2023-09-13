@@ -37,7 +37,7 @@
 .container-btnCircle:focus-visible {
     border:2px solid $tertiary-color; 
     transition: border-color 0.3s ease;  
-    width: min-content;
+    width:fit ;
     padding: 5px;
     border-radius: 12px;
   }
@@ -78,12 +78,33 @@
   display: flex;
   align-items: center;  
   border-radius: 5px;
-  border: 2px solid $grey-a-color;
-  background: #fff;
+  border: 2px solid #373737;
+  background: $white-color;
   font-size: 15px;
   text-align: center;
   padding: 0 10px; 
 }
+
+.select-dropdown:focus {
+
+  border: 3px solid #001C41;
+  background: $white-color;
+}
+.select-dropdown:hover {
+
+  border: 3px solid #001C41;
+  background: $white-color;
+}
+.select-dropdown:active {
+
+  border: 3px solid #001C41;
+  background: $white-color;
+}
+
+
+
+
+
 .select-dropdown .dropdown-content {
   display: flex; 
   align-items: center; 

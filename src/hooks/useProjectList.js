@@ -1,6 +1,6 @@
 import { useState, useCallback, useRef } from 'react';
 import axios from 'axios';
-import apiProjects from '../services/project/projects.api';
+import { apiBancoProyecto } from '../services/bancoproyecto.api.js';
 
 export const useProjectList = () => {
   const [projects, setProjects] = useState([]);
@@ -27,7 +27,7 @@ export const useProjectList = () => {
     console.log("URL de la solicitud:", fullUrl);
 
     try {
-      const response = await apiProjects.get(fullUrl, {
+      const response = await apiBancoProyecto.get(fullUrl, {
         cancelToken: source.token,
       });
       setProjects(response.data);

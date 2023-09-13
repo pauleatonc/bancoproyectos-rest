@@ -13,7 +13,6 @@ const Navbar = () =>{
 
   return (
   <>
-    <div id="barraGris"></div>
     <nav className="container-fluid">
       <div className="row">
         <div className="col">
@@ -41,9 +40,9 @@ const Navbar = () =>{
       </div>
     </nav>  
 
-    <div className="row mt-4">
+    <div className="row mt-4 col-12">
       {/* Navegacion */}
-      <div className="mx-md-auto mx-lg-auto mx-xl-auto d-flex flex-column flex-md-row justify-content-center">
+      <div className="mx-md-auto mx-lg-auto mx-xl-auto d-flex flex-column flex-md-row justify-content-center p-0">
         <Link to="/" className="link text-black text-underline mx-md-3 d-none d-md-block"> Inicio </Link>
         <Link to="/bancodeproyectos" className="link text-black text-underline mx-md-3 d-none d-md-block"> Banco de Proyectos </Link>
         <Link to="/bancodeideas" className="link text-black text-underline mx-md-3 d-none d-md-block"> Proyectos Innovadores </Link>

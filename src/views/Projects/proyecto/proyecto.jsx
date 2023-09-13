@@ -3,23 +3,26 @@ import useApiProjectsDetail from "../../../hooks/useApiProjectsDetail";
 import Carrusel from "../../../components/Commons/carrusel";
 import ProyectosRelacionados from "../../../components/Proyecto/proyectosRelacionados";
 
-const Proyecto = () => {
-const { slug } = useParams();
-const { dataProject, loadingProject, errorProject } = useApiProjectsDetail(slug);
-const navigate = useNavigate();
+const Proyecto = () =>
+{
+  const { slug } = useParams();
+  const { dataProject, loadingProject, errorProject } = useApiProjectsDetail(slug);
+  const navigate = useNavigate();
 
-if (loadingProject) {
-  return <div>CARGANDO DATOS...</div>
-}
-if (errorProject) {
-  return <div>Error de conexión: {errorProject}</div>
-}
+  if (loadingProject)
+  {
+    return <div>CARGANDO DATOS...</div>
+  }
+  if (errorProject)
+  {
+    return <div>Error de conexión: {errorProject}</div>
+  }
 
   return (
-    <div className="container col-11 col-md-10" style={{ marginBottom: '70px' }}>
+    <div className="container col-11 col-md-10 mb-5 pb-5" >
       {/* Boton volver y breadcrumbs */}
       <div className="d-flex align-items-center">
-        <button className="volver-btn d-none d-lg-block"onClick={() => navigate(-1)}> &lt; volver</button>
+        <button className="volver-btn d-none d-lg-block" onClick={() => navigate(-1)}> &lt; volver</button>
         <p className="m-0 d-none d-lg-block me-3 opacity-50">|</p>
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb m-0">
@@ -35,9 +38,9 @@ if (errorProject) {
       {/* Descripcion del proyecto */}
       <div className="descripcion-container py-3 px-3">
         <h2 className="text-sans-h2 my-2">Descripción del proyecto</h2>
-        <p className="text-sans-p" style={{whiteSpace: 'pre-line'}}>{dataProject.description}</p>
+        <p className="text-sans-p" style={{ whiteSpace: 'pre-line' }}>{dataProject.description}</p>
       </div>
-      
+
       {/* Tabla detalles del proyecto */}
       <div className="detalles-del-proyecto my-4 mt-5">
         <h2 className="text-sans-h2-white ms-3 ">Detalles del proyecto</h2>
@@ -76,36 +79,36 @@ if (errorProject) {
             <p className="text-sans-p">{dataProject.year.number}</p>
           </div>
         </div>
-        
+
         <div className="row">
           <p className="text-sans-p"><strong>Código de identificación SUBDERE</strong></p>
           <p className="text-sans-p">{dataProject.id_subdere}</p>
         </div>
       </div>
-      
+
       {/* Imágenes del proyecto */}
       <h2 className="text-sans-h2 my-5">Imágenes del proyecto</h2>
-      
-      <Carrusel imgPortada={dataProject.portada} imgGeneral={dataProject.images}/>
+
+      <Carrusel imgPortada={dataProject.portada} imgGeneral={dataProject.images} />
 
       {/* Imágenes antes y después */}
-      { (dataProject.beforeimage && dataProject.afterimage) && 
+      {(dataProject.beforeimage && dataProject.afterimage) &&
         <>
           <div className=" p-0 d-md-flex justify-content-between my-4">
             <div className="col-md-6">
               <h3 className="text-sans-h3">Antes del proyecto</h3>
-              <img src={dataProject.beforeimage} className="img-proyecto"/>
+              <img src={dataProject.beforeimage} className="img-proyecto" />
             </div>
             <div className="col-md-6">
               <h3 className="text-sans-h3">Después del proyecto</h3>
-              <img src={dataProject.afterimage} className="img-proyecto"/>
+              <img src={dataProject.afterimage} className="img-proyecto" />
             </div>
           </div>
         </>
       }
 
       {/* Video del proyecto */}
-      { dataProject.video && 
+      {dataProject.video &&
         <>
           <h3 className="text-sans-h3">Video del proyecto</h3>
           <div className="d-flex justify-content-center mb-md-5">
@@ -115,68 +118,69 @@ if (errorProject) {
       }
 
       {/* Tabla documentos del proyecto */}
-      <h2 className="text-sans-h2 my-4">Documentos del proyecto</h2>
-        <div className="row my-4 fw-bold border-top">
-            <div className="col-1 mt-3">#</div>
-            <div className="col mt-3">Documento</div>
-            <div className="col mt-3">Formato</div>
-            <div className="col mt-3">Acción</div>
-        </div>
 
-        {/* Especificaciones Técnicas */}
-        <div className="row border-top grey-table-line">
-            <div className="col-1 p-3">1</div>
-            <div className="col p-3">Especificaciones Técnicas</div>
-            <div className="col p-3">PDF</div>
-            <a className="col p-3 text-sans-p-tertiary" href={dataProject.eett} target="_blank" rel="noopener noreferrer">Descargar</a>
-        </div>
-
-        {/* Presupuesto */}
-        <div className="row border-top">
-            <div className="col-1 p-3">2</div>
-            <div className="col p-3">Presupuesto</div>
-            <div className="col p-3">PDF</div>
-            <a className="col p-3 text-sans-p-tertiary" href={dataProject.presupuesto} target="_blank" rel="noopener noreferrer">Descargar</a>
-        </div>
-
-          {
-            dataProject.files.map((file, index) => (
-                <div key={index} className={`row border-top ${index % 2 === 0 ? 'grey-table-line' : 'white-table-line'}`}>
-                    <div className="col-1 p-3">{index + 3}</div>  {/* Comenzamos desde el índice 3 porque ya mostramos 2 documentos anteriormente */}
-                    <div className="col p-3">{file.name}</div>
-                    <div className="col p-3">{file.file_format}</div>
-                    <a  className="col p-3 text-sans-p-tertiary" href={file.file} target="_blank" rel="noopener noreferrer">Descargar</a>
-                </div>
-            ))
-          }
-
-      {/* Normativa por tipo de proyecto */}
-      { dataProject.type && dataProject.type.documents && dataProject.type.documents.length > 0 &&
-        <>
-        <h2 className="text-sans-h2 my-4 mt-5">Documentos con normativa de uso general</h2>
+        <h2 className="text-sans-h2 my-4">Documentos del proyecto</h2>
         <div className="row my-4 fw-bold border-top">
           <div className="col-1 mt-3">#</div>
           <div className="col mt-3">Documento</div>
           <div className="col mt-3">Formato</div>
           <div className="col mt-3">Acción</div>
         </div>
-          {
-            dataProject.type.documents.map((documents, index) => (
+
+        {/* Especificaciones Técnicas */}
+        <div className="row border-top grey-table-line">
+          <div className="col-1 p-3">1</div>
+          <div className="col p-3">Especificaciones Técnicas</div>
+          <div className="col p-3">PDF</div>
+          <a className="col p-3 text-sans-p-tertiary" href={dataProject.eett} target="_blank" rel="noopener noreferrer">Descargar</a>
+        </div>
+
+        {/* Presupuesto */}
+        <div className="row border-top">
+          <div className="col-1 p-3">2</div>
+          <div className="col p-3">Presupuesto</div>
+          <div className="col p-3">PDF</div>
+          <a className="col p-3 text-sans-p-tertiary" href={dataProject.presupuesto} target="_blank" rel="noopener noreferrer">Descargar</a>
+        </div>
+
+        {
+          dataProject.files.map((file, index) => (
+            <div key={index} className={`row border-top ${index % 2 === 0 ? 'grey-table-line' : 'white-table-line'}`}>
+              <div className="col-1 p-3">{index + 3}</div>  {/* Comenzamos desde el índice 3 porque ya mostramos 2 documentos anteriormente */}
+              <div className="col p-3">{file.name}</div>
+              <div className="col p-3">{file.file_format}</div>
+              <a className="col p-3 text-sans-p-tertiary" href={file.file} target="_blank" rel="noopener noreferrer">Descargar</a>
+            </div>
+          ))
+        }
+
+        {/* Normativa por tipo de proyecto */}
+        {dataProject.type && dataProject.type.documents && dataProject.type.documents.length > 0 &&
+          <>
+            <h2 className="text-sans-h2 my-4 mt-5">Documentos con normativa de uso general</h2>
+            <div className="row my-4 fw-bold border-top">
+              <div className="col-1 mt-3">#</div>
+              <div className="col mt-3">Documento</div>
+              <div className="col mt-3">Formato</div>
+              <div className="col mt-3">Acción</div>
+            </div>
+            {
+              dataProject.type.documents.map((documents, index) => (
                 <div key={index} className={`row border-top ${index % 2 === 0 ? 'grey-table-line' : 'white-table-line'}`}>
-                    <div className="col-1 p-3">{index + 1}</div>
-                    <div className="col p-3">{documents.title}</div>
-                    <div className="col p-3">{documents.document_format}</div>
-                    <a className="col p-3 text-sans-p-tertiary" href={documents.document} target="_blank" rel="noopener noreferrer">Descargar</a>
+                  <div className="col-1 p-3">{index + 1}</div>
+                  <div className="col p-3">{documents.title}</div>
+                  <div className="col p-3">{documents.document_format}</div>
+                  <a className="col p-3 text-sans-p-tertiary" href={documents.document} target="_blank" rel="noopener noreferrer">Descargar</a>
                 </div>
-            ))
-          }
-        </>
-      }
+              ))
+            }
+          </>
+        }
 
       {/* Proyectos Relacionados */}
-      <ProyectosRelacionados currentSlug={ dataProject.slug } />
+      <ProyectosRelacionados currentSlug={dataProject.slug} />
     </div>
 
   );
-}; 
+};
 export default Proyecto;

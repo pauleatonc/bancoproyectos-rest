@@ -1,47 +1,56 @@
 import { useState, useRef, useEffect } from 'react';
 
-const Dropdown = ({ 
-  items = [], 
-  selectedItems = [], 
-  onItemChange, 
-  singleItemName = 'ítems', 
-  isComuna = false, 
-}) => {
-  const [dropdownDisplay, setDropdownDisplay] = useState(false);
+const Dropdown = ({
+  items = [],
+  selectedItems = [],
+  onItemChange,
+  singleItemName = 'ítems',
+  isComuna = false,
+}) =>
+{
+  const [ dropdownDisplay, setDropdownDisplay ] = useState(false);
   const dropdownRef = useRef(null);
   const buttonRef = useRef(null);
 
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target) && !buttonRef.current.contains(event.target)) {
+  useEffect(() =>
+  {
+    function handleClickOutside(event)
+    {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target) && !buttonRef.current.contains(event.target))
+      {
         setDropdownDisplay(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
-    return () => {
+    return () =>
+    {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
-  const getDropdownDisplayMessage = () => {
-    if (!Array.isArray(selectedItems) || selectedItems.length === 0) {
+  const getDropdownDisplayMessage = () =>
+  {
+    if (!Array.isArray(selectedItems) || selectedItems.length === 0)
+    {
       return `Elige uno o más ${singleItemName}`;
-    } else if (selectedItems.length === 1) {
-      const singleItem = items.find(item => item.id.toString() === selectedItems[0]);
+    } else if (selectedItems.length === 1)
+    {
+      const singleItem = items.find(item => item.id.toString() === selectedItems[ 0 ]);
       return singleItem ? singleItem.name || singleItem.comuna || singleItem.region || singleItem.number : `${selectedItems.length} seleccionados`;
-    } else {
+    } else
+    {
       return `${selectedItems.length} seleccionados`;
     }
   };
 
   return (
-    <div>
-      <button role="button" tabIndex="0" ref={buttonRef} className='select-dropdown mt-3 btn btn-md border border-2' onClick={() => setDropdownDisplay((prevState) => !prevState)}>
-    <span className="dropdown-content"> 
-        {getDropdownDisplayMessage()}
-        <i className="material-symbols-outlined pr-0">expand_more</i>
-    </span>
-</button>
+    <>
+      <button  tabIndex="0" ref={buttonRef} className='select-dropdown mt-3 btn btn-md border border-2' onClick={() => setDropdownDisplay((prevState) => !prevState)}>
+        <span className="dropdown-content">
+          {getDropdownDisplayMessage()}
+          <i className="material-symbols-outlined pr-0">expand_more</i>
+        </span>
+      </button>
 
       {dropdownDisplay && <div ref={dropdownRef} className='panel'>
         {isComuna ? items.map(region => (
@@ -67,7 +76,7 @@ const Dropdown = ({
           </li>
         ))}
       </div>}
-    </div>
+    </>
 
   );
 };
