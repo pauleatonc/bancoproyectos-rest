@@ -8,7 +8,11 @@ import SelectorLateral from '../../../components/Commons/selectorLateral';
 const ProyectosInnovadores = () => {
   const { programs } = useFilterOptions();
   const [selectedProject, setSelectedProject] = useState(null);
-  const [selectedPractice, setSelectedPractice] = useState(null);
+  const [selectedPractice, setSelectedPractice] = useState(() => {
+  // Recuperar la buena práctica seleccionada del almacenamiento local
+  const storedPractice = localStorage.getItem('selectedPractice');
+  return storedPractice ? JSON.parse(storedPractice) : null;
+  });
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectedPrograms, setSelectedPrograms] = useState(() => {
     return JSON.parse(localStorage.getItem('selectedPrograms') || '[]');
@@ -41,6 +45,8 @@ const ProyectosInnovadores = () => {
 
   const onGoodPracticeSelect = (practice) => {
     setSelectedPractice(practice);
+    // Guardar la buena práctica seleccionada en el almacenamiento local
+    localStorage.setItem('selectedPractice', JSON.stringify(practice));
     console.log('Buena Práctica seleccionada:', practice);
   };
 
