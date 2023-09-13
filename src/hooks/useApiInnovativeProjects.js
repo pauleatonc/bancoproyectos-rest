@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import apiInnovativeProjects from '../services/innovativeProjects/innovative_projects.api';
 
-const useApiInnovativeProjectsList = () => {
+const useApiInnovativeProjects = () => {
   const [dataInnovativeProjects, setDataInnovativeProjects] = useState([]);
   const [loadingInnovativeProjects, setLoadingInnovativeProjects] = useState(true);
   const [errorInnovativeProjects, setErrorInnovativeProjects] = useState(null);
@@ -28,4 +28,4 @@ const useApiInnovativeProjectsList = () => {
   return { dataInnovativeProjects, loadingInnovativeProjects, errorInnovativeProjects };
 };
 
-export default useApiInnovativeProjectsList;
+export default useApiInnovativeProjects;

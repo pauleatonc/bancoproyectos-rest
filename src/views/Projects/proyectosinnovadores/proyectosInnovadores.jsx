@@ -1,55 +1,94 @@
 import { useState, useEffect, useMemo } from 'react';
-import useApiInnovativeProjectsList from '../../../hooks/useApiInnovativeProjectsList';
-//import useApiGoodPractices from '../../../hooks/useApiGoodPractices';
-import IconPMU from '../../../static/img/icons/PMU.svg';
-import IconPMB from '../../../static/img/icons/PMB.svg';
+import useApiInnovativeProjects from '../../../hooks/useApiInnovativeProjects';
+import useFilterOptions from '../../../hooks/useFilterProjects';
+import useApiGoodPractices from '../../../hooks/useApiGoodPractices';
 import Carrusel from '../../../components/Commons/carrusel';
 import SelectorLateral from '../../../components/Commons/selectorLateral';
 
 const ProyectosInnovadores = () => {
-  const [selectedProjectType, setSelectedProjectType] = useState(null);
+  const { programs } = useFilterOptions();
   const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedPractice, setSelectedPractice] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [selectedPrograms, setSelectedPrograms] = useState(() => {
+    return JSON.parse(localStorage.getItem('selectedPrograms') || '[]');
+  });
+  const [selectedPracticesPrograms, setSelectedPracticesPrograms] = useState(() => {
+    return JSON.parse(localStorage.getItem('selectedGoodPracticesPrograms') || '[]');
+  });
+
+  const toggleProgram = (id) => {
+    setSelectedPrograms((prevSelected) => {
+      if (prevSelected.includes(id)) {
+        return prevSelected.filter(existingId => existingId !== id);
+      } else {
+        return [...prevSelected, id];
+      }
+    });
+
+    setSelectedPracticesPrograms((prevSelected) => {
+      if (prevSelected.includes(id)) {
+        return prevSelected.filter(existingId => existingId !== id);
+      } else {
+        return [...prevSelected, id];
+      }
+    });
+  };
+
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
-  const { dataInnovativeProjects, loadingInnovativeProjects, errorInnovativeProjects } = useApiInnovativeProjectsList();
+  const onGoodPracticeSelect = (goodPractice) => {
+    setSelectedPractice(goodPractice);
+    console.log('Buena Práctica seleccionada:', goodPractice);
+  };
 
-  // const {
-  //   dataGoodPractices,
-  //   loadingGoodPractices,
-  //   errorGoodPractices,
-  // } = useApiGoodPractices();
+  const { 
+    dataInnovativeProjects, 
+    loadingInnovativeProjects, 
+    errorInnovativeProjects 
+  } = useApiInnovativeProjects();
+
+  const {
+    dataGoodPractices,
+    loadingGoodPractices,
+    errorGoodPractices,
+  } = useApiGoodPractices();
+
+  const filterProjectsByPrograms = (data, selectedPrograms) => {
+    if (selectedPrograms.length === 0) {
+      return data;
+    } else {
+      return data.filter((item) =>
+        selectedPrograms.includes(parseInt(item.program[0].id, 10))
+      );
+    }
+  };
 
   const filteredProjects = useMemo(() => {
-    if (selectedProjectType === null) {
-      return [...dataInnovativeProjects]; // Si no hay filtro, devuelve todos los proyectos
-    }
-    const selectedType = parseInt(selectedProjectType, 10);
-    return dataInnovativeProjects.filter((project) => {
-      const projectId = parseInt(project.program[0].id, 10);
-      return projectId === selectedType;
-    });
-  }, [selectedProjectType, dataInnovativeProjects]);
+    return filterProjectsByPrograms(dataInnovativeProjects, selectedPrograms);
+  }, [selectedPrograms, dataInnovativeProjects]);
+
+  const filteredPractices = useMemo(() => {
+    return filterProjectsByPrograms(dataGoodPractices, selectedPracticesPrograms);
+  }, [selectedPracticesPrograms, dataGoodPractices]);
 
   useEffect(() => {
-    console.log('selectedProjectType:', selectedProjectType);
-    console.log('filteredProjects:', filteredProjects);
-  }, [selectedProjectType, filteredProjects]);
+  }, [filteredProjects, filteredPractices]);
 
   if (loadingInnovativeProjects) {
     return <div>Cargando datos...</div>;
-  } 
+  }
   if (errorInnovativeProjects) {
     return <div>Error: {errorInnovativeProjects}</div>;
   }
-  // if (loadingGoodPractices) {
-  //   return <div>Cargando datos de buenas prácticas...</div>;
-  // }
-  // if (errorGoodPractices) {
-  //   return <div>Error en los datos de buenas prácticas: {errorGoodPractices}</div>;
-  // }
+  if (loadingGoodPractices) {
+    return <div>Cargando datos de buenas prácticas...</div>;
+  }
+  if (errorGoodPractices) {
+    return <div>Error en los datos de buenas prácticas: {errorGoodPractices}</div>;
+  }
 
   return (
     <div className="container col-md-8">
@@ -68,19 +107,17 @@ const ProyectosInnovadores = () => {
 
       {/* Tipo de programa */}
       <div className="container d-flex flex-row justify-content-center">
-        <div className="col-md-2 d-flex flex-column mx-md-5 align-items-center">
-          <a   type="button"   id='btn-icon' className={`categorias-circle btn btn-outline-primary rounded-circle border-2 d-flex align-items-center justify-content-center my-3 ${selectedProjectType === '' ? 'active' : ''}`} onClick={() => setSelectedProjectType('1')}>
-            <img src={IconPMU} alt='iconPMU'  id='btnIcon' />
-          </a>
-          <p className="text-sans-p text-center">Programa Mejoramiento Urbano</p>
-        </div>
-          
-        <div className="col-md-2 d-flex flex-column mx-md-5 align-items-center">
-          <a  type="button"  id='btn-icon' className={`categorias-circle btn btn-outline-primary rounded-circle border-2 d-flex align-items-center justify-content-center my-3 ${selectedProjectType === '2' ? 'active' : ''}`} onClick={() => setSelectedProjectType('2')}>
-            <img src={IconPMB} alt='iconPMU' id='btnIcon' />
-          </a>
-          <p className="text-sans-p text-center">Programa Mejoramiento de Barrios</p>
-        </div>
+        {programs.map((program) => (
+          <div tabIndex="0" className="container-btnCircle col-md-2 d-flex flex-column align-items-center mx-5" key={program.id}>
+            <button
+              className={`categorias-circle d-inline-flex focus-ring py-1 px-2 rounded-2 btn rounded-circle border-2 d-flex align-items-center justify-content-center my-3 ${selectedPrograms.includes(program.id) ? 'btn-primary' : 'btn-outline-primary white-text'}`}
+              onClick={() => toggleProgram(program.id)}
+            >
+              <img src={program.icon_program} alt={program.sigla} id='btnIcon' className={selectedPrograms.includes(program.id) ? 'white-icon' : ''} />
+            </button>
+            <p className="text-sans-p text-center">{program.name}</p>
+          </div>
+        ))}
       </div>
 
       <p className="text-sans-p">Los espacios públicos, al igual que nuestra sociedad, son dinámicos y varían acorde a los tiempos y lugares en los que se encuentran. Es por esto, que la innovación en el espacio urbano se hace fundamental a la hora de entregar a la ciudadanía una mejor, más amplia y moderna oferta de espacio público.
@@ -109,7 +146,6 @@ const ProyectosInnovadores = () => {
 
       <div className={`dropdown-menu ${dropdownOpen ? 'show' : ''}`}>
         <div className="d-flex flex-column">
-      
          {filteredProjects.map((project) => (
           <button 
           key={project.id} 
@@ -134,6 +170,7 @@ const ProyectosInnovadores = () => {
               <Carrusel
                 imgPortada={selectedProject.portada}
                 imgGeneral={selectedProject.innovative_gallery_images}
+                context="proyectosInnovadores"
               />
             </div>
             <p className="text-sans-p mt-3">{selectedProject.description}</p>
@@ -157,14 +194,32 @@ const ProyectosInnovadores = () => {
       <p className="text-sans-p mt-3">Con estas prácticas buscamos promover criterios sustentables a considerar en el diseño actual de los espacios públicos.</p>
       <div className="row">
         <div className="col-md-4">
-          < SelectorLateral />
+        <SelectorLateral 
+        data={filteredPractices} 
+        selectedPrograms={selectedPracticesPrograms} 
+        toggleProgram={toggleProgram}
+        onGoodPracticeSelect={onGoodPracticeSelect} 
+        />
         </div>
         <div className="col">
-          detalle practica seleccionada
-          <div className="border border-alert my-4">
-            {/* <Carrusel imgPortada={dataGoodPractices.portada} imgGeneral={dataGoodPractices.good_practices_gallery_images}/>  */}
-          </div>
+          {selectedPractice ? ( // Comprueba si hay una Buena Práctica seleccionada
+            <>
+              <h2>{selectedPractice.title}</h2>
+              <p>{selectedPractice.description}</p>
+              <div className="my-4">
+                <Carrusel
+                imgPortada={selectedPractice.portada}
+                imgGeneral={selectedPractice.good_practices_gallery_images}
+                context="buenasPracticas"
+              />
+              </div>
+            </>
+          ) : (
+            <p className="text-sans-h4 mt-3">Selecciona una buena práctica para ver los detalles.</p>
+          )}
         </div>
+
+     
       </div>
     </div>
   );
