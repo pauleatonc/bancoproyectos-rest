@@ -19,8 +19,14 @@ const ProyectosRelacionados = ({ currentSlug }) => {
     fetchRelatedProjects();
   }, [currentSlug]);
 
+  if (relatedProjects.length === 0) {
+    return null;
+  }
+
   return (
     <div className="container row">
+      <h2 className="text-sans-h2 my-4 mt-5">Proyectos relacionados</h2>
+      
       {relatedProjects.map(project => (
         <div key={project.slug} className="col-md my-3 mx-2">
           <div className="row">
@@ -38,7 +44,7 @@ const ProyectosRelacionados = ({ currentSlug }) => {
         </div>
       ))}
     </div>
-  )
+  );
 };
 
 export default ProyectosRelacionados;
