@@ -116,8 +116,8 @@ const ProyectosInnovadores = () => {
         {programs.map((program) => (
           <div tabIndex="0" className="container-btnCircle col-md-2 d-flex flex-column align-items-center mx-5" key={program.id}>
             <button
-              className={`categorias-circle d-inline-flex focus-ring py-1 px-2 rounded-2 btn rounded-circle border-2 d-flex align-items-center justify-content-center my-3 ${selectedPrograms.includes(program.id) ? 'btn-primary' : 'btn-outline-primary white-text'}`}
-              onClick={() => toggleProgram(program.id)}
+            className={`categorias-circle d-inline-flex focus-ring py-1 px-2 rounded-2 btn rounded-circle border-2 d-flex align-items-center justify-content-center my-3 ${selectedPrograms.includes(program.id) ? 'btn-primary' : 'btn-outline-primary white-text'}`}
+            onClick={() => toggleProgram(program.id)}
             >
               <img src={program.icon_program} alt={program.sigla} id='btnIcon' className={selectedPrograms.includes(program.id) ? 'white-icon' : ''} />
             </button>
@@ -126,7 +126,7 @@ const ProyectosInnovadores = () => {
         ))}
       </div>
 
-      <p className="text-sans-p">Los espacios públicos, al igual que nuestra sociedad, son dinámicos y varían acorde a los tiempos y lugares en los que se encuentran. Es por esto, que la innovación en el espacio urbano se hace fundamental a la hora de entregar a la ciudadanía una mejor, más amplia y moderna oferta de espacio público.
+      <p className="text-sans-p d-none d-lg-block">Los espacios públicos, al igual que nuestra sociedad, son dinámicos y varían acorde a los tiempos y lugares en los que se encuentran. Es por esto, que la innovación en el espacio urbano se hace fundamental a la hora de entregar a la ciudadanía una mejor, más amplia y moderna oferta de espacio público.
         Aquí te mostramos algunas ideas de espacios deportivos, culturales y de protección ambiental para que puedas considerar posibles soluciones a desarrollar con financiamiento PMU.
       </p>
 
@@ -198,9 +198,9 @@ const ProyectosInnovadores = () => {
             <div>
               <div className="carrusel-container container col-xl-7 float-md-end m-4">
                 <Carrusel
-                  imgPortada={filteredProjects[0].portada}
-                  imgGeneral={filteredProjects[0].innovative_gallery_images}
-                  context="proyectosInnovadores"
+                imgPortada={filteredProjects[0].portada}
+                imgGeneral={filteredProjects[0].innovative_gallery_images}
+                context="proyectosInnovadores"
                 />
               </div>
               <p className="text-sans-p mt-3">{filteredProjects[0].description}</p>
@@ -213,25 +213,23 @@ const ProyectosInnovadores = () => {
               ))}
             </div>
           </>
-        ) : (
+          ) : (
           <p className="text-sans-h4 mt-3">Selecciona un proyecto para ver los detalles.</p>
         )
       )}
-    </div>
-
-
+    
       <hr className="my-5" />
 
       <h2 className="text-sans-h2">Buenas prácticas para el diseño de los espacios públicos</h2>
       <p className="text-sans-p mt-3">Con estas prácticas buscamos promover criterios sustentables a considerar en el diseño actual de los espacios públicos.</p>
       <div className="row">
         <div className="col-lg-4">
-        <SelectorLateral 
-        data={filteredPractices} 
-        selectedPrograms={selectedPracticesPrograms} 
-        toggleProgram={toggleProgram}
-        onGoodPracticeSelect={onGoodPracticeSelect} 
-        />
+          <SelectorLateral 
+          data={filteredPractices} 
+          selectedPrograms={selectedPracticesPrograms} 
+          toggleProgram={toggleProgram}
+          onGoodPracticeSelect={onGoodPracticeSelect} 
+          />
         </div>
         <div className="col">
           {selectedPractice ? (
@@ -240,18 +238,19 @@ const ProyectosInnovadores = () => {
               <p>{selectedPractice.description}</p>
               <div className="my-4">
                 <Carrusel
-                  imgPortada={selectedPractice.portada}
-                  imgGeneral={selectedPractice.good_practices_gallery_images}
-                  context="buenasPracticas"
+                imgPortada={selectedPractice.portada}
+                imgGeneral={selectedPractice.good_practices_gallery_images}
+                context="buenasPracticas"
                 />
               </div>
             </>
-          ) : (
+            ) : (
             <p className="text-sans-h4 mt-3">Selecciona una buena práctica para ver los detalles.</p>
-          )}
+            )}
         </div>
       </div>
     </div>
+  </div>
   );
 };
 
