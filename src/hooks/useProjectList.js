@@ -3,9 +3,11 @@ import axios from 'axios';
 import { apiBancoProyecto } from '../services/bancoproyecto.api.js';
 
 export const useProjectList = () => {
-  const [projects, setProjects] = useState([]);
+  const [projects, setProjects] = useState([]);  // Este almacena solo los proyectos
+  const [metadata, setMetadata] = useState({ count: 0, next: null, previous: null }); // Este almacena los metadatos
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
 
   // Referencia para el setTimeout
   const debounceTimeoutRef = useRef(null);
@@ -30,7 +32,12 @@ export const useProjectList = () => {
       const response = await apiBancoProyecto.get(fullUrl, {
         cancelToken: source.token,
       });
-      setProjects(response.data);
+      setProjects(response.data.results); 
+      setMetadata({
+        count: response.data.count,
+        next: response.data.next,
+        previous: response.data.previous
+      });
     } catch (err) {
       if (!axios.isCancel(err)) {
         console.error('Error al cargar proyectos:', err);
@@ -56,5 +63,5 @@ export const useProjectList = () => {
     }, 500); 
   }, [listProjects]);
 
-  return { projects, loading, error, listProjects: debouncedListProjects }; 
+  return { projects,  metadata, loading, error, listProjects: debouncedListProjects }; 
 };
