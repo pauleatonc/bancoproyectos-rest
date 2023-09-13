@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import apiProject from '../../services/project/projects.api';
+import { apiBancoProyecto } from '../../services/bancoproyecto.api.js';
 
 const ProyectosRelacionados = ({ currentSlug }) => {
   const [relatedProjects, setRelatedProjects] = useState([]);
@@ -8,7 +8,7 @@ const ProyectosRelacionados = ({ currentSlug }) => {
   useEffect(() => {
     async function fetchRelatedProjects() {
       try {
-        const response = await apiProject.get(`projects/v1/${currentSlug}/related_projects/`);
+        const response = await apiBancoProyecto.get(`projects/v1/${currentSlug}/related_projects/`);
         setRelatedProjects(response.data);
 
       } catch (error) {
@@ -23,10 +23,15 @@ const ProyectosRelacionados = ({ currentSlug }) => {
     return null;
   }
 
+    // Si no hay proyectos relacionados, retorna null para que no se renderice nada
+    if (relatedProjects.length === 0) {
+      return null;
+    }
+  
   return (
-    <div className="container row">
-      <h2 className="text-sans-h2 my-4 mt-5">Proyectos relacionados</h2>
-      
+
+    <div className="container row">      
+    <h2 className="text-sans-h2 my-4 mt-5">Proyectos relacionados</h2>
       {relatedProjects.map(project => (
         <div key={project.slug} className="col-md my-3 mx-2">
           <div className="row">
@@ -45,6 +50,7 @@ const ProyectosRelacionados = ({ currentSlug }) => {
       ))}
     </div>
   );
+
 };
 
 export default ProyectosRelacionados;

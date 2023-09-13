@@ -1,11 +1,11 @@
 import useContactForm from '../../hooks/useContactForm';
-import apiCreatecontact from '../../services/home/createContact';
+import {apiBancoProyecto } from '../../services/bancoproyecto.api.js';
 
 const ContactForm = () => {
 
   const submitForm = async (formData) => {
     try {
-        const response = await apiCreatecontact.post('contact/v1/', formData);
+        const response = await apiBancoProyecto.post('contact/v1/', formData);
         if (response.status === 200) {
             console.log('Form data submitted successfully:', response.data);
             // You can add additional logic here, e.g., showing a success message, redirecting, etc.

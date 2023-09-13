@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import apiInnovativeProjects from '../services/innovativeProjects/innovative_projects.api';
+import { apiBancoProyecto } from '../services/bancoproyecto.api.js'; 
 
 const useApiInnovativeProjects = () => {
   const [dataInnovativeProjects, setDataInnovativeProjects] = useState([]);
@@ -9,7 +9,7 @@ const useApiInnovativeProjects = () => {
   const fetchInnovativeProjectsList = async () => {
     setLoadingInnovativeProjects(true);
     try {
-      const response = await apiInnovativeProjects.get('innovative_projects/v1/');
+      const response = await apiBancoProyecto.get('innovative_projects/v1/');
       setDataInnovativeProjects(response.data);
       setErrorInnovativeProjects(null);
     } catch (error) {

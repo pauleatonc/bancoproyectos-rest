@@ -67,13 +67,13 @@ const Home = () => {
                 onClick={(e) => handleProgramClick(e, program.id)}>
               <img src={program.icon_program} alt={program.sigla} id='btnIcon'  />
             </button>
-            <p className="text-sans-h5-bold text-center">{program.name}</p>
+            <p className="text-sans-p text-center">{program.name}</p>
           </div>
             
       
           ))}
 
-          <div  tabIndex="0" className="container-btnCirclecol-md-2 d-flex flex-column mx-md-5 align-items-center">
+          <div  tabIndex="0" className="container-btnCircle col-md-2 d-flex flex-column align-items-center mr-5">
             <button type="button"  onClick={handleViewAllProjects} id='btn-icon' className="categorias-circle btn btn-outline-primary  border-2 rounded-circle d-flex align-items-center justify-content-center my-3">
             <img src={IconList} alt='iconList' id='btnIcon' />
             </button>
@@ -126,20 +126,17 @@ const Home = () => {
         <div className="col p-3 me-lg-5">
           <h2 className="text-sans-h2">Encuentra ideas innovadoras para tu comuna</h2>
           <h3 className="text-sans-p mt-3">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s.</h3>
-          <button className="btn-secundario-s mt-3">
-            <Link to={`/bancodeideas`} className="text-sans-p-blue text-decoration-underline px-2">
+
+            <Link to={`/bancodeideas`}  type="button" className="btn-secundario-s mt-3 text-sans-p-blue text-decoration-underline px-3 py-3">
               Ver Proyectos Innovadores &gt;
             </Link>
-          </button>
         </div>
         <div className="col p-3 ms-lg-5">
           <h2 className="text-sans-h2">Revisa la documentación que necesitas para tu postulación</h2>
           <h3 className="text-sans-p mt-3">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s.</h3>
-          <button className="btn-secundario-s mt-3">
-            <Link to={`/documentacion`} className="text-sans-p-blue text-decoration-underline px-2">
+            <Link to={`/documentacion`} type="button" className="btn-secundario-s mt-3 text-sans-p-blue text-decoration-underline px-3 py-3">
               Ver Documentación &gt;
             </Link>
-          </button>
         </div>
       </div>
 
