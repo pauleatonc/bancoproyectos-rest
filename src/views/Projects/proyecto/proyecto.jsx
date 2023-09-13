@@ -16,7 +16,7 @@ if (errorProject) {
 }
 
   return (
-    <div className="container col-11 col-md-10">
+    <div className="container col-11 col-md-10" style={{ marginBottom: '70px' }}>
       {/* Boton volver y breadcrumbs */}
       <div className="d-flex align-items-center">
         <button className="volver-btn d-none d-lg-block"onClick={() => navigate(-1)}> &lt; volver</button>
@@ -174,7 +174,6 @@ if (errorProject) {
       }
 
       {/* Proyectos Relacionados */}
-      <h2 className="text-sans-h2 my-4 mt-5">Proyectos relacionados</h2>
       <ProyectosRelacionados currentSlug={ dataProject.slug } />
     </div>
 
