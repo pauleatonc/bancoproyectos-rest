@@ -62,7 +62,7 @@ class ProjectViewSet(Authentication, viewsets.ModelViewSet):
     search_fields = ['name', 'id_subdere', 'description']
     ordering_fields = ['year']
     ordering = ['year']
-    #pagination_class = CustomPagination
+    pagination_class = CustomPagination
 
 
     @action(detail=False, methods=['GET'])

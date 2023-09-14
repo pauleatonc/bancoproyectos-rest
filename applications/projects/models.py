@@ -14,7 +14,6 @@ from applications.base.models import BaseModel
 from applications.regioncomuna.models import Comuna
 from applications.documents.models import Documents
 from .functions import validate_file_size_five, validate_file_size_twenty
-from .managers import ProjectsManager
 
 
 class Program(BaseModel):
@@ -186,7 +185,6 @@ class Project(BaseModel):
 
     # checklist = models.ManyToManyField(ChecklistDocuments, verbose_name='Checklist de documentos obligatorios')
 
-    objects = ProjectsManager()
 
 
     @property

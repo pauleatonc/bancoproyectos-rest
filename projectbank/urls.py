@@ -5,8 +5,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 #urls errores 
-from django.conf.urls import handler404 , handler500 
-from applications.home.views import Error404 , Error500 , Error503
+from django.conf.urls import handler404 , handler500
 
 # Swagger para documentación de la API
 from rest_framework import permissions
@@ -41,12 +40,3 @@ urlpatterns = [
     re_path('', include('applications.documents.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-handler404 = Error404.as_view()
-
-handler500 = Error500.as_error_view()
-
-urlpatterns += [
-path('503/', Error503.as_error_view(), name='error_503'), 
-
-]
