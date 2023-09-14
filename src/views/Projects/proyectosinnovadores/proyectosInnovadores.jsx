@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import useApiInnovativeProjects from '../../../hooks/useApiInnovativeProjects';
 import useFilterOptions from '../../../hooks/useFilterProjects';
 import useApiGoodPractices from '../../../hooks/useApiGoodPractices';
@@ -31,6 +31,36 @@ const ProyectosInnovadores = () => {
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
+  // Ref para el boton del dropdown
+  const dropdownButtonRef = useRef(null);
+  const dropdownMenuRef = useRef(null);
+  // Función para cerrar el dropdown cuando se hace clic fuera de él
+  const handleClickOutsideDropdown = (e) => {
+    if (
+      dropdownButtonRef.current &&
+      !dropdownButtonRef.current.contains(e.target) &&
+      dropdownMenuRef.current &&
+      !dropdownMenuRef.current.contains(e.target)
+    ) {
+      setDropdownOpen(false);
+    }
+  };
+  // Función para evitar que el clic en opciones del dropdown cierre el dropdown
+  const handleDropdownOptionClick = (e) => {
+    if (dropdownMenuRef.current && dropdownMenuRef.current.contains(e.target)) {
+      e.stopPropagation();
+    }
+  };
+
+  useEffect(() => {
+    // Agregar event listener para clics en todo el documento
+    document.addEventListener("mousedown", handleClickOutsideDropdown);
+
+    // Retirar el event listener cuando el componente se desmonte
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutsideDropdown);
+    };
+  }, []);
 
   // Funcion para filtrar proyectos segun programa seleccionado
   const filterProjectsByPrograms = (data, selectedPrograms) => {
@@ -174,9 +204,11 @@ useEffect(() => {
 
       {/* Boton y Dropdown */}
       <div className="d-flex justify-content-center m-3 d-lg-none">
-        <button 
+        <button
+        ref={dropdownButtonRef} 
         className="select-box d-flex justify-content-center px-3 pt-3"
-        onClick={toggleDropdown} 
+        onClick={toggleDropdown}
+        onClickCapture={handleDropdownOptionClick} 
         >
          {selectedProject ? (
             <p className="text-decoration-underline">{selectedProject.title}</p>
@@ -187,13 +219,16 @@ useEffect(() => {
         </button>
       </div>
 
-      <div className={`dropdown-menu ${dropdownOpen ? 'show' : ''}`}>
+      <div ref={dropdownMenuRef} className={`dropdown-menu ${dropdownOpen ? 'show' : ''}`}>
         <div className="d-flex flex-column">
          {filteredProjects.map((project) => (
           <button 
           key={project.id} 
           className="select-option text-start px-3 p-2 m-1"
-          onClick={() => setSelectedProject(project)}
+          onClick={() => {
+            setSelectedProject(project);
+            setDropdownOpen(false); // Cierra el dropdown al seleccionar una opcion
+          }}
           >
             {project.title}
           </button>
