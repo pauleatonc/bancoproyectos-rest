@@ -8,33 +8,39 @@ import SelectorLateral from '../../../components/Commons/selectorLateral';
 const ProyectosInnovadores = () => {
   const { programs } = useFilterOptions();
   const [selectedProject, setSelectedProject] = useState(null);
-  const [selectedPractice, setSelectedPractice] = useState(null); // Cambio aquí
+  const [selectedPractice, setSelectedPractice] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedPrograms, setSelectedPrograms] = useState(() => {
-    return JSON.parse(localStorage.getItem('selectedPrograms') || '[]');
-  });
+  const [selectedProgram, setSelectedProgram] = useState([2]); // Inicialmente selecciona "PMU"
   const [selectedPracticesPrograms, setSelectedPracticesPrograms] = useState(() => {
     return JSON.parse(localStorage.getItem('selectedGoodPracticesPrograms') || '[]');
   });
+  
 
-  const toggleProgram = (id) => {
-    setSelectedPrograms((prevSelected) => {
-      if (prevSelected.includes(id)) {
-        return prevSelected.filter(existingId => existingId !== id);
-      } else {
-        return [...prevSelected, id];
-      }
-    });
-
-    setSelectedPracticesPrograms((prevSelected) => {
-      if (prevSelected.includes(id)) {
-        return prevSelected.filter(existingId => existingId !== id);
-      } else {
-        return [...prevSelected, id];
-      }
-    });
+  const filterPracticesByPrograms = (data, selectedPrograms) => {
+    if (selectedPrograms.length === 0) {
+      return data;
+    } else {
+      return data.filter((item) =>
+        selectedPrograms.includes(item.program)
+      );
+    }
   };
 
+  const toggleProgram = (id) => {
+    if (selectedProgram.includes(id)) {
+      // Si ya está seleccionado, no hagas nada o puedes limpiar el programa
+      setSelectedProgram([]);
+      setSelectedPracticesPrograms([]);
+    } else {
+      // Si no está seleccionado, selecciona el nuevo programa y filtra las Buenas Prácticas
+      setSelectedProgram([id]);
+      const filteredPractices = filterPracticesByPrograms(dataGoodPractices, [id]);
+      setSelectedPracticesPrograms(filteredPractices.map((practice) => practice.id));
+      console.log('selectedPracticesPrograms:', selectedPracticesPrograms);
+      console.log('filteredPractices después de la actualización:', filteredPractices);
+    }
+  };
+  
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
@@ -69,14 +75,15 @@ const ProyectosInnovadores = () => {
   };
 
   const filteredProjects = useMemo(() => {
-    return filterProjectsByPrograms(dataInnovativeProjects, selectedPrograms);
-  }, [selectedPrograms, dataInnovativeProjects]);
+    return filterProjectsByPrograms(dataInnovativeProjects, selectedProgram);
+  }, [selectedProgram, dataInnovativeProjects]);
 
   const filteredPractices = useMemo(() => {
     return filterProjectsByPrograms(dataGoodPractices, selectedPracticesPrograms);
   }, [selectedPracticesPrograms, dataGoodPractices]);
 
   useEffect(() => {
+    console.log('filteredPractices:', filteredPractices);
     // Cambio aquí para actualizar la buena práctica seleccionada al cambiar la lista
     if (filteredPractices.length > 0) {
       setSelectedPractice(filteredPractices[0]);
@@ -95,7 +102,8 @@ const ProyectosInnovadores = () => {
   if (errorGoodPractices) {
     return <div>Error en los datos de buenas prácticas: {errorGoodPractices}</div>;
   }
-
+  console.log('filteredPractices antes de pasarla como prop:', filteredPractices);
+  
   return (
     <div className="container col-md-8">
       <nav aria-label="breadcrumb">
@@ -116,10 +124,10 @@ const ProyectosInnovadores = () => {
         {programs.map((program) => (
           <div tabIndex="0" className="container-btnCircle col-md-2 d-flex flex-column align-items-center mx-5" key={program.id}>
             <button
-            className={`categorias-circle d-inline-flex focus-ring py-1 px-2 rounded-2 btn rounded-circle border-2 d-flex align-items-center justify-content-center my-3 ${selectedPrograms.includes(program.id) ? 'btn-primary' : 'btn-outline-primary white-text'}`}
+            className={`categorias-circle d-inline-flex focus-ring py-1 px-2 rounded-2 btn rounded-circle border-2 d-flex align-items-center justify-content-center my-3 ${selectedProgram.includes(program.id) ? 'btn-primary' : 'btn-outline-primary white-text'}`}
             onClick={() => toggleProgram(program.id)}
             >
-              <img src={program.icon_program} alt={program.sigla} id='btnIcon' className={selectedPrograms.includes(program.id) ? 'white-icon' : ''} />
+              <img src={program.icon_program} alt={program.sigla} id='btnIcon' className={selectedProgram.includes(program.id) ? 'white-icon' : ''} />
             </button>
             <p className="text-sans-p text-center">{program.name}</p>
           </div>
