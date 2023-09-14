@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLogin } from '../../hooks/useLogin';
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    rut: '',
+    username: '',
     password: '',
   });
   const navigate = useNavigate();
@@ -12,12 +13,20 @@ const Login = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Aquí agregar la lógica para enviar los datos al backend cuando esté listo
-    console.log('Enviar datos de inicio de sesión:', formData);
-    // Resto del código para manejar la respuesta del backend
-  };
+  const { login, loading, error, data } = useLogin();
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        await login(formData);
+        // Aquí puedes manejar la respuesta. Por ejemplo:
+        if (data) {
+            console.log('Datos de respuesta:', data);
+            // Aquí puedes, por ejemplo, guardar el token en el localStorage o manejar una navegación, etc.
+        } else if (error) {
+            console.error('Error en el inicio de sesión:', error);
+            // Aquí puedes mostrar un mensaje al usuario informando sobre el error
+        }
+    };
 
   return (
     <div className="container">
