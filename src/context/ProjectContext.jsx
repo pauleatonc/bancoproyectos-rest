@@ -29,7 +29,8 @@ export const ApiProvider = (props) =>
   const [ filterParams, setFilterParams ] = useState(initialFilterParams);
   const [ sortOrder, setSortOrder ] = useState('-year');
   const [ selectedFilters, setSelectedFilters ] = useState(initialSelectedFilters);
-  const { projects, loading, error, listProjects } = useProjectList();
+  const { projects, metadata, loading, error, listProjects } = useProjectList();
+
 
 
   const updateProjects = useCallback(async () =>
@@ -73,6 +74,7 @@ export const ApiProvider = (props) =>
 
   const value = useMemo(() => ({
     projects,
+    metadata, 
     listProjects,
     loading,
     error,
@@ -86,7 +88,7 @@ export const ApiProvider = (props) =>
     selectedFilters,
     setSelectedFilters,
     updateProjects,
-  }), [ projects, listProjects, loading, error, searchTerm, filterParams, sortOrder, selectedFilters, updateProjects ]);
+  }), [projects, metadata, listProjects, loading, error, searchTerm, filterParams, sortOrder, selectedFilters, updateProjects]);
 
   return (
     <ApiContext.Provider value={value}>
