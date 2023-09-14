@@ -6,6 +6,7 @@ import Carrusel from '../../../components/Commons/carrusel';
 import SelectorLateral from '../../../components/Commons/selectorLateral';
 
 const ProyectosInnovadores = () => {
+  // Hooks de estado
   const { programs } = useFilterOptions();
   const [selectedProject, setSelectedProject] = useState(null);
   const [selectedPractice, setSelectedPractice] = useState(null);
@@ -14,56 +15,25 @@ const ProyectosInnovadores = () => {
   const [selectedPracticesPrograms, setSelectedPracticesPrograms] = useState(() => {
     return JSON.parse(localStorage.getItem('selectedGoodPracticesPrograms') || '[]');
   });
-  
 
-  const filterPracticesByPrograms = (data, selectedPrograms) => {
-    if (selectedPrograms.length === 0) {
-      return data;
-    } else {
-      return data.filter((item) =>
-        selectedPrograms.includes(item.program)
-      );
-    }
-  };
-
-  const toggleProgram = (id) => {
-    if (selectedProgram.includes(id)) {
-      // Si ya está seleccionado, no hagas nada o puedes limpiar el programa
-      setSelectedProgram([]);
-      setSelectedPracticesPrograms([]);
-    } else {
-      // Si no está seleccionado, selecciona el nuevo programa y filtra las Buenas Prácticas
-      setSelectedProgram([id]);
-      const filteredPractices = filterPracticesByPrograms(dataGoodPractices, [id]);
-      setSelectedPracticesPrograms(filteredPractices.map((practice) => practice.id));
-      console.log('selectedPracticesPrograms:', selectedPracticesPrograms);
-      console.log('filteredPractices después de la actualización:', filteredPractices);
-    }
-  };
-  
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
-
-  const onGoodPracticeSelect = (practice) => {
-    setSelectedPractice(practice);
-    // Guardar la buena práctica seleccionada en el almacenamiento local
-    localStorage.setItem('selectedPractice', JSON.stringify(practice));
-    console.log('Buena Práctica seleccionada:', practice);
-  };
-
+  // Logica para obtener datos de Proyectos Innovadores y Buenas Practicas
   const { 
     dataInnovativeProjects, 
     loadingInnovativeProjects, 
     errorInnovativeProjects 
   } = useApiInnovativeProjects();
-
   const {
     dataGoodPractices,
     loadingGoodPractices,
     errorGoodPractices,
   } = useApiGoodPractices();
 
+  // Funcion para abrir o cerrar Dropdown
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  // Funcion para filtrar proyectos segun programa seleccionado
   const filterProjectsByPrograms = (data, selectedPrograms) => {
     if (selectedPrograms.length === 0) {
       return data;
@@ -74,22 +44,54 @@ const ProyectosInnovadores = () => {
     }
   };
 
+  // Funcion que filtra practicas segun programa seleccionado
+  const filterPracticesByPrograms = (data, selectedPrograms) => {
+    if (selectedPrograms.length === 0) {
+      return data;
+    } else {
+      return data.filter((item) =>
+        selectedPrograms.includes(item.program)
+      );
+    }
+  };
+
+  // Funcion para cambiar el programa seleccionado
+  const toggleProgram = (id) => {
+    if (selectedProgram.includes(id)) {
+      setSelectedProgram([]);
+      setSelectedPracticesPrograms([]);
+    } else {
+      setSelectedProgram([id]);
+      const filteredPractices = filterPracticesByPrograms(dataGoodPractices, [id]);
+      setSelectedPracticesPrograms(filteredPractices.map((practice) => practice.id));
+    }
+  };
+  
+  // Funcion para seleccionar una practica
+  const onGoodPracticeSelect = (practice) => {
+    setSelectedPractice(practice);
+    // Guarda la buena practica seleccionada en el almacenamiento local
+    localStorage.setItem('selectedPractice', JSON.stringify(practice));
+  };
+
+  // Filtra proyectos segun programa seleccionado
   const filteredProjects = useMemo(() => {
     return filterProjectsByPrograms(dataInnovativeProjects, selectedProgram);
   }, [selectedProgram, dataInnovativeProjects]);
 
+  // Filtra practicas segun programa seleccionado
   const filteredPractices = useMemo(() => {
     return filterProjectsByPrograms(dataGoodPractices, selectedPracticesPrograms);
   }, [selectedPracticesPrograms, dataGoodPractices]);
 
+  // Actualiza la buena practica seleccionada al cambiar la lista de practicas
   useEffect(() => {
-    console.log('filteredPractices:', filteredPractices);
-    // Cambio aquí para actualizar la buena práctica seleccionada al cambiar la lista
     if (filteredPractices.length > 0) {
       setSelectedPractice(filteredPractices[0]);
     }
   }, [filteredPractices]);
 
+  // Manejo de errores y carga de datos
   if (loadingInnovativeProjects) {
     return <div>Cargando datos...</div>;
   }
@@ -102,7 +104,6 @@ const ProyectosInnovadores = () => {
   if (errorGoodPractices) {
     return <div>Error en los datos de buenas prácticas: {errorGoodPractices}</div>;
   }
-  console.log('filteredPractices antes de pasarla como prop:', filteredPractices);
   
   return (
     <div className="container col-md-8">
