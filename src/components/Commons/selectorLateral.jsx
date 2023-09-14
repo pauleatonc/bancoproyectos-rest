@@ -13,11 +13,11 @@ const SelectorLateral = ({ data, onGoodPracticeSelect }) => {
      <div className="d-flex flex-column d-none d-lg-block">
       {data.map((practice) => (
         <button
-          key={practice.id}
-          className="btn-secundario-l text-decoration-underline text-start"
-          onClick={() => onGoodPracticeSelect(practice)}
+        key={practice.id}
+        className="btn-secundario-l d-flex justify-content-between"
+        onClick={() => onGoodPracticeSelect(practice)}
         >
-          {practice.title}
+          <p className="text-decoration-underline mb-0 py-1">{practice.title} </p><i className="material-symbols-rounded ms-2">keyboard_arrow_right</i>
         </button>
       ))}
     </div>
@@ -25,10 +25,10 @@ const SelectorLateral = ({ data, onGoodPracticeSelect }) => {
     {/* Boton que abre en dropdown */}
     <div className="d-flex justify-content-center my-4 d-lg-none">
       <button 
-      className="select-box text-decoration-underline px-3 p-2"
+      className="select-box d-flex justify-content-center px-3 pt-3"
       onClick={toggleDropdown} 
       >
-        Elige una buena practica
+        <p className="text-decoration-underline">Elige una buena practica</p> <i className="material-symbols-rounded ms-2">keyboard_arrow_down</i>
       </button>
     </div>
 

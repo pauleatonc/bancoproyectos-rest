@@ -11,10 +11,8 @@ const ProyectosInnovadores = () => {
   const [selectedProject, setSelectedProject] = useState(null);
   const [selectedPractice, setSelectedPractice] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedProgram, setSelectedProgram] = useState([2]); // Inicialmente selecciona "PMU"
-  const [selectedPracticesPrograms, setSelectedPracticesPrograms] = useState(() => {
-    return JSON.parse(localStorage.getItem('selectedGoodPracticesPrograms') || '[]');
-  });
+  const [selectedProgram, setSelectedProgram] = useState([2]); // Inicialmente selecciona "PMB"
+  const [selectedPracticesPrograms, setSelectedPracticesPrograms] = useState([]);
 
   // Logica para obtener datos de Proyectos Innovadores y Buenas Practicas
   const { 
@@ -27,6 +25,7 @@ const ProyectosInnovadores = () => {
     loadingGoodPractices,
     errorGoodPractices,
   } = useApiGoodPractices();
+  console.log('Data Good Practices:', dataGoodPractices);
 
   // Funcion para abrir o cerrar Dropdown
   const toggleDropdown = () => {
@@ -57,6 +56,7 @@ const ProyectosInnovadores = () => {
 
   // Funcion para cambiar el programa seleccionado
   const toggleProgram = (id) => {
+    console.log('Toggle program with ID:', id); // si toma el id bien
     if (selectedProgram.includes(id)) {
       setSelectedProgram([]);
       setSelectedPracticesPrograms([]);
@@ -64,9 +64,12 @@ const ProyectosInnovadores = () => {
       setSelectedProgram([id]);
       const filteredPractices = filterPracticesByPrograms(dataGoodPractices, [id]);
       setSelectedPracticesPrograms(filteredPractices.map((practice) => practice.id));
+      setSelectedProject(null); // Limpia seleccion del usuario para mostrar primer proyecto del listado al cambiar programa.
     }
+    console.log('Selected Program:', selectedProgram);
+    console.log('Selected Practices Programs:', selectedPracticesPrograms);
   };
-  
+   
   // Funcion para seleccionar una practica
   const onGoodPracticeSelect = (practice) => {
     setSelectedPractice(practice);
@@ -81,8 +84,12 @@ const ProyectosInnovadores = () => {
 
   // Filtra practicas segun programa seleccionado
   const filteredPractices = useMemo(() => {
-    return filterProjectsByPrograms(dataGoodPractices, selectedPracticesPrograms);
-  }, [selectedPracticesPrograms, dataGoodPractices]);
+    console.log('Data Good Practices:', dataGoodPractices);
+    console.log('Selected Practices Programs:', selectedPracticesPrograms);
+    const filtered = filterPracticesByPrograms(dataGoodPractices, selectedPracticesPrograms);
+    console.log('Filtered Practices:', filtered);
+    return filtered;
+  }, [dataGoodPractices, selectedPracticesPrograms]);
 
   // Actualiza la buena practica seleccionada al cambiar la lista de practicas
   useEffect(() => {
@@ -135,9 +142,15 @@ const ProyectosInnovadores = () => {
         ))}
       </div>
 
-      <p className="text-sans-p d-none d-lg-block">Los espacios públicos, al igual que nuestra sociedad, son dinámicos y varían acorde a los tiempos y lugares en los que se encuentran. Es por esto, que la innovación en el espacio urbano se hace fundamental a la hora de entregar a la ciudadanía una mejor, más amplia y moderna oferta de espacio público.
-        Aquí te mostramos algunas ideas de espacios deportivos, culturales y de protección ambiental para que puedas considerar posibles soluciones a desarrollar con financiamiento PMU.
-      </p>
+      {selectedProgram.includes(1) ? ( // Si PMU está seleccionado
+        <p className="text-sans-p my-md-4">
+          Los espacios públicos, al igual que nuestra sociedad, son dinámicos y varían acorde a los tiempos y lugares en los que se encuentran. Es por esto, que la innovación en el espacio urbano se hace fundamental a la hora de entregar a la ciudadanía una mejor, más amplia y moderna oferta de espacio público. Aquí te mostramos algunas ideas de espacios deportivos, culturales y de protección ambiental para que puedas considerar posibles soluciones a desarrollar con financiamiento PMU.
+        </p>
+        ) : ( // Si PMB u otro programa está seleccionado
+        <p className="text-sans-p my-md-4">
+         {/* Aqui poner texto PMB si es que entregan alguno    */}
+        </p>
+      )}
 
       {/* Selector Proyectos */}
       <div className="container my-3 d-none d-lg-block">
@@ -154,8 +167,11 @@ const ProyectosInnovadores = () => {
 
       {/* Boton y Dropdown */}
       <div className="d-flex justify-content-center m-3 d-lg-none">
-        <button className="select-box text-decoration-underline px-3 p-2" onClick={toggleDropdown}>
-          Elige un proyecto
+        <button 
+        className="select-box d-flex justify-content-center px-3 pt-3"
+        onClick={toggleDropdown} 
+        >
+          <p className="text-decoration-underline">Elige un Proyecto</p> <i className="material-symbols-rounded ms-2">keyboard_arrow_down</i>
         </button>
       </div>
 
