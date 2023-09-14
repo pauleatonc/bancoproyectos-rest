@@ -91,12 +91,19 @@ const ProyectosInnovadores = () => {
     return filtered;
   }, [dataGoodPractices, selectedPracticesPrograms]);
 
-  // Actualiza la buena practica seleccionada al cambiar la lista de practicas
-  useEffect(() => {
-    if (filteredPractices.length > 0) {
-      setSelectedPractice(filteredPractices[0]);
-    }
-  }, [filteredPractices]);
+// Actualiza proyecto seleccionado al cambiar la lista de proyectos
+useEffect(() => {
+  if (filteredProjects.length > 0 && selectedProject === null) {
+    setSelectedProject(filteredProjects[0]);
+  }
+}, [filteredProjects, selectedProject]);
+
+// Actualiza la practica seleccionada al cambiar la lista de practicas
+useEffect(() => {
+  if (filteredPractices.length > 0 && selectedPractice === null) {
+    setSelectedPractice(filteredPractices[0]);
+  }
+}, [filteredPractices, selectedPractice]);
 
   // Manejo de errores y carga de datos
   if (loadingInnovativeProjects) {
@@ -171,7 +178,12 @@ const ProyectosInnovadores = () => {
         className="select-box d-flex justify-content-center px-3 pt-3"
         onClick={toggleDropdown} 
         >
-          <p className="text-decoration-underline">Elige un Proyecto</p> <i className="material-symbols-rounded ms-2">keyboard_arrow_down</i>
+         {selectedProject ? (
+            <p className="text-decoration-underline">{selectedProject.title}</p>
+          ) : (
+            <p className="text-decoration-underline">Elige un Proyecto</p>
+          )}
+          <i className="material-symbols-rounded ms-2">keyboard_arrow_down</i>
         </button>
       </div>
 
@@ -251,7 +263,7 @@ const ProyectosInnovadores = () => {
         <div className="col-lg-4">
           <SelectorLateral 
           data={filteredPractices} 
-          selectedPrograms={selectedPracticesPrograms} 
+          selectedPrograms={selectedPracticesPrograms}
           toggleProgram={toggleProgram}
           onGoodPracticeSelect={onGoodPracticeSelect} 
           />
