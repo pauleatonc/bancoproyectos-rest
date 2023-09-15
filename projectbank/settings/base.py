@@ -1,7 +1,7 @@
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from unipath import Path
+from datetime import timedelta
 
-import applications.users.authentication_mixins
 
 BASE_DIR = Path(__file__).ancestor(3)
 
@@ -43,6 +43,8 @@ THIRD_PARTY_APPS = [
     'simple_history',
     'drf_yasg',
     'rest_framework.authtoken',
+    'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
 
 ]
 
@@ -132,15 +134,20 @@ CORS_ALLOWED_ORIGINS = [
 
 # Configuraciones de Django Rest Framework
 REST_FRAMEWORK = {
-    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
-    'DEFAULT_AUTHENTICATION_CLASSES': ['applications.users.authentication_mixins.Authentication']
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True
 }
 
 # Configuraciones de documentación en Swagger
 SWAGGER_SETTINGS = {
     'DOC_EXPANSION': 'none',
 }
-
-# Configuración de expiración de token de autentificación
-TOKEN_EXPIRED_AFTER_SECONDS = 1800 # segundos

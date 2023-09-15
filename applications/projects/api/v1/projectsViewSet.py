@@ -7,6 +7,7 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.permissions import IsAuthenticated
 #
 from applications.projects.models import (
     Program,
@@ -27,8 +28,6 @@ from .projectSerializer import (
     ProgramSerializerV1,
     TypeSerializerV1,
 )
-#
-from applications.users.authentication_mixins import Authentication
 
 
 class CustomPagination(PageNumberPagination):
@@ -37,16 +36,16 @@ class CustomPagination(PageNumberPagination):
     max_page_size = 25
 
 
-class ProjectViewSet(Authentication, viewsets.ModelViewSet):
+class ProjectViewSet(viewsets.ModelViewSet):
     """
     Listado y Edición de proyectos
 
 
     API con CRUD completo para proyectos
     """
-
     queryset = Project.objects.filter(public=True)
     serializer_class = ProjectDetailSerializerV1
+    permission_classes = (IsAuthenticated,)
     lookup_field = 'slug'
     filter_backends = [filters.SearchFilter, DjangoFilterBackend, filters.OrderingFilter]
 
