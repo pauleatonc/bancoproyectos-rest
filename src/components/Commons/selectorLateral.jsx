@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 
-const SelectorLateral = ({ data, onGoodPracticeSelect }) => {
+const SelectorLateral = ({ data, onGoodPracticeSelect, selectedPrograms }) => {
+  console.log("Data received in SelectorLateral:", data);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectedPractice, setSelectedPractice] = useState(null);
 
@@ -45,7 +46,9 @@ const SelectorLateral = ({ data, onGoodPracticeSelect }) => {
   return (
     <div>
       <div className="d-flex flex-column d-none d-lg-block">
-        {data.map((practice) => (
+        {data
+        // .filter((practice) => selectedPrograms.includes(practice.program))
+        .map((practice) => (
           <button
             key={practice.id}
             className="btn-secundario-l d-flex justify-content-between"

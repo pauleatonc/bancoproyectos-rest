@@ -12,7 +12,9 @@ const ProyectosInnovadores = () => {
   const [selectedPractice, setSelectedPractice] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectedProgram, setSelectedProgram] = useState([2]); // Inicialmente selecciona "PMB"
-  const [selectedPracticesPrograms, setSelectedPracticesPrograms] = useState([]);
+  const [selectedPracticesPrograms, setSelectedPracticesPrograms] = useState(
+    selectedProgram.length > 0 ? [selectedProgram[0]] : []
+  );
 
   // Logica para obtener datos de Proyectos Innovadores y Buenas Practicas
   const { 
@@ -56,7 +58,7 @@ const ProyectosInnovadores = () => {
     // Agregar event listener para clics en todo el documento
     document.addEventListener("mousedown", handleClickOutsideDropdown);
 
-    // Retirar el event listener cuando el componente se desmonte
+    // Retirar el event listener cuando el componente se cierre
     return () => {
       document.removeEventListener("mousedown", handleClickOutsideDropdown);
     };
@@ -79,7 +81,9 @@ const ProyectosInnovadores = () => {
       return data;
     } else {
       return data.filter((item) =>
-        selectedPrograms.includes(item.program)
+        item.program.some((program) =>
+          selectedPrograms.includes(program.id)
+        )
       );
     }
   };
@@ -92,8 +96,8 @@ const ProyectosInnovadores = () => {
       setSelectedPracticesPrograms([]);
     } else {
       setSelectedProgram([id]);
-      const filteredPractices = filterPracticesByPrograms(dataGoodPractices, [id]);
-      setSelectedPracticesPrograms(filteredPractices.map((practice) => practice.id));
+      
+      setSelectedPracticesPrograms([id]);
       setSelectedProject(null); // Limpia seleccion del usuario para mostrar primer proyecto del listado al cambiar programa.
     }
     console.log('Selected Program:', selectedProgram);
