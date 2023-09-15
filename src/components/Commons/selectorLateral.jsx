@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-const SelectorLateral = ({ data, onGoodPracticeSelect, selectedPrograms }) => {
-  console.log("Data received in SelectorLateral:", data);
+const SelectorLateral = ({ data, onGoodPracticeSelect }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectedPractice, setSelectedPractice] = useState(null);
 
@@ -31,7 +30,6 @@ const SelectorLateral = ({ data, onGoodPracticeSelect, selectedPrograms }) => {
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutsideDropdown);
-
     return () => {
       document.removeEventListener("mousedown", handleClickOutsideDropdown);
     };
@@ -47,12 +45,11 @@ const SelectorLateral = ({ data, onGoodPracticeSelect, selectedPrograms }) => {
     <div>
       <div className="d-flex flex-column d-none d-lg-block">
         {data
-        // .filter((practice) => selectedPrograms.includes(practice.program))
         .map((practice) => (
           <button
-            key={practice.id}
-            className="btn-secundario-l d-flex justify-content-between"
-            onClick={() => onGoodPracticeSelect(practice)}
+          key={practice.id}
+          className="btn-secundario-l d-flex justify-content-between"
+          onClick={() => onGoodPracticeSelect(practice)}
           >
             <p className="text-decoration-underline mb-0 py-1">{practice.title}</p>
             <i className="material-symbols-rounded ms-2">keyboard_arrow_right</i>
@@ -62,10 +59,10 @@ const SelectorLateral = ({ data, onGoodPracticeSelect, selectedPrograms }) => {
 
       <div className="d-flex justify-content-center my-4 d-lg-none">
         <button
-          ref={dropdownButtonRef}
-          className="select-box d-flex justify-content-center px-3 pt-3"
-          onClick={toggleDropdown}
-          onClickCapture={handleDropdownOptionClick}
+        ref={dropdownButtonRef}
+        className="select-box d-flex justify-content-center px-3 pt-3"
+        onClick={toggleDropdown}
+        onClickCapture={handleDropdownOptionClick}
         >
           <p className="text-decoration-underline">
             {selectedPractice ? selectedPractice.title : "Elige una buena práctica"}

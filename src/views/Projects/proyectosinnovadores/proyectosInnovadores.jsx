@@ -27,7 +27,6 @@ const ProyectosInnovadores = () => {
     loadingGoodPractices,
     errorGoodPractices,
   } = useApiGoodPractices();
-  console.log('Data Good Practices:', dataGoodPractices);
 
   // Funcion para abrir o cerrar Dropdown
   const toggleDropdown = () => {
@@ -57,7 +56,6 @@ const ProyectosInnovadores = () => {
   useEffect(() => {
     // Agregar event listener para clics en todo el documento
     document.addEventListener("mousedown", handleClickOutsideDropdown);
-
     // Retirar el event listener cuando el componente se cierre
     return () => {
       document.removeEventListener("mousedown", handleClickOutsideDropdown);
@@ -90,18 +88,16 @@ const ProyectosInnovadores = () => {
 
   // Funcion para cambiar el programa seleccionado
   const toggleProgram = (id) => {
-    console.log('Toggle program with ID:', id); // si toma el id bien
     if (selectedProgram.includes(id)) {
       setSelectedProgram([]);
       setSelectedPracticesPrograms([]);
+      setSelectedPractice(null);
     } else {
       setSelectedProgram([id]);
-      
       setSelectedPracticesPrograms([id]);
+      setSelectedPractice(null);
       setSelectedProject(null); // Limpia seleccion del usuario para mostrar primer proyecto del listado al cambiar programa.
     }
-    console.log('Selected Program:', selectedProgram);
-    console.log('Selected Practices Programs:', selectedPracticesPrograms);
   };
    
   // Funcion para seleccionar una practica
@@ -118,10 +114,7 @@ const ProyectosInnovadores = () => {
 
   // Filtra practicas segun programa seleccionado
   const filteredPractices = useMemo(() => {
-    console.log('Data Good Practices:', dataGoodPractices);
-    console.log('Selected Practices Programs:', selectedPracticesPrograms);
     const filtered = filterPracticesByPrograms(dataGoodPractices, selectedPracticesPrograms);
-    console.log('Filtered Practices:', filtered);
     return filtered;
   }, [dataGoodPractices, selectedPracticesPrograms]);
 
