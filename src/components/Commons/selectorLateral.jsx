@@ -1,16 +1,19 @@
 import { useState, useEffect, useRef } from "react";
 
 const SelectorLateral = ({ data, onGoodPracticeSelect }) => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedPractice, setSelectedPractice] = useState(null);
+  const [dropdownOpen, setDropdownOpen] = useState(false); // Controla si el dropdown esta abierto o cerrado.
+  const [selectedOption, setSelectedOption] = useState(null); // Almacena la opcion seleccionada.
 
+  // Funcion que maneja apertura y cierre de dropdown (DD)
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
 
+  // Referencias a elementos del DOM, detectan clicks fuera del DD.
   const dropdownButtonRef = useRef(null);
   const dropdownMenuRef = useRef(null);
 
+  // Funcion que maneja clicks fuera del DD para cerrarlo
   const handleClickOutsideDropdown = (e) => {
     if (
       dropdownButtonRef.current &&
@@ -21,13 +24,14 @@ const SelectorLateral = ({ data, onGoodPracticeSelect }) => {
       setDropdownOpen(false);
     }
   };
-
+  // Manejador de clicks en opciones del DD para evitar su cierre anticipado.
   const handleDropdownOptionClick = (e) => {
     if (dropdownMenuRef.current && dropdownMenuRef.current.contains(e.target)) {
       e.stopPropagation();
     }
   };
 
+  // Evento que quita o agrega el evento click fuera del DD
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutsideDropdown);
     return () => {
@@ -35,21 +39,32 @@ const SelectorLateral = ({ data, onGoodPracticeSelect }) => {
     };
   }, []);
 
+  // Evento que selecciona primera opcion del listado al cambiar opciones o montar componente.
   useEffect(() => {
-    if (!selectedPractice && data.length > 0) {
-      setSelectedPractice(data[0]);
+    if (!selectedOption && data.length > 0) {
+      setSelectedOption(data[0]);
     }
-  }, [data, selectedPractice]);
+  }, [data, selectedOption]);
+
+  // Evento que actualiza opcion seleccionada al primer elemento de 'data' cuando 'data' cambia.
+  useEffect(() => {
+    if (data.length > 0) {
+      setSelectedOption(data[0]);
+    }
+  }, [data]);
 
   return (
     <div>
       <div className="d-flex flex-column d-none d-lg-block">
-        {data
-        .map((practice) => (
+        {data.map((practice) => (
           <button
           key={practice.id}
           className="btn-secundario-l d-flex justify-content-between"
-          onClick={() => onGoodPracticeSelect(practice)}
+          onClick={() => {
+            setSelectedOption(practice);
+            onGoodPracticeSelect(practice);
+            setDropdownOpen(false); // Cierra el dropdown al seleccionar una opción
+          }}
           >
             <p className="text-decoration-underline mb-0 py-1">{practice.title}</p>
             <i className="material-symbols-rounded ms-2">keyboard_arrow_right</i>
@@ -65,7 +80,7 @@ const SelectorLateral = ({ data, onGoodPracticeSelect }) => {
         onClickCapture={handleDropdownOptionClick}
         >
           <p className="text-decoration-underline">
-            {selectedPractice ? selectedPractice.title : "Elige una buena práctica"}
+            {selectedOption ? selectedOption.title : "Elige una buena práctica"}
           </p>{" "}
           <i className="material-symbols-rounded ms-2">keyboard_arrow_down</i>
         </button>
@@ -78,7 +93,7 @@ const SelectorLateral = ({ data, onGoodPracticeSelect }) => {
               key={practice.id}
               className="select-option text-start px-3 p-2 m-1"
               onClick={() => {
-                setSelectedPractice(practice);
+                setSelectedOption(practice);
                 onGoodPracticeSelect(practice);
                 setDropdownOpen(false); // Cierra el dropdown al seleccionar una opción
               }}
