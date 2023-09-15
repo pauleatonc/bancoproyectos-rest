@@ -34,7 +34,6 @@ class Migration(migrations.Migration):
                 ('tipo_usuario', models.CharField(choices=[('SUBDERE', 'SUBDERE'), ('BANCO', 'Banco de Proyectos')], default='Banco de Proyectos', max_length=20, verbose_name='SUBDERE o Banco de Proyectos')),
                 ('password', models.CharField(blank=True, max_length=200)),
                 ('email', models.TextField(blank=True, max_length=100, null=True)),
-                ('institucion', models.CharField(blank=True, max_length=50, null=True)),
                 ('is_staff', models.BooleanField(default=False, verbose_name='Usuario administrador')),
                 ('is_active', models.BooleanField(default=True)),
                 ('groups', models.ManyToManyField(blank=True, help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.', related_name='user_set', related_query_name='user', to='auth.group', verbose_name='groups')),
