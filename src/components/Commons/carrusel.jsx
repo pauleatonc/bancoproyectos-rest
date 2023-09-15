@@ -20,7 +20,6 @@ const Carrusel = ({ imgPortada, imgGeneral, context }) => {
     const miniContainer = miniContainerRef.current;
 
     if (!miniContainer) {
-      // No hacemos nada si miniContainer es null
       return;
     }
 
@@ -43,38 +42,52 @@ const Carrusel = ({ imgPortada, imgGeneral, context }) => {
     };
   }, [imgArray.length]);
 
+  const isMobile = window.innerWidth <= 768; // Establece el punto de corte para dispositivos moviles
+
   return (
     <div className="container text-center mb-md-5 d-flex flex-column align-items-center">
-      {/* Portada */}
-      {imgPortada && (
-        <div className="col-10 d-none d-md-block img-portada my-4 d-flex justify-content-center">
+      {isMobile && imgArray.length === 1 ? (
+        // En vista movil, muestra imgPortada de no haber miniaturas.
+        <div className="col-12 d-block d-md-none img-portada my-4 d-flex justify-content-center">
           <a data-bs-toggle="modal" data-bs-target={`#imageModal-${context}`} onClick={() => setSelectedImageIndex(0)}>
             <img className="img-fluid" src={imgPortada} alt="Portada" />
           </a>
         </div>
-      )}
-
-      {/* Miniaturas */}
-      {imgGeneral && imgArray.length > 1 && (
-        <div className="container-fluid container-md mini-container d-flex flex-wrap justify-content-center" ref={miniContainerRef}>
-          {imgArray.map((image, index) => (
-            <div className={`m-1 m-md-2 miniatura`} key={index}>
-              <a data-bs-toggle="modal" data-bs-target={`#imageModal-${context}`} onClick={() => setSelectedImageIndex(index)}>
-                <img className="miniatura" src={image} alt={`Thumbnail ${index}`} />
-                {index === imgArray.length - hiddenThumbnailsCount -1 && hiddenThumbnailsCount > 0 && (
-                  <div className="thumbnail-counter-overlay">+{hiddenThumbnailsCount}</div>
-                )}
+      ) : (
+        // Si no, muestra imagen de portada y miniaturas
+        <>
+          {/* Portada */}
+          {imgPortada && (
+            <div className="col-10 d-none d-md-block img-portada my-4 d-flex justify-content-center">
+              <a data-bs-toggle="modal" data-bs-target={`#imageModal-${context}`} onClick={() => setSelectedImageIndex(0)}>
+                <img className="img-fluid" src={imgPortada} alt="Portada" />
               </a>
             </div>
-          ))}
+          )}
 
-          <ImageModal 
-            img={imgArray} 
-            selectedImageIndex={selectedImageIndex} 
-            setSelectedImageIndex={setSelectedImageIndex} 
-            context={context}
-          />
-        </div>
+          {/* Miniaturas */}
+          {imgGeneral && imgArray.length > 1 && (
+            <div className="container-fluid container-md mini-container d-flex flex-wrap justify-content-center" ref={miniContainerRef}>
+              {imgArray.map((image, index) => (
+                <div className={`m-1 m-md-2 miniatura`} key={index}>
+                  <a data-bs-toggle="modal" data-bs-target={`#imageModal-${context}`} onClick={() => setSelectedImageIndex(index)}>
+                    <img className="miniatura" src={image} alt={`Thumbnail ${index}`} />
+                    {index === imgArray.length - hiddenThumbnailsCount - 1 && hiddenThumbnailsCount > 0 && (
+                      <div className="thumbnail-counter-overlay">+{hiddenThumbnailsCount}</div>
+                    )}
+                  </a>
+                </div>
+              ))}
+
+              <ImageModal
+                img={imgArray}
+                selectedImageIndex={selectedImageIndex}
+                setSelectedImageIndex={setSelectedImageIndex}
+                context={context}
+              />
+            </div>
+          )}
+        </>
       )}
     </div>
   );
