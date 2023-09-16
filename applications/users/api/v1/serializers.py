@@ -19,13 +19,33 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
 class UpdateUserSerializer(serializers.ModelSerializer):
+    groups = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=Group.objects.all(),
+        required=False
+    )
 
     """
     Indicar solo los campos actualizables
     """
     class Meta:
         model = User
-        fields = ('email', 'nombres', 'is_staff', 'is_active')
+        fields = ('email', 'is_active', 'groups')
+
+class UserProfileUpdateSerializer(serializers.ModelSerializer):
+    """
+        Indicar solo los campos actualizables
+        """
+
+    class Meta:
+        model = User
+        fields = ('nombres',
+                  'primer_apellido',
+                  'segundo_apellido',
+                  'comuna',
+                  'email',
+                  'institucion'
+                  )
 
 
 class PasswordSerializer(serializers.Serializer):
