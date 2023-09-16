@@ -1,17 +1,22 @@
 from django.shortcuts import get_object_or_404
+from django.contrib.auth.models import Group, Permission
 
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 
 from applications.users.models import User
 from applications.users.api.v1.serializers import (
     UserSerializer,
     UserListSerializer,
     UpdateUserSerializer,
-    PasswordSerializer
+    PasswordSerializer,
+    GroupSerializer,
+    PermissionSerializer
 )
+from applications.users.permissions import CanEditUser
 
 
 class UserViewSet(viewsets.GenericViewSet):
@@ -27,7 +32,7 @@ class UserViewSet(viewsets.GenericViewSet):
         if self.queryset is None:
             self.queryset = self.model.objects \
                 .filter(is_active=True) \
-                .values('id', 'rut', 'email', 'nombres')
+                .values('id', 'rut', 'email', 'nombres', 'is_staff')
         return self.queryset
 
     @action(detail=True, methods=['post'])
@@ -69,6 +74,14 @@ class UserViewSet(viewsets.GenericViewSet):
 
     def update(self, request, pk=None):
         user = self.get_object(pk)
+
+        # Verificar el permiso
+        if not CanEditUser().has_object_permission(request, self, user):
+            return Response({
+                'message': 'No tienes permiso para editar este usuario'
+            }, status=status.HTTP_403_FORBIDDEN)
+
+        # Continuar con la lógica de actualización
         user_serializer = UpdateUserSerializer(user, data=request.data)
         if user_serializer.is_valid():
             user_serializer.save()
@@ -81,6 +94,18 @@ class UserViewSet(viewsets.GenericViewSet):
         }, status=status.HTTP_400_BAD_REQUEST)
 
     def destroy(self, request, pk=None):
+        """
+        Solo vuelve al usuario inactivo, no lo elimina de la base de datos
+        """
+        user = self.get_object(pk)
+
+        # Verificar el permiso
+        if not CanEditUser().has_object_permission(request, self, user):
+            return Response({
+                'message': 'No tienes permiso para eliminar este usuario'
+            }, status=status.HTTP_403_FORBIDDEN)
+
+        # Continuar con la lógica de eliminación
         user_destroy = self.model.objects.filter(id=pk).update(is_active=False)
         if user_destroy == 1:
             return Response({
@@ -89,3 +114,12 @@ class UserViewSet(viewsets.GenericViewSet):
         return Response({
             'message': 'No existe el usuario que desea eliminar'
         }, status=status.HTTP_404_NOT_FOUND)
+
+
+class PermissionViewSet(viewsets.ModelViewSet):
+    queryset = Permission.objects.all()
+    serializer_class = PermissionSerializer
+
+class GroupViewSet(viewsets.ModelViewSet):
+    queryset = Group.objects.all()
+    serializer_class = GroupSerializer

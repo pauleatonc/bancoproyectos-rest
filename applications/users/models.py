@@ -22,13 +22,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         ('BANCO', 'Banco de Proyectos'),
     )
 
-    USER_ROLE_CHOICES = (
-        ('ADMIN', 'Administrador'),
-        ('EDITOR', 'Editor Programa'),
-        ('PROFESSIONAL', 'Profesional Programa'),
-        ('USUARIO', 'Usuario Autenticado')
-    )
-
     rut = models.CharField(max_length=15, validators=[validar_rut], unique=True)
     nombres = models.CharField(max_length=30, blank=True, null=True)
     primer_apellido = models.CharField(max_length=30, blank=True, null=True)
@@ -38,7 +31,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     password = models.CharField(max_length=200, blank=True)
     email = models.TextField(max_length=100, blank=True, null=True)
     institucion = models.CharField(max_length=50, blank=True, null=True)
-    #rol_usuario = models.CharField('Rol de Usuario', max_length=15, choices=USER_ROLE_CHOICES, default='USUARIO')
 
     #Setiando el nombre de usuario al rut
     USERNAME_FIELD = 'rut'    

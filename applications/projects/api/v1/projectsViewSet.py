@@ -7,7 +7,6 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.permissions import IsAuthenticated
 #
 from applications.projects.models import (
     Program,
@@ -45,7 +44,6 @@ class ProjectViewSet(viewsets.ModelViewSet):
     """
     queryset = Project.objects.filter(public=True)
     serializer_class = ProjectDetailSerializerV1
-    permission_classes = (IsAuthenticated,)
     lookup_field = 'slug'
     filter_backends = [filters.SearchFilter, DjangoFilterBackend, filters.OrderingFilter]
 

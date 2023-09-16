@@ -5,7 +5,6 @@ from django.contrib.auth  import authenticate
 #
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.generics import GenericAPIView
 from rest_framework import status
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
@@ -40,7 +39,8 @@ class Login(TokenObtainPairView):
             return Response({'error': 'Contraseña o nombre de usuario incorrectos'}, status = status.HTTP_400_BAD_REQUEST)
         return Response({'error': 'Contraseña o nombre de usuario incorrectos'}, status=status.HTTP_400_BAD_REQUEST)
 
-class Logout(GenericAPIView):
+
+class Logout(APIView):
     def post(self, request, *args, **kwargs):
         user = User.objects.filter(id=request.data.get('user', 0))
         if user.exists():

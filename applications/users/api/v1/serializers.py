@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from applications.users.models import User
+from django.contrib.auth.models import Group, Permission
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 
@@ -24,7 +25,7 @@ class UpdateUserSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = User
-        fields = ('email', 'nombres')
+        fields = ('email', 'nombres', 'is_staff', 'is_active')
 
 
 class PasswordSerializer(serializers.Serializer):
@@ -47,5 +48,18 @@ class UserListSerializer(serializers.ModelSerializer):
             'id': instance['id'],
             'rut': instance['rut'],
             'nombres': instance['nombres'],
-            'email': instance['email']
+            'email': instance['email'],
+            'is_staff': instance['is_staff']
         }
+
+class PermissionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Permission
+        fields = '__all__'
+
+class GroupSerializer(serializers.ModelSerializer):
+    permissions = PermissionSerializer(many=True)
+
+    class Meta:
+        model = Group
+        fields = '__all__'
