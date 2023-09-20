@@ -2,12 +2,17 @@ import { useEffect, useState, useRef } from "react";
 
 const SortProyectos = ({ sortOrder, onSortChange }) =>
 {
-  const [ dropdownSort, setDropdownSort ] = useState(false);
+  const [ opendropdownSort, setOpenDropdownSort ] = useState(false);
   const [ selectedOption, setSelectedOption ] = useState("-year");
   const options = [ "Más reciente", "Más antiguo" ];
   const optionValues = [ "-year", "year" ];
   const dropdownRef = useRef(null);
   const buttonRef = useRef(null);
+
+  const sortDropdown = () =>
+  {
+    setOpenDropdownSort(prevState => !prevState)
+  }
 
   useEffect(() =>
   {
@@ -24,7 +29,7 @@ const SortProyectos = ({ sortOrder, onSortChange }) =>
         !buttonRef.current.contains(event.target)
       )
       {
-        setDropdownSort(false);
+        setOpenDropdownSort(false);
       }
     }
 
@@ -55,18 +60,18 @@ const SortProyectos = ({ sortOrder, onSortChange }) =>
         role="button"
         tabIndex="0"
         ref={buttonRef}
-        className="select-dropdown mt-3 btn btn-md border border-2"
-        onClick={() =>
-        {
-          setDropdownSort((prevState) => !prevState);
-        }}
+        className="sort-dropdown mt-3 text-decoration-none  d-flex align-items-center nowrap"
+        onClick={sortDropdown}
       ><span className="dropdown-content">
-          <u>{getDropdownDisplayMessage()}</u><i className="material-symbols-outlined pr-0">expand_more</i>
+          <u>{getDropdownDisplayMessage()}</u>
+          {opendropdownSort ? (<i className="material-symbols-outlined pr-0"> arrow_drop_up</i>) : (<i className="material-symbols-outlined">
+            arrow_drop_down
+          </i>)}
         </span>
       </button>
 
-      {dropdownSort && (
-        <div ref={dropdownRef} className="panel">
+      {opendropdownSort && (
+        <div ref={dropdownRef} className="panel-sort">
           <ul className="list-sort">
             {options.map((option, index) => (
               <li className="items-sort my-1" key={index}>
@@ -78,7 +83,7 @@ const SortProyectos = ({ sortOrder, onSortChange }) =>
                   onChange={handleOptionChange}
                   checked={selectedOption === optionValues[ index ]}
                 />
-                <label className="form-check-label" htmlFor={`option-${index}`}> {/* Note el ml-4 (margin-left) aquí */}
+                <label className="form-check-label" htmlFor={`option-${index}`}>
                   Año de construcción: {option}
                 </label>
               </li>
