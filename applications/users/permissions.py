@@ -5,11 +5,12 @@ class CanEditUser(permissions.BasePermission):
     """
     Permiso personalizado para verificar quién puede editar a quién.
 
-    Para crear los grupos dedes seguir los siguientes pasos en la shell de python:
+    Para crear los grupos debes seguir los siguientes pasos en la shell de python:
         python manage.py shell
         from django.contrib.auth.models import Group
         Group.objects.get_or_create(name='Editor')
         Group.objects.get_or_create(name='Profesional')
+        Group.objects.get_or_create(name='Prof. Temporal')
     """
 
     def has_object_permission(self, request, view, obj):
