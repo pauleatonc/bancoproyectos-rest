@@ -20,15 +20,6 @@ class Program(BaseModel):
     name = models.CharField(max_length=200, verbose_name='Nombre', unique=True)
     sigla = models.CharField(max_length=200, verbose_name='Sigla', unique=True)
     icon_program = models.FileField(upload_to='icon-program/', null=True, blank=True, default=None)
-    historical = HistoricalRecords()
-
-    @property
-    def _history_user(self):
-        return self.changed_by
-
-    @_history_user.setter
-    def _history_user(self, value):
-        self.changed_by = value
 
     class Meta:
         verbose_name= 'Programa'
@@ -45,15 +36,6 @@ class Guide(BaseModel):
                                  FileExtensionValidator(
                                      ['pdf'], message='Solo se permiten archivos PDF.'), validate_file_size_five],
                              verbose_name='Documento', null=True, blank=True)
-    historical = HistoricalRecords()
-
-    @property
-    def _history_user(self):
-        return self.changed_by
-
-    @_history_user.setter
-    def _history_user(self, value):
-        self.changed_by = value
 
     class Meta:
         verbose_name = 'Guía'
@@ -70,15 +52,6 @@ class Type(BaseModel):
     documents = models.ManyToManyField(Documents, related_name='documents', blank=True)
     icon_type = models.CharField(
         verbose_name='Icono ( Nombre icono)', max_length=200, default='other_admission')
-    historical = HistoricalRecords()
-
-    @property
-    def _history_user(self):
-        return self.changed_by
-
-    @_history_user.setter
-    def _history_user(self, value):
-        self.changed_by = value
 
     class Meta:
         verbose_name = 'Tipo'
@@ -98,15 +71,6 @@ class Year(models.Model):
 class PrioritizedTag(BaseModel):
     prioritized_tag = models.CharField(
         max_length=20, verbose_name='Tag para proyectos priorizados', unique=True)
-    historical = HistoricalRecords()
-
-    @property
-    def _history_user(self):
-        return self.changed_by
-
-    @_history_user.setter
-    def _history_user(self, value):
-        self.changed_by = value
 
     class Meta:
         verbose_name = 'Tag priorizado'
@@ -122,15 +86,6 @@ class ChecklistDocuments(BaseModel):
     description = models.TextField(verbose_name='Descripción documento')
     file = models.ManyToManyField(
         Guide, verbose_name='Guías de referencia', blank=True)
-    historical = HistoricalRecords()
-
-    @property
-    def _history_user(self):
-        return self.changed_by
-
-    @_history_user.setter
-    def _history_user(self, value):
-        self.changed_by = value
 
     class Meta:
         verbose_name = 'Checklist de Documento'
@@ -181,19 +136,9 @@ class Project(BaseModel):
 
     prioritized_tag = models.ManyToManyField(
         PrioritizedTag, blank=True, verbose_name='Tag proyecto priorizado')
-    historical = HistoricalRecords()
 
     # checklist = models.ManyToManyField(ChecklistDocuments, verbose_name='Checklist de documentos obligatorios')
 
-
-
-    @property
-    def _history_user(self):
-        return self.changed_by
-
-    @_history_user.setter
-    def _history_user(self, value):
-        self.changed_by = value
 
     def save(self, *args, **kwargs):
         """Agrega una fecha única para cada slug de proyecto"""

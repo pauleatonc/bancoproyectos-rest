@@ -27,15 +27,6 @@ class Documents(BaseModel):
                              verbose_name='Documento')
     document_type = models.ForeignKey('DocumentType', verbose_name='Tipo de Documento', on_delete=models.CASCADE)
     public = models.BooleanField(default=True)
-    historical = HistoricalRecords()
-
-    @property
-    def _history_user(self):
-        return self.changed_by
-
-    @_history_user.setter
-    def _history_user(self, value):
-        self.changed_by = value
 
     class Meta:
         verbose_name = 'Documento'
