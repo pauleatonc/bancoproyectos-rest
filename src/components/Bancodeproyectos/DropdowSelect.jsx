@@ -8,9 +8,14 @@ const Dropdown = ({
   isComuna = false,
 }) =>
 {
-  const [ dropdownDisplay, setDropdownDisplay ] = useState(false);
+  const [ openDropdownDisplay, setOpenDropdownDisplay ] = useState(false);
   const dropdownRef = useRef(null);
   const buttonRef = useRef(null);
+
+  const selectDropdown = () =>
+  {
+    setOpenDropdownDisplay((prevState) => !prevState)
+  }
 
   useEffect(() =>
   {
@@ -18,7 +23,7 @@ const Dropdown = ({
     {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target) && !buttonRef.current.contains(event.target))
       {
-        setDropdownDisplay(false);
+        setOpenDropdownDisplay(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -45,14 +50,16 @@ const Dropdown = ({
 
   return (
     <>
-      <button  tabIndex="0" ref={buttonRef} className='select-dropdown mt-3 btn btn-md border border-2' onClick={() => setDropdownDisplay((prevState) => !prevState)}>
-        <span className="dropdown-content">
+      <button tabIndex="0" ref={buttonRef} className='select-dropdown mt-3 border border-2' onClick={selectDropdown}>
+        <span className="dropdown-content text-body-secondary">
+
           {getDropdownDisplayMessage()}
-          <i className="material-symbols-outlined pr-0">expand_more</i>
+        {openDropdownDisplay ? (<i className="material-symbols-outlined pr-0">expand_less</i>) : (
+            <i className="material-symbols-outlined pr-0">expand_more</i>)}
         </span>
       </button>
 
-      {dropdownDisplay && <div ref={dropdownRef} className='panel'>
+      {openDropdownDisplay && <div ref={dropdownRef} className='panel'>
         {isComuna ? items.map(region => (
           <div key={region.id} >
             <span className='fw-semibold list-group-item'>{region.region}</span>

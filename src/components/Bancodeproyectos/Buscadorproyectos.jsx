@@ -32,7 +32,7 @@ const BuscadorProyectos = ({ searchTerm, onSearch, isSearching, setIsSearching }
   };
 
   return (
-    <div className="container col-md-4 d-flex flex-column my-md-4">
+    <div className="container col-sm-12 col-md-12 col-lg-4 d-flex flex-column my-md-4">
       <p className="text-sans-p text-center my-4">Accede al buscador de proyectos escribiendo palabras clave</p>
       <div className="input-group border border-2 d-flex " >
         <input

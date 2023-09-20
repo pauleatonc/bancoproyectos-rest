@@ -28,7 +28,7 @@ const ProyectoCard = ({ project = {} }) => {
   const truncatedDescription = truncateText(description, 20);
 
   return (
-    <div className="proyect-card m-3 col-6 d-flex flex-column justify-content-between">
+    <div className="proyect-card mx-0 m-md-3 col-6 d-flex flex-column justify-content-between">
       <div>
         <div className="img-container d-flex justify-content-center">
           <img src={portada} className="image p-1" alt={name} />
