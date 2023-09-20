@@ -43,7 +43,7 @@ const BuscadorProyectos = ({ searchTerm, onSearch, isSearching, setIsSearching }
           placeholder='Buscar proyecto por palabras claves '
         />
         {isSearching && (
-          <button className="btn bg-white border  border-0 " onClick={handleClearSearch} id="icon-inputClose">
+          <button className="btn  border  border-0 " onClick={handleClearSearch} id="icon-inputClose">
             <i className="material-symbols-outlined " >close</i>
           </button>
         )}

@@ -64,8 +64,8 @@ const Navbar = () =>{
         <div className="d-flex flex-column ms-3">
           <Link to="/" className="link text-sans-p-white text-underline my-2"> Inicio </Link>
           <Link to="/bancodeproyectos" className="link text-sans-p-white text-underline my-2"> Banco de Proyectos </Link>
-          <Link to="/bancodeproyectos" className="link text-sans-p-white text-underline my-2"> Type something </Link>
-          <Link to="/bancodeproyectos" className="link text-sans-p-white text-underline my-2"> Type something </Link>
+          <Link to="/bancodeideas" className="link text-sans-p-white text-underline my-2"> Proyectos Innovadores </Link>
+          <Link to="/documentacion" className="link text-sans-p-white text-underline my-2"> Documentación </Link>
           <Link to="/contacto" className="link text-sans-p-white text-underline my-2">Contacto</Link>
         </div>
 

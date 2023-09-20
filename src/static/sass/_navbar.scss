@@ -1,3 +1,4 @@
+
 .line-container{
     position:absolute;
     top: 0px;
@@ -38,9 +39,9 @@
     top: 28px;
     right: 0;
     background-color: #093F75;
-    z-index: 1;
+    z-index: 9999;
     padding: 10px;
-    width: 290px; /* Ajusta según sea necesario */
+    width: 290px;
   }
   .menu-modal.open {
     display: block;
