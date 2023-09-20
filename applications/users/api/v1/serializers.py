@@ -8,15 +8,35 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     pass
 
 class UserSerializer(serializers.ModelSerializer):
+    tipo_de_usuario = serializers.SerializerMethodField()
+    full_name = serializers.SerializerMethodField()
+
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ('id', 'full_name', 'rut', 'email', 'tipo_de_usuario', 'is_active')
 
     def create(self, validated_data):
         user = User(**validated_data)
         user.set_password(validated_data['password'])
         user.save()
         return user
+
+    def get_tipo_de_usuario(self, obj):
+        if obj.is_superuser:
+            return 'Superusuario'
+
+        # Obtener nombres de todos los grupos a los que pertenece el usuario
+        group_names = [group.name for group in obj.groups.all()]
+
+        # Si pertenece a algún grupo, retornar esos nombres unidos por coma
+        if group_names:
+            return ', '.join(group_names)
+
+        return 'Registrado'
+
+    def get_full_name(self, obj):  # Método para obtener el nombre completo
+        return obj.get_full_name()
+
 
 class UpdateUserSerializer(serializers.ModelSerializer):
     groups = serializers.PrimaryKeyRelatedField(
@@ -61,16 +81,25 @@ class PasswordSerializer(serializers.Serializer):
 
 
 class UserListSerializer(serializers.ModelSerializer):
+    tipo_de_usuario = serializers.SerializerMethodField()
+
     class Meta:
         model = User
-    def to_representation(self, instance):
-        return {
-            'id': instance['id'],
-            'rut': instance['rut'],
-            'nombres': instance['nombres'],
-            'email': instance['email'],
-            'is_staff': instance['is_staff']
-        }
+        fields = ['id', 'rut', 'nombres', 'email', 'is_active', 'tipo_de_usuario']
+
+    def get_tipo_de_usuario(self, obj):
+        if obj.is_superuser:
+            return 'Superusuario'
+
+        # Obtener nombres de todos los grupos a los que pertenece el usuario
+        group_names = [group.name for group in obj.groups.all()]
+
+        # Si pertenece a algún grupo, retornar esos nombres unidos por coma
+        if group_names:
+            return ', '.join(group_names)
+
+        return 'Registrado'
+
 
 class PermissionSerializer(serializers.ModelSerializer):
     class Meta:

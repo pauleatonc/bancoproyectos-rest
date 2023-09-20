@@ -31,9 +31,7 @@ class UserViewSet(viewsets.GenericViewSet):
 
     def get_queryset(self):
         if self.queryset is None:
-            self.queryset = self.model.objects \
-                .filter(is_active=True) \
-                .values('id', 'rut', 'email', 'nombres', 'is_staff')
+            self.queryset = self.model.objects.filter(is_active=True)
         return self.queryset
 
     @action(detail=True, methods=['post'])
@@ -132,12 +130,12 @@ class UserViewSet(viewsets.GenericViewSet):
 
 
         Permite editar solo los campos
-                    'nombres',
-                  'primer_apellido',
-                  'segundo_apellido',
-                  'comuna',
-                  'email',
-                  'institucion.
+                'nombres',
+                'primer_apellido',
+                'segundo_apellido',
+                'comuna',
+                'email',
+                'institucion'
         """
         instance = request.user
         serializer = UserProfileUpdateSerializer(instance, data=request.data, partial=True)
