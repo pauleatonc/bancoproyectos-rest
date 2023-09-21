@@ -12,6 +12,7 @@
   text-align: center;
   padding: 0 10px;
 
+
   &:focus, &:hover, &:active {
     border: 2px solid $primary-color;
   }
@@ -44,6 +45,7 @@
   width: 260px;
   border: solid 1px $grey-a-color;
   margin-top: 70px;
+  z-index: 9999;
 }
 
 

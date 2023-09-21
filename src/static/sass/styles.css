@@ -1040,6 +1040,7 @@ input[type=radio]:checked {
   width: 260px;
   border: solid 1px #373737;
   margin-top: 70px;
+  z-index: 9999;
 }
 
 .panel-dropdown ul {
