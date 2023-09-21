@@ -8,15 +8,16 @@ const SelectorLateral = ({ data, onSelect, titlePropertyName }) => {
   useEffect(() => {
     if (!selectedOption && data.length > 0)
     {
-      setSelectedOption(data[ 0 ]);
+      setSelectedOption(data[0]);
+      onSelect(data[0]); // Llama a la función onSelect con la primera opción
     }
-  }, [ data, selectedOption ]);
+  }, [ data, selectedOption, onSelect ]);
 
   // Evento que actualiza opcion seleccionada al primer elemento de 'data' cuando 'data' cambia.
   useEffect(() => {
     if (data.length > 0)
     {
-      setSelectedOption(data[ 0 ]);
+      setSelectedOption(data[0]);
     }
   }, [ data ]);
 
@@ -47,6 +48,7 @@ const SelectorLateral = ({ data, onSelect, titlePropertyName }) => {
           {
             onSelect(item);
           }}
+          titlePropertyName={titlePropertyName}
         />
       </div>
     </div>

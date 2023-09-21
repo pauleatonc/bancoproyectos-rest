@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 
-const DropdownComponent = ({ data, onOptionSelect, description = 'una opción' }) => {
+const DropdownComponent = ({ data, onOptionSelect, description = 'una opción', titlePropertyName }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const dropdownButtonRef = useRef(null);
@@ -65,7 +65,7 @@ const DropdownComponent = ({ data, onOptionSelect, description = 'una opción' }
                   }}
                   type='button'
                 >
-                  {item.title}
+                  {item[titlePropertyName]}
                 </button>
               </li>
             ))}
