@@ -162,11 +162,6 @@
   color: #FFF;
 }
 
-.btn-secundario-s:active {
-  background-color: #0F69C4;
-  color: #FFF;
-}
-
 .btn-secundario-s:focus {
   background-color: #0F69C4;
   color: #FFF;
@@ -185,11 +180,6 @@
   color: #FFF;
 }
 
-.btn-secundario-l:active {
-  background-color: #0F69C4;
-  color: #FFF;
-}
-
 .btn-terciario {
   width: -moz-fit-content;
   width: fit-content;
@@ -199,12 +189,12 @@
   border-radius: 32px;
 }
 
-.btn-terciario:active {
+.btn-terciario:hover {
   background-color: #0F69C4;
   color: #FFF;
 }
 
-.btn-terciario:hover {
+.selected-button {
   background-color: #0F69C4;
   color: #FFF;
 }
@@ -230,11 +220,6 @@
   border: none;
   background-color: transparent;
   color: #373737;
-}
-
-.select-option:active {
-  background-color: #0F69C4;
-  color: #FFF;
 }
 
 .select-option:hover {

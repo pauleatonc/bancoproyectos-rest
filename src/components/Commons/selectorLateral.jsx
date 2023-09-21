@@ -25,7 +25,9 @@ const SelectorLateral = ({ data, onSelect, titlePropertyName }) => {
         {data.map((item) => (
           <button
             key={item.id}
-            className="btn-secundario-l d-flex justify-content-between"
+            className={`btn-secundario-l d-flex justify-content-between ${
+              selectedOption === item ? "selected-button" : ""
+            }`}
             onClick={() => {
               setSelectedOption(item);
               onSelect(item);
