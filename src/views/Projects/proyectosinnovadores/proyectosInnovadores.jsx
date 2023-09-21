@@ -29,8 +29,6 @@ const ProyectosInnovadores = () =>
     errorGoodPractices,
   } = useApiGoodPractices();
 
-
-
   // Funcion para filtrar proyectos segun programa seleccionado
   const filterProjectsByPrograms = (data, selectedPrograms) =>
   {
@@ -79,7 +77,7 @@ const ProyectosInnovadores = () =>
   };
 
   // Funcion para seleccionar una practica
-  const onGoodPracticeSelect = (practice) =>
+  const onSelect = (practice) =>
   {
     setSelectedPractice(practice);
     // Guarda la buena practica seleccionada en el almacenamiento local
@@ -262,7 +260,8 @@ const ProyectosInnovadores = () =>
               data={filteredPractices}
               selectedPrograms={selectedPracticesPrograms}
               toggleProgram={toggleProgram}
-              onGoodPracticeSelect={onGoodPracticeSelect}
+              onSelect={onSelect}
+              titlePropertyName="title"
             />
           </div>
           <div className="col">

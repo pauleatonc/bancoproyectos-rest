@@ -1,15 +1,11 @@
 import { useState, useEffect } from "react";
 import DropdownComponent from "./Dropdown";
 
-const SelectorLateral = ({ data, onGoodPracticeSelect }) =>
-{
+const SelectorLateral = ({ data, onSelect, titlePropertyName }) => {
   const [ selectedOption, setSelectedOption ] = useState(null); // Almacena la opcion seleccionada.
 
-
-
   // Evento que selecciona primera opcion del listado al cambiar opciones o montar componente.
-  useEffect(() =>
-  {
+  useEffect(() => {
     if (!selectedOption && data.length > 0)
     {
       setSelectedOption(data[ 0 ]);
@@ -17,8 +13,7 @@ const SelectorLateral = ({ data, onGoodPracticeSelect }) =>
   }, [ data, selectedOption ]);
 
   // Evento que actualiza opcion seleccionada al primer elemento de 'data' cuando 'data' cambia.
-  useEffect(() =>
-  {
+  useEffect(() => {
     if (data.length > 0)
     {
       setSelectedOption(data[ 0 ]);
@@ -28,17 +23,17 @@ const SelectorLateral = ({ data, onGoodPracticeSelect }) =>
   return (
     <div>
       <div className="d-flex flex-column d-none d-lg-block">
-        {data.map((practice) => (
+        {data.map((item) => (
           <button
-            key={practice.id}
+            key={item.id}
             className="btn-secundario-l d-flex justify-content-between"
             onClick={() =>
             {
-              setSelectedOption(practice);
-              onGoodPracticeSelect(practice);
+              setSelectedOption(item);
+              onSelect(item);
             }}
           >
-            <p className="text-decoration-underline mb-0 py-1">{practice.title}</p>
+            <p className="text-decoration-underline mb-0 py-1">{item[titlePropertyName]}</p>
             <i className="material-symbols-rounded ms-2">keyboard_arrow_right</i>
           </button>
         ))}
@@ -48,9 +43,9 @@ const SelectorLateral = ({ data, onGoodPracticeSelect }) =>
         <DropdownComponent
           data={data}
           description="una buena practica"
-          onOptionSelect={(practice) =>
+          onOptionSelect={(item) =>
           {
-            onGoodPracticeSelect(practice);
+            onSelect(item);
           }}
         />
       </div>
