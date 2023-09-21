@@ -48,9 +48,6 @@ const Buscador = ({ searchTerm, onSearch, isSearching, setIsSearching }) => {
           </button>
         </span>
       </div>
-
-   
-
   );
 };
 

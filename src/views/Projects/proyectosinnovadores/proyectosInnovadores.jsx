@@ -186,7 +186,7 @@ const ProyectosInnovadores = () =>
         ))}
       </div>
 
-      {/* Boton y Dropdown */}
+      {/* Dropdown */}
       <div className="d-flex justify-content-center m-3 d-lg-none">
         <DropdownComponent
           data={filteredProjects}
@@ -194,6 +194,8 @@ const ProyectosInnovadores = () =>
           onOptionSelect={(project) => {
             setSelectedProject(project);
           }}
+          titlePropertyName="title"
+          selectedOption={selectedProject}
         />
         </div>
       {/* Datos del proyecto */}

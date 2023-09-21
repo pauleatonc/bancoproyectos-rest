@@ -79,7 +79,7 @@ const Documentacion = () => {
       <h1 className="text-sans-h1 mt-5">Documentación</h1>
       <p className="text-sans-p my-md-4">Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. </p>
 
-      <div className="d-flex justify-content-center my-5 py-4">
+      <div className="d-flex justify-content-center my-5">
         <Buscador 
         searchTerm={searchTerm}
         onSearch={handleSearch}
@@ -89,9 +89,9 @@ const Documentacion = () => {
       </div>
 
       {/* Resultados de la busqueda */}
-      <div className="my-5 pb-4">
+      <div className="my-5">
         {isSearching && (
-          <div className="mt-4">
+          <div className="mt-4 pb-4">
             {Object.keys(searchResults).length === 0 ? ( <p> No se encontraron resultados. </p> ) : (
               Object.keys(searchResults).map((type) => (
                 <div className="my-5" key={type}>
@@ -131,7 +131,6 @@ const Documentacion = () => {
           </div>
         )}
       </div>
-
 
       {searchActive ? null : (
         <div className="d-flex flex-column flex-lg-row">

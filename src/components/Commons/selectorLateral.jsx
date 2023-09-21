@@ -6,8 +6,7 @@ const SelectorLateral = ({ data, onSelect, titlePropertyName }) => {
 
   // Evento que selecciona primera opcion del listado al cambiar opciones o montar componente.
   useEffect(() => {
-    if (!selectedOption && data.length > 0)
-    {
+    if (!selectedOption && data.length > 0){
       setSelectedOption(data[0]);
       onSelect(data[0]); // Llama a la función onSelect con la primera opción
     }
@@ -15,8 +14,7 @@ const SelectorLateral = ({ data, onSelect, titlePropertyName }) => {
 
   // Evento que actualiza opcion seleccionada al primer elemento de 'data' cuando 'data' cambia.
   useEffect(() => {
-    if (data.length > 0)
-    {
+    if (data.length > 0){
       setSelectedOption(data[0]);
     }
   }, [ data ]);
@@ -28,8 +26,7 @@ const SelectorLateral = ({ data, onSelect, titlePropertyName }) => {
           <button
             key={item.id}
             className="btn-secundario-l d-flex justify-content-between"
-            onClick={() =>
-            {
+            onClick={() => {
               setSelectedOption(item);
               onSelect(item);
             }}
@@ -44,11 +41,12 @@ const SelectorLateral = ({ data, onSelect, titlePropertyName }) => {
         <DropdownComponent
           data={data}
           description="una buena practica"
-          onOptionSelect={(item) =>
-          {
+          onOptionSelect={(item) => {
+            setSelectedOption(item);
             onSelect(item);
           }}
           titlePropertyName={titlePropertyName}
+          selectedOption={selectedOption}
         />
       </div>
     </div>
