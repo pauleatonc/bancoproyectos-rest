@@ -1,46 +1,40 @@
-import { useState, useContext } from 'react';
+import {  useContext,  } from 'react';
 import { ProyectoCard } from '../../components/Bancodeproyectos';
 import { ApiContext } from '../../context/ProjectContext';
 
-const ProyectosContainer = () =>
-{
+const ProyectosContainer = () => {
   const {
     projects,
     metadata,
-    listProjects,
-    searchTerm,
-    filterParams,
-    sortOrder
+    currentPage,
+    setCurrentPage
   } = useContext(ApiContext);
 
-  const [ currentPage, setCurrentPage ] = useState(1);
   const projectsPerPage = 6;
 
   const totalPages = Math.ceil(metadata.count / projectsPerPage);
 
-  const handlePageChange = (pageNumber) =>
-  {
+  const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
-    listProjects(searchTerm, { ...filterParams, page: pageNumber }, sortOrder);
   };
 
   return (
     <>
-      <div className={`card-container d-flex flex-wrap ${projects.length === 1 ? 'justify-content-start' : 'justify-content-between'}`}>
+      <div className={`card-container d-flex flex-wrap ${projects.length === 1 ? 'justify-content-md-start justify-content-center' : 'justify-content-center justify-content-lg-between'}`}>
         {projects.map((project) => (
           <ProyectoCard key={project.id} project={project} />
         ))}
       </div>
 
       {/* Paginación */}
-      <div className="mt-5 d-flex flex-column flex-md-row">
+      <div className="d-flex flex-column flex-md-row my-5">
         {/* Índice */}
-        <p className="text-sans-h5">
+        <p className="text-sans-h5 mx-5 text-center">
           {`Mostrando ${(currentPage - 1) * projectsPerPage + 1}- ${Math.min(currentPage * projectsPerPage, metadata.count)} de ${metadata.count} proyectos`}
         </p>
         {/* Paginación */}
-        <nav className="pagination-container">
-          <ul className="pagination ms-5">
+        <nav className="pagination-container mx-auto mx-md-0">
+          <ul className="pagination ms-md-5">
             <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
               <button className="custom-pagination-btn mx-3" onClick={() => handlePageChange(currentPage - 1)} disabled={currentPage === 1}>
                 &lt;

@@ -3,8 +3,8 @@ import axios from 'axios';
 import { apiBancoProyecto } from '../services/bancoproyecto.api.js';
 
 export const useProjectList = () => {
-  const [projects, setProjects] = useState([]);  // Este almacena solo los proyectos
-  const [metadata, setMetadata] = useState({ count: 0, next: null, previous: null }); // Este almacena los metadatos
+  const [projects, setProjects] = useState([]);  
+  const [metadata, setMetadata] = useState({ count: 0, next: null, previous: null }); 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 

@@ -24,37 +24,39 @@ export const ApiProvider = (props) =>
     type__in: [],
     year__in: [],
   };
+  const initialPage = parseInt(localStorage.getItem('currentProjectPage'), 10) || 1;
 
   const [ searchTerm, setSearchTerm ] = useState('');
   const [ filterParams, setFilterParams ] = useState(initialFilterParams);
   const [ sortOrder, setSortOrder ] = useState('-year');
   const [ selectedFilters, setSelectedFilters ] = useState(initialSelectedFilters);
+  const [currentPage, setCurrentPage] = useState(initialPage);
   const { projects, metadata, loading, error, listProjects } = useProjectList();
-
 
 
   const updateProjects = useCallback(async () =>
   {
     const updatedFilterParams = {
-      program__in: selectedFilters.program__in,
+    ...{program__in: selectedFilters.program__in,
       comuna__region__in: selectedFilters.comuna__region__in,
       comuna__in: selectedFilters.comuna__in,
       type__in: selectedFilters.type__in,
-      year__in: selectedFilters.year__in,
+      year__in: selectedFilters.year__in,},
+      page: currentPage
     };
 
     try
     {
       if (!isEqual(updatedFilterParams, filterParams))
       {
-        await listProjects(searchTerm, updatedFilterParams, sortOrder)     
+        listProjects(searchTerm, updatedFilterParams, sortOrder)     
         setFilterParams(updatedFilterParams);
       }
     } catch (error)
     {
       console.error('Error al cargar proyectos:', error);
     }
-  }, [ listProjects, searchTerm, selectedFilters, sortOrder, filterParams ]);
+  }, [ listProjects, searchTerm, selectedFilters, sortOrder, filterParams, currentPage ]);
 
   useEffect(() =>
   {
@@ -72,6 +74,10 @@ export const ApiProvider = (props) =>
     setSortOrder(order);
   };
 
+  useEffect(() => {
+    localStorage.setItem('currentProjectPage', currentPage.toString());
+  }, [currentPage]);
+
   const value = useMemo(() => ({
     projects,
     metadata, 
@@ -88,7 +94,9 @@ export const ApiProvider = (props) =>
     selectedFilters,
     setSelectedFilters,
     updateProjects,
-  }), [projects, metadata, listProjects, loading, error, searchTerm, filterParams, sortOrder, selectedFilters, updateProjects]);
+    currentPage,
+    setCurrentPage
+  }), [projects, metadata, listProjects, loading, error, searchTerm, filterParams, sortOrder, selectedFilters, updateProjects, currentPage]);
 
   return (
     <ApiContext.Provider value={value}>
