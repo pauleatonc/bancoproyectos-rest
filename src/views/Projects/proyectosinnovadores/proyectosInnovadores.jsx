@@ -1,26 +1,27 @@
-import { useState, useEffect, useMemo, useRef } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import useApiInnovativeProjects from '../../../hooks/useApiInnovativeProjects';
 import useFilterOptions from '../../../hooks/useFilterProjects';
 import useApiGoodPractices from '../../../hooks/useApiGoodPractices';
 import Carrusel from '../../../components/Commons/carrusel';
+import DropdownComponent from '../../../components/Commons/Dropdown';
 import SelectorLateral from '../../../components/Commons/selectorLateral';
 
-const ProyectosInnovadores = () => {
+const ProyectosInnovadores = () =>
+{
   // Hooks de estado
   const { programs } = useFilterOptions();
-  const [selectedProject, setSelectedProject] = useState(null);
-  const [selectedPractice, setSelectedPractice] = useState(null);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedProgram, setSelectedProgram] = useState([2]); // Inicialmente selecciona "PMB"
-  const [selectedPracticesPrograms, setSelectedPracticesPrograms] = useState(
-    selectedProgram.length > 0 ? [selectedProgram[0]] : []
+  const [ selectedProject, setSelectedProject ] = useState(null);
+  const [ selectedPractice, setSelectedPractice ] = useState(null);
+  const [ selectedProgram, setSelectedProgram ] = useState([ 2 ]); // Inicialmente selecciona "PMB"
+  const [ selectedPracticesPrograms, setSelectedPracticesPrograms ] = useState(
+    selectedProgram.length > 0 ? [ selectedProgram[ 0 ] ] : []
   );
 
   // Logica para obtener datos de Proyectos Innovadores y Buenas Practicas
-  const { 
-    dataInnovativeProjects, 
-    loadingInnovativeProjects, 
-    errorInnovativeProjects 
+  const {
+    dataInnovativeProjects,
+    loadingInnovativeProjects,
+    errorInnovativeProjects
   } = useApiInnovativeProjects();
   const {
     dataGoodPractices,
@@ -28,56 +29,28 @@ const ProyectosInnovadores = () => {
     errorGoodPractices,
   } = useApiGoodPractices();
 
-  // Funcion para abrir o cerrar Dropdown
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
-  // Ref para el boton del dropdown
-  const dropdownButtonRef = useRef(null);
-  const dropdownMenuRef = useRef(null);
-  // Función para cerrar el dropdown cuando se hace clic fuera de él
-  const handleClickOutsideDropdown = (e) => {
-    if (
-      dropdownButtonRef.current &&
-      !dropdownButtonRef.current.contains(e.target) &&
-      dropdownMenuRef.current &&
-      !dropdownMenuRef.current.contains(e.target)
-    ) {
-      setDropdownOpen(false);
-    }
-  };
-  // Función para evitar que el clic en opciones del dropdown cierre el dropdown
-  const handleDropdownOptionClick = (e) => {
-    if (dropdownMenuRef.current && dropdownMenuRef.current.contains(e.target)) {
-      e.stopPropagation();
-    }
-  };
-
-  useEffect(() => {
-    // Agregar event listener para clics en todo el documento
-    document.addEventListener("mousedown", handleClickOutsideDropdown);
-    // Retirar el event listener cuando el componente se cierre
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutsideDropdown);
-    };
-  }, []);
-
   // Funcion para filtrar proyectos segun programa seleccionado
-  const filterProjectsByPrograms = (data, selectedPrograms) => {
-    if (selectedPrograms.length === 0) {
+  const filterProjectsByPrograms = (data, selectedPrograms) =>
+  {
+    if (selectedPrograms.length === 0)
+    {
       return data;
-    } else {
+    } else
+    {
       return data.filter((item) =>
-        selectedPrograms.includes(parseInt(item.program[0].id, 10))
+        selectedPrograms.includes(parseInt(item.program[ 0 ].id, 10))
       );
     }
   };
 
   // Funcion que filtra practicas segun programa seleccionado
-  const filterPracticesByPrograms = (data, selectedPrograms) => {
-    if (selectedPrograms.length === 0) {
+  const filterPracticesByPrograms = (data, selectedPrograms) =>
+  {
+    if (selectedPrograms.length === 0)
+    {
       return data;
-    } else {
+    } else
+    {
       return data.filter((item) =>
         item.program.some((program) =>
           selectedPrograms.includes(program.id)
@@ -87,65 +60,79 @@ const ProyectosInnovadores = () => {
   };
 
   // Funcion para cambiar el programa seleccionado
-  const toggleProgram = (id) => {
-    if (selectedProgram.includes(id)) {
+  const toggleProgram = (id) =>
+  {
+    if (selectedProgram.includes(id))
+    {
       setSelectedProgram([]);
       setSelectedPracticesPrograms([]);
       setSelectedPractice(null);
-    } else {
-      setSelectedProgram([id]);
-      setSelectedPracticesPrograms([id]);
+    } else
+    {
+      setSelectedProgram([ id ]);
+      setSelectedPracticesPrograms([ id ]);
       setSelectedPractice(null);
       setSelectedProject(null); // Limpia seleccion del usuario para mostrar primer proyecto del listado al cambiar programa.
     }
   };
-   
+
   // Funcion para seleccionar una practica
-  const onGoodPracticeSelect = (practice) => {
+  const onSelect = (practice) =>
+  {
     setSelectedPractice(practice);
     // Guarda la buena practica seleccionada en el almacenamiento local
     localStorage.setItem('selectedPractice', JSON.stringify(practice));
   };
 
   // Filtra proyectos segun programa seleccionado
-  const filteredProjects = useMemo(() => {
+  const filteredProjects = useMemo(() =>
+  {
     return filterProjectsByPrograms(dataInnovativeProjects, selectedProgram);
-  }, [selectedProgram, dataInnovativeProjects]);
+  }, [ selectedProgram, dataInnovativeProjects ]);
 
   // Filtra practicas segun programa seleccionado
-  const filteredPractices = useMemo(() => {
+  const filteredPractices = useMemo(() =>
+  {
     const filtered = filterPracticesByPrograms(dataGoodPractices, selectedPracticesPrograms);
     return filtered;
-  }, [dataGoodPractices, selectedPracticesPrograms]);
+  }, [ dataGoodPractices, selectedPracticesPrograms ]);
 
-// Actualiza proyecto seleccionado al cambiar la lista de proyectos
-useEffect(() => {
-  if (filteredProjects.length > 0 && selectedProject === null) {
-    setSelectedProject(filteredProjects[0]);
-  }
-}, [filteredProjects, selectedProject]);
+  // Actualiza proyecto seleccionado al cambiar la lista de proyectos
+  useEffect(() =>
+  {
+    if (filteredProjects.length > 0 && selectedProject === null)
+    {
+      setSelectedProject(filteredProjects[ 0 ]);
+    }
+  }, [ filteredProjects, selectedProject ]);
 
-// Actualiza la practica seleccionada al cambiar la lista de practicas
-useEffect(() => {
-  if (filteredPractices.length > 0 && selectedPractice === null) {
-    setSelectedPractice(filteredPractices[0]);
-  }
-}, [filteredPractices, selectedPractice]);
+  // Actualiza la practica seleccionada al cambiar la lista de practicas
+  useEffect(() =>
+  {
+    if (filteredPractices.length > 0 && selectedPractice === null)
+    {
+      setSelectedPractice(filteredPractices[ 0 ]);
+    }
+  }, [ filteredPractices, selectedPractice ]);
 
   // Manejo de errores y carga de datos
-  if (loadingInnovativeProjects) {
+  if (loadingInnovativeProjects)
+  {
     return <div>Cargando datos...</div>;
   }
-  if (errorInnovativeProjects) {
+  if (errorInnovativeProjects)
+  {
     return <div>Error: {errorInnovativeProjects}</div>;
   }
-  if (loadingGoodPractices) {
+  if (loadingGoodPractices)
+  {
     return <div>Cargando datos de buenas prácticas...</div>;
   }
-  if (errorGoodPractices) {
+  if (errorGoodPractices)
+  {
     return <div>Error en los datos de buenas prácticas: {errorGoodPractices}</div>;
   }
-  
+
   return (
     <div className="container col-md-8">
       <nav aria-label="breadcrumb">
@@ -155,19 +142,19 @@ useEffect(() => {
         </ol>
       </nav>
       <h1 className="text-sans-h1">Proyectos Innovadores</h1>
-      <p className="text-sans-p my-md-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
+      <p className="text-sans-p my-md-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
         quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
       </p>
       <h2 className="text-sans-h2 mt-5">Listado de proyectos innovadores</h2>
       <h3 className="text-sans-h3 mt-3">Primero, elige un programa:</h3>
 
       {/* Tipo de programa */}
-      <div className="container d-flex flex-row justify-content-center">
+      <div className="container d-flex flex-row justify-content-center ">
         {programs.map((program) => (
-          <div tabIndex="0" className="container-btnCircle col-md-2 d-flex flex-column align-items-center mx-5" key={program.id}>
+          <div tabIndex="0" className="container-btnCircle col-md-2 d-flex flex-column align-items-center mx-lg-5" key={program.id}>
             <button
-            className={`categorias-circle d-inline-flex focus-ring py-1 px-2 rounded-2 btn rounded-circle border-2 d-flex align-items-center justify-content-center my-3 ${selectedProgram.includes(program.id) ? 'btn-primary' : 'btn-outline-primary white-text'}`}
-            onClick={() => toggleProgram(program.id)}
+              className={`categorias-circle d-inline-flex focus-ring py-1 px-2 rounded-2 btn rounded-circle border-2 d-flex align-items-center justify-content-center my-3 ${selectedProgram.includes(program.id) ? 'btn-primary' : 'btn-outline-primary white-text'}`}
+              onClick={() => toggleProgram(program.id)}
             >
               <img src={program.icon_program} alt={program.sigla} id='btnIcon' className={selectedProgram.includes(program.id) ? 'white-icon' : ''} />
             </button>
@@ -180,146 +167,125 @@ useEffect(() => {
         <p className="text-sans-p my-md-4">
           Los espacios públicos, al igual que nuestra sociedad, son dinámicos y varían acorde a los tiempos y lugares en los que se encuentran. Es por esto, que la innovación en el espacio urbano se hace fundamental a la hora de entregar a la ciudadanía una mejor, más amplia y moderna oferta de espacio público. Aquí te mostramos algunas ideas de espacios deportivos, culturales y de protección ambiental para que puedas considerar posibles soluciones a desarrollar con financiamiento PMU.
         </p>
-        ) : ( // Si PMB u otro programa está seleccionado
+      ) : ( // Si PMB u otro programa está seleccionado
         <p className="text-sans-p my-md-4">
-         {/* Aqui poner texto PMB si es que entregan alguno    */}
+          {/* Aqui poner texto PMB si es que entregan alguno    */}
         </p>
       )}
 
       {/* Selector Proyectos */}
       <div className="container my-3 d-none d-lg-block">
         {filteredProjects.map((project) => (
-          <button 
-          key={project.id} 
-          className="btn-terciario text-decoration-underline px-3 p-2 m-1"
-          onClick={() => setSelectedProject(project)}
+          <button
+            key={project.id}
+            className="btn-terciario text-decoration-underline px-3 p-2 m-1"
+            onClick={() => setSelectedProject(project)}
           >
             {project.title}
           </button>
         ))}
       </div>
 
-      {/* Boton y Dropdown */}
+      {/* Dropdown */}
       <div className="d-flex justify-content-center m-3 d-lg-none">
-        <button
-        ref={dropdownButtonRef} 
-        className="select-box d-flex justify-content-center px-3 pt-3"
-        onClick={toggleDropdown}
-        onClickCapture={handleDropdownOptionClick} 
-        >
-         {selectedProject ? (
-            <p className="text-decoration-underline">{selectedProject.title}</p>
-          ) : (
-            <p className="text-decoration-underline">Elige un Proyecto</p>
-          )}
-          <i className="material-symbols-rounded ms-2">keyboard_arrow_down</i>
-        </button>
-      </div>
-
-      <div ref={dropdownMenuRef} className={`dropdown-menu ${dropdownOpen ? 'show' : ''}`}>
-        <div className="d-flex flex-column">
-         {filteredProjects.map((project) => (
-          <button 
-          key={project.id} 
-          className="select-option text-start px-3 p-2 m-1"
-          onClick={() => {
+        <DropdownComponent
+          data={filteredProjects}
+          description='un proyecto'
+          onOptionSelect={(project) => {
             setSelectedProject(project);
-            setDropdownOpen(false); // Cierra el dropdown al seleccionar una opcion
           }}
-          >
-            {project.title}
-          </button>
-        ))}
-        </div> 
-      </div>
-
+          titlePropertyName="title"
+          selectedOption={selectedProject}
+        />
+        </div>
       {/* Datos del proyecto */}
       <div>
-      {selectedProject ? (
-        <>
-          <h4 className="text-sans-h3 text-center text-md-start mt-5">
-            {selectedProject.title}
-          </h4>
-          <div>
-            <div className="carrusel-container container col-xl-7 float-md-end m-4">
-              <Carrusel
-                imgPortada={selectedProject.portada}
-                imgGeneral={selectedProject.innovative_gallery_images}
-                context="proyectosInnovadores"
-              />
-            </div>
-            <p className="text-sans-p mt-3">{selectedProject.description}</p>
-          </div>
-          <div className="d-flex flex-column">
-            {selectedProject.web_sources.map((source, index) => (
-              <a key={source.id} href={source.url} target="_blank" rel="noopener noreferrer">
-                Visitar fuente {index + 1}
-              </a>
-            ))}
-          </div>
-        </>
-        ) : (
-        filteredProjects.length > 0 ? (
+        {selectedProject ? (
           <>
             <h4 className="text-sans-h3 text-center text-md-start mt-5">
-              {filteredProjects[0].title}
+              {selectedProject.title}
             </h4>
             <div>
-              <div className="carrusel-container container col-xl-7 float-md-end m-4">
+              <div className="carrusel-container container col-xl-7 float-md-end m-lg-4">
                 <Carrusel
-                imgPortada={filteredProjects[0].portada}
-                imgGeneral={filteredProjects[0].innovative_gallery_images}
-                context="proyectosInnovadores"
+                  imgPortada={selectedProject.portada}
+                  imgGeneral={selectedProject.innovative_gallery_images}
+                  context="proyectosInnovadores"
                 />
               </div>
-              <p className="text-sans-p mt-3">{filteredProjects[0].description}</p>
+              <p className="text-sans-p mt-3">{selectedProject.description}</p>
             </div>
             <div className="d-flex flex-column">
-              {filteredProjects[0].web_sources.map((source, index) => (
+              {selectedProject.web_sources.map((source, index) => (
                 <a key={source.id} href={source.url} target="_blank" rel="noopener noreferrer">
                   Visitar fuente {index + 1}
                 </a>
               ))}
             </div>
           </>
-          ) : (
-          <p className="text-sans-h4 mt-3">Selecciona un proyecto para ver los detalles.</p>
-        )
-      )}
-    
-      <hr className="my-5" />
-
-      <h2 className="text-sans-h2">Buenas prácticas para el diseño de los espacios públicos</h2>
-      <p className="text-sans-p mt-3">Con estas prácticas buscamos promover criterios sustentables a considerar en el diseño actual de los espacios públicos.</p>
-      <div className="row">
-        <div className="col-lg-4">
-          <SelectorLateral 
-          data={filteredPractices} 
-          selectedPrograms={selectedPracticesPrograms}
-          toggleProgram={toggleProgram}
-          onGoodPracticeSelect={onGoodPracticeSelect} 
-          />
-        </div>
-        <div className="col">
-          {selectedPractice ? (
+        ) : (
+          filteredProjects.length > 0 ? (
             <>
-              <h2>{selectedPractice.title}</h2>
-              <p>{selectedPractice.description}</p>
-              <div className="my-4">
-                <Carrusel
-                imgPortada={selectedPractice.portada}
-                imgGeneral={selectedPractice.good_practices_gallery_images}
-                context="buenasPracticas"
-                />
+              <h4 className="text-sans-h3 text-center text-md-start mt-5">
+                {filteredProjects[ 0 ].title}
+              </h4>
+              <div>
+                <div className="carrusel-container container col-xl-7 float-md-end m-4">
+                  <Carrusel
+                    imgPortada={filteredProjects[ 0 ].portada}
+                    imgGeneral={filteredProjects[ 0 ].innovative_gallery_images}
+                    context="proyectosInnovadores"
+                  />
+                </div>
+                <p className="text-sans-p mt-3">{filteredProjects[ 0 ].description}</p>
+              </div>
+              <div className="d-flex flex-column">
+                {filteredProjects[ 0 ].web_sources.map((source, index) => (
+                  <a key={source.id} href={source.url} target="_blank" rel="noopener noreferrer">
+                    Visitar fuente {index + 1}
+                  </a>
+                ))}
               </div>
             </>
+          ) : (
+            <p className="text-sans-h4 mt-3">Selecciona un proyecto para ver los detalles.</p>
+          )
+        )}
+
+        <hr className="my-5" />
+
+        <h2 className="text-sans-h2">Buenas prácticas para el diseño de los espacios públicos</h2>
+        <p className="text-sans-p mt-3">Con estas prácticas buscamos promover criterios sustentables a considerar en el diseño actual de los espacios públicos.</p>
+        <div className="row">
+          <div className="col-lg-4">
+            <SelectorLateral
+              data={filteredPractices}
+              // selectedPrograms={selectedPracticesPrograms}
+              // toggleProgram={toggleProgram}
+              onSelect={onSelect}
+              titlePropertyName="title"
+            />
+          </div>
+          <div className="col">
+            {selectedPractice ? (
+              <>
+                <h2>{selectedPractice.title}</h2>
+                <p>{selectedPractice.description}</p>
+                <div className="my-4">
+                  <Carrusel
+                    imgPortada={selectedPractice.portada}
+                    imgGeneral={selectedPractice.good_practices_gallery_images}
+                    context="buenasPracticas"
+                  />
+                </div>
+              </>
             ) : (
-            <p className="text-sans-h4 mt-3">Selecciona una buena práctica para ver los detalles.</p>
+              <p className="text-sans-h4 mt-3">Selecciona una buena práctica para ver los detalles.</p>
             )}
+          </div>
         </div>
       </div>
     </div>
-  </div>
   );
 };
 
