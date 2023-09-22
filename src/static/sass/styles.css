@@ -1063,4 +1063,16 @@ input[type=radio]:checked {
 .active-option {
   background-color: #006FB3;
   color: #FFF;
+}
+
+.sidebar {
+  display: flex;
+  width: 280px;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: flex-end;
+  background-color: #FFF;
+  align-items: center;
+  flex-shrink: 0;
+  top: 0%;
 }/*# sourceMappingURL=styles.css.map */
