@@ -1,8 +1,8 @@
 import { useState, useRef, useEffect } from 'react';
 
-const DropdownComponent = ({ data, onOptionSelect, description = 'una opción' }) => {
+const DropdownComponent = ({ data, onOptionSelect, description = 'una opción', titlePropertyName, selectedOption  }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [currentOption, setCurrentOption] = useState(null);
   const dropdownButtonRef = useRef(null);
   const dropdownMenuRef = useRef(null);
 
@@ -30,7 +30,7 @@ const DropdownComponent = ({ data, onOptionSelect, description = 'una opción' }
     if (!selectedOption) {
       return `Elige ${description}`;
     }
-    return selectedOption.title;
+    return selectedOption[titlePropertyName];
   };
 
   return (
@@ -57,15 +57,15 @@ const DropdownComponent = ({ data, onOptionSelect, description = 'una opción' }
             {data.map((item) => (
               <li key={item.id}>
                 <button
-                  className={`dropdown-option ${selectedOption && item.id === selectedOption.id ? 'active-option' : ''}`}
+                  className={`dropdown-option ${currentOption && item.id === currentOption.id ? 'active-option' : ''}`}
                   onClick={() => {
-                    setSelectedOption(item);
+                    setCurrentOption(item);
                     onOptionSelect(item);
                     setDropdownOpen(false);
                   }}
                   type='button'
                 >
-                  {item.title}
+                  {item[titlePropertyName]}
                 </button>
               </li>
             ))}

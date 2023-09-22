@@ -29,8 +29,6 @@ const ProyectosInnovadores = () =>
     errorGoodPractices,
   } = useApiGoodPractices();
 
-
-
   // Funcion para filtrar proyectos segun programa seleccionado
   const filterProjectsByPrograms = (data, selectedPrograms) =>
   {
@@ -79,7 +77,7 @@ const ProyectosInnovadores = () =>
   };
 
   // Funcion para seleccionar una practica
-  const onGoodPracticeSelect = (practice) =>
+  const onSelect = (practice) =>
   {
     setSelectedPractice(practice);
     // Guarda la buena practica seleccionada en el almacenamiento local
@@ -188,15 +186,17 @@ const ProyectosInnovadores = () =>
         ))}
       </div>
 
-      {/* Boton y Dropdown */}
+      {/* Dropdown */}
       <div className="d-flex justify-content-center m-3 d-lg-none">
         <DropdownComponent
-  data={filteredProjects}
-  description='un proyecto'
-  onOptionSelect={(project) => {
-    setSelectedProject(project);
-  }}
-/>
+          data={filteredProjects}
+          description='un proyecto'
+          onOptionSelect={(project) => {
+            setSelectedProject(project);
+          }}
+          titlePropertyName="title"
+          selectedOption={selectedProject}
+        />
         </div>
       {/* Datos del proyecto */}
       <div>
@@ -260,9 +260,10 @@ const ProyectosInnovadores = () =>
           <div className="col-lg-4">
             <SelectorLateral
               data={filteredPractices}
-              selectedPrograms={selectedPracticesPrograms}
-              toggleProgram={toggleProgram}
-              onGoodPracticeSelect={onGoodPracticeSelect}
+              // selectedPrograms={selectedPracticesPrograms}
+              // toggleProgram={toggleProgram}
+              onSelect={onSelect}
+              titlePropertyName="title"
             />
           </div>
           <div className="col">
