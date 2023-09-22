@@ -7,13 +7,22 @@ export const useLogin = () => {
     const [error, setError] = useState(null);
 
     const login = async ({ rut, password }) => {
+        setLoading(true);
         try {
             const response = await apiBancoProyecto.post('login/', {
-                username: rut,
+                rut: rut,
                 password: password
             });
             setData(response.data);
-            setLoading(false);
+    
+            // Almacenamiento del token y refresh-token
+            localStorage.setItem('userToken', response.data.token);  // Usando "token"
+            localStorage.setItem('refreshToken', response.data['refresh-token']);  // Usando "refresh-token"
+    
+            //Almacenar los datos del usuario
+            localStorage.setItem('userData', JSON.stringify(response.data.user));
+
+
         } catch (error) {
             if (error.response) {
                 console.error('Error data:', error.response.data);

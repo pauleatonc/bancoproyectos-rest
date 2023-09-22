@@ -3,9 +3,11 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
+import { useAuth } from '../../context/AuthContext';
 
 const Navbar = () =>{  
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { isLoggedIn, userData, logout } = useAuth();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -27,16 +29,22 @@ const Navbar = () =>{
         </div>
 
         <div className="col d-flex justify-content-end">
-          {/* Inicio sesion */}
+        { isLoggedIn ? (
+          <>
+            <span>Hola, {userData.full_name || userData.rut}</span>
+            <button className="btn-principal-s mt-4 me-md-5 d-none d-md-block" type="button" onClick={logout}>
+                Cerrar sesión
+            </button>
+          </>
+        ) : (
           <button className="btn-principal-s mt-4 me-md-5 d-none d-md-block" type="button">
-            <i className="cl cl-claveunica"/> 
-            <Link to="/login" className="text-sans-p-white text-underline mx-md-3 d-none d-md-block">Iniciar sesión</Link>    
+            <i className="cl cl-claveunica" />
+            <Link to="/login" className="text-sans-p-white text-underline mx-md-3 d-none d-md-block">
+              Iniciar sesión
+            </Link>
           </button>
-          {/* Boton menu vista mobile */}
-          <button className="d-md-none menu-btn" onClick={toggleMenu}> Menu
-            <FontAwesomeIcon icon={faBars} className="fa-lg ms-2" /> 
-          </button>
-        </div>
+        )}
+      </div>
       </div>
     </nav>  
 
@@ -60,7 +68,7 @@ const Navbar = () =>{
           </button>
         </div>
 
-        {/* nagevacion */}
+        {/* navegacion */}
         <div className="d-flex flex-column ms-3">
           <Link to="/" className="link text-sans-p-white text-underline my-2"> Inicio </Link>
           <Link to="/bancodeproyectos" className="link text-sans-p-white text-underline my-2"> Banco de Proyectos </Link>

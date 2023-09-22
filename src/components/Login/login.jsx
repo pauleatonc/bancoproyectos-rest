@@ -1,32 +1,40 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLogin } from '../../hooks/useLogin';
+import { useAuth } from '../../context/AuthContext';
 
 const Login = () => {
   const [formData, setFormData] = useState({
-    username: '',
+    rut: '',
     password: '',
   });
+
+  const [errorMessage, setErrorMessage] = useState(''); // Agregado para manejar errores
+
   const navigate = useNavigate();
+  const { login: authLogin } = useAuth();
+  const { login, loading, error, data } = useLogin();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const { login, loading, error, data } = useLogin();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await login(formData);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        await login(formData);
-        // Aquí puedes manejar la respuesta. Por ejemplo:
-        if (data) {
-            console.log('Datos de respuesta:', data);
-            // Aquí puedes, por ejemplo, guardar el token en el localStorage o manejar una navegación, etc.
-        } else if (error) {
-            console.error('Error en el inicio de sesión:', error);
-            // Aquí puedes mostrar un mensaje al usuario informando sobre el error
-        }
-    };
+    if (data) {
+      console.log('Datos de respuesta:', data);
+      authLogin(data.token, data['refresh-token'], data.user);
+      navigate('/');
+    } else if (error) {
+      console.error('Error en el inicio de sesión:', error);
+
+      // Asumimos que el error del backend viene en una propiedad 'message', ajusta esto según tu backend
+      setErrorMessage(error.response?.data?.message || 'Ocurrió un error inesperado');
+    }
+  };
+
 
   return (
     <div className="container">
@@ -77,6 +85,9 @@ const Login = () => {
                 <button className=" btn-principal-s my-4 mt-5 px-5 text-decoration-underline" type="submit">Ingresar al portal</button>
               </div>
             </form>
+
+            {/* Muestra el mensaje de error si existe */}
+            {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
 
             <h3 className="text-sans-p mt-4">¿No tienes credenciales para ingresar al Banco de Proyectos? <br />
               Debes solicitarlas en tu municipalidad.</h3>
