@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { ApiProvider } from './context/ProjectContext';
+import PrivateRoute from './components/Commons/privateRoute';
 const MainLayout = React.lazy(() => import('./layout/mainLayout'));
 const Landing = React.lazy(() => import('./views/Landing/landing'));
 const Contacto = React.lazy(() => import('./views/Landing/contacto'));
