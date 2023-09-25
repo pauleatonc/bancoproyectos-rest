@@ -25,7 +25,7 @@ const CrearProyectoInnovadorP1 = () => {
       <div className="col-10 mx-5">
         <div className="d-flex justify-content-center border border-alert"> PASOS </div>
         <form className="col">
-          <div className="col-6 d-flex flex-column mt-3 my-5">
+          <div className="col-6 d-flex flex-column my-5">
             <label className="text-sans-p px-3">Elige el programa (Obligatorio)</label>
             <select
               className="custom-select px-3"
@@ -37,7 +37,7 @@ const CrearProyectoInnovadorP1 = () => {
             </select>
           </div>
 
-          <div className="col-6 d-flex flex-column input-container">
+          <div className="col-6 d-flex flex-column input-container mb-4">
             <label className="text-sans-p input-label ms-3 ms-sm-0"> Nombre del proyecto </label>
             <input
               className="input-s px-3"
@@ -46,10 +46,10 @@ const CrearProyectoInnovadorP1 = () => {
               value={inputContent}
               onChange={handleInputChange}
             />
-            <p className="text-sans-p text-end opacity-75 mt-1">{inputContent.length} / {inputMaxCaracteres}</p>
+            <p className="text-sans-h5 text-end opacity-75 mt-1">{inputContent.length} / {inputMaxCaracteres} caracteres.</p>
           </div>
 
-          <div className="col-10 d-flex flex-column input-container mt-4">
+          <div className="col-10 d-flex flex-column input-container">
             <label className="text-sans-p input-label ms-3 ms-sm-0">Describe el proyecto</label>
             <textarea
               className="input-l p-3"
@@ -58,7 +58,7 @@ const CrearProyectoInnovadorP1 = () => {
               value={textareaContent}
               onChange={handleTextareaChange}
             />
-            <p className="text-sans-p text-end opacity-75 mt-1">{textareaContent.length} / {textareaMaxCaracteres}</p>
+            <p className="text-sans-h5 text-end opacity-75 mt-1">{textareaContent.length} / {textareaMaxCaracteres} caracteres.</p>
           </div>
         </form>
         <button className="btn-principal-s d-flex justify-content-between my-5">

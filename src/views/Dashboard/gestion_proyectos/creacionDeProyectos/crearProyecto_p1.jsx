@@ -6,7 +6,7 @@ const CrearProyectoP1 = () => {
         <div className="col-10 mx-5">
           <div className="d-flex justify-content-center border border-alert"> PASOS </div>
           <form className="col">
-            <div className="col-6 d-flex flex-column mt-3 my-5">
+            <div className="col-6 d-flex flex-column my-4">
               <label className="text-sans-p px-3">Elige el programa (Obligatorio)</label>
               <select
                 className="custom-select px-3"
@@ -16,7 +16,7 @@ const CrearProyectoP1 = () => {
               </select>
             </div>
 
-            <div className="col-6 d-flex flex-column mt-3 my-5">
+            <div className="col-6 d-flex flex-column my-4">
               <label className="text-sans-p px-3">Elige el tipo de proyecto (Obligatorio)</label>
               <select
                 className="custom-select px-3"
@@ -26,7 +26,7 @@ const CrearProyectoP1 = () => {
               </select>
             </div>
 
-            <div className="col-6 d-flex flex-column mt-3 my-5">
+            <div className="col-6 d-flex flex-column my-4">
               <label className="text-sans-p px-3">¿En qué región está el proyecto? (Obligatorio)</label>
               <select
                 className="custom-select px-3"
@@ -36,7 +36,7 @@ const CrearProyectoP1 = () => {
               </select>
             </div>
 
-              <div className="col-6 d-flex flex-column mt-3 my-5">
+              <div className="col-6 d-flex flex-column my-4">
                 <label className="text-sans-p px-3">¿En qué comuna? (Obligatorio)</label>
                 <select
                   className="custom-select px-3"
@@ -46,7 +46,7 @@ const CrearProyectoP1 = () => {
                 </select>
               </div>
 
-              <div className="col-6 d-flex flex-column mt-3 my-5">
+              <div className="col-6 d-flex flex-column my-4">
                 <label className="text-sans-p px-3">Elige el año de construcción del proyecto (Obligatorio)</label>
                 <select
                   className="custom-select px-3"
