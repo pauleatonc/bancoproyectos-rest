@@ -32,6 +32,7 @@ $black-color: #111111;
 }
 .text-serif-h3{
     @include font-serif(24px, $grey-a-color);
+    font-weight: 700;
 }
 
 // Estilos texto sin serifa
@@ -64,6 +65,9 @@ $black-color: #111111;
 }
 .text-sans-h5-blue{
     @include font-sans(14px, 400, $primary-color);
+}
+.text-sans-h5-red{
+    @include font-sans(14px, 400, $dark-red);
 }
 .text-sans-p{
     @include font-sans(16px, 400, $grey-a-color);
