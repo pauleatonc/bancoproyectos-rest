@@ -22,8 +22,26 @@ const CrearProyectoInnovadorP1 = () => {
     <div className="container view-container">
       <h2 className="text-sans-h2 mt-4 mb-5">Subir Proyecto: Banco de Proyectos</h2>
       
-      <div className="col-10 mx-5">
-        <div className="d-flex justify-content-center border border-alert"> PASOS </div>
+      <div className="col-7 mx-5">
+
+        <div className="d-flex flex-column align-items-center">
+          <div className="d-flex flex-row align-items-center">
+            <div className="contador-circle-active text-center mx-1"><p className="mt-1">1</p></div>
+            <div className="contador-line-active"></div>
+            <div className="contador-line"></div>
+            <div className="contador-circle text-center mx-1">2</div>
+            <div className="contador-line"></div>
+            <div className="contador-line"></div>
+            <div className="contador-circle text-center mx-1">3</div>
+          </div>
+          <div className="col-10 d-flex flex-row justify-content-between mt-2">
+            <p className="text-sans-p"><strong>Información <br/> General</strong></p>
+            <p className="text-sans-p">Fotos y referencias</p>
+            <p className="text-sans-p">Vista previa</p>
+          </div>
+        </div>
+
+
         <form className="col">
           <div className="col-6 d-flex flex-column my-5">
             <label className="text-sans-p px-3">Elige el programa (Obligatorio)</label>
