@@ -1,0 +1,14 @@
+.view-container{
+    min-width: 1000px;
+    margin: 0 auto;
+    overflow-x: auto;
+}
+
+.opt-container{
+    border: 1px solid $light-blue;
+    border-radius: 5px;
+}
+.opt-container:hover{
+    outline: 3px solid $light-blue;
+    outline-offset: -2px;
+}

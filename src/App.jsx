@@ -1,7 +1,7 @@
 import React, { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { ApiProvider } from './context/ProjectContext';
-import PrivateRoute from './components/Commons/privateRoute';
+//import PrivateRoute from './components/Commons/privateRoute';
 const MainLayout = React.lazy(() => import('./layout/mainLayout'));
 const Landing = React.lazy(() => import('./views/Landing/landing'));
 const Contacto = React.lazy(() => import('./views/Landing/contacto'));
@@ -16,6 +16,10 @@ const Error404 = React.lazy(() => import('./views/Error/error404'));
 const Error500 = React.lazy(() => import('./views/Error/error500'));
 const Error503 = React.lazy(() => import('./views/Error/error503'));
 const HomeDashboard = React.lazy(() => import('./views/Dashboard/admin/home'));
+const CrearProyectos = React.lazy(() => import('./views/Dashboard/gestion_proyectos/creacionDeProyectos/creacionProyectos_pCero'));
+const CrearProyecto_paso1 = React.lazy(() => import('./views/Dashboard/gestion_proyectos/creacionDeProyectos/crearProyecto_p1'));
+const CrearInnovador_paso1 = React.lazy(() => import('./views/Dashboard/gestion_proyectos/creacionDeProyectos/crearInnovador_p1'));
+const AdministrarProyectos = React.lazy(() => import('./views/Dashboard/gestion_proyectos/administracionDeProyectos/administracionProyectos'));
 
 function App()
 {
@@ -40,6 +44,10 @@ function App()
           </Route>
           <Route path="/dashboard" element={<DashboardLayout />}>
             <Route index element={<HomeDashboard />} />
+            <Route path="crearproyectos" element={<CrearProyectos />} />
+            <Route path="crearproyecto_paso1" element={<CrearProyecto_paso1 />} />
+            <Route path="crearinnovador_paso1" element={<CrearInnovador_paso1 />} />
+            <Route path="administrarproyectos" element={<AdministrarProyectos />} />
           </Route>
         </Routes>
       </Suspense>
