@@ -7,37 +7,61 @@ const CrearProyectoP1 = () => {
           <div className="d-flex justify-content-center border border-alert"> PASOS </div>
           <form className="col">
             <div className="col-6 d-flex flex-column mt-3 my-5">
-              <label className="text-sans-p px-3" htmlFor="contact_reason">Elige el programa (Obligatorio)</label>
+              <label className="text-sans-p px-3">Elige el programa (Obligatorio)</label>
               <select
                 className="custom-select px-3"
                 id="contact_reason"> 
                 {/* GENERAR DE MANERA DINAMICA */}
-                <option value="">Elije una opción</option>
-                <option value="sugerencia">PMU</option>
-                <option value="consulta">PMB</option>
+                <option value="">Elige una opción</option>
               </select>
             </div>
 
-            <div className="col-6 d-flex flex-column input-container my-5">
-              <label className="text-sans-p input-label ms-3 ms-sm-0" htmlFor="organization"> Nombre del proyecto </label>
-              <input
-                className="input-s px-3"
-                type="text"
-                placeholder="Ingresa el nombre de tu organización."
-              />
+            <div className="col-6 d-flex flex-column mt-3 my-5">
+              <label className="text-sans-p px-3">Elige el tipo de proyecto (Obligatorio)</label>
+              <select
+                className="custom-select px-3"
+                id="contact_reason"> 
+                {/* GENERAR DE MANERA DINAMICA */}
+                <option value="">Elige una opción</option>
+              </select>
             </div>
 
-            <div className="col-10 d-flex flex-column input-container mt-4">
-              <label className="text-sans-p input-label ms-3 ms-sm-0" htmlFor="message">Describe el proyecto</label>
-              <textarea
-                className="input-l p-3"
-                id="message"
-                placeholder="Describe la razón de contacto."
-              ></textarea>
+            <div className="col-6 d-flex flex-column mt-3 my-5">
+              <label className="text-sans-p px-3">¿En qué región está el proyecto? (Obligatorio)</label>
+              <select
+                className="custom-select px-3"
+                id="contact_reason"> 
+                {/* GENERAR DE MANERA DINAMICA */}
+                <option value="">Elige una opción</option>
+              </select>
             </div>
+
+              <div className="col-6 d-flex flex-column mt-3 my-5">
+                <label className="text-sans-p px-3">¿En qué comuna? (Obligatorio)</label>
+                <select
+                  className="custom-select px-3"
+                  id="contact_reason"> 
+                  {/* GENERAR DE MANERA DINAMICA */}
+                  <option value="">Elige una opción</option>
+                </select>
+              </div>
+
+              <div className="col-6 d-flex flex-column mt-3 my-5">
+                <label className="text-sans-p px-3">Elige el año de construcción del proyecto (Obligatorio)</label>
+                <select
+                  className="custom-select px-3"
+                  id="contact_reason"> 
+                  {/* GENERAR DE MANERA DINAMICA */}
+                  <option value="">Elige una opción</option>
+                </select>
+              </div>
           </form>
+          <button className="btn-principal-s d-flex justify-content-between my-5">
+            <p className="text-sans-p-white text-decoration-underline mb-0 py-1 px-2">Seguir con “paso siguiente”</p>
+            <i className="material-symbols-rounded ms-2 fs-2 mt-1">keyboard_arrow_right</i>
+          </button>
         </div>
       </div>
     )
   }
-  export default CrearProyectoP1; 
+export default CrearProyectoP1; 

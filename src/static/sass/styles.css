@@ -53,6 +53,13 @@
   font-weight: 600;
 }
 
+.text-sans-h4-white {
+  font-family: "Roboto";
+  color: #FFF;
+  font-size: 20px;
+  font-weight: 600;
+}
+
 .text-sans-h5 {
   font-family: "Roboto";
   color: #373737;

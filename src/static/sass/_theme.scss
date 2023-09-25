@@ -57,6 +57,9 @@ $black-color: #111111;
 .text-sans-h4{
     @include font-sans(20px, 600, $grey-a-color);
 }
+.text-sans-h4-white{
+    @include font-sans(20px, 600, $white-color);
+}
 .text-sans-h5{
     @include font-sans(14px, 400, $grey-a-color);
 }
