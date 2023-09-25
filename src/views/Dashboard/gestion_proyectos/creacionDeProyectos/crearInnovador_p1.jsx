@@ -1,4 +1,23 @@
+import { useState } from 'react';
+
 const CrearProyectoInnovadorP1 = () => {
+  const [textareaContent, setTextareaContent] = useState('');
+  const [inputContent, setInputContent] = useState('');
+  const textareaMaxCaracteres = 500;
+  const inputMaxCaracteres = 30;
+
+  // Actualiza el estado del contenido del textarea y mostrar el contador de caracteres
+  const handleTextareaChange = (event) => {
+    const texto = event.target.value;
+    setTextareaContent(texto);
+  };
+  
+  // Actualiza el estado del contenido del textarea y mostrar el contador de caracteres
+  const handleInputChange = (event) => {
+    const texto = event.target.value;
+    setInputContent(texto);
+  };
+
   return (
     <div className="container view-container">
       <h2 className="text-sans-h2 mt-4 mb-5">Subir Proyecto: Banco de Proyectos</h2>
@@ -18,14 +37,16 @@ const CrearProyectoInnovadorP1 = () => {
             </select>
           </div>
 
-          <div className="col-6 d-flex flex-column input-container my-5">
+          <div className="col-6 d-flex flex-column input-container">
             <label className="text-sans-p input-label ms-3 ms-sm-0"> Nombre del proyecto </label>
             <input
               className="input-s px-3"
               type="text"
               placeholder="Text example"
+              value={inputContent}
+              onChange={handleInputChange}
             />
-            <p>conteo caracteres</p>
+            <p className="text-sans-p text-end opacity-75 mt-1">{inputContent.length} / {inputMaxCaracteres}</p>
           </div>
 
           <div className="col-10 d-flex flex-column input-container mt-4">
@@ -34,8 +55,10 @@ const CrearProyectoInnovadorP1 = () => {
               className="input-l p-3"
               id="message"
               placeholder="Text example"
+              value={textareaContent}
+              onChange={handleTextareaChange}
             />
-            <p>conteo caracteres</p>
+            <p className="text-sans-p text-end opacity-75 mt-1">{textareaContent.length} / {textareaMaxCaracteres}</p>
           </div>
         </form>
         <button className="btn-principal-s d-flex justify-content-between my-5">
