@@ -79,9 +79,6 @@ $black-color: #111111;
     @include font-sans(16px, 400, $grey-a-color);
     line-height: 30px;
 }
-.text-sans-p-bolder{
-    @include font-sans(16px, 700, $grey-a-color);
-}
 .text-sans-p-blue{
     @include font-sans(16px, 400, $blue-color);
 }
