@@ -103,6 +103,13 @@
   line-height: 30px;
 }
 
+.text-sans-p-bolder {
+  font-family: "Roboto";
+  color: #373737;
+  font-size: 16px;
+  font-weight: 700;
+}
+
 .text-sans-p-blue {
   font-family: "Roboto";
   color: #0F69C4;
@@ -230,6 +237,15 @@
 .custom-pagination-btn.active {
   background-color: #0F69C4;
   color: #FFF;
+}
+
+.red-btn {
+  width: -moz-fit-content;
+  width: fit-content;
+  background-color: transparent;
+  border: 2px solid #871a1a;
+  color: #871a1a;
+  padding: 13px;
 }
 
 .select-box {

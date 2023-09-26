@@ -79,6 +79,9 @@ $black-color: #111111;
     @include font-sans(16px, 400, $grey-a-color);
     line-height: 30px;
 }
+.text-sans-p-bolder{
+    @include font-sans(16px, 700, $grey-a-color);
+}
 .text-sans-p-blue{
     @include font-sans(16px, 400, $blue-color);
 }
@@ -177,6 +180,14 @@ $black-color: #111111;
 .custom-pagination-btn.active {
     background-color:$blue-color;
     color: $white-color;
+}
+
+.red-btn{
+    width: fit-content;
+    background-color: transparent;
+    border: 2px solid $dark-red;
+    color: $dark-red;
+    padding: 13px;
 }
 
 // Boton falso selector
