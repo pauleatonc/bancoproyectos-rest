@@ -3,13 +3,13 @@ from datetime import timedelta, datetime
 #
 from django.db import models
 from django.core.validators import MinLengthValidator
+from django.core.exceptions import ValidationError
 #
 from applications.base.models import BaseModel
 from applications.projects.models import Program
 # apps de terceros
 from imagekit.models import ProcessedImageField
-from imagekit.processors import ResizeToFill, ResizeToFit
-from simple_history.models import HistoricalRecords
+from imagekit.processors import ResizeToFill
 
 
 class InnovativeProjects(BaseModel):
@@ -21,8 +21,38 @@ class InnovativeProjects(BaseModel):
     portada = ProcessedImageField(upload_to='projects', processors=[
         ResizeToFill(1200, 630)], format='WEBP', options={'quality': 60}, null=True,
                                   blank=False, verbose_name='Foto portada (obligatorio)')
-    program = models.ManyToManyField(Program, blank=False, verbose_name='Programa (obligatorio)')
-    public = models.BooleanField(default=True)
+    program = models.ManyToManyField(Program, blank=True, verbose_name='Programa (obligatorio)')
+    public = models.BooleanField(default=False)
+
+    # request_sent debe cambiar a True si el proyecto es enviado a revisión. Debe cambiar nuevamente a False cuando evaluated sea True
+    request_sent = models.BooleanField(default=False)
+
+    # evaluated debe cambiar a True cuando el proyecto sea evaluado. Debe cambiar nuevamente a False si request_sent sea True
+    evaluated = models.BooleanField(default=False)
+
+    @property
+    def application_status(self):
+        if self.evaluated:
+            # Check if the related objects exist before accessing them
+            if ((hasattr(self, 'revision_section_one') and self.revision_section_one.approved_section_one) and
+                    (hasattr(self, 'revision_section_two') and self.revision_section_two.approved_section_two)):
+                return "Aceptado"
+            else:
+                return "Rechazado"
+        else:
+            if self.request_sent:
+                return "Pendiente"
+            else:
+                return "Incompleto"
+
+    def clean(self):
+        # Validación personalizada
+        if self.public and self.application_status != "Aceptado":
+            raise ValidationError('El proyecto debe ser "Aceptado" para poder ser público.')
+
+    def save(self, *args, **kwargs):
+        self.clean()
+        super(InnovativeProjects, self).save(*args, **kwargs)
 
 
     class Meta:
@@ -48,3 +78,41 @@ class InnovativeGalleryImage(models.Model):
         blank=True
     )
     project = models.ForeignKey('InnovativeProjects', related_name='innovative_gallery_images', on_delete=models.CASCADE)
+
+
+class RevisionSectionOne(models.Model):
+    """
+    Campos para revisión y aprobación
+    """
+    approved_title = models.BooleanField(verbose_name='Error en el título', default=True)
+    approved_description = models.BooleanField(verbose_name='Error en la descripción del proyecto', default=True)
+    approved_program = models.BooleanField(verbose_name='Programa incorrecto', default=True)
+
+    approved_section_one = models.BooleanField(default=False)
+
+    project = models.OneToOneField('InnovativeProjects', related_name='revision_section_one',  on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        if self.approved_section_one:
+            if not (self.approved_title and self.approved_description and self.approved_program):
+                raise ValueError('El campo approved_section_one solo puede ser True si todos los otros campos son True')
+        super().save(*args, **kwargs)
+
+
+class RevisionSectionTwo(models.Model):
+    """
+    Campos para revisión y aprobación
+    """
+    approved_portada = models.BooleanField(verbose_name='Foto de portada con problemas', default=True)
+    approved_gallery = models.BooleanField(verbose_name='Fotos de la galería con problemas', default=True)
+    approved_web_source = models.BooleanField(verbose_name='Error en la fuente o enlace', default=True)
+
+    approved_section_two = models.BooleanField(default=False)
+
+    project = models.OneToOneField('InnovativeProjects', related_name='revision_section_two', on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        if self.approved_section_two:
+            if not (self.approved_portada and self.approved_gallery and self.approved_web_source):
+                raise ValueError('El campo approved_section_two solo puede ser True si todos los otros campos son True')
+        super().save(*args, **kwargs)

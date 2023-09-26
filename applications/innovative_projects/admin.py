@@ -2,7 +2,7 @@ from django.contrib import admin
 from import_export.admin import ImportExportMixin
 from import_export.resources import ModelResource
 
-from .models import InnovativeProjects, InnovativeGalleryImage, InnovativeWebSource
+from .models import InnovativeProjects, InnovativeGalleryImage, InnovativeWebSource, HistoricalInnovativeProjects
 
 ''' La clase Model Resource disponibiliza al Model indicado
     para poder usar el ImportExportMixin en el administrador
@@ -52,3 +52,13 @@ class InnovativeProjectsAdmin(ImportExportMixin, admin.ModelAdmin):
 
     # Agregar las acciones personalizadas al administrador
     actions = [make_public, make_private]
+
+
+class HistoricalInnovativeProjectsAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'public', 'history_type', 'history_date', 'history_user']
+    search_fields = ['title']
+    list_display_links = ['title']
+    list_per_page = 20
+
+# Registra el modelo histórico en el admin
+admin.site.register(HistoricalInnovativeProjects, HistoricalInnovativeProjectsAdmin)
