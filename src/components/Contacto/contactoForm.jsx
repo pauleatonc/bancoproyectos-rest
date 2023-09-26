@@ -1,13 +1,11 @@
 import useContactForm from '../../hooks/useContactForm';
 
-
 const ContactForm = () => {
   const {
     register,
     handleSubmit,
     errors
   } = useContactForm();
-
 
   return (
     <div className="d-flex justify-content-center mt-4 mb-5">
@@ -55,7 +53,7 @@ const ContactForm = () => {
             {...register('contact_reason')}
             className="custom-select px-3"
             id="contact_reason">
-            <option value="">Elije una opción</option>
+            <option value="">Elige una opción</option>
             <option value="sugerencia">Sugerencia</option>
             <option value="consulta">Consulta por programa</option>
             <option value="documento">Falta un documento</option>
