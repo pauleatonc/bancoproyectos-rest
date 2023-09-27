@@ -55,23 +55,19 @@ const CrearProyectos = () => {
 
   const handleSubirProyectoClick = () => {
     if (selectedOption) {
-      if (selectedOption === 'bancoProyectos') {
-        // Verifica si se ha ingresado un título
-        if (!inputText) {
-          setShowTitleErrorMessage(true);
-        } else {
+      // Verifica si se ha ingresado un título
+      if (!inputText) {
+        setShowTitleErrorMessage(true);
+      } else {
+        if (selectedOption === 'bancoProyectos') {
           window.location.href = '/dashboard/crearproyecto_paso1';
-        }
-      } else if (selectedOption === 'proyectosInnovadores') {
-        // Verifica si se ha ingresado un título
-        if (!inputText) {
-          setShowTitleErrorMessage(true);
-        } else {
+        } else if (selectedOption === 'proyectosInnovadores') {
           window.location.href = '/dashboard/crearinnovador_paso1';
         }
       }
     } else {
-      setShowTitleErrorMessage(true);
+      // Muestra el mensaje de error si no se ha seleccionado una opción
+      setShowOptionErrorMessage(true);
     }
   };
 
