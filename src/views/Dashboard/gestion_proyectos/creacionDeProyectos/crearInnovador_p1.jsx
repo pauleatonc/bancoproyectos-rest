@@ -53,7 +53,8 @@ const CrearProyectoInnovadorP1 = () => {
       <div className="col-10 mt-5 d-flex justify-content-end">
         <button className="btn-principal-s d-flex text-sans-h4 pb-0">
           <p className="text-decoration-underline">Enviar solicitud</p>
-          <i className="material-symbols-rounded ms-2">arrow_forward_ios</i> </button>
+          <i className="material-symbols-rounded ms-2">arrow_forward_ios</i> 
+        </button>
       </div>
       <div className="col-10 mt-5 d-flex justify-content-start mb-5">
         <button className="red-btn text-sans-h4 d-flex pb-0">

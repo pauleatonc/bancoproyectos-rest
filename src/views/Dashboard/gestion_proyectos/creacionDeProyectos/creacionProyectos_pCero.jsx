@@ -40,11 +40,11 @@ const CrearProyectos = () => {
             </div>
             <div className="d-flex flex-row">
               <i className="material-symbols-rounded me-2">check</i>
-              <p className="text-sans-h5">Crear usuarios.Crear usuarios.Crear usuarios.Crear usuarios.</p>
+              <p className="text-sans-h5">Muestran información como: año de construcción, región y comuna donde se realizó, y el código SUBDERE asociado.</p>
             </div>
             <div className="d-flex flex-row">
               <i className="material-symbols-rounded me-2">check</i>
-              <p className="text-sans-h5">Crear usuarios.Crear usuarios.Crear usuarios.Crear usuarios.</p>
+              <p className="text-sans-h5">Comparten documentación como presupuestos, especificaciones técnicas, entre otros.</p>
             </div>
             <hr/>
             <div className="d-flex justify-content-center">
@@ -63,15 +63,19 @@ const CrearProyectos = () => {
             <hr/>
             <div className="d-flex flex-row">
               <i className="material-symbols-rounded me-2">check</i>
-              <p className="text-sans-h5">Proyectos referenciales que no han sido ejecutados.</p>
+              <p className="text-sans-h5">Proyectos referenciales que no necesariamente han sido ejecutados.</p>
             </div>
             <div className="d-flex flex-row">
               <i className="material-symbols-rounded me-2">check</i>
-              <p className="text-sans-h5">No es obligatorio tener documentación asociada a la ejecución del proyecto.</p>
+              <p className="text-sans-h5">Debes tener fotos para mostrar.</p>
             </div>
             <div className="d-flex flex-row">
               <i className="material-symbols-rounded me-2">check</i>
-              <p className="text-sans-h5">Crear usuarios.Crear usuarios.Crear usuarios.Crear usuarios.</p>
+              <p className="text-sans-h5">Puedes agregar enlaces a sitios web referenciales.</p>
+            </div>
+            <div className="d-flex flex-row">
+              <i className="material-symbols-rounded me-2">check</i>
+              <p className="text-sans-h5">Proyectos novedosos que escapan de lo que normalmente se postula.</p>
             </div>
             <hr/>
             <div className="d-flex justify-content-center">
@@ -92,12 +96,31 @@ const CrearProyectos = () => {
         </p>
         }
 
-        <button 
-        onClick={handleSubirProyectoClick}
-        className="btn-secundario-s text-decoration-underline px-4"
-        >
-          Subir proyecto
-        </button>
+        <div>
+          <p className="text-sans-h5 mb-1">Escribe el título del proyecto (Obligatorio)</p>
+          <div className="d-flex justify-content-between">
+            <input className="text-sans-h1 container-fluid ghost-input" placeholder="Título del Proyecto"></input>
+            <button className="btn-principal-s d-flex text-sans-h4 pb-0">
+              <p className="text-sans-p-white text-decoration-underline">Guardar</p>
+              <i className="material-symbols-rounded ms-2 pt-1">save</i>
+            </button >
+          </div>
+          <p className="text-sans-h5 mt-1">CONTADOR DE CARACTERES 0 / 70</p>
+          {/* Aparece condificonalmente */}
+          <p className="text-sans-h5-red"> Mensaje de error.</p>
+        </div>
+
+        <div className="container d-flex justify-content-end">
+          <button
+          onClick={handleSubirProyectoClick} 
+          className="btn-principal-s d-flex text-sans-h4 pb-0"
+          >
+            <p className="text-sans-h4-white text-decoration-underline">Subir Proyecto</p>
+            <i className="material-symbols-rounded ms-2">arrow_forward_ios</i> 
+          </button>
+        </div>
+        
+
         </div>
       </div>
     );

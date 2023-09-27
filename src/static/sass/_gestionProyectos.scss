@@ -4,6 +4,10 @@
     margin: 0 auto;
     overflow-x: auto;
 }
+.ghost-input{
+    border: none;
+    outline: none;
+}
 // Paso cero
 .opt-container{
     border: 1px solid $light-blue;
