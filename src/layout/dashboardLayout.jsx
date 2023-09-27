@@ -5,21 +5,21 @@ const DashboardLayout = () =>
 {
   return (
     <>
-      <div className="cols-12">
+      <div className="container-fluid">
         <div className="row">
-          <div className="col-3">
+          <div className="col-2">
             <Sidebar />
           </div>
-          <div className="col-9">
+          <div className="col-10">
             <NavbarUser />
-            <Outlet />
+              <Outlet />
           </div>
         </div>
-      </div>
-    </>
+        </div>
+      </>
 
-  )
+      )
 
 }
 
-export default DashboardLayout; 
+      export default DashboardLayout; 
