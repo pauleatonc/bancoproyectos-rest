@@ -35,17 +35,43 @@ const CrearProyectos = () => {
     setIsEditing(true);
   };
 
+  // const handleSubirProyectoClick = () => {
+  //   if (selectedOption) {
+  //     // Redirige segun la opcion seleccionada
+  //     if (selectedOption === 'bancoProyectos') {
+  //       window.location.href = '/dashboard/crearproyecto_paso1';
+  //     } else if (selectedOption === 'proyectosInnovadores') {
+  //       window.location.href = '/dashboard/crearinnovador_paso1';
+  //     }
+  //   } else {
+  //     // Muestra el mensaje de error si no se ha seleccionado una opcion
+  //     setShowOptionErrorMessage(true);
+  //   }
+  //   // Verifica si se ha ingresado un título
+  //   if (!inputText) {
+  //     setShowTitleErrorMessage(true);
+  //   }
+  // };
+
   const handleSubirProyectoClick = () => {
     if (selectedOption) {
-      // Redirige segun la opcion seleccionada
       if (selectedOption === 'bancoProyectos') {
-        window.location.href = '/dashboard/crearproyecto_paso1';
+        // Verifica si se ha ingresado un título
+        if (!inputText) {
+          setShowTitleErrorMessage(true);
+        } else {
+          window.location.href = '/dashboard/crearproyecto_paso1';
+        }
       } else if (selectedOption === 'proyectosInnovadores') {
-        window.location.href = '/dashboard/crearinnovador_paso1';
+        // Verifica si se ha ingresado un título
+        if (!inputText) {
+          setShowTitleErrorMessage(true);
+        } else {
+          window.location.href = '/dashboard/crearinnovador_paso1';
+        }
       }
     } else {
-      // Muestra el mensaje de error si no se ha seleccionado una opcion
-      setShowOptionErrorMessage(true);
+      setShowTitleErrorMessage(true);
     }
   };
 
