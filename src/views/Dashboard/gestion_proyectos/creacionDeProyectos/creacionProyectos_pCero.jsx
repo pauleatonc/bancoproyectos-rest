@@ -3,8 +3,10 @@ import { useState } from 'react';
 const CrearProyectos = () => {
   // Hooks de estado
   const [selectedOption, setSelectedOption] = useState(null);
-  const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [showOptionErrorMessage, setShowOptionErrorMessage] = useState(false);
   const [inputText, setInputText] = useState('');
+  const [isEditing, setIsEditing] = useState(true);
+  const [showTitleErrorMessage, setShowTitleErrorMessage] = useState(false);
 
   // Maneja cambios en la seleccion y la actualiza en el estado.
   const handleOptionChange = (value) => {
@@ -17,6 +19,22 @@ const CrearProyectos = () => {
     setInputText(text);
   };
 
+  const handleGuardarClick = () => {
+    if (!inputText) {
+      // Si no hay texto en el input, muestra el mensaje de error
+      setShowTitleErrorMessage(true);
+    } else {
+      // Si hay texto en el input, cambia al modo de edicion
+      setIsEditing(false);
+      setShowTitleErrorMessage(false);
+    }
+  };
+
+  const handleEditarClick = () => {
+    // Cambia de nuevo al modo de edicion
+    setIsEditing(true);
+  };
+
   const handleSubirProyectoClick = () => {
     if (selectedOption) {
       // Redirige segun la opcion seleccionada
@@ -27,7 +45,7 @@ const CrearProyectos = () => {
       }
     } else {
       // Muestra el mensaje de error si no se ha seleccionado una opcion
-      setShowErrorMessage(true);
+      setShowOptionErrorMessage(true);
     }
   };
 
@@ -97,32 +115,55 @@ const CrearProyectos = () => {
           </div>
         </div>
 
-        {showErrorMessage && 
+        {showOptionErrorMessage && 
         <p className="text-sans-h5-red ms-1 ">
           Debes elegir donde quieres mostrar el proyecto antes de continuar.
         </p>
         }
 
-        <div>
-          <p className="text-sans-h5 mb-1">Escribe el título del proyecto (Obligatorio)</p>
-          <div className="d-flex justify-content-between">
-            <input 
-            className="text-sans-h1 container-fluid ghost-input" 
-            placeholder="Título del Proyecto"
-            value={inputText}
-            onChange={handleInputChange}
-            />
-            <button className="btn-principal-s d-flex text-sans-h4 pb-0">
-              <p className="text-sans-p-white text-decoration-underline">Guardar</p>
-              <i className="material-symbols-rounded ms-2 pt-1">save</i>
-            </button >
-          </div>
-          <p className="text-sans-h5 mt-1">{inputText.length} / 70 caracteres.</p>
-          {/* Aparece condificonalmente */}
-          <p className="text-sans-h5-red"> Mensaje de error.</p>
+        <div className="container">
+          {isEditing ? (
+            // Modo de edición
+            <>
+              <div className="d-flex flex-row justify-content-between my-3">
+                <input
+                  className="text-sans-h1 container-fluid ghost-input"
+                  placeholder="Titulo del Proyecto"
+                  value={inputText}
+                  onChange={handleInputChange}
+                />
+                <button
+                  className="btn-principal-s d-flex text-sans-h4 pb-0"
+                  onClick={handleGuardarClick}
+                >
+                  <p className="text-sans-p-white text-decoration-underline">Guardar</p>
+                  <i className="material-symbols-rounded ms-2 pt-1">save</i>
+                </button>
+              </div>
+              
+              {showTitleErrorMessage && (
+                <p className="text-sans-h5-red mt-1">Debes ingresar un título antes de continuar.</p>
+              )}
+            </>
+          ) : (
+            // Modo de visualización
+            <div>
+              <p>Título del Proyecto</p>
+              <div className="d-flex flex-row justify-content-between my-3">
+                <h1 className="text-sans-h1">{inputText || "Titulo del Proyecto"}</h1>
+                <button
+                  className="btn-secundario-s d-flex pb-0"
+                  onClick={handleEditarClick}
+                >
+                  <p className=" text-decoration-underline">Editar</p>
+                  <i className="material-symbols-rounded ms-2 pt-1">edit</i>
+                </button>
+              </div>
+            </div>
+          )}
         </div>
 
-        <div className="container d-flex justify-content-end">
+        <div className="container d-flex justify-content-end mt-5">
           <button
           onClick={handleSubirProyectoClick} 
           className="btn-principal-s d-flex text-sans-h4 pb-0"
@@ -132,7 +173,6 @@ const CrearProyectos = () => {
           </button>
         </div>
         
-
         </div>
       </div>
     );
