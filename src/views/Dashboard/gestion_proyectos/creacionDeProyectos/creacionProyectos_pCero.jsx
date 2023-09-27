@@ -4,10 +4,17 @@ const CrearProyectos = () => {
   // Hooks de estado
   const [selectedOption, setSelectedOption] = useState(null);
   const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [inputText, setInputText] = useState('');
 
-  // Almacena opcion seleccionada
+  // Maneja cambios en la seleccion y la actualiza en el estado.
   const handleOptionChange = (value) => {
     setSelectedOption(value);
+  };
+
+  // Maneja cambios en el input y actualiza el estado.
+  const handleInputChange = (event) => {
+    const text = event.target.value;
+    setInputText(text);
   };
 
   const handleSubirProyectoClick = () => {
@@ -99,13 +106,18 @@ const CrearProyectos = () => {
         <div>
           <p className="text-sans-h5 mb-1">Escribe el título del proyecto (Obligatorio)</p>
           <div className="d-flex justify-content-between">
-            <input className="text-sans-h1 container-fluid ghost-input" placeholder="Título del Proyecto"></input>
+            <input 
+            className="text-sans-h1 container-fluid ghost-input" 
+            placeholder="Título del Proyecto"
+            value={inputText}
+            onChange={handleInputChange}
+            />
             <button className="btn-principal-s d-flex text-sans-h4 pb-0">
               <p className="text-sans-p-white text-decoration-underline">Guardar</p>
               <i className="material-symbols-rounded ms-2 pt-1">save</i>
             </button >
           </div>
-          <p className="text-sans-h5 mt-1">CONTADOR DE CARACTERES 0 / 70</p>
+          <p className="text-sans-h5 mt-1">{inputText.length} / 70 caracteres.</p>
           {/* Aparece condificonalmente */}
           <p className="text-sans-h5-red"> Mensaje de error.</p>
         </div>
