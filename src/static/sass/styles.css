@@ -15,6 +15,7 @@
   font-family: "Roboto Slab";
   color: #373737;
   font-size: 24px;
+  font-weight: 700;
 }
 
 .text-sans-h1 {
@@ -45,9 +46,23 @@
   font-weight: 500;
 }
 
+.text-sans-h35 {
+  font-family: "Roboto";
+  color: #373737;
+  font-size: 23px;
+  font-weight: 500;
+}
+
 .text-sans-h4 {
   font-family: "Roboto";
   color: #373737;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.text-sans-h4-white {
+  font-family: "Roboto";
+  color: #FFF;
   font-size: 20px;
   font-weight: 600;
 }
@@ -69,6 +84,13 @@
 .text-sans-h5-blue {
   font-family: "Roboto";
   color: #006FB3;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.text-sans-h5-red {
+  font-family: "Roboto";
+  color: #871a1a;
   font-size: 14px;
   font-weight: 400;
 }
@@ -162,11 +184,6 @@
   color: #FFF;
 }
 
-.btn-secundario-s:active {
-  background-color: #0F69C4;
-  color: #FFF;
-}
-
 .btn-secundario-s:focus {
   background-color: #0F69C4;
   color: #FFF;
@@ -185,11 +202,6 @@
   color: #FFF;
 }
 
-.btn-secundario-l:active {
-  background-color: #0F69C4;
-  color: #FFF;
-}
-
 .btn-terciario {
   width: -moz-fit-content;
   width: fit-content;
@@ -199,12 +211,12 @@
   border-radius: 32px;
 }
 
-.btn-terciario:active {
+.btn-terciario:hover {
   background-color: #0F69C4;
   color: #FFF;
 }
 
-.btn-terciario:hover {
+.selected-button {
   background-color: #0F69C4;
   color: #FFF;
 }
@@ -230,11 +242,6 @@
   border: none;
   background-color: transparent;
   color: #373737;
-}
-
-.select-option:active {
-  background-color: #0F69C4;
-  color: #FFF;
 }
 
 .select-option:hover {
@@ -471,6 +478,10 @@
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   width: 300px;
   padding: 17px;
+}
+
+.search-bar {
+  max-width: 450px;
 }
 
 .text-body {
@@ -1247,4 +1258,42 @@ a.btn-link:hover, a.btn-link:focus {
   color: #001C41;
   font-size: 24px;
   margin: 15px 12px 12px 12px;
+}
+
+.view-container {
+  min-width: 1000px;
+  margin: 0 auto;
+  overflow-x: auto;
+}
+
+.opt-container {
+  border: 1px solid #3f87d0;
+  border-radius: 5px;
+}
+
+.opt-container:hover {
+  outline: 3px solid #3f87d0;
+  outline-offset: -2px;
+}
+
+.img-section-l {
+  color: #656565;
+  border: 2px dashed #656565;
+  height: 356px;
+  width: 550px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.img-section-s {
+  color: #656565;
+  border: 2px dashed #656565;
+  height: 150px;
+  width: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }/*# sourceMappingURL=styles.css.map */

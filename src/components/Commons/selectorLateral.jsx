@@ -1,44 +1,39 @@
 import { useState, useEffect } from "react";
 import DropdownComponent from "./Dropdown";
 
-const SelectorLateral = ({ data, onGoodPracticeSelect }) =>
-{
+const SelectorLateral = ({ data, onSelect, titlePropertyName }) => {
   const [ selectedOption, setSelectedOption ] = useState(null); // Almacena la opcion seleccionada.
 
-
-
   // Evento que selecciona primera opcion del listado al cambiar opciones o montar componente.
-  useEffect(() =>
-  {
-    if (!selectedOption && data.length > 0)
-    {
-      setSelectedOption(data[ 0 ]);
+  useEffect(() => {
+    if (!selectedOption && data.length > 0){
+      setSelectedOption(data[0]);
+      onSelect(data[0]); // Llama a la función onSelect con la primera opción
     }
-  }, [ data, selectedOption ]);
+  }, [ data, selectedOption, onSelect ]);
 
   // Evento que actualiza opcion seleccionada al primer elemento de 'data' cuando 'data' cambia.
-  useEffect(() =>
-  {
-    if (data.length > 0)
-    {
-      setSelectedOption(data[ 0 ]);
+  useEffect(() => {
+    if (data.length > 0){
+      setSelectedOption(data[0]);
     }
   }, [ data ]);
 
   return (
     <div>
       <div className="d-flex flex-column d-none d-lg-block">
-        {data.map((practice) => (
+        {data.map((item) => (
           <button
-            key={practice.id}
-            className="btn-secundario-l d-flex justify-content-between"
-            onClick={() =>
-            {
-              setSelectedOption(practice);
-              onGoodPracticeSelect(practice);
+            key={item.id}
+            className={`btn-secundario-l d-flex justify-content-between ${
+              selectedOption === item ? "selected-button" : ""
+            }`}
+            onClick={() => {
+              setSelectedOption(item);
+              onSelect(item);
             }}
           >
-            <p className="text-decoration-underline mb-0 py-1">{practice.title}</p>
+            <p className="text-decoration-underline mb-0 py-1">{item[titlePropertyName]}</p>
             <i className="material-symbols-rounded ms-2">keyboard_arrow_right</i>
           </button>
         ))}
@@ -48,10 +43,12 @@ const SelectorLateral = ({ data, onGoodPracticeSelect }) =>
         <DropdownComponent
           data={data}
           description="una buena practica"
-          onOptionSelect={(practice) =>
-          {
-            onGoodPracticeSelect(practice);
+          onOptionSelect={(item) => {
+            setSelectedOption(item);
+            onSelect(item);
           }}
+          titlePropertyName={titlePropertyName}
+          selectedOption={selectedOption}
         />
       </div>
     </div>

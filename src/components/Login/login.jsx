@@ -1,23 +1,40 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useLogin } from '../../hooks/useLogin';
+import { useAuth } from '../../context/AuthContext';
 
 const Login = () => {
   const [formData, setFormData] = useState({
     rut: '',
     password: '',
   });
+
+  const [errorMessage, setErrorMessage] = useState(''); // Agregado para manejar errores
+
   const navigate = useNavigate();
+  const { login: authLogin } = useAuth();
+  const { login, loading, error, data } = useLogin();
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Aquí agregar la lógica para enviar los datos al backend cuando esté listo
-    console.log('Enviar datos de inicio de sesión:', formData);
-    // Resto del código para manejar la respuesta del backend
+    await login(formData);
+
+    if (data) {
+      console.log('Datos de respuesta:', data);
+      authLogin(data.token, data['refresh-token'], data.user);
+      navigate('/');
+    } else if (error) {
+      console.error('Error en el inicio de sesión:', error);
+
+      // Asumimos que el error del backend viene en una propiedad 'message', ajusta esto según tu backend
+      setErrorMessage(error.response?.data?.message || 'Ocurrió un error inesperado');
+    }
   };
+
 
   return (
     <div className="container">
@@ -68,6 +85,9 @@ const Login = () => {
                 <button className=" btn-principal-s my-4 mt-5 px-5 text-decoration-underline" type="submit">Ingresar al portal</button>
               </div>
             </form>
+
+            {/* Muestra el mensaje de error si existe */}
+            {errorMessage && <p style={{ color: 'red' }}>{errorMessage}</p>}
 
             <h3 className="text-sans-p mt-4">¿No tienes credenciales para ingresar al Banco de Proyectos? <br />
               Debes solicitarlas en tu municipalidad.</h3>

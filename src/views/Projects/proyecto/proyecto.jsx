@@ -2,12 +2,16 @@ import { useParams, useNavigate } from "react-router-dom";
 import useApiProjectsDetail from "../../../hooks/useApiProjectsDetail";
 import Carrusel from "../../../components/Commons/carrusel";
 import ProyectosRelacionados from "../../../components/Proyecto/proyectosRelacionados";
+import { useAuth } from "../../../context/AuthContext";
+import { Link } from 'react-router-dom';
+
 
 const Proyecto = () =>
 {
   const { slug } = useParams();
   const { dataProject, loadingProject, errorProject } = useApiProjectsDetail(slug);
   const navigate = useNavigate();
+  const { isLoggedIn } = useAuth();
 
   if (loadingProject)
   {
@@ -132,7 +136,11 @@ const Proyecto = () =>
           <div className="col-1 p-3">1</div>
           <div className="col p-3">Especificaciones Técnicas</div>
           <div className="col p-3">PDF</div>
-          <a className="col p-3 text-sans-p-tertiary" href={dataProject.eett} target="_blank" rel="noopener noreferrer">Descargar</a>
+          {isLoggedIn ? (
+              <a className="col p-3 text-sans-p-tertiary" href={dataProject.eett} target="_blank" rel="noopener noreferrer">Descargar</a>
+            ) : (
+              <Link className="col p-3 text-sans-p-tertiary" to="/login">Iniciar sesión para descargar</Link>
+            )}
         </div>
 
         {/* Presupuesto */}
@@ -140,7 +148,11 @@ const Proyecto = () =>
           <div className="col-1 p-3">2</div>
           <div className="col p-3">Presupuesto</div>
           <div className="col p-3">PDF</div>
-          <a className="col p-3 text-sans-p-tertiary" href={dataProject.presupuesto} target="_blank" rel="noopener noreferrer">Descargar</a>
+          {isLoggedIn ? (
+              <a className="col p-3 text-sans-p-tertiary" href={dataProject.eett} target="_blank" rel="noopener noreferrer">Descargar</a>
+            ) : (
+              <Link className="col p-3 text-sans-p-tertiary" to="/login">Iniciar sesión para descargar</Link>
+            )}
         </div>
 
         {
@@ -149,10 +161,15 @@ const Proyecto = () =>
               <div className="col-1 p-3">{index + 3}</div>  {/* Comenzamos desde el índice 3 porque ya mostramos 2 documentos anteriormente */}
               <div className="col p-3">{file.name}</div>
               <div className="col p-3">{file.file_format}</div>
-              <a className="col p-3 text-sans-p-tertiary" href={file.file} target="_blank" rel="noopener noreferrer">Descargar</a>
+              {isLoggedIn ? (
+                  <a className="col p-3 text-sans-p-tertiary" href={dataProject.eett} target="_blank" rel="noopener noreferrer">Descargar</a>
+                ) : (
+                  <Link className="col p-3 text-sans-p-tertiary" to="/login">Iniciar sesión para descargar</Link>
+                )}
             </div>
           ))
         }
+
 
         {/* Normativa por tipo de proyecto */}
         {dataProject.type && dataProject.type.documents && dataProject.type.documents.length > 0 &&

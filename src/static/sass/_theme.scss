@@ -10,12 +10,12 @@ $grey-c-color:#656565;
 $white-color: #FFF;
 $neutral-color: #EEEEEE;
 $alert-danger:#F56B0F;
-$dark-red:#871a1a; 
+$dark-red:#871a1a;
+$success-color: #006636; 
 $light-blue:#3f87d0;
 $dark-black:#1c1a1a ;
 $dark-blue:#093F75;
 $blue-sky:#CFE1F3;  
-
 $accent-color: #A8B7c7;
 $black-color: #111111;
 
@@ -35,6 +35,7 @@ $black-color: #111111;
 }
 .text-serif-h3{
     @include font-serif(24px, $grey-a-color);
+    font-weight: 700;
 }
 
 // Estilos texto sin serifa
@@ -56,8 +57,14 @@ $black-color: #111111;
 .text-sans-h3{
     @include font-sans(25px, 500, $grey-a-color);
 }
+.text-sans-h35{
+    @include font-sans(23px, 500, $grey-a-color);
+}
 .text-sans-h4{
     @include font-sans(20px, 600, $grey-a-color);
+}
+.text-sans-h4-white{
+    @include font-sans(20px, 600, $white-color);
 }
 .text-sans-h5{
     @include font-sans(14px, 400, $grey-a-color);
@@ -67,6 +74,9 @@ $black-color: #111111;
 }
 .text-sans-h5-blue{
     @include font-sans(14px, 400, $primary-color);
+}
+.text-sans-h5-red{
+    @include font-sans(14px, 400, $dark-red);
 }
 .text-sans-p{
     @include font-sans(16px, 400, $grey-a-color);
@@ -133,10 +143,6 @@ $black-color: #111111;
     background-color: $blue-color;
     color: $white-color;
 }
-.btn-secundario-s:active{
-    background-color: $blue-color;
-    color: $white-color;
-}
 .btn-secundario-s:focus{
     background-color: $blue-color;
     color: $white-color;
@@ -148,10 +154,7 @@ $black-color: #111111;
     background-color: $blue-color;
     color: $white-color;
 }
-.btn-secundario-l:active{
-    background-color: $blue-color;
-    color: $white-color;
-}
+
 
 .btn-terciario{
     width:fit-content;
@@ -160,12 +163,12 @@ $black-color: #111111;
     border: 2px solid $blue-color;
     border-radius: 32px;
 }
-.btn-terciario:active{
+.btn-terciario:hover{
     background-color:$blue-color;
     color: $white-color;
 }
-.btn-terciario:hover{
-    background-color:$blue-color;
+.selected-button{
+    background-color: $blue-color;
     color: $white-color;
 }
 
@@ -190,15 +193,10 @@ $black-color: #111111;
     background-color: transparent;
     color: $grey-a-color;
 }
-.select-option:active{
-    background-color: $blue-color;
-    color: $white-color;
-}
 .select-option:hover{
     background-color: $blue-color;
     color: $white-color;
 }
-
 
 // Tags
 .tag{
@@ -208,7 +206,6 @@ $black-color: #111111;
 }
 
 
-//buton icono programa-tipo
 #btn-icon:hover  #btnIcon {
     filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(1%) hue-rotate(210deg) brightness(102%) contrast(101%)
 }
@@ -245,7 +242,6 @@ $black-color: #111111;
 .white-icon:focus-visible {
     filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(1%) hue-rotate(210deg) brightness(102%) contrast(101%)
 }
-
 
 
 .alerta {

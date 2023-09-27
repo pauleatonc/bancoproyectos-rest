@@ -1,0 +1,37 @@
+// Comun a todas las vistas
+.view-container{
+    min-width: 1000px;
+    margin: 0 auto;
+    overflow-x: auto;
+}
+// Paso cero
+.opt-container{
+    border: 1px solid $light-blue;
+    border-radius: 5px;
+}
+.opt-container:hover{
+    outline: 3px solid $light-blue;
+    outline-offset: -2px;
+}
+
+// Paso 1
+.img-section-l{
+    color: #656565;
+    border: 2px dashed #656565;
+    height: 356px;
+    width: 550px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.img-section-s{
+    color: #656565;
+    border: 2px dashed #656565;
+    height: 150px;
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
