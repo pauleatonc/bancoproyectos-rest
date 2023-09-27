@@ -8,18 +8,25 @@ const CrearProyectoInnovadorP1 = () => {
         <div className="col-5">
           <div className="d-flex flex-row justify-content-between my-4">
             <h3 className="text-sans-h3">Título del Proyecto</h3>
-            <button>Editar <i className="material-symbols-rounded me-2">edit</i> </button>
+            <button className="btn-secundario-s text-sans-p-blue d-flex pb-0">
+              <p className="text-decoration-underline">Editar</p>
+              <i className="material-symbols-rounded ms-2">edit</i> </button>
           </div>
           <div className="d-flex flex-row justify-content-between my-4">
             <h3 className="text-sans-h35">Descripción del proyecto</h3>
-            <button>Editar <i className="material-symbols-rounded me-2">edit</i> </button>
+            <button className="btn-secundario-s text-sans-p-blue d-flex pb-0">
+            <p className="text-decoration-underline">Editar</p>
+              <i className="material-symbols-rounded ms-2">edit</i> </button>
           </div>
           <div className="d-flex flex-row justify-content-between my-4">
             <div className="d-flex flex-column">
               <h3 className="text-sans-h35">Fuentes </h3>
               <p className="text-sans-h5">(Opcional)</p>
             </div>
-            <button className=""> <i className="material-symbols-rounded me-2">add</i> Agregar fuente</button>
+            <button className="btn-secundario-s text-sans-p-blue d-flex pb-0"> 
+              <i className="material-symbols-rounded me-2">add</i>
+              <p className="text-decoration-underline">Agregar fuente</p>
+              </button>
           </div>
         </div>
 
@@ -44,10 +51,15 @@ const CrearProyectoInnovadorP1 = () => {
       </div>
 
       <div className="col-10 mt-5 d-flex justify-content-end">
-        <button>Enviar solicitud <i className="material-symbols-rounded me-2">arrow_forward_ios</i> </button>
+        <button className="btn-principal-s d-flex text-sans-h4 pb-0">
+          <p className="text-decoration-underline">Enviar solicitud</p>
+          <i className="material-symbols-rounded ms-2">arrow_forward_ios</i> 
+        </button>
       </div>
-      <div className="col-10 mt-5 d-flex justify-content-start">
-        <button>Deshechar solicitud <i className="material-symbols-rounded me-2">delete</i> </button>
+      <div className="col-10 mt-5 d-flex justify-content-start mb-5">
+        <button className="red-btn text-sans-h4 d-flex pb-0">
+          <p className="text-decoration-underline">Deshechar solicitud</p>
+          <i className="material-symbols-rounded ms-2">delete</i> </button>
       </div>
     </div>
   )

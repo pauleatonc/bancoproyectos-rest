@@ -232,6 +232,15 @@
   color: #FFF;
 }
 
+.red-btn {
+  width: -moz-fit-content;
+  width: fit-content;
+  background-color: transparent;
+  border: 2px solid #871a1a;
+  color: #871a1a;
+  padding: 13px;
+}
+
 .select-box {
   border: 2px solid #373737;
   border-radius: 5px;
@@ -1264,6 +1273,11 @@ a.btn-link:hover, a.btn-link:focus {
   min-width: 1000px;
   margin: 0 auto;
   overflow-x: auto;
+}
+
+.ghost-input {
+  border: none;
+  outline: none;
 }
 
 .opt-container {
