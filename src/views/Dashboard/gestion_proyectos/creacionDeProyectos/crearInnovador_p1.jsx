@@ -36,7 +36,7 @@ const CrearProyectoInnovadorP1 = () => {
     setInputDescr(text);
   };
   const handleSaveDescrClick = () => {
-    if (!inputTitle) {
+    if (!inputDescr) {
       // Si no hay texto en el input, muestra el mensaje de error
       setShowDescrError(true);
     } else {
@@ -50,14 +50,12 @@ const CrearProyectoInnovadorP1 = () => {
     setIsEditingDescr(true);
   };
 
-
   return (
     <div className="container view-container">
       <h2 className="text-sans-h2 mt-4 mb-5">Subir Proyecto: Proyectos Innovadores</h2>
 
       <div className="row">
         <div className="col-5">
-
           {/* Titulo */}
           <div className="container">
           {isEditingTitle ? (
@@ -114,7 +112,7 @@ const CrearProyectoInnovadorP1 = () => {
                   value={inputDescr}
                   onChange={handleDescrInputChange}
                 />
-                <p>CONTADOR</p>
+                <p className="text-sans-h5">{inputDescr.length} / 700 caracteres.</p>
                 <button
                   className="btn-principal-s d-flex text-sans-h4 pb-0 px-3"
                   onClick={handleSaveDescrClick}
@@ -132,8 +130,8 @@ const CrearProyectoInnovadorP1 = () => {
             // Modo de visualización
             <div>
               <p className="text-sans-p">Descripción del proyecto</p>
-              <div className="d-flex flex-row justify-content-between my-3">
-                <p className="text-sans-p">{inputDescr || "Descripción del proyecto"}</p>
+              <div className="d-flex flex-column my-3">
+                <p className="text-sans-p mb-4">{inputDescr || "Descripción del proyecto"}</p>
                 <button
                   className="btn-secundario-s d-flex pb-0 px-3"
                   onClick={handleEditDescrClick}
@@ -145,11 +143,6 @@ const CrearProyectoInnovadorP1 = () => {
             </div>
           )}
         </div>
-
-
-
-
-
 
         {/* Fuentes */}
         <div className="d-flex flex-row justify-content-between my-4">
