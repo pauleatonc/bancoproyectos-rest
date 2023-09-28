@@ -40,3 +40,23 @@
     justify-content: center;
     align-items: center;
 }
+
+.card-description {
+display: flex;
+flex-direction: column;
+width: 750px;
+height: 270px;
+padding: 15px 0px;
+align-items: flex-start;
+background-color: $neutral-color; 
+}
+
+.input-area {
+display: flex;
+flex-direction: column;
+width:720px;
+height: 258px;
+margin: 10px 12px 13px 14px ; 
+
+}
+

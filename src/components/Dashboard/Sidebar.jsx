@@ -42,7 +42,7 @@ export const Sidebar = () =>
         <hr className="w-85 mx-4" />
         <span className="title-section ms-4 my-2">Gestión de Proyectos</span>
         <li>
-          <NavLink to="#" className="btn-sidebar my-1 mx-4" >
+          <NavLink to="crearproyectos" className="btn-sidebar my-1 mx-4" >
             <u>Subir Proyectos</u><i className="material-symbols-outlined">
               post_add
             </i>
