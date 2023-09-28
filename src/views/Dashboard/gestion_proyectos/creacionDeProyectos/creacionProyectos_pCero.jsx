@@ -60,7 +60,11 @@ const CrearProyectos = () => {
         <h3 className="text-sans-h3 ms-1">Elige donde quieres mostrar el proyecto:</h3>
 
         <div className="row my-5">
-          <div className="col-5 opt-container p-3 mx-3">
+          <div 
+          className={`col-5 opt-container p-3 mx-3 ${
+            selectedOption === 'bancoProyectos' ? 'opt-container-active' : 'opt-container'
+          }`}
+          >
             <h3 className="text-serif-h3 text-center text-decoration-underline">Banco de Proyectos</h3>
             <hr/>
             <div className="d-flex flex-row">
@@ -78,7 +82,9 @@ const CrearProyectos = () => {
             <hr/>
             <div className="d-flex justify-content-center">
               <button
-              className="btn-secundario-s text-decoration-underline px-4"
+              className={`btn-secundario-s text-decoration-underline px-4 ${
+                selectedOption === 'bancoProyectos' ? 'btn-secundario-s-active' : 'btn-secundario-s'
+              }`}
               onClick={() => handleOptionChange('bancoProyectos')}
               value='bancoProyectos'
               >
@@ -87,7 +93,11 @@ const CrearProyectos = () => {
             </div>
           </div>
 
-          <div className="col-5 opt-container p-3 mx-3">
+          <div 
+          className={`col-5 opt-container p-3 mx-3 ${
+            selectedOption === 'proyectosInnovadores' ? 'opt-container-active' : 'opt-container'
+          }`}
+          >
             <h3 className="text-serif-h3 text-center text-decoration-underline">Proyectos Innovadores</h3>
             <hr/>
             <div className="d-flex flex-row">
@@ -109,7 +119,9 @@ const CrearProyectos = () => {
             <hr/>
             <div className="d-flex justify-content-center">
               <button
-              className="btn-secundario-s text-decoration-underline px-4"
+              className={`btn-secundario-s text-decoration-underline px-4 ${
+                selectedOption === 'proyectosInnovadores' ? 'btn-secundario-s-active' : 'btn-secundario-s'
+              }`}
               onClick={() => handleOptionChange('proyectosInnovadores')}
               value="proyectosInnovadores"
               >
