@@ -142,12 +142,16 @@ const CrearProyectos = () => {
             // Modo de edición
             <>
               <div className="d-flex flex-row justify-content-between my-3">
-                <input
-                  className="text-sans-h1 container-fluid ghost-input"
-                  placeholder="Titulo del Proyecto"
-                  value={inputText}
-                  onChange={handleInputChange}
-                />
+                <div>
+                  <p className="text-sans-h5">Escribe el título del proyecto (Obligatorio)</p>
+                  <input
+                    className="text-sans-h1 container-fluid ghost-input"
+                    placeholder="Titulo del Proyecto"
+                    value={inputText}
+                    onChange={handleInputChange}
+                  />
+                  <p className="text-sans-h5">{inputText.length} / 70 caracteres</p>
+                </div> 
                 <button
                   className="btn-principal-s d-flex text-sans-h4 pb-0"
                   onClick={handleGuardarClick}
