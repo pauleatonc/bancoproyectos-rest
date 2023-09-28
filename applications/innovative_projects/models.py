@@ -16,12 +16,12 @@ class InnovativeProjects(BaseModel):
     """
     Modelo para proyectos innovadores
     """
-    title = models.CharField(max_length=23, verbose_name='Título (obligatorio)', unique=True)
-    description = models.TextField(validators=[MinLengthValidator(280, 'La descripción debe tener al menos 280 caracteres.')])
+    title = models.CharField(max_length=23, verbose_name='Título (obligatorio)', unique=True, blank=True)
+    description = models.TextField(validators=[MinLengthValidator(280, 'La descripción debe tener al menos 280 caracteres.')], blank=True)
     portada = ProcessedImageField(upload_to='projects', processors=[
         ResizeToFill(1200, 630)], format='WEBP', options={'quality': 60}, null=True,
-                                  blank=False, verbose_name='Foto portada (obligatorio)')
-    program = models.ManyToManyField(Program, blank=True, verbose_name='Programa (obligatorio)')
+                                  blank=True, verbose_name='Foto portada (obligatorio)')
+    program = models.ForeignKey(Program, blank=True, null=True, verbose_name='Programa (obligatorio)', on_delete=models.SET_NULL)
     public = models.BooleanField(default=False)
 
     # request_sent debe cambiar a True si el proyecto es enviado a revisión. Debe cambiar nuevamente a False cuando evaluated sea True
@@ -30,8 +30,14 @@ class InnovativeProjects(BaseModel):
     # evaluated debe cambiar a True cuando el proyecto sea evaluado. Debe cambiar nuevamente a False si request_sent sea True
     evaluated = models.BooleanField(default=False)
 
+    def fields_completed(self):
+        # Valida que los campos obligatorios no estén en blanco
+        return all([self.title, self.description, self.portada, self.program])
+
     @property
     def application_status(self):
+        if not self.fields_completed():
+            return "Incompleto"
         if self.evaluated:
             # Check if the related objects exist before accessing them
             if ((hasattr(self, 'revision_section_one') and self.revision_section_one.approved_section_one) and
@@ -40,7 +46,7 @@ class InnovativeProjects(BaseModel):
             else:
                 return "Rechazado"
         else:
-            if self.request_sent:
+            if self.request_sent and self.fields_completed():
                 return "Pendiente"
             else:
                 return "Incompleto"
@@ -49,6 +55,10 @@ class InnovativeProjects(BaseModel):
         # Validación personalizada
         if self.public and self.application_status != "Aceptado":
             raise ValidationError('El proyecto debe ser "Aceptado" para poder ser público.')
+
+        if self.request_sent and not self.fields_completed():
+            raise ValidationError(
+                "Todos los campos (title, description, portada, program) deben estar completos antes de enviar la solicitud.")
 
     def save(self, *args, **kwargs):
         self.clean()

@@ -30,7 +30,7 @@ class InnovativeWebSource(admin.TabularInline):
 @admin.register(InnovativeProjects)
 class InnovativeProjectsAdmin(ImportExportMixin, admin.ModelAdmin):
     resource_class = InnovativeProjectsResource
-    list_display = ('id', 'title', 'public')
+    list_display = ('id', 'title', 'program', 'public')
     search_fields = ('title', 'program')
     list_display_links = ('title',)
     list_per_page = 20

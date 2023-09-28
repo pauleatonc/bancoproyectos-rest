@@ -20,6 +20,11 @@ class Program(BaseModel):
     name = models.CharField(max_length=200, verbose_name='Nombre', unique=True)
     sigla = models.CharField(max_length=200, verbose_name='Sigla', unique=True)
     icon_program = models.FileField(upload_to='icon-program/', null=True, blank=True, default=None)
+    guide = models.FileField(upload_to='program_documents',
+                             validators=[
+                                 FileExtensionValidator(
+                                     ['pdf'], message='Solo se permiten archivos PDF.'), validate_file_size_five],
+                             verbose_name='Guía programática', null=True, blank=True)
 
     class Meta:
         verbose_name= 'Programa'
@@ -52,6 +57,8 @@ class Type(BaseModel):
     documents = models.ManyToManyField(Documents, related_name='documents', blank=True)
     icon_type = models.CharField(
         verbose_name='Icono ( Nombre icono)', max_length=200, default='other_admission')
+    program = models.ForeignKey(Program, null=True, blank=True,
+                                on_delete=models.SET_NULL, verbose_name='Programa (obligatorio)')
 
     class Meta:
         verbose_name = 'Tipo'
