@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ModalBase } from "../../../../components/Modals/ModalBase";
+import  ModalFuentes  from "../../../../components/Modals/ModalFuentes";
 
 const CrearProyectoInnovadorP1 = () => {
   const [inputTitle, setInputTitle] = useState('');
@@ -132,7 +132,9 @@ const CrearProyectoInnovadorP1 = () => {
             <div>
               <p className="text-sans-p">Descripción del proyecto</p>
               <div className="d-flex flex-column my-3">
-                <p className="text-sans-p mb-4">{inputDescr || "Descripción del proyecto"}</p>
+                <pre> 
+                  <p className="text-sans-p mb-4">{inputDescr || "Descripción del proyecto"}</p>
+                </pre>
                 <button
                   className="btn-secundario-s d-flex pb-0 px-3"
                   onClick={handleEditDescrClick}
@@ -151,10 +153,7 @@ const CrearProyectoInnovadorP1 = () => {
             <h3 className="text-sans-h35">Fuentes </h3>
             <p className="text-sans-h5">(Opcional)</p>
           </div>
-          <ModalBase btnName="Agregar fuentes" btnIcon="add" title="Agregar fuente (Opcional)">
-            {/* Contenido del modal */}
-            <p>Este es el contenido del modal HURRA.</p>
-          </ModalBase>
+          <ModalFuentes />
         </div>
       </div>
 
