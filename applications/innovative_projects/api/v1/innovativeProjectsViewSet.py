@@ -1,3 +1,4 @@
+from datetime import datetime
 from rest_framework import viewsets
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import Group, Permission
@@ -18,8 +19,10 @@ from .innovativeProjectSerializer import (
     InnovativeProjectsCreateSerializer,
     InnovativeProjectsAdminListSerializer
 )
-from applications.users.permissions import is_admin, is_pmb_user, is_pmu_user
+from applications.users.permissions import is_admin, is_editor_general_or_superuser, is_program_related_user
 from applications.projects.models import Program
+from applications.innovative_projects.models import HistoricalInnovativeProjects
+
 
 
 class HasProjectPermissions(BasePermission):
@@ -65,20 +68,30 @@ class InnovativeProjectsViewSet(viewsets.ModelViewSet):
         Divide el listado entre los distintos roles como administrador
         """
         user = request.user
-        if user.is_superuser or user.groups.filter(name='Editor').exists():
+
+        if is_editor_general_or_superuser(user):
             innovative_projects = InnovativeProjects.objects.all()
-        elif user.groups.filter(name__in=['Editor PMB', 'Profesional PMB']).exists():
-            innovative_projects = InnovativeProjects.objects.filter(program__sigla="PMB")
-        elif user.groups.filter(name__in=['Editor PMU', 'Profesional PMU']).exists():
-            innovative_projects = InnovativeProjects.objects.filter(program__sigla="PMU")
-        elif user.groups.filter(name='Prof. Temporal PMB').exists():
-            innovative_projects = InnovativeProjects.objects.filter(program__sigla="PMB")
-            innovative_projects = [proj for proj in innovative_projects if
-                                   proj.historical_date.earliest('history_date').history_user == user]
-        elif user.groups.filter(name='Prof. Temporal PMU').exists():
-            innovative_projects = InnovativeProjects.objects.filter(program__sigla="PMU")
-            innovative_projects = [proj for proj in innovative_projects if
-                                   proj.historical_date.earliest('history_date').history_user == user]
+
+        # Editor Programa y Profesional: pueden ver innovative projects que compartan el mismo program
+        elif "Editor Programa" in user.groups.values_list('name', flat=True) or \
+                "Profesional" in user.groups.values_list('name', flat=True):
+            # Asegurarse de que el usuario tiene un programa asociado
+            try:
+                user_program = user.program
+                innovative_projects = InnovativeProjects.objects.filter(program=user_program)
+            except AttributeError:  # En caso de que el usuario no tenga un programa asociado
+                innovative_projects = InnovativeProjects.objects.none()
+
+        # Profesional Temporal: pueden ver innovative projects que compartan el mismo program y que haya sido creado por él
+        elif "Profesional Temporal" in user.groups.values_list('name', flat=True):
+            try:
+                user_program = user.program
+                innovative_projects = InnovativeProjects.objects.filter(program=user_program)
+                innovative_projects = [proj for proj in innovative_projects if
+                                       proj.historical_date.earliest('history_date').history_user == user]
+            except AttributeError:  # En caso de que el usuario no tenga un programa asociado
+                innovative_projects = InnovativeProjects.objects.none()
+
         else:
             # Se devuelve un conjunto vacío si no se cumple ningún criterio anterior
             innovative_projects = InnovativeProjects.objects.none()
@@ -102,31 +115,84 @@ class InnovativeProjectsViewSet(viewsets.ModelViewSet):
         """
         user = request.user
 
-        print(f"is_pmb_user: {is_pmb_user(user)}")
-        print(f"is_pmu_user: {is_pmu_user(user)}")
-
-        # Comprobar si el usuario está en uno de los grupos permitidos o es un superusuario
-        if is_admin(user):
+        if is_editor_general_or_superuser(user):
+            # Si es superusuario o editor general, puede crear con cualquier programa.
             serializer = InnovativeProjectsCreateSerializer(data=request.data, context={'request': request})
 
-            if serializer.is_valid():
-                # Asignar automáticamente el programa si el usuario es de un grupo específico
-                try:
-                    if is_pmb_user(user):
-                        program = Program.objects.get(sigla='PMB')
-                    elif is_pmu_user(user):
-                        program = Program.objects.get(sigla='PMU')
-                    else:
-                        program = None
-                except Program.DoesNotExist:
-                    program = None
+        elif is_program_related_user(user):
+            # Asegurarse de que el usuario tenga un programa asociado
+            if not hasattr(user, 'program'):
+                return Response({'detail': 'El usuario no tiene un programa asociado.'},
+                                status=status.HTTP_403_FORBIDDEN)
 
-                serializer.validated_data['program'] = program
+            # Asignar automáticamente el programa del usuario al proyecto
+            project_data = request.data.copy()
+            project_data['program'] = user.program.id
+            serializer = InnovativeProjectsCreateSerializer(data=project_data, context={'request': request})
 
-                serializer.save()
-
-                return Response(serializer.data, status=status.HTTP_201_CREATED)
-            else:
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         else:
             return Response({'detail': 'No tienes permiso para crear proyectos.'}, status=status.HTTP_403_FORBIDDEN)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=True, methods=['get'], permission_classes=[HasProjectPermissions])
+    def get_last_editors(self, request, pk=None):
+        try:
+            project = InnovativeProjects.objects.get(pk=pk)
+        except InnovativeProjects.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        # Define un diccionario para cada tipo de usuario
+        solicitante_info = {
+            'full_name': None,
+            'group': None,
+            'program': None,
+            'date': None
+        }
+
+        evaluador_info = {
+            'full_name': None,
+            'group': None,
+            'program': None,
+            'date': None
+        }
+
+        # Obtén el historial del proyecto
+        history = HistoricalInnovativeProjects.objects.filter(id=pk).order_by('-history_date')
+
+        # Función auxiliar para obtener el nombre del grupo o identificar si es superusuario
+        def get_group_name(user):
+            if user.is_superuser:
+                return "Superusuario"
+            groups = user.groups.all()
+            return groups[0].name if groups else None
+
+
+        # Buscar el último cambio de request_sent de False a True
+        for record, previous_record in zip(history, history[1:]):
+            if not previous_record.request_sent and record.request_sent:
+                solicitante = record.history_user
+                solicitante_info['full_name'] = solicitante.get_full_name()
+                solicitante_info['group'] = get_group_name(solicitante)
+                solicitante_info['program'] = record.history_user.program.sigla
+                solicitante_info['date'] = datetime.strftime(record.history_date, "%d/%m/%Y")
+                break
+
+        # Buscar el último cambio de evaluated de False a True
+        for record, previous_record in zip(history, history[1:]):
+            if not previous_record.evaluated and record.evaluated:
+                evaluador = record.history_user
+                evaluador_info['full_name'] = evaluador.get_full_name()
+                evaluador_info['group'] = get_group_name(evaluador)
+                evaluador_info['program'] = record.history_user.program.sigla
+                evaluador_info['date'] = datetime.strftime(record.history_date, "%d/%m/%Y")
+                break
+
+        return Response({
+            'solicitante': solicitante_info,
+            'evaluador': evaluador_info
+        })

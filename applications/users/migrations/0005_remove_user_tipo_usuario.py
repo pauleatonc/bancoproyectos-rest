@@ -5,13 +5,10 @@ from django.db import migrations
 # Creación de grupos de administración
 def create_groups(apps, schema_editor):
     Group = apps.get_model('auth', 'Group')
-    Group.objects.get_or_create(name='Editor')
-    Group.objects.get_or_create(name='Editor PMB')
-    Group.objects.get_or_create(name='Editor PMU')
-    Group.objects.get_or_create(name='Profesional PMB')
-    Group.objects.get_or_create(name='Profesional PMU')
-    Group.objects.get_or_create(name='Prof. Temporal PMB')
-    Group.objects.get_or_create(name='Prof. Temporal PMU')
+    Group.objects.get_or_create(name='Editor General')
+    Group.objects.get_or_create(name='Editor Programa')
+    Group.objects.get_or_create(name='Profesional')
+    Group.objects.get_or_create(name='Profesional Temporal')
 
 class Migration(migrations.Migration):
 

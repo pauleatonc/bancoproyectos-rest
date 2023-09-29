@@ -4,6 +4,7 @@ from django.db import models
 from .functions import validar_rut
 from .managers import UserManager
 from applications.regioncomuna.models import Comuna
+from applications.projects.models import Program
 # apps de terceros
 from simple_history.models import HistoricalRecords
 
@@ -25,10 +26,11 @@ class User(AbstractBaseUser, PermissionsMixin):
     password = models.CharField(max_length=200, blank=True)
     email = models.TextField(max_length=100, blank=True, null=True)
     institucion = models.CharField(max_length=50, blank=True, null=True)
+    program = models.ForeignKey(Program, null=True, blank=True,
+                                on_delete=models.SET_NULL, verbose_name='Programa')
 
-    #Setiando el nombre de usuario al rut
-    USERNAME_FIELD = 'rut'    
-
+    #Seteando el nombre de usuario al RUT
+    USERNAME_FIELD = 'rut'
 
     is_staff = models.BooleanField('Usuario administrador', default=False)
     is_active = models.BooleanField(default=True)

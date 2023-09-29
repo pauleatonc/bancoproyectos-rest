@@ -56,9 +56,9 @@ class InnovativeProjects(BaseModel):
         if self.public and self.application_status != "Aceptado":
             raise ValidationError('El proyecto debe ser "Aceptado" para poder ser público.')
 
-        if self.request_sent and not self.fields_completed():
+        """if self.request_sent and not self.fields_completed():
             raise ValidationError(
-                "Todos los campos (title, description, portada, program) deben estar completos antes de enviar la solicitud.")
+                "Todos los campos (title, description, portada, program) deben estar completos antes de enviar la solicitud.")"""
 
     def save(self, *args, **kwargs):
         self.clean()

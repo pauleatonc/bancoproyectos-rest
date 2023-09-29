@@ -9,7 +9,7 @@ from applications.innovative_projects.models import (
 )
 
 from applications.projects.models import Program
-from applications.users.permissions import is_editor_or_superuser, is_profesional, is_admin
+from applications.users.permissions import is_editor_general_or_superuser, is_any_editor_or_superuser, is_profesional, is_admin
 
 
 class ProgramSerializer(serializers.ModelSerializer):
@@ -110,6 +110,42 @@ class RevisionSectionTwoSerializer(serializers.ModelSerializer):
 
 
 class InnovativeProjectsCreateSerializer(serializers.ModelSerializer):
+    program = serializers.PrimaryKeyRelatedField(queryset=Program.objects.all(), required=False)
+
+    class Meta:
+        model = InnovativeProjects
+        fields = ['id', 'title', 'program']
+
+    def validate(self, data):
+        request = self.context.get('request')
+        user = request.user
+
+        # Solo administradores pueden crear proyectos
+        if not is_admin(user):
+            raise serializers.ValidationError("No tienes permiso para crear proyectos.")
+
+        return data
+
+    def create(self, validated_data):
+
+        # Lógica para el historial
+        is_creation = not self.instance
+
+        if is_creation:
+            history_change_reason = 'Solicitud'
+        else:
+            previous_instance = InnovativeProjects.objects.get(pk=self.instance.pk)
+            if validated_data.get('request_sent') and not previous_instance.request_sent:
+                history_change_reason = 'Solicitud'
+            elif validated_data.get('evaluated') and not previous_instance.evaluated:
+                history_change_reason = 'Aprobación'
+            else:
+                history_change_reason = None
+
+        return InnovativeProjects.objects.create(**validated_data)
+
+
+class InnovativeProjectsUpdateSerializer(serializers.ModelSerializer):
     program = serializers.CharField(required=False)
     innovative_gallery_images = InnovativeGalleryImageSerializerV1(many=True, required=False)
     web_sources = InnovativeWebSourceSerializerV1(many=True, required=False)
@@ -140,7 +176,7 @@ class InnovativeProjectsCreateSerializer(serializers.ModelSerializer):
         if is_profesional(user):
             data['public'] = False
 
-        # Si el usuario no es superusuario, no es de algún grupo "Editor", y no es de algún grupo "Profesional", entonces no puede crear proyectos.
+        # Solo administradores pueden crear proyectos
         elif not is_admin(user):
             raise serializers.ValidationError("No tienes permiso para crear proyectos.")
 
@@ -171,7 +207,7 @@ class InnovativeProjectsCreateSerializer(serializers.ModelSerializer):
         user = request.user
 
         # Si el usuario es superusuario o del grupo Editor, usa estos datos:
-        if is_editor_or_superuser(user):
+        if is_any_editor_or_superuser(user):
             revision_section_one_data = {
                 'approved_title': True,
                 'approved_description': True,
