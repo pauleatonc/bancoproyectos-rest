@@ -23,15 +23,7 @@ class InnovativeProjects(BaseModel):
                                   blank=False, verbose_name='Foto portada (obligatorio)')
     program = models.ManyToManyField(Program, blank=False, verbose_name='Programa (obligatorio)')
     public = models.BooleanField(default=True)
-    historical = HistoricalRecords()
 
-    @property
-    def _history_user(self):
-        return self.changed_by
-
-    @_history_user.setter
-    def _history_user(self, value):
-        self.changed_by = value
 
     class Meta:
         verbose_name = 'Proyecto Innovador'

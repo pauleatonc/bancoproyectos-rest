@@ -48,7 +48,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.nombres
 
     def get_full_name(self):
-        return self.nombres + ' ' + self.primer_apellido + ' ' + self.segundo_apellido
+        return ' '.join(part for part in [self.nombres, self.primer_apellido, self.segundo_apellido] if part)
 
     def save(self, *args, **kwargs):
         # Formatear el RUT antes de guardar

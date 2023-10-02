@@ -1,5 +1,8 @@
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from unipath import Path
+from datetime import timedelta
+
+
 BASE_DIR = Path(__file__).ancestor(3)
 
 # Application definition
@@ -39,6 +42,9 @@ THIRD_PARTY_APPS = [
     'corsheaders',
     'simple_history',
     'drf_yasg',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
 
 ]
 
@@ -128,8 +134,20 @@ CORS_ALLOWED_ORIGINS = [
 
 # Configuraciones de Django Rest Framework
 REST_FRAMEWORK = {
-    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True
 }
 
 # Configuraciones de documentación en Swagger

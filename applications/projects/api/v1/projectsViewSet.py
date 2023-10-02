@@ -42,14 +42,12 @@ class ProjectViewSet(viewsets.ModelViewSet):
 
     API con CRUD completo para proyectos
     """
-
     queryset = Project.objects.filter(public=True)
     serializer_class = ProjectDetailSerializerV1
     lookup_field = 'slug'
-    filter_backends = [filters.SearchFilter,
-                       DjangoFilterBackend, filters.OrderingFilter]
+    filter_backends = [filters.SearchFilter, DjangoFilterBackend, filters.OrderingFilter]
 
-    # El término 'in' es propio de django, puedes encontrar la documentación para otros lookups en
+    #El término 'in' es propio de django, puedes encontrar la documentación para otros lookups en
     # https://docs.djangoproject.com/en/3.2/ref/models/querysets/#field-lookups
     filterset_fields = {
         'comuna__region': ['in'],
@@ -62,6 +60,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
     ordering_fields = ['year']
     ordering = ['year']
     pagination_class = CustomPagination
+
 
     @action(detail=False, methods=['GET'])
     def filter_options(self, request):
@@ -80,8 +79,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
             'name')
 
         # Obtener tipos únicos que están asociados con al menos un proyecto
-        unique_types = Type.objects.annotate(num_projects=Count(
-            'project')).filter(num_projects__gt=0).order_by('name')
+        unique_types = Type.objects.annotate(num_projects=Count('project')).filter(num_projects__gt=0).order_by('name')
 
         # A partir de las comunas, obtener las regiones únicas
         unique_regiones = Region.objects.annotate(
@@ -90,14 +88,10 @@ class ProjectViewSet(viewsets.ModelViewSet):
 
         # Serializar los datos
         serializer_context = {'request': request}
-        years_data = YearSerializerV1(
-            unique_years, many=True, context=serializer_context).data
-        programs_data = ProgramSerializerV1(
-            unique_programs, many=True, context=serializer_context).data
-        types_data = TypeSerializerV1(
-            unique_types, many=True, context=serializer_context).data
-        region_data = RegionWithComunasSerializer(
-            unique_regiones, many=True, context=serializer_context).data
+        years_data = YearSerializerV1(unique_years, many=True, context=serializer_context).data
+        programs_data = ProgramSerializerV1(unique_programs, many=True, context=serializer_context).data
+        types_data = TypeSerializerV1(unique_types, many=True, context=serializer_context).data
+        region_data = RegionWithComunasSerializer(unique_regiones, many=True, context=serializer_context).data
 
         return Response({
             'years': years_data,
@@ -124,8 +118,7 @@ class ProjectViewSet(viewsets.ModelViewSet):
         ).exclude(slug=slug)
 
         # Selección aleatoria
-        related_slugs = list(
-            related_projects_query.values_list('slug', flat=True))
+        related_slugs = list(related_projects_query.values_list('slug', flat=True))
         selected_slugs = random.sample(related_slugs, min(len(related_slugs),
                                                           3))  # Puedes ajustar el 3 a cuántos proyectos quieras obtener
 
@@ -134,7 +127,6 @@ class ProjectViewSet(viewsets.ModelViewSet):
 
         # Serializar los datos
         serializer_context = {'request': request}
-        related_data = ProjectDetailSerializerV1(
-            selected_projects, many=True, context=serializer_context).data
+        related_data = ProjectDetailSerializerV1(selected_projects, many=True, context=serializer_context).data
 
         return Response(related_data)
