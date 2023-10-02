@@ -29,29 +29,14 @@ class Program(BaseModel):
         return self.sigla
 
 
-class Guide(BaseModel):
-    name = models.CharField(max_length=200, verbose_name='Guías', unique=True)
-    guide = models.FileField(upload_to='project_documents',
-                             validators=[
-                                 FileExtensionValidator(
-                                     ['pdf'], message='Solo se permiten archivos PDF.'), validate_file_size_five],
-                             verbose_name='Documento', null=True, blank=True)
-
-    class Meta:
-        verbose_name = 'Guía'
-        verbose_name_plural = 'Guías'
-
-    def __str__(self):
-        return self.name
-
-
 class Type(BaseModel):
     name = models.CharField(
         max_length=200, verbose_name='Tipo de Proyecto', unique=True)
-    guides = models.ManyToManyField(Guide, related_name='guides', blank=True)
     documents = models.ManyToManyField(Documents, related_name='documents', blank=True)
     icon_type = models.CharField(
         verbose_name='Icono ( Nombre icono)', max_length=200, default='other_admission')
+    program = models.ForeignKey(Program, null=True, blank=True,
+                                on_delete=models.SET_NULL, verbose_name='Programa (obligatorio)')
 
     class Meta:
         verbose_name = 'Tipo'
@@ -78,21 +63,6 @@ class PrioritizedTag(BaseModel):
 
     def __str__(self):
         return self.prioritized_tag
-
-
-class ChecklistDocuments(BaseModel):
-    documentname = models.CharField(
-        verbose_name='Nombre documento', unique=True, max_length=50)
-    description = models.TextField(verbose_name='Descripción documento')
-    file = models.ManyToManyField(
-        Guide, verbose_name='Guías de referencia', blank=True)
-
-    class Meta:
-        verbose_name = 'Checklist de Documento'
-        verbose_name_plural = 'Checklist de Documentos'
-
-    def __str__(self):
-        return self.documentname
 
 
 class Project(BaseModel):
@@ -129,6 +99,9 @@ class Project(BaseModel):
     presupuesto = models.FileField(
         upload_to='project_documents', validators=[
             FileExtensionValidator(['pdf'], message='Solo se permiten archivos PDF.'), validate_file_size_five], null=True, blank=False, verbose_name='Presupuesto')
+    planimetria = models.FileField(
+        upload_to='project_documents', validators=[validate_file_size_twenty],
+        null=True, blank=False, verbose_name='Planimetría')
     comuna = models.ForeignKey(
         Comuna, on_delete=models.SET_NULL, null=True, blank=False, verbose_name='Comuna')
 
@@ -182,7 +155,7 @@ class Projectimage(models.Model):
 
 class Projectfile(models.Model):
     name = models.CharField(null=True, blank=False, max_length=200,
-                            verbose_name='Nombre (obligatorio)', unique=True)
+                            verbose_name='Nombre (obligatorio)')
     file = models.FileField(upload_to='project_documents', validators=[
         FileExtensionValidator(['pdf'], message='Solo se permiten archivos PDF.'), validate_file_size_twenty])
     project = models.ForeignKey(
