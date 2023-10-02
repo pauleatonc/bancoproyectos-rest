@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.core.exceptions import ValidationError
-from .models import Program, Guide, Type, Year, PrioritizedTag, ChecklistDocuments, Project, Projectimage, Projectfile
+from .models import Program, Type, Year, PrioritizedTag, Project, Projectimage, Projectfile
 from django.core.files.uploadedfile import SimpleUploadedFile
 
 class ProgramModelTest(TestCase):
@@ -14,15 +14,6 @@ class ProgramModelTest(TestCase):
         program = Program.objects.create(name="Program 1", sigla="P1")
         self.assertEqual(str(program), "P1")
         print("Projects: Test de representación de cadena de modelo programa: Ok")
-
-class GuideModelTest(TestCase):
-
-    def test_create_guide(self):
-        # Set up file for upload
-        file = SimpleUploadedFile("file.pdf", b"file_content")
-        guide = Guide.objects.create(name="Guide 1", guide=file)
-        self.assertEqual(Guide.objects.count(), 1)
-        print("Projects: Test de creación de guías: Ok")
 
 class TypeModelTest(TestCase):
     def test_string_representation(self):
@@ -65,13 +56,6 @@ class PrioritizedTagModelTest(TestCase):
             new_tag.full_clean()
             new_tag.save()
         print("Projects: Test de validación de unicidad de modelo PrioritizedTag: Ok")
-
-class ChecklistDocumentsModelTest(TestCase):
-    def test_string_representation(self):
-        checklist = ChecklistDocuments.objects.create(documentname="Document1", description="Description1")
-        self.assertEqual(str(checklist), "Document1")
-        print("Projects: Test de representación de cadena de modelo chacklist: Ok")
-
 
 class ProjectModelTest(TestCase):
 

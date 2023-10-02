@@ -27,7 +27,8 @@ class DocumentsSerializerV1(serializers.ModelSerializer):
             'title',
             'document',
             'document_type',
-            'document_format'
+            'document_format',
+            'program'
         )
 
     def get_document_format(self, obj):

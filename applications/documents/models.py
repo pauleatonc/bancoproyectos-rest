@@ -27,6 +27,8 @@ class Documents(BaseModel):
                              verbose_name='Documento')
     document_type = models.ForeignKey('DocumentType', verbose_name='Tipo de Documento', on_delete=models.CASCADE)
     public = models.BooleanField(default=True)
+    program = models.ForeignKey('projects.Program', on_delete=models.CASCADE, related_name='documents', blank=True, null=True)
+
 
     class Meta:
         verbose_name = 'Documento'

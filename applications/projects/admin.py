@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib import admin
-from .models import Project, Program, Type, Guide, Projectimage, Projectfile, Year, PrioritizedTag, ChecklistDocuments
+from .models import Project, Program, Type, Projectimage, Projectfile, Year, PrioritizedTag
 from import_export.admin import ImportExportMixin
 from import_export.resources import ModelResource
 
@@ -25,9 +25,6 @@ class TypeResource(ModelResource):
     class Meta:
         model = Type
 
-class GuideResource(ModelResource):
-    class Meta:
-        model = Guide
 
 class YearResource(ModelResource):
     class Meta:
@@ -37,9 +34,6 @@ class PrioritizedTagResource(ModelResource):
     class Meta:
         model = PrioritizedTag
 
-class ChecklistDocumentsResource(ModelResource):
-    class Meta:
-        model = ChecklistDocuments
 
 # Modelos tipo inline
 class ProjectfileAdmin(admin.TabularInline):
@@ -89,12 +83,6 @@ class ProgramAdmin(ImportExportMixin, admin.ModelAdmin):
 class TypeAdmin(ImportExportMixin, admin.ModelAdmin):
     resource_class = TypeResource
 
-@admin.register(Guide)
-class GuideAdmin(ImportExportMixin, admin.ModelAdmin):
-    resource_class = GuideResource
-    search_fields = ('name',)
-    list_per_page = 20
-
 @admin.register(Year)
 class YearAdmin(ImportExportMixin, admin.ModelAdmin):
     resource_class = YearResource
@@ -102,7 +90,3 @@ class YearAdmin(ImportExportMixin, admin.ModelAdmin):
 @admin.register(PrioritizedTag)
 class PrioritizedTagAdmin(ImportExportMixin, admin.ModelAdmin):
     resource_class = PrioritizedTagResource
-
-@admin.register(ChecklistDocuments)
-class ChecklistDocumentsAdmin(ImportExportMixin, admin.ModelAdmin):
-    resource_class = ChecklistDocumentsResource

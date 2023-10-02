@@ -2,7 +2,6 @@ from rest_framework import serializers
 #
 from applications.projects.models import (
     Program,
-    Guide,
     Type,
     Year,
     PrioritizedTag,
@@ -16,13 +15,16 @@ from applications.documents.api.v1.documentsSerializer import DocumentsSerialize
 
 
 class ProgramSerializerV1(serializers.ModelSerializer):
+    documents = DocumentsSerializerV1(many=True, read_only=True, source='documents.all')
+
     class Meta:
         model = Program
         fields = (
             'id',
             'name',
             'sigla',
-            'icon_program'
+            'icon_program',
+            'documents'
         )
 
 
@@ -35,17 +37,6 @@ class YearSerializerV1(serializers.ModelSerializer):
         )
 
 
-class GuideSerializerV1(serializers.ModelSerializer):
-    guide_format = serializers.SerializerMethodField()
-
-    class Meta:
-        model = Guide
-        fields = (
-            'id',
-            'name',
-            'guide',
-            'guide_format'
-        )
 
     def get_guide_format(self, obj):
         # Retorna la extensión del archivo sin el punto
@@ -54,7 +45,6 @@ class GuideSerializerV1(serializers.ModelSerializer):
 
 class TypeSerializerV1(serializers.ModelSerializer):
 
-    guides = GuideSerializerV1(many=True)
     documents = serializers.SerializerMethodField()
 
     class Meta:
@@ -63,7 +53,6 @@ class TypeSerializerV1(serializers.ModelSerializer):
             'id',
             'name',
             'icon_type',
-            'guides',
             'documents'
         )
 
