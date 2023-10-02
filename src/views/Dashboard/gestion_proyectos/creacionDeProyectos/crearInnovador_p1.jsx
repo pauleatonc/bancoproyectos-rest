@@ -148,15 +148,50 @@ const CrearProyectoInnovadorP1 = () => {
         </div>
 
         {/* Fuentes */}
-        <div className="d-flex flex-row justify-content-between my-4">
+        {/* if no hay fuentes ingresadas */}
+        <div className="container d-flex flex-row justify-content-between my-4">
           <div className="d-flex flex-column">
             <h3 className="text-sans-h35">Fuentes </h3>
             <p className="text-sans-h5">(Opcional)</p>
           </div>
           <ModalFuentes/>
         </div>
-      </div>
 
+        {/* if hay fuentes ingresadas en el proyecto */}
+        <div className="container">
+          <div className="d-flex flex-column">
+            <h3 className="text-sans-h35">Fuentes </h3>
+            <p className="text-sans-h5">(Opcional)</p>
+          </div>
+          {/* Renderizar dinamicamente segun informacion de la base de datos */}
+          <div>
+            <div className="my-2 d-flex justify-content-between">
+              <div className="d-flex flex-row">
+                <p className="text-decoration-underline">Fuente 1</p>
+                <i className="material-symbols-rounded ms-2 pt-1">open_in_new</i>
+              </div>
+              <button className="btn-secundario-s d-flex pb-0 px-3">
+                <p className="text-decoration-underline">Editar</p>
+                <i className="material-symbols-rounded ms-2 pt-1">edit</i>
+              </button>
+            </div>
+            <div className="my-2 d-flex justify-content-between">
+              <div className="d-flex flex-row">
+                <p className="text-decoration-underline">Fuente 2</p>
+                <i className="material-symbols-rounded ms-2 pt-1">open_in_new</i>
+              </div>
+              <button className="btn-secundario-s d-flex pb-0 px-3">
+                <p className="text-decoration-underline">Editar</p>
+                <i className="material-symbols-rounded ms-2 pt-1">edit</i>
+              </button>
+            </div>
+          </div>
+          <div className="mt-5">
+            <ModalFuentes/>
+          </div> 
+        </div> 
+      </div>
+      
       <div className="col-6 ms-5">
         {/* Img Portada - componente */}
         <div className="">
