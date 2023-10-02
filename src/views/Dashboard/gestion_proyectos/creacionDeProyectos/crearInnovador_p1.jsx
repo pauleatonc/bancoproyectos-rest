@@ -9,7 +9,7 @@ const CrearProyectoInnovadorP1 = () => {
   const [isEditingDescr, setIsEditingDescr] = useState(true); // comienza en modo edicion
   const [showDescrError, setShowDescrError] = useState(false);
 
-  // LOGICA INPUT TITULO
+  // LOGICA TITULO
   // Maneja cambios en el input Titulo y actualiza el estado.
   const handleTitleInputChange = (event) => {
     const text = event.target.value;
@@ -30,7 +30,7 @@ const CrearProyectoInnovadorP1 = () => {
     setIsEditingTitle(true);
   };
 
-  // LOGICA INPUT DESCRIPCION
+  // LOGICA DESCRIPCION
   // Maneja cambios en el input Descripcion y actualiza el estado.
   const handleDescrInputChange = (event) => {
     const text = event.target.value;
@@ -153,7 +153,7 @@ const CrearProyectoInnovadorP1 = () => {
             <h3 className="text-sans-h35">Fuentes </h3>
             <p className="text-sans-h5">(Opcional)</p>
           </div>
-          <ModalFuentes />
+          <ModalFuentes/>
         </div>
       </div>
 
