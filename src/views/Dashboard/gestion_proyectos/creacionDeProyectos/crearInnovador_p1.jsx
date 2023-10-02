@@ -1,5 +1,6 @@
 import { useState } from "react";
-import  ModalFuentes  from "../../../../components/Modals/ModalFuentes";
+import  ModalAgregarFuente  from "../../../../components/Modals/ModalAgregarFuente";
+import ModalEditarFuente from "../../../../components/Modals/ModalEditarFuente";
 
 const CrearProyectoInnovadorP1 = () => {
   const [inputTitle, setInputTitle] = useState('');
@@ -108,7 +109,7 @@ const CrearProyectoInnovadorP1 = () => {
               <div className="d-flex flex-column my-4">
                 <h3 className="text-sans-h3">Descripción del proyecto</h3>
                 <textarea
-                  className="text-sans-p container ghost-input"
+                  className="description-input text-sans-p container ghost-input"
                   placeholder="Descripción del proyecto"
                   value={inputDescr}
                   onChange={handleDescrInputChange}
@@ -132,9 +133,9 @@ const CrearProyectoInnovadorP1 = () => {
             <div>
               <p className="text-sans-p">Descripción del proyecto</p>
               <div className="d-flex flex-column my-3">
-                <pre> 
-                  <p className="text-sans-p mb-4">{inputDescr || "Descripción del proyecto"}</p>
-                </pre>
+                <div className="description-container">
+                  <p className="text-sans-p">{inputDescr || "Descripción del proyecto"} </p>
+                </div>
                 <button
                   className="btn-secundario-s d-flex pb-0 px-3"
                   onClick={handleEditDescrClick}
@@ -154,10 +155,10 @@ const CrearProyectoInnovadorP1 = () => {
             <h3 className="text-sans-h35">Fuentes </h3>
             <p className="text-sans-h5">(Opcional)</p>
           </div>
-          <ModalFuentes/>
+          <ModalAgregarFuente/>
         </div>
 
-        {/* if hay fuentes ingresadas en el proyecto */}
+        {/* if hay fuentes ingresadas */}
         <div className="container">
           <div className="d-flex flex-column">
             <h3 className="text-sans-h35">Fuentes </h3>
@@ -167,27 +168,21 @@ const CrearProyectoInnovadorP1 = () => {
           <div>
             <div className="my-2 d-flex justify-content-between">
               <div className="d-flex flex-row">
-                <p className="text-decoration-underline">Fuente 1</p>
+                <p className="text-decoration-underline">Fuente Ejemplo 1</p>
                 <i className="material-symbols-rounded ms-2 pt-1">open_in_new</i>
               </div>
-              <button className="btn-secundario-s d-flex pb-0 px-3">
-                <p className="text-decoration-underline">Editar</p>
-                <i className="material-symbols-rounded ms-2 pt-1">edit</i>
-              </button>
+              <ModalEditarFuente/>
             </div>
             <div className="my-2 d-flex justify-content-between">
               <div className="d-flex flex-row">
-                <p className="text-decoration-underline">Fuente 2</p>
+                <p className="text-decoration-underline">Fuente Ejemplo 2</p>
                 <i className="material-symbols-rounded ms-2 pt-1">open_in_new</i>
               </div>
-              <button className="btn-secundario-s d-flex pb-0 px-3">
-                <p className="text-decoration-underline">Editar</p>
-                <i className="material-symbols-rounded ms-2 pt-1">edit</i>
-              </button>
+              <ModalEditarFuente/>
             </div>
           </div>
           <div className="mt-5">
-            <ModalFuentes/>
+            <ModalAgregarFuente/>
           </div> 
         </div> 
       </div>
@@ -200,6 +195,10 @@ const CrearProyectoInnovadorP1 = () => {
               <i className="material-symbols-rounded me-2">add_a_photo</i>
               <p className="text-sans-p">Agregar foto de portada</p>
             </div>
+        </div>
+        <div className="d-flex flex-row text-sans-h5-blue">
+          <i className="material-symbols-rounded me-2">info</i>
+          <p className="pt-1">La imagen de portada será la primera que se verá en la galería y en el sitio web.</p>
         </div>
 
         {/* Img Miniatura - componente */}
