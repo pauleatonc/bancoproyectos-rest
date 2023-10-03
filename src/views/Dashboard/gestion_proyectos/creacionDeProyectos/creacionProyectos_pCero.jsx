@@ -35,24 +35,6 @@ const CrearProyectos = () => {
     setIsEditing(true);
   };
 
-  // const handleSubirProyectoClick = () => {
-  //   if (selectedOption) {
-  //     // Redirige segun la opcion seleccionada
-  //     if (selectedOption === 'bancoProyectos') {
-  //       window.location.href = '/dashboard/crearproyecto_paso1';
-  //     } else if (selectedOption === 'proyectosInnovadores') {
-  //       window.location.href = '/dashboard/crearinnovador_paso1';
-  //     }
-  //   } else {
-  //     // Muestra el mensaje de error si no se ha seleccionado una opcion
-  //     setShowOptionErrorMessage(true);
-  //   }
-  //   // Verifica si se ha ingresado un título
-  //   if (!inputText) {
-  //     setShowTitleErrorMessage(true);
-  //   }
-  // };
-
   const handleSubirProyectoClick = () => {
     if (selectedOption) {
       // Verifica si se ha ingresado un título
@@ -78,7 +60,11 @@ const CrearProyectos = () => {
         <h3 className="text-sans-h3 ms-1">Elige donde quieres mostrar el proyecto:</h3>
 
         <div className="row my-5">
-          <div className="col-5 opt-container p-3 mx-3">
+          <div 
+          className={`col-5 opt-container p-3 mx-3 ${
+            selectedOption === 'bancoProyectos' ? 'opt-container-active' : 'opt-container'
+          }`}
+          >
             <h3 className="text-serif-h3 text-center text-decoration-underline">Banco de Proyectos</h3>
             <hr/>
             <div className="d-flex flex-row">
@@ -96,7 +82,9 @@ const CrearProyectos = () => {
             <hr/>
             <div className="d-flex justify-content-center">
               <button
-              className="btn-secundario-s text-decoration-underline px-4"
+              className={`btn-secundario-s text-decoration-underline px-4 ${
+                selectedOption === 'bancoProyectos' ? 'btn-secundario-s-active' : 'btn-secundario-s'
+              }`}
               onClick={() => handleOptionChange('bancoProyectos')}
               value='bancoProyectos'
               >
@@ -105,7 +93,11 @@ const CrearProyectos = () => {
             </div>
           </div>
 
-          <div className="col-5 opt-container p-3 mx-3">
+          <div 
+          className={`col-5 opt-container p-3 mx-3 ${
+            selectedOption === 'proyectosInnovadores' ? 'opt-container-active' : 'opt-container'
+          }`}
+          >
             <h3 className="text-serif-h3 text-center text-decoration-underline">Proyectos Innovadores</h3>
             <hr/>
             <div className="d-flex flex-row">
@@ -127,7 +119,9 @@ const CrearProyectos = () => {
             <hr/>
             <div className="d-flex justify-content-center">
               <button
-              className="btn-secundario-s text-decoration-underline px-4"
+              className={`btn-secundario-s text-decoration-underline px-4 ${
+                selectedOption === 'proyectosInnovadores' ? 'btn-secundario-s-active' : 'btn-secundario-s'
+              }`}
               onClick={() => handleOptionChange('proyectosInnovadores')}
               value="proyectosInnovadores"
               >
@@ -148,12 +142,16 @@ const CrearProyectos = () => {
             // Modo de edición
             <>
               <div className="d-flex flex-row justify-content-between my-3">
-                <input
-                  className="text-sans-h1 container-fluid ghost-input"
-                  placeholder="Titulo del Proyecto"
-                  value={inputText}
-                  onChange={handleInputChange}
-                />
+                <div>
+                  <p className="text-sans-h5">Escribe el título del proyecto (Obligatorio)</p>
+                  <input
+                    className="text-sans-h1 container-fluid ghost-input"
+                    placeholder="Titulo del Proyecto"
+                    value={inputText}
+                    onChange={handleInputChange}
+                  />
+                  <p className="text-sans-h5">{inputText.length} / 70 caracteres</p>
+                </div> 
                 <button
                   className="btn-principal-s d-flex text-sans-h4 pb-0"
                   onClick={handleGuardarClick}

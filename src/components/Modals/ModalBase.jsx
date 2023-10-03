@@ -1,14 +1,18 @@
-export const ModalBase = ({ title,children }) =>
+export const ModalBase = ({ btnName, btnIcon, title, children, modalID }) =>
 {
-
   return (
     <>
-      <button type="button" className="btn-secundario-s text-sans-p-blue d-flex pb-0 me-4 " data-bs-toggle="modal" data-bs-target="#ModalBase">
-        <p className="text-decoration-underline">Editar</p>
-        <i className="material-symbols-rounded ms-2">edit</i> </button>
+      <button 
+      type="button" 
+      className="btn-secundario-s text-sans-p-blue d-flex pb-0 me-4 " 
+      data-bs-toggle="modal"
+      data-bs-target={`#${modalID}`}
+      >
+        <p className="text-decoration-underline">{btnName}</p>
+        <i className="material-symbols-rounded ms-2">{btnIcon}</i> 
+      </button>
 
-
-      <div className="modal fade " id="ModalBase" tabIndex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
+      <div className="modal fade " id={modalID} tabIndex="-1" aria-labelledby="ModalLabel" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">

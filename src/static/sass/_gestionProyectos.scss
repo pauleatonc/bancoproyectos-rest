@@ -9,7 +9,7 @@
     outline: none;
 }
 
-// Paso cero
+// Vista Paso cero
 .opt-container{
     border: 1px solid $light-blue;
     border-radius: 5px;
@@ -18,8 +18,22 @@
     outline: 3px solid $light-blue;
     outline-offset: -2px;
 }
+.opt-container-active{
+    outline: 3px solid $light-blue;
+    outline-offset: -2px;
+}
 
-// Paso 1
+// Vista Paso 1 Creacion Proyectos Innovadores
+.description-container{
+    width: 90%;
+    height: fit-content;
+    white-space: pre-wrap;
+}
+.description-input{
+    height: fit-content;
+    min-height: 158px;
+    
+}
 .img-section-l{
     color: #656565;
     border: 2px dashed #656565;
@@ -41,22 +55,22 @@
     align-items: center;
 }
 
+// Vista Paso 1 Creacion Proyectos - Banco de Proyectos
 .card-description {
-display: flex;
-flex-direction: column;
-width: 750px;
-height: 270px;
-padding: 15px 0px;
-align-items: flex-start;
-background-color: $neutral-color; 
+    display: flex;
+    flex-direction: column;
+    width: 750px;
+    height: 270px;
+    padding: 15px 0px;
+    align-items: flex-start;
+    background-color: $neutral-color; 
 }
-
 .input-area {
-display: flex;
-flex-direction: column;
-width:720px;
-height: 258px;
-margin: 10px 12px 13px 14px ; 
+    display: flex;
+    flex-direction: column;
+    width:720px;
+    height: 258px;
+    margin: 10px 12px 13px 14px ; 
 
 }
 
