@@ -27,7 +27,8 @@ const CrearProyectos = () => {
   const handleSubirProyectoClick = () => {
     if (selectedOption) {
       // Verifica si se ha ingresado un título
-      if (!inputText) {
+      const trimmedTitle = inputText.trim();
+      if (!trimmedTitle) {
         setShowTitleErrorMessage(true);
       } else {
         if (selectedOption === 'bancoProyectos') {

@@ -16,8 +16,10 @@ const CrearProyectoInnovadorP1 = () => {
     const text = event.target.value;
     setInputTitle(text);
   };
+
   const handleSaveTitleClick = () => {
-    if (!inputTitle) {
+    const trimmedText = inputTitle.trim();
+    if (!trimmedText) {
       // Si no hay texto en el input, muestra el mensaje de error
       setShowTitleErrorMessage(true);
     } else {
@@ -26,6 +28,7 @@ const CrearProyectoInnovadorP1 = () => {
       setShowTitleErrorMessage(false);
     }
   };
+
   const handleEditTitleClick = () => {
     // Cambia de nuevo al modo de edicion
     setIsEditingTitle(true);
@@ -37,8 +40,10 @@ const CrearProyectoInnovadorP1 = () => {
     const text = event.target.value;
     setInputDescr(text);
   };
+
   const handleSaveDescrClick = () => {
-    if (!inputDescr) {
+    const trimmedText = inputDescr.trim();
+    if (!trimmedText) {
       // Si no hay texto en el input, muestra el mensaje de error
       setShowDescrError(true);
     } else {
@@ -47,6 +52,7 @@ const CrearProyectoInnovadorP1 = () => {
       setShowDescrError(false);
     }
   };
+
   const handleEditDescrClick = () => {
     // Cambia de nuevo al modo de edicion
     setIsEditingDescr(true);
