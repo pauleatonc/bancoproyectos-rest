@@ -61,6 +61,9 @@ $black-color: #111111;
 .text-sans-h3{
     @include font-sans(25px, 500, $grey-a-color);
 }
+.text-sans-h3-lightgrey{
+    @include font-sans(25px, 500, $grey-c-color);
+}
 .text-sans-h35{
     @include font-sans(23px, 500, $grey-a-color);
 }
@@ -162,6 +165,10 @@ $black-color: #111111;
     @include btn-secundario(fit-content, $white-color, $blue-color);
 }
 .btn-secundario-s:hover{
+    background-color: $blue-color;
+    color: $white-color;
+}
+.btn-secundario-s-active{
     background-color: $blue-color;
     color: $white-color;
 }

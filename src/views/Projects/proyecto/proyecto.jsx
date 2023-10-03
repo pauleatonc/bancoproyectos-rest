@@ -12,6 +12,10 @@ const Proyecto = () =>
   const { dataProject, loadingProject, errorProject } = useApiProjectsDetail(slug);
   const navigate = useNavigate();
   const { isLoggedIn } = useAuth();
+  const combinedDocuments = [
+    ...(dataProject.program && dataProject.program.documents ? dataProject.program.documents : []),
+    ...(dataProject.type && dataProject.type.documents ? dataProject.type.documents : [])
+  ];
 
   if (loadingProject)
   {
@@ -171,28 +175,30 @@ const Proyecto = () =>
         }
 
 
-        {/* Normativa por tipo de proyecto */}
-        {dataProject.type && dataProject.type.documents && dataProject.type.documents.length > 0 &&
-          <>
-            <h2 className="text-sans-h2 my-4 mt-5">Documentos con normativa de uso general</h2>
-            <div className="row my-4 fw-bold border-top">
-              <div className="col-1 mt-3">#</div>
-              <div className="col mt-3">Documento</div>
-              <div className="col mt-3">Formato</div>
-              <div className="col mt-3">Acción</div>
-            </div>
-            {
-              dataProject.type.documents.map((documents, index) => (
-                <div key={index} className={`row border-top ${index % 2 === 0 ? 'grey-table-line' : 'white-table-line'}`}>
-                  <div className="col-1 p-3">{index + 1}</div>
-                  <div className="col p-3">{documents.title}</div>
-                  <div className="col p-3">{documents.document_format}</div>
-                  <a className="col p-3 text-sans-p-tertiary" href={documents.document} target="_blank" rel="noopener noreferrer">Descargar</a>
+        {/* Normativa por programa y tipo de proyecto */}
+            { combinedDocuments.length > 0 &&
+              <>
+                <h2 className="text-sans-h2 my-4 mt-5">Documentos</h2>
+                <div className="row my-4 fw-bold border-top">
+                  <div className="col-1 mt-3">#</div>
+                  <div className="col mt-3">Documento</div>
+                  <div className="col mt-3">Formato</div>
+                  <div className="col mt-3">Acción</div>
                 </div>
-              ))
+                {
+                  combinedDocuments.map((documents, index) => (
+                    <div key={index} className={`row border-top ${index % 2 === 0 ? 'grey-table-line' : 'white-table-line'}`}>
+                      <div className="col-1 p-3">{index + 1}</div>
+                      <div className="col p-3">{documents.title}</div>
+                      <div className="col p-3">{documents.document_format}</div>
+                      <a className="col p-3 text-sans-p-tertiary" href={documents.document} target="_blank" rel="noopener noreferrer">Descargar</a>
+                    </div>
+                  ))
+                }
+              </>
             }
-          </>
-        }
+          
+
 
       {/* Proyectos Relacionados */}
       <ProyectosRelacionados currentSlug={dataProject.slug} />

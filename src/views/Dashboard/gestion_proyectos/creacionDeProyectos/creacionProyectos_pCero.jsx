@@ -8,6 +8,11 @@ const CrearProyectos = () => {
   const [isEditing, setIsEditing] = useState(true);
   const [showTitleErrorMessage, setShowTitleErrorMessage] = useState(false);
 
+  //Hooks para conteo y manejo de caracteres maximos
+  const [maxTitleChars] = useState(70); // Maximo de caracteres para el titulo
+  const [titleCharsCount, setTitleCharsCount] = useState(0);
+  const [titleCharsExceeded, setTitleCharsExceeded] = useState(false);
+
   // Maneja cambios en la seleccion y la actualiza en el estado.
   const handleOptionChange = (value) => {
     setSelectedOption(value);
@@ -16,47 +21,26 @@ const CrearProyectos = () => {
   // Maneja cambios en el input y actualiza el estado.
   const handleInputChange = (event) => {
     const text = event.target.value;
-    setInputText(text);
-  };
-
-  const handleGuardarClick = () => {
-    if (!inputText) {
-      // Si no hay texto en el input, muestra el mensaje de error
-      setShowTitleErrorMessage(true);
+    if (text.length <= maxTitleChars) {
+      setInputText(text);
+      setTitleCharsCount(text.length);
+      setTitleCharsExceeded(false);
     } else {
-      // Si hay texto en el input, cambia al modo de edicion
-      setIsEditing(false);
-      setShowTitleErrorMessage(false);
+      setTitleCharsExceeded(true);
     }
   };
+
 
   const handleEditarClick = () => {
     // Cambia de nuevo al modo de edicion
     setIsEditing(true);
   };
 
-  // const handleSubirProyectoClick = () => {
-  //   if (selectedOption) {
-  //     // Redirige segun la opcion seleccionada
-  //     if (selectedOption === 'bancoProyectos') {
-  //       window.location.href = '/dashboard/crearproyecto_paso1';
-  //     } else if (selectedOption === 'proyectosInnovadores') {
-  //       window.location.href = '/dashboard/crearinnovador_paso1';
-  //     }
-  //   } else {
-  //     // Muestra el mensaje de error si no se ha seleccionado una opcion
-  //     setShowOptionErrorMessage(true);
-  //   }
-  //   // Verifica si se ha ingresado un título
-  //   if (!inputText) {
-  //     setShowTitleErrorMessage(true);
-  //   }
-  // };
-
   const handleSubirProyectoClick = () => {
     if (selectedOption) {
       // Verifica si se ha ingresado un título
-      if (!inputText) {
+      const trimmedTitle = inputText.trim();
+      if (!trimmedTitle) {
         setShowTitleErrorMessage(true);
       } else {
         if (selectedOption === 'bancoProyectos') {
@@ -78,7 +62,11 @@ const CrearProyectos = () => {
         <h3 className="text-sans-h3 ms-1">Elige donde quieres mostrar el proyecto:</h3>
 
         <div className="row my-5">
-          <div className="col-5 opt-container p-3 mx-3">
+          <div 
+          className={`col-5 opt-container p-3 mx-3 ${
+            selectedOption === 'bancoProyectos' ? 'opt-container-active' : 'opt-container'
+          }`}
+          >
             <h3 className="text-serif-h3 text-center text-decoration-underline">Banco de Proyectos</h3>
             <hr/>
             <div className="d-flex flex-row">
@@ -96,7 +84,9 @@ const CrearProyectos = () => {
             <hr/>
             <div className="d-flex justify-content-center">
               <button
-              className="btn-secundario-s text-decoration-underline px-4"
+              className={`btn-secundario-s text-decoration-underline px-4 ${
+                selectedOption === 'bancoProyectos' ? 'btn-secundario-s-active' : 'btn-secundario-s'
+              }`}
               onClick={() => handleOptionChange('bancoProyectos')}
               value='bancoProyectos'
               >
@@ -105,7 +95,11 @@ const CrearProyectos = () => {
             </div>
           </div>
 
-          <div className="col-5 opt-container p-3 mx-3">
+          <div 
+          className={`col-5 opt-container p-3 mx-3 ${
+            selectedOption === 'proyectosInnovadores' ? 'opt-container-active' : 'opt-container'
+          }`}
+          >
             <h3 className="text-serif-h3 text-center text-decoration-underline">Proyectos Innovadores</h3>
             <hr/>
             <div className="d-flex flex-row">
@@ -127,7 +121,9 @@ const CrearProyectos = () => {
             <hr/>
             <div className="d-flex justify-content-center">
               <button
-              className="btn-secundario-s text-decoration-underline px-4"
+              className={`btn-secundario-s text-decoration-underline px-4 ${
+                selectedOption === 'proyectosInnovadores' ? 'btn-secundario-s-active' : 'btn-secundario-s'
+              }`}
               onClick={() => handleOptionChange('proyectosInnovadores')}
               value="proyectosInnovadores"
               >
@@ -148,19 +144,17 @@ const CrearProyectos = () => {
             // Modo de edición
             <>
               <div className="d-flex flex-row justify-content-between my-3">
-                <input
-                  className="text-sans-h1 container-fluid ghost-input"
-                  placeholder="Titulo del Proyecto"
-                  value={inputText}
-                  onChange={handleInputChange}
-                />
-                <button
-                  className="btn-principal-s d-flex text-sans-h4 pb-0"
-                  onClick={handleGuardarClick}
-                >
-                  <p className="text-sans-p-white text-decoration-underline">Guardar</p>
-                  <i className="material-symbols-rounded ms-2 pt-1">save</i>
-                </button>
+                <div>
+                  <p className="text-sans-h5">Escribe el título del proyecto (Obligatorio)</p>
+                  <input
+                    className="text-sans-h1 container-fluid ghost-input"
+                    placeholder="Titulo del Proyecto"
+                    value={inputText}
+                    onChange={handleInputChange}
+                  />
+                  <p className={`text-sans-h5 ${titleCharsExceeded ? "text-sans-h5-red" : ""}`}> {titleCharsCount} / {maxTitleChars} caracteres </p>
+                </div> 
+                
               </div>
               
               {showTitleErrorMessage && (
