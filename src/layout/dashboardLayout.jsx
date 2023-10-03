@@ -12,14 +12,14 @@ const DashboardLayout = () =>
           </div>
           <div className="col-10">
             <NavbarUser />
-              <Outlet />
+            <Outlet />
           </div>
         </div>
-        </div>
-      </>
+      </div>
+    </>
 
-      )
+  )
 
 }
 
-      export default DashboardLayout; 
+export default DashboardLayout; 

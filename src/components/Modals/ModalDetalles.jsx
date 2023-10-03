@@ -51,7 +51,7 @@ const ModalDetalles = ({ setDetalles }) =>
   };
   return (
     <>
-      <ModalBase title="Detalles del Proyecto">
+      <ModalBase title="Detalles del Proyecto" btnName="Editar" btnIcon="edit" modalID="modalDetalles">
         <div className="modal-detalle d-flex align-items-center" >
 
           <form className="col">

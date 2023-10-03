@@ -4,7 +4,7 @@ const UploadFile = () =>
 {
   return (
     <>
-      <ModalBase title="Agregar archivo adicional">
+      <ModalBase title="Agregar archivo adicional" btnName="Subir Archivo" btnIcon="add" modalID="uploadFile">
         <div className="d-flex align-items-center" >
           <div className=" col-12 d-flex border-top justify-content-between">
             <button className="btn-borderless d-flex justify-content-between my-5" data-bs-dismiss="modal" aria-label="Close">
