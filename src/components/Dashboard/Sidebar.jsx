@@ -12,7 +12,7 @@ export const Sidebar = () =>
   };
 
   return (
-    <div className="sidebar d-flex flex-column flex-shrink-0  border-end">
+    <div className="sidebar  fixed-top  d-flex flex-column flex-shrink-0  border-end">
       <div className="my-0">
         <div className="line-container row">
           <div id="lineBlue" />
@@ -26,7 +26,7 @@ export const Sidebar = () =>
       </div>
       <ul className="nav nav-pills flex-column mb-auto">
         <li className="my-1">
-          <NavLink to="/dashboard" className="mx-4 btn-link" activeClassName="active" aria-current="page" type="button" >
+          <NavLink to="/dashboard" className="mx-4 btn-link"  aria-current="page" type="button" >
             <i className="material-symbols-outlined mx-3 ">
               home
             </i> <span className="text-link">Inicio</span>

@@ -1,7 +1,54 @@
-import { ModalBase } from './ModalBase';
+import { useRef, useState } from 'react';
+import { useApiRegionComuna } from '../../hooks/useApiRegionComuna';
+import ModalBase from './ModalBase';
+import YearPicker from '../Commons/YearPicker';
 
-const ModalDetalles = () =>
+const ModalDetalles = ({ setDetalles }) =>
 {
+  const { data, loading, error } = useApiRegionComuna();
+  const [ selectedRegion, setSelectedRegion ] = useState(null);
+  const [ selectedRegionID, setSelectedRegionID ] = useState(null);
+  const [ selectedComuna, setSelectedComuna ] = useState(null);
+  const [ selectedYear, setSelectedYear ] = useState(new Date().getFullYear());
+
+  const programaRef = useRef(null);
+  const tipoProyectoRef = useRef(null);
+  const regionRef = useRef(null);
+  const comunaRef = useRef(null);
+  const idSubereRef = useRef(null);
+
+  const handleYearChange = (year) =>
+  {
+    setSelectedYear(year);
+  };
+
+  const handleRegionChange = (e) =>
+  {
+    const selectedIndex = e.target.selectedIndex;
+    setSelectedRegion(e.target[ selectedIndex ].text);
+    setSelectedRegionID(e.target.value);
+  };
+
+  const handleComunaChange = (e) =>
+  {
+    setSelectedComuna(e.target[ e.target.selectedIndex ].text);
+  };
+
+  const handleGuardar = () =>
+  {
+    const programa = programaRef.current ? programaRef.current.value : "";
+    const tipoProyecto = tipoProyectoRef.current ? tipoProyectoRef.current.value : "";
+    const idSubdere = idSubereRef.current ? idSubereRef.current.value : "";
+    setDetalles({
+      programa,
+      tipoProyecto,
+      region: selectedRegion,
+      comuna: selectedComuna,
+      year: `${selectedYear}`,
+      idSubdere,
+    });
+
+  };
   return (
     <>
       <ModalBase title="Detalles del Proyecto">
@@ -12,18 +59,18 @@ const ModalDetalles = () =>
               <label className="text-sans-p px-3">Elige el programa (Obligatorio)</label>
               <select
                 className="custom-select px-3"
-                id="contact_reason">
-                {/* GENERAR DE MANERA DINAMICA */}
+                id=""
+                ref={programaRef}>
                 <option value="">Elige una opción</option>
               </select>
             </div>
 
-            <div className="col-12  d-flex flex-column my-4">
+            <div className="col-12  d-flex flex-column my-4 ">
               <label className="text-sans-p px-3">Elige el tipo de proyecto (Obligatorio)</label>
               <select
                 className="custom-select px-3"
-                id="contact_reason">
-                {/* GENERAR DE MANERA DINAMICA */}
+                id=""
+                ref={tipoProyectoRef}>
                 <option value="">Elige una opción</option>
               </select>
             </div>
@@ -32,9 +79,12 @@ const ModalDetalles = () =>
               <label className="text-sans-p px-3">¿En qué región está el proyecto? (Obligatorio)</label>
               <select
                 className="custom-select px-3"
-                id="contact_reason">
-                {/* GENERAR DE MANERA DINAMICA */}
+                onChange={handleRegionChange}
+                ref={regionRef}>
                 <option value="">Elige una opción</option>
+                {!loading && !error && data?.map(region => (
+                  <option key={region.id} value={region.id}>{region.region}</option>
+                ))}
               </select>
             </div>
 
@@ -42,20 +92,27 @@ const ModalDetalles = () =>
               <label className="text-sans-p px-3">¿En qué comuna? (Obligatorio)</label>
               <select
                 className="custom-select px-3"
-                id="contact_reason">
-                {/* GENERAR DE MANERA DINAMICA */}
+                onChange={handleComunaChange}
+                ref={comunaRef}>
                 <option value="">Elige una opción</option>
+                {!loading && !error && selectedRegionID && data.find(region => region.id === parseInt(selectedRegionID))?.comunas.map(comuna => (
+                  <option key={comuna.id} value={comuna.id}>{comuna.comuna}</option>
+                ))}
               </select>
             </div>
 
+
             <div className="col-12 d-flex flex-column my-4">
-              <label className="text-sans-p px-3">Elige el año de construcción del proyecto (Obligatorio)</label>
-              <select
-                className="custom-select px-3"
-                id="contact_reason">
-                {/* GENERAR DE MANERA DINAMICA */}
-                <option value="">Elige una opción</option>
-              </select>
+              <YearPicker onYearChange={handleYearChange} />
+            </div>
+            <div className="d-flex flex-column input-container my-4">
+              <label className="text-sans-p input-label ms-3 ms-sm-0" htmlFor="organization">ID SUBDERE (Obligatorio)</label>
+              <input
+                className="input-s px-3"
+                type="text"
+                placeholder="Ingresa el ID SUBDERE del Proyecto"
+                ref={idSubereRef}
+              />
             </div>
           </form>
           <div className=" col-12 d-flex border-top justify-content-between">
@@ -65,6 +122,7 @@ const ModalDetalles = () =>
             </button>
             <button
               className="btn-principal-s d-flex text-sans-h4 pb-0 me-3 align-self-center"
+              onClick={handleGuardar}
             >
               <p className="text-sans-p-white text-decoration-underline">Guardar</p>
               <i className="material-symbols-rounded ms-2 pt-1">save</i>

@@ -2,7 +2,7 @@
 
 export const NavbarUser = () => {
   return (
-    <div className="d-flex justify-content-end me-5 w-100 sticky-top">
+    <nav className="d-flex  bg-white border-bottom justify-content-end me-5 w-100 sticky-top">
       <div className="align-self-center mx-2 text-sans-h5">
         <span >Hola, $userName</span>
       </div>
@@ -12,6 +12,6 @@ open_in_new
         <button className="btn-logout mx-2 my-2"><u>Cerrar Sesión</u><i className="material-symbols-outlined">
 logout
 </i></button>
-    </div>
+    </nav>
   )
 }

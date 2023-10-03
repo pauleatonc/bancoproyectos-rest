@@ -49,6 +49,9 @@ $black-color: #111111;
 .text-sans-h1{
     @include font-sans(39px, 500, $grey-a-color);
 }
+.text-sans-h1-muted {
+    @include font-sans(39px, 500, $grey-light-color);
+}
 .text-sans-h2{
     @include font-sans(31px, 500, $grey-a-color);
 }
@@ -73,11 +76,16 @@ $black-color: #111111;
 .text-sans-h5-bold{
     @include font-sans(14px, 700, $grey-a-color);
 }
+
 .text-sans-h5-blue{
     @include font-sans(14px, 400, $primary-color);
 }
 .text-sans-h5-red{
     @include font-sans(14px, 400, $dark-red);
+}
+
+.text-sans-h5-grey{
+    @include font-sans(14px, 400, $grey-a-color);
 }
 .text-sans-p{
     @include font-sans(16px, 400, $grey-a-color);
@@ -92,6 +100,19 @@ $black-color: #111111;
 .text-sans-p-white{
     @include font-sans(16px, 400, $white-color);
     line-height: 35px;
+}
+
+.text-sans-b-gray{
+    @include font-sans(16px, 700, $grey-a-color);
+    line-height: 22px;
+}
+.text-sans-c-gray{
+    @include font-sans(16px, 400, $grey-c-color);
+    line-height: 22px;
+}
+.text-sans-b-white{
+    @include font-sans(16px, 700, $white-color);
+    line-height: 24px;
 }
 
 // Linea decorativa 50/50
@@ -125,10 +146,10 @@ $black-color: #111111;
 }
 .btn-principal-l{
     @include btn-principal(90%); 
- }
- .btn-principal-xl{
+}
+.btn-principal-xl{
     @include btn-principal(100%); 
- }
+}
 
 @mixin btn-secundario ($btnSize, $btnBG, $btnColor){
     width: $btnSize;
@@ -182,6 +203,7 @@ $black-color: #111111;
     background-color:$blue-color;
     color: $white-color;
 }
+
 
 .red-btn{
     width: fit-content;
