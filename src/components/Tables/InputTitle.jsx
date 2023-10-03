@@ -54,8 +54,8 @@ export const EditableTitle = () =>
 
   return (
     <div className="mb-4">
-      <div className="title-container d-flex flex-row justify-content-between pb-0 ">
-        <div className="title-input-container">
+      <div className="title-edit-container d-flex flex-row justify-content-between pb-0 ">
+        <div className="title-input-container-edit">
           {isEditing ? (
             <input
               type="text"
@@ -63,7 +63,7 @@ export const EditableTitle = () =>
               onChange={handleTitleChange}
               onFocus={handleFocus}
               onBlur={handleBlur}
-              className='ghost-input border-0 mt-4 text-sans-h1'
+              className='ghost-input-edit  border-0 mt-4 text-sans-h1'
               placeholder='Titulo Proyecto'
               ref={inputRef} 
             />
