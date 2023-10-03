@@ -8,6 +8,11 @@ const CrearProyectos = () => {
   const [isEditing, setIsEditing] = useState(true);
   const [showTitleErrorMessage, setShowTitleErrorMessage] = useState(false);
 
+  //Hooks para conteo y manejo de caracteres maximos
+  const [maxTitleChars] = useState(70); // Maximo de caracteres para el titulo
+  const [titleCharsCount, setTitleCharsCount] = useState(0);
+  const [titleCharsExceeded, setTitleCharsExceeded] = useState(false);
+
   // Maneja cambios en la seleccion y la actualiza en el estado.
   const handleOptionChange = (value) => {
     setSelectedOption(value);
@@ -16,8 +21,15 @@ const CrearProyectos = () => {
   // Maneja cambios en el input y actualiza el estado.
   const handleInputChange = (event) => {
     const text = event.target.value;
-    setInputText(text);
+    if (text.length <= maxTitleChars) {
+      setInputText(text);
+      setTitleCharsCount(text.length);
+      setTitleCharsExceeded(false);
+    } else {
+      setTitleCharsExceeded(true);
+    }
   };
+
 
   const handleEditarClick = () => {
     // Cambia de nuevo al modo de edicion
@@ -140,7 +152,7 @@ const CrearProyectos = () => {
                     value={inputText}
                     onChange={handleInputChange}
                   />
-                  <p className="text-sans-h5">{inputText.length} / 70 caracteres</p>
+                  <p className={`text-sans-h5 ${titleCharsExceeded ? "text-sans-h5-red" : ""}`}> {titleCharsCount} / {maxTitleChars} caracteres </p>
                 </div> 
                 
               </div>

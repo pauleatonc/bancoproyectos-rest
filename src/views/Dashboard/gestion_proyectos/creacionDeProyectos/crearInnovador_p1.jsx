@@ -10,11 +10,27 @@ const CrearProyectoInnovadorP1 = () => {
   const [isEditingDescr, setIsEditingDescr] = useState(true); // comienza en modo edicion
   const [showDescrError, setShowDescrError] = useState(false);
 
+  // Hooks de estado para conteo de caracteres maximos en Titulo
+  const [maxTitleChars] = useState(70); // Maximo de caracteres para el titulo
+  const [titleCharsCount, setTitleCharsCount] = useState(0);
+  const [titleCharsExceeded, setTitleCharsExceeded] = useState(false);
+  //Hooks de estado para conteo de caracteres maximos en Descripcion
+  const [maxDescChars] = useState(700); // Maximo de caracteres para la descripcion
+  const [descCharsCount, setDescCharsCount] = useState(0);
+  const [descCharsExceeded, setDescCharsExceeded] = useState(false);
+
+
   // LOGICA TITULO
   // Maneja cambios en el input Titulo y actualiza el estado.
   const handleTitleInputChange = (event) => {
     const text = event.target.value;
-    setInputTitle(text);
+    if (text.length <= maxTitleChars) {
+      setInputTitle(text);
+      setTitleCharsCount(text.length);
+      setTitleCharsExceeded(false);
+    } else {
+      setTitleCharsExceeded(true);
+    }
   };
 
   const handleSaveTitleClick = () => {
@@ -38,7 +54,13 @@ const CrearProyectoInnovadorP1 = () => {
   // Maneja cambios en el input Descripcion y actualiza el estado.
   const handleDescrInputChange = (event) => {
     const text = event.target.value;
-    setInputDescr(text);
+    if (text.length <= maxDescChars) {
+      setInputDescr(text);
+      setDescCharsCount(text.length);
+      setDescCharsExceeded(false);
+    } else {
+      setDescCharsExceeded(true);
+    }
   };
 
   const handleSaveDescrClick = () => {
@@ -78,7 +100,7 @@ const CrearProyectoInnovadorP1 = () => {
                     value={inputTitle}
                     onChange={handleTitleInputChange}
                   />
-                  <p className="text-sans-h5">{inputTitle.length} / 70 caracteres</p>
+                  <p className={`text-sans-h5 ${titleCharsExceeded ? "text-sans-h5-red" : ""}`}> {titleCharsCount} / {maxTitleChars} caracteres </p>
                 </div> 
 
                 <button
@@ -125,7 +147,7 @@ const CrearProyectoInnovadorP1 = () => {
                   value={inputDescr}
                   onChange={handleDescrInputChange}
                 />
-                <p className="text-sans-h5">{inputDescr.length} / 700 caracteres.</p>
+                <p className={`text-sans-h5 ${descCharsExceeded ? "text-sans-h5-red" : ""}`}>{descCharsCount} / {maxDescChars} caracteres</p>
                 <button
                   className="btn-principal-s d-flex text-sans-h4 pb-0 px-3"
                   onClick={handleSaveDescrClick}
