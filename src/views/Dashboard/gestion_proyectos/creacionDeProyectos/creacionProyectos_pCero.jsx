@@ -19,17 +19,6 @@ const CrearProyectos = () => {
     setInputText(text);
   };
 
-  const handleGuardarClick = () => {
-    if (!inputText) {
-      // Si no hay texto en el input, muestra el mensaje de error
-      setShowTitleErrorMessage(true);
-    } else {
-      // Si hay texto en el input, cambia al modo de edicion
-      setIsEditing(false);
-      setShowTitleErrorMessage(false);
-    }
-  };
-
   const handleEditarClick = () => {
     // Cambia de nuevo al modo de edicion
     setIsEditing(true);
@@ -152,13 +141,7 @@ const CrearProyectos = () => {
                   />
                   <p className="text-sans-h5">{inputText.length} / 70 caracteres</p>
                 </div> 
-                <button
-                  className="btn-principal-s d-flex text-sans-h4 pb-0"
-                  onClick={handleGuardarClick}
-                >
-                  <p className="text-sans-p-white text-decoration-underline">Guardar</p>
-                  <i className="material-symbols-rounded ms-2 pt-1">save</i>
-                </button>
+                
               </div>
               
               {showTitleErrorMessage && (

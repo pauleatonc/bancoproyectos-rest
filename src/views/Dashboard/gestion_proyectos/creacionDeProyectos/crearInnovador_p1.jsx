@@ -63,15 +63,20 @@ const CrearProyectoInnovadorP1 = () => {
           {isEditingTitle ? (
             // Modo de edición
             <>
-              <div className="d-flex flex-row justify-content-between my-4">
-                <input
-                  className="text-sans-h3 container ghost-input"
-                  placeholder="Titulo del Proyecto"
-                  value={inputTitle}
-                  onChange={handleTitleInputChange}
-                />
+              <div className="d-flex flex-row justify-content-between">
+                <div>
+                  <p className="text-sans-h5">Escribe el título del proyecto (Obligatorio)</p>
+                  <input
+                    className="text-sans-h3-lightgrey container ghost-input ps-0"
+                    placeholder="Titulo del Proyecto"
+                    value={inputTitle}
+                    onChange={handleTitleInputChange}
+                  />
+                  <p className="text-sans-h5">{inputTitle.length} / 70 caracteres</p>
+                </div> 
+
                 <button
-                  className="btn-principal-s d-flex text-sans-h4 pb-0"
+                  className="btn-principal-s d-flex text-sans-h4 pb-0 align-self-end"
                   onClick={handleSaveTitleClick}
                 >
                   <p className="text-sans-p-white text-decoration-underline">Guardar</p>
