@@ -10,14 +10,32 @@ const CrearProyectoInnovadorP1 = () => {
   const [isEditingDescr, setIsEditingDescr] = useState(true); // comienza en modo edicion
   const [showDescrError, setShowDescrError] = useState(false);
 
+  // Hooks de estado para conteo de caracteres maximos en Titulo
+  const [maxTitleChars] = useState(70); // Maximo de caracteres para el titulo
+  const [titleCharsCount, setTitleCharsCount] = useState(0);
+  const [titleCharsExceeded, setTitleCharsExceeded] = useState(false);
+  //Hooks de estado para conteo de caracteres maximos en Descripcion
+  const [maxDescChars] = useState(700); // Maximo de caracteres para la descripcion
+  const [descCharsCount, setDescCharsCount] = useState(0);
+  const [descCharsExceeded, setDescCharsExceeded] = useState(false);
+
+
   // LOGICA TITULO
   // Maneja cambios en el input Titulo y actualiza el estado.
   const handleTitleInputChange = (event) => {
     const text = event.target.value;
-    setInputTitle(text);
+    if (text.length <= maxTitleChars) {
+      setInputTitle(text);
+      setTitleCharsCount(text.length);
+      setTitleCharsExceeded(false);
+    } else {
+      setTitleCharsExceeded(true);
+    }
   };
+
   const handleSaveTitleClick = () => {
-    if (!inputTitle) {
+    const trimmedText = inputTitle.trim();
+    if (!trimmedText) {
       // Si no hay texto en el input, muestra el mensaje de error
       setShowTitleErrorMessage(true);
     } else {
@@ -26,6 +44,7 @@ const CrearProyectoInnovadorP1 = () => {
       setShowTitleErrorMessage(false);
     }
   };
+
   const handleEditTitleClick = () => {
     // Cambia de nuevo al modo de edicion
     setIsEditingTitle(true);
@@ -35,10 +54,18 @@ const CrearProyectoInnovadorP1 = () => {
   // Maneja cambios en el input Descripcion y actualiza el estado.
   const handleDescrInputChange = (event) => {
     const text = event.target.value;
-    setInputDescr(text);
+    if (text.length <= maxDescChars) {
+      setInputDescr(text);
+      setDescCharsCount(text.length);
+      setDescCharsExceeded(false);
+    } else {
+      setDescCharsExceeded(true);
+    }
   };
+
   const handleSaveDescrClick = () => {
-    if (!inputDescr) {
+    const trimmedText = inputDescr.trim();
+    if (!trimmedText) {
       // Si no hay texto en el input, muestra el mensaje de error
       setShowDescrError(true);
     } else {
@@ -47,6 +74,7 @@ const CrearProyectoInnovadorP1 = () => {
       setShowDescrError(false);
     }
   };
+
   const handleEditDescrClick = () => {
     // Cambia de nuevo al modo de edicion
     setIsEditingDescr(true);
@@ -63,15 +91,20 @@ const CrearProyectoInnovadorP1 = () => {
           {isEditingTitle ? (
             // Modo de edición
             <>
-              <div className="d-flex flex-row justify-content-between my-4">
-                <input
-                  className="text-sans-h3 container ghost-input"
-                  placeholder="Titulo del Proyecto"
-                  value={inputTitle}
-                  onChange={handleTitleInputChange}
-                />
+              <div className="d-flex flex-row justify-content-between">
+                <div>
+                  <p className="text-sans-h5">Escribe el título del proyecto (Obligatorio)</p>
+                  <input
+                    className="text-sans-h3-lightgrey container ghost-input ps-0"
+                    placeholder="Titulo del Proyecto"
+                    value={inputTitle}
+                    onChange={handleTitleInputChange}
+                  />
+                  <p className={`text-sans-h5 ${titleCharsExceeded ? "text-sans-h5-red" : ""}`}> {titleCharsCount} / {maxTitleChars} caracteres </p>
+                </div> 
+
                 <button
-                  className="btn-principal-s d-flex text-sans-h4 pb-0"
+                  className="btn-principal-s d-flex text-sans-h4 pb-0 align-self-end"
                   onClick={handleSaveTitleClick}
                 >
                   <p className="text-sans-p-white text-decoration-underline">Guardar</p>
@@ -114,7 +147,7 @@ const CrearProyectoInnovadorP1 = () => {
                   value={inputDescr}
                   onChange={handleDescrInputChange}
                 />
-                <p className="text-sans-h5">{inputDescr.length} / 700 caracteres.</p>
+                <p className={`text-sans-h5 ${descCharsExceeded ? "text-sans-h5-red" : ""}`}>{descCharsCount} / {maxDescChars} caracteres</p>
                 <button
                   className="btn-principal-s d-flex text-sans-h4 pb-0 px-3"
                   onClick={handleSaveDescrClick}

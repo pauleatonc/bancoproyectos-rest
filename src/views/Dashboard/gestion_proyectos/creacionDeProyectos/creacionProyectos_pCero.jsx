@@ -8,6 +8,11 @@ const CrearProyectos = () => {
   const [isEditing, setIsEditing] = useState(true);
   const [showTitleErrorMessage, setShowTitleErrorMessage] = useState(false);
 
+  //Hooks para conteo y manejo de caracteres maximos
+  const [maxTitleChars] = useState(70); // Maximo de caracteres para el titulo
+  const [titleCharsCount, setTitleCharsCount] = useState(0);
+  const [titleCharsExceeded, setTitleCharsExceeded] = useState(false);
+
   // Maneja cambios en la seleccion y la actualiza en el estado.
   const handleOptionChange = (value) => {
     setSelectedOption(value);
@@ -16,19 +21,15 @@ const CrearProyectos = () => {
   // Maneja cambios en el input y actualiza el estado.
   const handleInputChange = (event) => {
     const text = event.target.value;
-    setInputText(text);
-  };
-
-  const handleGuardarClick = () => {
-    if (!inputText) {
-      // Si no hay texto en el input, muestra el mensaje de error
-      setShowTitleErrorMessage(true);
+    if (text.length <= maxTitleChars) {
+      setInputText(text);
+      setTitleCharsCount(text.length);
+      setTitleCharsExceeded(false);
     } else {
-      // Si hay texto en el input, cambia al modo de edicion
-      setIsEditing(false);
-      setShowTitleErrorMessage(false);
+      setTitleCharsExceeded(true);
     }
   };
+
 
   const handleEditarClick = () => {
     // Cambia de nuevo al modo de edicion
@@ -38,7 +39,8 @@ const CrearProyectos = () => {
   const handleSubirProyectoClick = () => {
     if (selectedOption) {
       // Verifica si se ha ingresado un título
-      if (!inputText) {
+      const trimmedTitle = inputText.trim();
+      if (!trimmedTitle) {
         setShowTitleErrorMessage(true);
       } else {
         if (selectedOption === 'bancoProyectos') {
@@ -150,15 +152,9 @@ const CrearProyectos = () => {
                     value={inputText}
                     onChange={handleInputChange}
                   />
-                  <p className="text-sans-h5">{inputText.length} / 70 caracteres</p>
+                  <p className={`text-sans-h5 ${titleCharsExceeded ? "text-sans-h5-red" : ""}`}> {titleCharsCount} / {maxTitleChars} caracteres </p>
                 </div> 
-                <button
-                  className="btn-principal-s d-flex text-sans-h4 pb-0"
-                  onClick={handleGuardarClick}
-                >
-                  <p className="text-sans-p-white text-decoration-underline">Guardar</p>
-                  <i className="material-symbols-rounded ms-2 pt-1">save</i>
-                </button>
+                
               </div>
               
               {showTitleErrorMessage && (
