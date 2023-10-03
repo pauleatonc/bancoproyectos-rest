@@ -6,6 +6,9 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework.permissions import BasePermission
+from django.utils.text import slugify
+from django.db.models import Q
+from collections import defaultdict
 
 #
 from applications.innovative_projects.models import (
@@ -17,11 +20,16 @@ from applications.innovative_projects.models import (
 from .innovativeProjectSerializer import (
     InnovativeProjectsSerializerV1,
     InnovativeProjectsCreateSerializer,
-    InnovativeProjectsAdminListSerializer
+    InnovativeProjectsAdminListSerializer,
+    InnovativeProjectsUpdateSerializer,
+    ProjectEvaluationSerializer,
+    InnovativeProjectsHistorySerializer,
+    InnovativeGalleryImageHistorySerializer,
+    InnovativeWebSourceHistorySerializer
 )
-from applications.users.permissions import is_admin, is_editor_general_or_superuser, is_program_related_user
+from applications.users.permissions import is_admin, is_editor_general_or_superuser, is_program_related_user, is_any_editor_or_superuser
 from applications.projects.models import Program
-from applications.innovative_projects.models import HistoricalInnovativeProjects
+from applications.innovative_projects.models import HistoricalInnovativeProjects, HistoricalInnovativeWebSource, HistoricalInnovativeGalleryImage
 
 
 
@@ -141,6 +149,11 @@ class InnovativeProjectsViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['get'], permission_classes=[HasProjectPermissions])
     def get_last_editors(self, request, pk=None):
+        """
+        Endpoint para obtener los últimos datos de 'solicitud' y 'aprobación/rechazo'
+
+        Es para vista de 'Ver proyecto'
+        """
         try:
             project = InnovativeProjects.objects.get(pk=pk)
         except InnovativeProjects.DoesNotExist:
@@ -196,3 +209,166 @@ class InnovativeProjectsViewSet(viewsets.ModelViewSet):
             'solicitante': solicitante_info,
             'evaluador': evaluador_info
         })
+
+    def update(self, request, pk=None, *args, **kwargs):
+        """
+        Endpoint para crear o actualizar proyectos
+
+        El proyecto se crea en endpoint POST, sin embargo, para llenar los campos distintos a title por primera vez
+        se utilizará esta vista.
+        """
+        user = request.user
+        if not is_admin(user):
+            return Response({'detail': 'No tienes permiso para actualizar proyectos.'},
+                            status=status.HTTP_403_FORBIDDEN)
+
+        instance = self.get_object(pk)
+        serializer = InnovativeProjectsUpdateSerializer(instance, data=request.data, partial=True, context={
+            'request': request})
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def retrieve(self, request, *args, **kwargs):
+        """
+        Endpoint para visualizar proyecto como administrador
+
+        Solo visible para administradores
+        """
+        user = request.user
+        if not is_admin(user):
+            return Response({'detail': 'No tienes permiso para actualizar proyectos.'},
+                            status=status.HTTP_403_FORBIDDEN)
+
+        instance = self.get_object()
+        serializer = self.get_serializer(instance)
+
+        # Campo public solo editable y visible para editores o superusuarios.
+        data = serializer.data
+        if not is_any_editor_or_superuser(request.user):
+            data.pop('public', None)
+
+        return Response(data)
+
+    def destroy(self, request, *args, **kwargs):
+        """
+        Endpoint para eliminar proyectos
+
+        - Solo los administradores pueden eliminar proyectos.
+        - Los usuarios del grupo 'Profesional Temporal' solo pueden eliminar sus propios proyectos.
+        - Se requiere una confirmación ingresando el título del proyecto.
+        """
+        user = request.user
+        project = self.get_object()
+
+        # Verifica si el usuario es administrador
+        if is_admin(user):
+            pass  # El usuario tiene permiso para eliminar cualquier proyecto
+        elif 'Profesional Temporal' in user.groups.values_list('name', flat=True):
+            # Verifica si el proyecto fue creado por el usuario actual
+            if project.historical_date.earliest('history_date').history_user != user:
+                return Response({'detail': 'No tienes permiso para eliminar este proyecto.'},
+                                status=status.HTTP_403_FORBIDDEN)
+        else:
+            return Response({'detail': 'No tienes permiso para eliminar proyectos.'},
+                            status=status.HTTP_403_FORBIDDEN)
+
+        # Comprueba si el nombre del proyecto coincide con el título enviado para confirmación
+        confirmation_title = request.data.get('confirmation_title', '')
+        if slugify(confirmation_title) != slugify(project.title):
+            return Response({'detail': 'El título no coincide. No se puede eliminar el proyecto.'},
+                            status=status.HTTP_400_BAD_REQUEST)
+
+        # Si llegamos a este punto, está todo bien y podemos eliminar el proyecto
+        self.perform_destroy(project)
+        return Response({'detail': 'Proyecto eliminado con éxito'}, status=status.HTTP_204_NO_CONTENT)
+
+    @action(detail=True, methods=['PATCH'], permission_classes=[HasProjectPermissions])
+    def evaluate(self, request, pk=None):
+        """
+        Endpoint para evaluación de proyecto
+
+        Solo Editores y superusuarios pueden evaluar proyectos
+        """
+        user = request.user
+
+        # Asegúrate de que el usuario tenga los permisos necesarios
+        if not is_any_editor_or_superuser(user):
+            return Response({'detail': 'No tienes permiso para evaluar proyectos.'},
+                            status=status.HTTP_403_FORBIDDEN)
+
+        # Obtiene el proyecto y sus secciones de revisión
+        project = self.get_object()
+        section_one = project.revision_section_one
+        section_two = project.revision_section_two
+
+        # Deserializa y valida los datos
+        serializer = ProjectEvaluationSerializer(data=request.data, instance=project)
+        if serializer.is_valid():
+            # Actualiza los datos de revisión
+            revision_section_one_data = serializer.validated_data.get('revision_section_one', {})
+            for field, value in revision_section_one_data.items():
+                setattr(section_one, field, value)
+
+            revision_section_two_data = serializer.validated_data.get('revision_section_two', {})
+            for field, value in revision_section_two_data.items():
+                setattr(section_two, field, value)
+
+            section_one.save()
+            section_two.save()
+            return Response({'detail': 'Evaluación guardada con éxito'}, status=status.HTTP_200_OK)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=True, methods=['GET'])
+    def history(self, request, pk=None):
+        project = self.get_object(pk)
+        project_history = HistoricalInnovativeProjects.objects.filter(id=project.id)
+        web_source_history = HistoricalInnovativeWebSource.objects.filter(project__id=project.id)
+        gallery_image_history = HistoricalInnovativeGalleryImage.objects.filter(project__id=project.id)
+
+        # Combinar todos los registros históricos y ordenarlos
+        combined_history = list(project_history) + list(web_source_history) + list(gallery_image_history)
+        combined_history.sort(key=lambda x: (x.history_date, x.history_user_id))
+
+        # Para combinar registros con la misma 'history_date' y 'modified_by'
+        grouped_history = defaultdict(list)
+
+        for record in combined_history:
+            key = (record.history_date, record.history_user_id)
+            grouped_history[key].append(record)
+
+        serialized_history = []
+
+        for (history_date, modified_by), records in grouped_history.items():
+            changed_fields = []
+            for record in records:
+                if isinstance(record, HistoricalInnovativeProjects):
+                    serializer = InnovativeProjectsHistorySerializer(record)
+                    for change in serializer.data['changed_fields']:
+                        change['model'] = 'InnovativeProjects'
+                        changed_fields.append(change)
+
+                elif isinstance(record, HistoricalInnovativeWebSource):
+                    serializer = InnovativeWebSourceHistorySerializer(record)
+                    for change in serializer.data['changed_fields']:
+                        change['model'] = 'InnovativeWebSource'
+                        changed_fields.append(change)
+
+                elif isinstance(record, HistoricalInnovativeGalleryImage):
+                    serializer = InnovativeGalleryImageHistorySerializer(record)
+                    for change in serializer.data['changed_fields']:
+                        change['model'] = 'InnovativeGalleryImage'
+                        changed_fields.append(change)
+
+            serialized_record = {
+                'history_date': history_date,
+                'modified_by': records[0].history_user.email if records[0].history_user else None,
+                'changed_fields': changed_fields
+            }
+            serialized_history.append(serialized_record)
+
+        return Response(serialized_history)
