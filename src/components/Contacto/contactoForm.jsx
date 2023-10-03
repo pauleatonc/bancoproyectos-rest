@@ -74,8 +74,6 @@ const ContactForm = () => {
         </div>
 
         <div className="text-sans-h5 text-end opacity-50 mt-1">
-          {/* Puedes utilizar watch para obtener el valor en tiempo real del textarea */}
-          {/* {watch('message').length} / 250 palabras */}
         </div>
         <div className="container d-flex justify-content-center">
           <button className="btn-principal-l mt-3" type="submit">Enviar</button>

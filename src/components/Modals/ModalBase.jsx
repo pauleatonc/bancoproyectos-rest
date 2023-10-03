@@ -29,3 +29,4 @@ export const ModalBase = ({ btnName, btnIcon, title, children, modalID }) =>
   );
 };
 
+export default ModalBase; 

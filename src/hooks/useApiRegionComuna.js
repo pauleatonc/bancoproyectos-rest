@@ -19,6 +19,5 @@ export const useApiRegionComuna = () => {
     }; 
     fetchData();
   },[]);
-
   return { data, loading, error };
 };

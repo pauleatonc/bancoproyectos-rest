@@ -1,8 +1,7 @@
 // Comun a todas las vistas
 .view-container{
-    min-width: 1000px;
+    min-width: auto;
     margin: 0 auto;
-    overflow-x: auto;
 }
 .ghost-input{
     border: none;
@@ -74,3 +73,30 @@
 
 }
 
+.info i.material-symbols-outlined {
+    align-self: center;
+    font-size: 24px;
+    font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.input-group, .input-group-text{
+border-radius: 0% !important;
+}
+
+
+.title-container {
+    /* ajusta este valor según tus necesidades */
+    min-height: 60px;
+  }
+  
+  .title-input-container {
+    width: 100%;
+    position: relative;
+    min-height: 40px; 
+  }
+  
+  input.ghost-input, h3.text-sans-h1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
