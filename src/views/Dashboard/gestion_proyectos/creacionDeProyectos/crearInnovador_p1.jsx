@@ -1,6 +1,8 @@
 import { useState } from "react";
 import  ModalAgregarFuente  from "../../../../components/Modals/ModalAgregarFuente";
 import ModalEditarFuente from "../../../../components/Modals/ModalEditarFuente";
+import UploadImg from "../../../../components/Commons/UploadImg";
+import UploadImgsm from "../../../../components/Commons/UploadImgsm";
 
 const CrearProyectoInnovadorP1 = () => {
   const [inputTitle, setInputTitle] = useState('');
@@ -222,12 +224,10 @@ const CrearProyectoInnovadorP1 = () => {
       
       <div className="col-6 ms-5">
         {/* Img Portada - componente */}
+        
         <div className="">
             <h3 className="text-sans-h35">Imagen de Portada</h3>
-            <div className="img-section-l my-3">
-              <i className="material-symbols-rounded me-2">add_a_photo</i>
-              <p className="text-sans-p">Agregar foto de portada</p>
-            </div>
+            <UploadImg/>
         </div>
         <div className="d-flex flex-row text-sans-h5-blue">
           <i className="material-symbols-rounded me-2">info</i>
@@ -236,12 +236,7 @@ const CrearProyectoInnovadorP1 = () => {
 
         {/* Img Miniatura - componente */}
         <div className="mt-5">
-            <h3 className="text-sans-h35">Imágenes para la galería</h3>
-            <p className="text-sans-h5">(Máximo 10 imágenes)</p>
-            <div className="img-section-s my-3">
-              <i className="material-symbols-rounded me-2">add_a_photo</i>
-              <p className="text-sans-p">Agregar fotos</p>
-            </div>
+          <UploadImgsm />
         </div>
       </div>
     </div>

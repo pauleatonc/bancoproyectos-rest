@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 
 const CrearProyectos = () => {
@@ -30,33 +31,28 @@ const CrearProyectos = () => {
     }
   };
 
-
   const handleEditarClick = () => {
     // Cambia de nuevo al modo de edicion
     setIsEditing(true);
   };
 
-  const handleSubirProyectoClick = () => {
-    if (selectedOption) {
-      // Verifica si se ha ingresado un título
-      const trimmedTitle = inputText.trim();
-      if (!trimmedTitle) {
-        setShowTitleErrorMessage(true);
-      } else {
-        if (selectedOption === 'bancoProyectos') {
-          window.location.href = '/dashboard/crearproyecto_paso1';
-        } else if (selectedOption === 'proyectosInnovadores') {
-          window.location.href = '/dashboard/crearinnovador_paso1';
-        }
-      }
-    } else {
-      // Muestra el mensaje de error si no se ha seleccionado una opción
+  const handleSaveClick = () => {
+    // Verificar si inputText esta vacio
+    if (inputText.trim() === "") {
       setShowOptionErrorMessage(true);
+    } else {
+      setShowOptionErrorMessage(false);
+    }
+    // Verificar si no se ha seleccionado una opcion
+    if (selectedOption === null) {
+      setShowTitleErrorMessage(true);
+    } else {
+      setShowTitleErrorMessage(false);
     }
   };
 
   return (
-    <div className="container view-container">
+    <div className="container view-container mb-5">
       <h2 className="text-sans-h2 mt-4 mb-5">Subir Proyecto</h2>
       <div className="col-10 mx-5">
         <h3 className="text-sans-h3 ms-1">Elige donde quieres mostrar el proyecto:</h3>
@@ -179,16 +175,32 @@ const CrearProyectos = () => {
           )}
         </div>
 
-        <div className="container d-flex justify-content-end mt-5">
-          <button
-          onClick={handleSubirProyectoClick} 
-          className="btn-principal-s d-flex text-sans-h4 pb-0"
-          >
-            <p className="text-sans-h4-white text-decoration-underline">Subir Proyecto</p>
-            <i className="material-symbols-rounded ms-2">arrow_forward_ios</i> 
-          </button>
-        </div>
-        
+        {selectedOption ? (
+          <div className="container d-flex justify-content-end mt-5">
+            <Link
+              to={
+                selectedOption === 'bancoProyectos'
+                  ? '/dashboard/crearproyecto_paso1'
+                  : '/dashboard/crearinnovador_paso1'
+              }
+              className="btn-principal-s d-flex text-sans-h4 pb-0"
+            >
+              <p className="text-sans-h4-white text-decoration-underline">Subir Proyecto</p>
+              <i className="material-symbols-rounded ms-2">arrow_forward_ios</i> 
+            </Link>
+          </div>
+        ) : (
+          <div className="container d-flex justify-content-end mt-5">
+            <button
+              onClick={handleSaveClick}
+              className="btn-principal-s d-flex text-sans-h4 pb-0"
+            >
+              <p className="text-sans-h4-white text-decoration-underline">Subir Proyecto</p>
+              <i className="material-symbols-rounded ms-2">arrow_forward_ios</i> 
+            </button>
+          </div>
+        )}
+
         </div>
       </div>
     );
