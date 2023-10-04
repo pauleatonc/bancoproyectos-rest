@@ -49,3 +49,37 @@
     line-height: 24px; 
     border:none; 
     }
+  
+    .btn-borderless-red {
+      color:$dark-red;
+      background-color: transparent;
+      text-align: center;
+      font-family: Roboto;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 24px; 
+      border:none; 
+      }
+
+
+
+  .modal-archivos {
+    display: flex;
+    min-width: 600px;
+    padding: 0px 15px;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+  }
+
+  .file-name { 
+    display: flex;
+    background: $neutral-color;
+    width:525px ;
+    height: 66px;
+    padding: 8px;
+    align-items: center;
+    gap: 8px;
+    align-self: stretch;
+  }

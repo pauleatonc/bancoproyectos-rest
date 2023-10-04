@@ -1,29 +1,23 @@
-import { useState, useEffct } from 'react';
+import { useState, useEffect } from 'react';
 import { apiBancoProyecto } from '../services/bancoproyecto.api';
 
-export const useApiTypeProject = () =>
-{
+export const useApiTypeProject = () => {
   const [ dataType, setDataType ] = useState([]);
-  const [ loading, setLoading ] = useState(true);
-  const [ error, setError ] = useState(null);
+  const [ typeLoading, setTypeLoading ] = useState(true);
+  const [ typeError, setTypeError ] = useState(null);
 
-  useEffct(() =>
-  {
-    const fetchData = async () =>
-    {
-      try
-      {
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
         const response = await apiBancoProyecto.get('types/v1/');
-        setDataType(response.dataType);
-        setLoading(false);
-      } catch (error)
-      {
-        setError(error);
-        setLoading(false);
+        setDataType(response.data);
+        setTypeLoading(false);
+      } catch (error) {
+        setTypeError(error);
+        setTypeLoading(false);
       }
     };
     fetchData();
   },[]);
-
-  return { dataType, loading , error }
+  return { dataType, typeLoading , typeError };
 };
