@@ -20,6 +20,7 @@ const CrearProyectos = React.lazy(() => import('./views/Dashboard/gestion_proyec
 const CrearProyecto_paso1 = React.lazy(() => import('./views/Dashboard/gestion_proyectos/creacionDeProyectos/crearProyecto_p1'));
 const CrearInnovador_paso1 = React.lazy(() => import('./views/Dashboard/gestion_proyectos/creacionDeProyectos/crearInnovador_p1'));
 const AdministrarProyectos = React.lazy(() => import('./views/Dashboard/gestion_proyectos/administracionDeProyectos/administracionProyectos'));
+const AdministrarProyectosInnovadores = React.lazy(() => import('./views/Dashboard/gestion_proyectos/administracionDeProyectos/administracionProyectosInnovadores'));
 
 function App()
 {
@@ -48,6 +49,7 @@ function App()
             <Route path="crearproyecto_paso1" element={<CrearProyecto_paso1 />} />
             <Route path="crearinnovador_paso1" element={<CrearInnovador_paso1 />} />
             <Route path="administrarproyectos" element={<AdministrarProyectos />} />
+            <Route path="administrarproyectosinnovadores" element={<AdministrarProyectosInnovadores />} />
           </Route>
         </Routes>
       </Suspense>
