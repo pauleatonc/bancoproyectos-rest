@@ -5,21 +5,25 @@ import ModalDetalles from "../../../../components/Modals/ModalDetalles";
 import UploadFile from "../../../../components/Modals/UploadFile";
 import { DocumentsProjects } from "../../../../components/Tables/DocumentsProjects";
 import { EditableTitle } from "../../../../components/Tables/InputTitle";
+import { AdditionalDocs } from '../../../../components/Tables/AdditionalDocs';
 
 const CrearProyectoP1 = () =>
 {
+  const [ videoLink, setVideoLink ] = useState('');
+  const [ files, setFiles ] = useState([]);
+  const [ editingIndex, setEditingIndex ] = useState(null);
 
   const [ text, setText ] = useState('');
   const [ count, setCount ] = useState(0);
   const [ isEditing, setIsEditing ] = useState(true);
   const [ errorMessage, setErrorMessage ] = useState(null);
   const [ detalles, setDetalles ] = useState({
-    programa: '',
-    tipoProyecto: '',
-    region: '',
-    comuna: '',
-    year: '',
-    idSubdere: '',
+    programa: 'No Seleccionado',
+    tipoProyecto: 'No Seleccionado',
+    region: 'No Seleccionado',
+    comuna: 'No Seleccionado',
+    year: 'No Seleccionado',
+    idSubdere: 'No Ingresado',
   });
 
   const handleTextChange = (e) =>
@@ -52,6 +56,23 @@ const CrearProyectoP1 = () =>
     }
   };
 
+  const handleSaveLink = () =>
+  {
+    console.log("Enlace guardado:", videoLink);
+    // Aquí puedes agregar código adicional para guardar el enlace donde lo necesites.
+  }
+
+  const addFile = (newFile, title) =>
+  {
+    setFiles([ ...files, { file: newFile, title: title } ]);
+  };
+
+  const handleEdit = (index) =>
+  {
+    setEditingIndex(index);
+  };
+
+
 
   return (
     <div className="container view-container">
@@ -64,12 +85,12 @@ const CrearProyectoP1 = () =>
           <div className="card-description">
             <div className="input-area">
               <div className="d-flex justify-content-between">
-                <label htmlFor="FormControlTextarea" className="form-label text-sans-h3 ms-3">Descripción del Proyecto</label>
+                <label htmlFor="FormControlTextarea" className="form-label text-sans-h3 ms-1">Descripción del Proyecto</label>
                 <button
                   className={isEditing ? "btn-principal-s d-flex text-sans-h4 pb-0 me-3" : "btn-secundario-s d-flex pb-0 me-3"}
                   onClick={handleButtonClick}
                 >
-                  <p className={isEditing ? "text-sans-p-white text-decoration-underline" : "text-sans-p-blue  text-decoration-underline"}>{isEditing ? 'Guardar' : 'Editar'}</p>
+                  <p className={isEditing ? "text-sans-p-white text-decoration-underline" : " text-decoration-underline"}>{isEditing ? 'Guardar' : 'Editar'}</p>
                   <i className="material-symbols-rounded ms-2 pt-1">{isEditing ? 'save' : 'edit'}</i>
                 </button>
               </div>
@@ -89,7 +110,7 @@ const CrearProyectoP1 = () =>
                 </>
               ) : (
                 <div className="mt-3">
-                  <span className="my-2">{text}</span>
+                  <span className="my-2 ms-1">{text}</span>
                 </div>
               )}
             </div>
@@ -176,10 +197,23 @@ const CrearProyectoP1 = () =>
             <p>(Máximo 1 enlace)</p>
             <div className="input-group">
               <span className="input-group-text" id="basic-addon3">https://</span>
-              <input type="text" className="form-control" id="basic-url" aria-describedby="basic-addon3 basic-addon4" />
-              <button className="btn-principal-s d-flex " type="button" id="button-addon2"> <i className="material-symbols-outlined ">
-                upgrade
-              </i><u className="align-self-center text-sans-b-white ">Subir Link</u></button>
+              <input
+                type="text"
+                className="form-control"
+                id="basic-url"
+                aria-describedby="basic-addon3 basic-addon4"
+                value={videoLink}
+                onChange={(e) => setVideoLink(e.target.value)}
+              />
+              <button
+                className="btn-principal-s d-flex "
+                type="button"
+                id="button-addon2"
+                onClick={handleSaveLink}
+              >
+                <i className="material-symbols-outlined ">upgrade</i>
+                <u className="align-self-center text-sans-b-white ">Subir Link</u>
+              </button>
             </div>
           </div>
           <div className="my-5">
@@ -196,26 +230,38 @@ const CrearProyectoP1 = () =>
               <DocumentsProjects
                 index="1"
                 description="Planimetría"
-                fileType="Archivo"
+                fileType="No seleccionado"
               />
             </div>
             <div className="row border-top align-items-center ">
               <DocumentsProjects
                 index="2"
                 description="Especificaciones técnicas"
-                fileType="Arc"
+                fileType="No seleccionado"
               />
             </div>
             <div className="row border-top grey-table-line align-items-center ">
               <DocumentsProjects
                 index="3"
                 description="Presupuesto"
-                fileType="Archivo" />
+                fileType="No seleccionado" />
             </div>
           </div>
           <span className='text-sans-h3 mt-4'>Documentos Adicionales (Opcionales)</span>
           <p>(Número de archivos máximo, peso máximo 20 MB, formato libre)</p>
-          <UploadFile />
+          <UploadFile
+            onFileAdded={addFile}
+            editingFile={editingIndex !== null ? files[ editingIndex ] : null}
+            editingIndex={editingIndex}
+            onFileUpdated={(updatedFile, updatedTitle, index) =>
+            {
+              const updatedFiles = [ ...files ];
+              updatedFiles[ index ] = { file: updatedFile, title: updatedTitle };
+              setFiles(updatedFiles);
+              setEditingIndex(null);
+            }}
+          />
+          {files.length > 0 && <AdditionalDocs files={files}  onEdit={handleEdit}/>}
           <div className="my-5">
             <span className='text-sans-h2'>Documentos con normativa de uso general</span>
             <div className="text-sans-h5-blue info d-flex  align-content-center">
