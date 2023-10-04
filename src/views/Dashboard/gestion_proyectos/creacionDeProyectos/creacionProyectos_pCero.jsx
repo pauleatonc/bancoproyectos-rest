@@ -176,6 +176,14 @@ const CrearProyectos = () => {
               </div>
             </div>
           )}
+
+          <div>
+            <p className="text-sans-p">Este proyecto corresponde al programa:</p>
+            <select className="custom-selector p-3">
+              <option className="custom-option p-5 ms-4">Programa Mejoramiento Urbano (PMU)</option>
+              <option className="custom-option">Programa Mejoramiento de Barrios (PMB)</option>
+            </select>
+          </div>
         </div>
 
         <div className="container d-flex justify-content-end mt-5">

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import  ModalAgregarFuente  from "../../../../components/Modals/ModalAgregarFuente";
 import ModalEditarFuente from "../../../../components/Modals/ModalEditarFuente";
 import UploadImg from "../../../../components/Commons/UploadImg";
@@ -21,6 +22,11 @@ const CrearProyectoInnovadorP1 = () => {
   const [descCharsCount, setDescCharsCount] = useState(0);
   const [descCharsExceeded, setDescCharsExceeded] = useState(false);
 
+  // Maneja boton de volver atras
+  const navigate = useNavigate();
+  const handleBackButtonClick = () => {
+    navigate('/dashboard/crearproyectos')
+  };
 
   // LOGICA TITULO
   // Maneja cambios en el input Titulo y actualiza el estado.
@@ -83,8 +89,21 @@ const CrearProyectoInnovadorP1 = () => {
   };
 
   return (
-    <div className="container view-container">
-      <h2 className="text-sans-h2 mt-4 mb-5">Subir Proyecto: Proyectos Innovadores</h2>
+    <div className="container col-10 view-container">
+      <h2 className="text-sans-h2 mt-4 mb-4">Subir Proyecto: Proyectos Innovadores</h2>
+
+      <button className="btn-secundario-s d-flex mb-4" onClick={handleBackButtonClick}>
+        <i className="material-symbols-rounded me-2">arrow_back_ios</i>
+        <p className="mb-0 text-decoration-underline">Volver atrás</p>
+      </button>
+
+      <div className="container mb-4">
+        <p className="text-sans-p">Este proyecto corresponde al programa:</p>
+        <select className="custom-selector p-3">
+          <option className="custom-option p-5 ms-4">Programa Mejoramiento Urbano (PMU)</option>
+          <option className="custom-option">Programa Mejoramiento de Barrios (PMB)</option>
+        </select>
+      </div>
 
       <div className="row">
         <div className="col-5">
@@ -225,7 +244,7 @@ const CrearProyectoInnovadorP1 = () => {
       <div className="col-6 ms-5">
         {/* Img Portada - componente */}
         
-        <div className="">
+        <div className="img-xl-container">
             <h3 className="text-sans-h35">Imagen de Portada</h3>
             <UploadImg/>
         </div>
