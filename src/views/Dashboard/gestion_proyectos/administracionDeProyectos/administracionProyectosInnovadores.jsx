@@ -29,7 +29,7 @@ const AdministrarProyectosInnovadores = () => {
             <div className="col p-3">
               {
                 (project.application_status !== 'Publicado' && project.application_status !== 'Privado') ? (
-                  <a href="/crearproyecto" className="btn btn-primary">Ver solicitud</a>
+                  <a href={`/dashboard/crearinnovador_paso1?id=${project.id}`} className="btn btn-primary">Ver solicitud</a>
                 ) : (
                   <button className="btn btn-secondary" disabled>Ver proyecto</button>
                 )
