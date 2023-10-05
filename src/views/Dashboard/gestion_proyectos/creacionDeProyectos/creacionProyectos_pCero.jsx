@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import useApiInnovativeProjects from '../../../../hooks/useApiInnovativeProjects';
 
-
 const CrearProyectos = () => {
   // Hooks de estado
   const [selectedOption, setSelectedOption] = useState(null);
@@ -43,7 +42,7 @@ const CrearProyectos = () => {
   const navigate = useNavigate();
   const handleSubirProyectoClick = async () => {
     if (selectedOption) {
-      // Verifica si se ha ingresado un título
+      // Verifica si se ha ingresado un titulo
       const trimmedTitle = inputText.trim();
       if (!trimmedTitle) {
         setShowTitleErrorMessage(true);
@@ -55,12 +54,12 @@ const CrearProyectos = () => {
           if (newProjectId) {
             navigate(`/dashboard/crearinnovador_paso1?id=${newProjectId}`);
           } else {
-            // Manejar el error aquí, quizás mostrando un mensaje al usuario
+            // Manejar error aqui
           }
         }
       }
     } else {
-      // Muestra el mensaje de error si no se ha seleccionado una opción
+      // Muestra el mensaje de error si no se ha seleccionado una opcion
       setShowOptionErrorMessage(true);
     }
   };
