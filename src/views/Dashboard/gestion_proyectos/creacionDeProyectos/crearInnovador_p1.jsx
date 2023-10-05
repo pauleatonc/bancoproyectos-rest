@@ -260,10 +260,9 @@ const CrearProyectoInnovadorP1 = () => {
       
       <div className="col-6 ms-5">
         {/* Img Portada - componente */}
-        
-        <div className="img-xl-container">
-            <h3 className="text-sans-h35">Imagen de Portada</h3>
-            <UploadImg/>
+        <h3 className="text-sans-h35">Imagen de Portada</h3>
+        <div className="img-l-container">  
+          <UploadImg/>
         </div>
         <div className="d-flex flex-row text-sans-h5-blue">
           <i className="material-symbols-rounded me-2">info</i>
