@@ -1,12 +1,18 @@
 from rest_framework import serializers
+from django.core.exceptions import ObjectDoesNotExist
 #
 from applications.innovative_projects.models import (
     InnovativeProjects,
     InnovativeGalleryImage,
     InnovativeWebSource,
     RevisionSectionOne,
-    RevisionSectionTwo
+    RevisionSectionTwo,
+    HistoricalInnovativeProjects,
+    HistoricalInnovativeWebSource,
+    HistoricalInnovativeGalleryImage
 )
+
+from simple_history.models import HistoricalRecords
 
 from applications.projects.models import Program
 from applications.users.permissions import is_editor_general_or_superuser, is_any_editor_or_superuser, is_profesional, is_admin
@@ -77,14 +83,12 @@ class InnovativeProjectsAdminListSerializer(serializers.ModelSerializer):
     def get_application_status(self, obj):
         return obj.application_status
 
-    def get_author_email(self, obj):  # Method to get the author's email
-        # Access the historical records and get the earliest one
-        historical_record = obj.historical_date.earliest('history_date')
-
-        if historical_record.history_user:  # Check if history_user is not None
-            return historical_record.history_user.email
-        else:
-            return None  # or return a default value like 'N/A' or an empty string
+    def get_author_email(self, obj):
+        if obj.historical_date.exists():
+            historical_record = obj.historical_date.earliest('history_date')
+            if historical_record.history_user:
+                return historical_record.history_user.email
+        return None  # o cualquier valor por defecto
 
 
 class RevisionSectionOneSerializer(serializers.ModelSerializer):
@@ -126,24 +130,6 @@ class InnovativeProjectsCreateSerializer(serializers.ModelSerializer):
 
         return data
 
-    def create(self, validated_data):
-
-        # Lógica para el historial
-        is_creation = not self.instance
-
-        if is_creation:
-            history_change_reason = 'Solicitud'
-        else:
-            previous_instance = InnovativeProjects.objects.get(pk=self.instance.pk)
-            if validated_data.get('request_sent') and not previous_instance.request_sent:
-                history_change_reason = 'Solicitud'
-            elif validated_data.get('evaluated') and not previous_instance.evaluated:
-                history_change_reason = 'Aprobación'
-            else:
-                history_change_reason = None
-
-        return InnovativeProjects.objects.create(**validated_data)
-
 
 class InnovativeProjectsUpdateSerializer(serializers.ModelSerializer):
     program = serializers.CharField(required=False)
@@ -168,6 +154,15 @@ class InnovativeProjectsUpdateSerializer(serializers.ModelSerializer):
                   'request_sent'
                   ]
 
+    def __init__(self, *args, **kwargs):
+        super(InnovativeProjectsUpdateSerializer, self).__init__(*args, **kwargs)
+
+        request = self.context.get('request')
+        user = request.user
+
+        if not is_editor_general_or_superuser(user):
+            self.fields['program'].read_only = True
+
     def validate(self, data):
         request = self.context.get('request')
         user = request.user
@@ -182,31 +177,11 @@ class InnovativeProjectsUpdateSerializer(serializers.ModelSerializer):
 
         return data
 
-    def create(self, validated_data):
-
-        # Lógica para el historial
-        is_creation = not self.instance
-
-        if is_creation:
-            history_change_reason = 'Solicitud'
-        else:
-            previous_instance = InnovativeProjects.objects.get(pk=self.instance.pk)
-            if validated_data.get('request_sent') and not previous_instance.request_sent:
-                history_change_reason = 'Solicitud'
-            elif validated_data.get('evaluated') and not previous_instance.evaluated:
-                history_change_reason = 'Aprobación'
-            else:
-                history_change_reason = None
-
-        # Extrae los campos relacionados
-        gallery_images_data = validated_data.pop('innovative_gallery_images', [])
-        program_data = validated_data.pop('program', [])
-        web_sources_data = validated_data.pop('web_sources', [])
-
+    def update(self, instance, validated_data):
         request = self.context.get('request')
         user = request.user
 
-        # Si el usuario es superusuario o del grupo Editor, usa estos datos:
+        # Lógica para determinar los valores aprobados
         if is_any_editor_or_superuser(user):
             revision_section_one_data = {
                 'approved_title': True,
@@ -223,7 +198,8 @@ class InnovativeProjectsUpdateSerializer(serializers.ModelSerializer):
             }
             validated_data['evaluated'] = True
 
-        else:  # Si no es, usa los valores por defecto del modelo
+        else:
+            # Usa los valores por defecto del modelo si no es superusuario o editor
             revision_section_one_data = {
                 'approved_title': RevisionSectionOne._meta.get_field('approved_title').default,
                 'approved_description': RevisionSectionOne._meta.get_field('approved_description').default,
@@ -238,32 +214,60 @@ class InnovativeProjectsUpdateSerializer(serializers.ModelSerializer):
                 'approved_section_two': RevisionSectionTwo._meta.get_field('approved_section_two').default,
             }
 
-        # Primero crea el proyecto
-        project = InnovativeProjects.objects.create(**validated_data)
+        # Para revision_section_one
+        try:
+            for field, value in revision_section_one_data.items():
+                setattr(instance.revision_section_one, field, value)
+            instance.revision_section_one.save()
+        except ObjectDoesNotExist:
+            # Crea el objeto si no existe
+            RevisionSectionOne.objects.create(project=instance, **revision_section_one_data)
 
-        # Crea las instancias para gallery_image y las asocia al proyecto
+        # Para revision_section_two
+        try:
+            for field, value in revision_section_two_data.items():
+                setattr(instance.revision_section_two, field, value)
+            instance.revision_section_two.save()
+        except ObjectDoesNotExist:
+            # Crea el objeto si no existe
+            RevisionSectionTwo.objects.create(project=instance, **revision_section_two_data)
+
+        # Actualiza los campos foráneos del modelo
+        program_name = validated_data.get('program')
+        if program_name:
+            program_instance = Program.objects.get(name=program_name)
+            instance.program = program_instance
+
+        gallery_images_data = validated_data.pop('innovative_gallery_images', [])
         for gallery_image_data in gallery_images_data:
-            gallery_image_serializer = InnovativeGalleryImageSerializerV1(data=gallery_image_data)
-            if gallery_image_serializer.is_valid(raise_exception=True):
-                InnovativeGalleryImage.objects.create(project=project, **gallery_image_serializer.validated_data)
+            InnovativeGalleryImage.objects.update_or_create(
+                project=instance,
+                defaults=gallery_image_data
+            )
 
-
-        # Crea las instancias para web_sources y las asocia al proyecto
+        web_sources_data = validated_data.pop('web_sources', [])
         for web_source_data in web_sources_data:
-            web_source_serializer = InnovativeWebSourceSerializerV1(data=web_source_data)
-            if web_source_serializer.is_valid(raise_exception=True):
-                InnovativeWebSource.objects.create(project=project, **web_source_serializer.validated_data)
+            InnovativeWebSource.objects.update_or_create(
+                project=instance,
+                defaults=web_source_data
+            )
 
-        # Ahora crea las instancias de RevisionSectionOne y RevisionSectionTwo
-        revision_section_one = RevisionSectionOne.objects.create(project=project, **revision_section_one_data)
-        revision_section_two = RevisionSectionTwo.objects.create(project=project, **revision_section_two_data)
+        for field, value in revision_section_one_data.items():
+            setattr(instance.revision_section_one, field, value)
+        instance.revision_section_one.save()
 
-        # Asocia las instancias de RevisionSectionOne y RevisionSectionTwo con el proyecto
-        project.revision_section_one = revision_section_one
-        project.revision_section_two = revision_section_two
-        project.save()
+        for field, value in revision_section_two_data.items():
+            setattr(instance.revision_section_two, field, value)
+        instance.revision_section_two.save()
 
-        return project
+        # Aquí está la lógica para actualizar los otros campos del modelo
+        instance.title = validated_data.get('title', instance.title)
+        instance.description = validated_data.get('description', instance.description)
+        instance.portada = validated_data.get('portada', instance.portada)
+
+        instance.save()
+
+        return instance
 
 
 class InnovativeProjectsRetrieveSerializer(serializers.ModelSerializer):
@@ -284,17 +288,59 @@ class InnovativeProjectsRetrieveSerializer(serializers.ModelSerializer):
             'innovative_gallery_images',
             'public',
             'application_status',
-            'solicitante'
         )
 
         def get_application_status(self, obj):
             return obj.application_status
 
-        def get_solicitante(self, obj):  # Method to get the solicitante email
-            # Access the historical records and get the earliest one
-            historical_record = obj.historical_date.earliest('history_date')
 
-            if historical_record.history_user:  # Check if history_user is not None
-                return historical_record.history_user.email
-            else:
-                return None
+class ProjectEvaluationSerializer(serializers.ModelSerializer):
+    revision_section_one = RevisionSectionOneSerializer()
+    revision_section_two = RevisionSectionTwoSerializer()
+
+    class Meta:
+        model = InnovativeProjects
+        fields = ['revision_section_one', 'revision_section_two']
+
+
+from simple_history.models import HistoricalRecords
+from rest_framework import serializers
+
+class BaseHistorySerializer(serializers.ModelSerializer):
+    modified_by = serializers.SerializerMethodField()
+    changed_fields = serializers.SerializerMethodField()
+
+    def get_modified_by(self, obj):
+        return obj.history_user.email if obj.history_user else None
+
+    def get_changed_fields(self, obj):
+        if obj.prev_record:
+            delta = obj.diff_against(obj.prev_record)
+            changes = []
+            for change in delta.changes:
+                changes.append({
+                    'field': change.field,
+                    'old': change.old,
+                    'new': change.new
+                })
+            return changes
+        else:
+            return []
+
+
+class InnovativeProjectsHistorySerializer(BaseHistorySerializer):
+    class Meta:
+        model = HistoricalInnovativeProjects
+        fields = ['history_date', 'modified_by', 'changed_fields']
+
+
+class InnovativeWebSourceHistorySerializer(BaseHistorySerializer):
+    class Meta:
+        model = HistoricalInnovativeWebSource
+        fields = ['history_date', 'modified_by', 'changed_fields']
+
+
+class InnovativeGalleryImageHistorySerializer(BaseHistorySerializer):
+    class Meta:
+        model = HistoricalInnovativeGalleryImage
+        fields = ['history_date', 'modified_by', 'changed_fields']

@@ -10,6 +10,7 @@ from applications.projects.models import Program
 # apps de terceros
 from imagekit.models import ProcessedImageField
 from imagekit.processors import ResizeToFill
+from simple_history.models import HistoricalRecords
 
 
 class InnovativeProjects(BaseModel):
@@ -30,6 +31,7 @@ class InnovativeProjects(BaseModel):
     # evaluated debe cambiar a True cuando el proyecto sea evaluado. Debe cambiar nuevamente a False si request_sent sea True
     evaluated = models.BooleanField(default=False)
 
+
     def fields_completed(self):
         # Valida que los campos obligatorios no estén en blanco
         return all([self.title, self.description, self.portada, self.program])
@@ -38,13 +40,21 @@ class InnovativeProjects(BaseModel):
     def application_status(self):
         if not self.fields_completed():
             return "Incompleto"
+
         if self.evaluated:
-            # Check if the related objects exist before accessing them
+            # Verificar si los objetos relacionados existen antes de acceder a ellos
             if ((hasattr(self, 'revision_section_one') and self.revision_section_one.approved_section_one) and
                     (hasattr(self, 'revision_section_two') and self.revision_section_two.approved_section_two)):
-                return "Aceptado"
+
+                # Comprueba si el campo 'public' es True
+                if self.public:
+                    return "Publicado"
+                else:
+                    return "Privado"
+
             else:
                 return "Rechazado"
+
         else:
             if self.request_sent and self.fields_completed():
                 return "Pendiente"
@@ -76,6 +86,7 @@ class InnovativeProjects(BaseModel):
 class InnovativeWebSource(models.Model):
     url = models.URLField()
     project = models.ForeignKey('InnovativeProjects', related_name='web_sources', on_delete=models.CASCADE)
+    history = HistoricalRecords()
 
 
 class InnovativeGalleryImage(models.Model):
@@ -88,6 +99,7 @@ class InnovativeGalleryImage(models.Model):
         blank=True
     )
     project = models.ForeignKey('InnovativeProjects', related_name='innovative_gallery_images', on_delete=models.CASCADE)
+    history = HistoricalRecords()
 
 
 class RevisionSectionOne(models.Model):
@@ -101,6 +113,7 @@ class RevisionSectionOne(models.Model):
     approved_section_one = models.BooleanField(default=False)
 
     project = models.OneToOneField('InnovativeProjects', related_name='revision_section_one',  on_delete=models.CASCADE)
+    history = HistoricalRecords()
 
     def save(self, *args, **kwargs):
         if self.approved_section_one:
@@ -120,6 +133,7 @@ class RevisionSectionTwo(models.Model):
     approved_section_two = models.BooleanField(default=False)
 
     project = models.OneToOneField('InnovativeProjects', related_name='revision_section_two', on_delete=models.CASCADE)
+    history = HistoricalRecords()
 
     def save(self, *args, **kwargs):
         if self.approved_section_two:
