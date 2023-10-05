@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import  ModalAgregarFuente  from "../../../../components/Modals/ModalAgregarFuente";
 import ModalEditarFuente from "../../../../components/Modals/ModalEditarFuente";
+import UploadImg from "../../../../components/Commons/UploadImg";
+import UploadImgsm from "../../../../components/Commons/UploadImgsm";
 import useApiInnovativeProjects from "../../../../hooks/useApiInnovativeProjects";
 
 const CrearProyectoInnovadorP1 = () => {
@@ -22,6 +25,11 @@ const CrearProyectoInnovadorP1 = () => {
   const [descCharsCount, setDescCharsCount] = useState(0);
   const [descCharsExceeded, setDescCharsExceeded] = useState(false);
 
+  // Maneja boton de volver atras
+  const navigate = useNavigate();
+  const handleBackButtonClick = () => {
+    navigate('/dashboard/crearproyectos')
+  };
 
   // Obtiene el ID del paso anterior y lo guarda en projectId. También muestra los datos guardados del proyecto.
   useEffect(() => {
@@ -36,7 +44,7 @@ const CrearProyectoInnovadorP1 = () => {
     };
     
     fetchProject();
-  }, []);
+  }, [getInnovativeProjectById]);
 
   // LOGICA TITULO
   // Maneja cambios en el input Titulo y actualiza el estado.
@@ -98,8 +106,21 @@ const CrearProyectoInnovadorP1 = () => {
 
 
   return (
-    <div className="container view-container">
-      <h2 className="text-sans-h2 mt-4 mb-5">Subir Proyecto: Proyectos Innovadores</h2>
+    <div className="container col-10 view-container">
+      <h2 className="text-sans-h2 mt-4 mb-4">Subir Proyecto: Proyectos Innovadores</h2>
+
+      <button className="btn-secundario-s d-flex mb-4" onClick={handleBackButtonClick}>
+        <i className="material-symbols-rounded me-2">arrow_back_ios</i>
+        <p className="mb-0 text-decoration-underline">Volver atrás</p>
+      </button>
+
+      <div className="container mb-4">
+        <p className="text-sans-p">Este proyecto corresponde al programa:</p>
+        <select className="custom-selector p-3">
+          <option className="custom-option p-5 ms-4">Programa Mejoramiento Urbano (PMU)</option>
+          <option className="custom-option">Programa Mejoramiento de Barrios (PMB)</option>
+        </select>
+      </div>
 
       <div className="row">
         <div className="col-5">
@@ -239,12 +260,9 @@ const CrearProyectoInnovadorP1 = () => {
       
       <div className="col-6 ms-5">
         {/* Img Portada - componente */}
-        <div className="">
-            <h3 className="text-sans-h35">Imagen de Portada</h3>
-            <div className="img-section-l my-3">
-              <i className="material-symbols-rounded me-2">add_a_photo</i>
-              <p className="text-sans-p">Agregar foto de portada</p>
-            </div>
+        <h3 className="text-sans-h35">Imagen de Portada</h3>
+        <div className="img-l-container">  
+          <UploadImg/>
         </div>
         <div className="d-flex flex-row text-sans-h5-blue">
           <i className="material-symbols-rounded me-2">info</i>
@@ -253,12 +271,7 @@ const CrearProyectoInnovadorP1 = () => {
 
         {/* Img Miniatura - componente */}
         <div className="mt-5">
-            <h3 className="text-sans-h35">Imágenes para la galería</h3>
-            <p className="text-sans-h5">(Máximo 10 imágenes)</p>
-            <div className="img-section-s my-3">
-              <i className="material-symbols-rounded me-2">add_a_photo</i>
-              <p className="text-sans-p">Agregar fotos</p>
-            </div>
+          <UploadImgsm />
         </div>
       </div>
     </div>

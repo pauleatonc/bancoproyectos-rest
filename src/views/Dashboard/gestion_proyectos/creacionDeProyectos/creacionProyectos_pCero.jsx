@@ -33,7 +33,6 @@ const CrearProyectos = () => {
     }
   };
 
-
   const handleEditarClick = () => {
     // Cambia de nuevo al modo de edicion
     setIsEditing(true);
@@ -64,7 +63,7 @@ const CrearProyectos = () => {
   };
 
   return (
-    <div className="container view-container">
+    <div className="container view-container mb-5">
       <h2 className="text-sans-h2 mt-4 mb-5">Subir Proyecto</h2>
       <div className="col-10 mx-5">
         <h3 className="text-sans-h3 ms-1">Elige donde quieres mostrar el proyecto:</h3>
@@ -185,6 +184,14 @@ const CrearProyectos = () => {
               </div>
             </div>
           )}
+
+          <div>
+            <p className="text-sans-p">Este proyecto corresponde al programa:</p>
+            <select className="custom-selector p-3">
+              <option className="custom-option p-5 ms-4">Programa Mejoramiento Urbano (PMU)</option>
+              <option className="custom-option">Programa Mejoramiento de Barrios (PMB)</option>
+            </select>
+          </div>
         </div>
 
         <div className="container d-flex justify-content-end mt-5">
@@ -196,7 +203,7 @@ const CrearProyectos = () => {
             <i className="material-symbols-rounded ms-2">arrow_forward_ios</i> 
           </button>
         </div>
-        
+
         </div>
       </div>
     );

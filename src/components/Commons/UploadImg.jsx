@@ -48,13 +48,13 @@ export default function UploadImg()
 
   return (
     <div
-      className="img-section-xl my-3"
+      className="img-section my-3"
       onDrop={handleImageChange}
       onDragOver={onDragOver}
     >
       {!imageURL ? (
         <label htmlFor="formFile">
-          <div className="img-section-xl">
+          <div className="">
             <i className="material-symbols-rounded me-2">add_a_photo</i>
             <span className="form-label">Agregar foto de portada</span>
           </div>

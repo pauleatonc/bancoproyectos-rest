@@ -225,20 +225,24 @@ $black-color: #111111;
     padding: 13px;
 }
 
-// Boton falso selector
-.select-box{
-    border: 2px solid $grey-a-color;
-    border-radius: 5px;
+// Selectores
+.custom-selector{
+    width: 402px;
+    height: 60px;
+    border: 1px solid $grey-c-color;
+    border-radius: 4px;
     background-color: $white-color;
+    font-family: 'Roboto';
+    color: $grey-c-color;
+    font-size: 16;
+    font-weight: 500;
 }
-.select-option{
-    border: none;
-    background-color: transparent;
-    color: $grey-a-color;
-}
-.select-option:hover{
-    background-color: $blue-color;
-    color: $white-color;
+.custom-option {
+    background-color: $white-color;
+    color: #093F75;
+    font-family: 'Roboto';
+    font-size: 16px;
+    font-weight: 800;
 }
 
 // Tags

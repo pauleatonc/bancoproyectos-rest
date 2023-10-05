@@ -31,27 +31,10 @@
 .description-input{
     height: fit-content;
     min-height: 158px;
-    
 }
-.img-section-l{
-    color: #656565;
-    border: 2px dashed #656565;
-    height: 356px;
+.img-l-container{
     width: 550px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-.img-section-s{
-    color: #656565;
-    border: 2px dashed #656565;
-    height: 150px;
-    width: 150px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    height: 356px;
 }
 
 // Vista Paso 1 Creacion Proyectos - Banco de Proyectos
