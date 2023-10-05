@@ -242,7 +242,6 @@ class InnovativeProjectsViewSet(viewsets.ModelViewSet):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def retrieve(self, request, *args, **kwargs):
-        print(kwargs)
         """
         Endpoint para visualizar proyecto como administrador
 

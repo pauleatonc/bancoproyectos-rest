@@ -264,8 +264,11 @@ class InnovativeProjectsUpdateSerializer(serializers.ModelSerializer):
         instance.title = validated_data.get('title', instance.title)
         instance.description = validated_data.get('description', instance.description)
         instance.portada = validated_data.get('portada', instance.portada)
+        instance.request_sent = validated_data.get('request_sent', instance.request_sent)
 
+        print("Before save:", instance.request_sent)
         instance.save()
+        print("After save:", instance.request_sent)
 
         return instance
 
