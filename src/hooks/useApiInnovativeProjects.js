@@ -61,9 +61,23 @@ const useApiInnovativeProjects = () => {
   
   const updateInnovativeProject = async (id, data) => {
     try {
-      await apiBancoProyecto.patch(`innovative_projects/v1/${id}/`, data);
+      console.log("Updating project with ID:", id, "Data:", data);
+      const response = await apiBancoProyecto.patch(`innovative_projects/v1/${id}/`, data);
+      console.log("Server response:", response.data);
     } catch (error) {
-      // manejar error
+      console.log("Error updating project:", error);
+    }
+  };
+
+  const deleteInnovativeProject = async (id) => {
+    try {
+      const response = await apiBancoProyecto.delete(`innovative_projects/v1/${id}/`);
+      console.log("Proyecto eliminado con éxito:", response.data);
+      // Puedes optar por actualizar la lista de proyectos aquí o en el componente
+      fetchInnovativeProjectsList();
+    } catch (error) {
+      console.log("Error al eliminar el proyecto:", error);
+      // Aquí podrías manejar errores más específicos
     }
   };
 
@@ -78,7 +92,8 @@ const useApiInnovativeProjects = () => {
     createInnovativeProject,
     getInnovativeProjectById,
     updateInnovativeProject,
-    InnovativeAdminProjectsList
+    InnovativeAdminProjectsList,
+    deleteInnovativeProject
   };
 };
 

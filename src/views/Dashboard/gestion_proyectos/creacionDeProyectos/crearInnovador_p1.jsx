@@ -11,7 +11,7 @@ const CrearProyectoInnovadorP1 = () => {
   const [isEditingDescr, setIsEditingDescr] = useState(true); // comienza en modo edicion
   const [showDescrError, setShowDescrError] = useState(false);
   const [projectId, setProjectId] = useState(null);
-  const { getInnovativeProjectById, updateInnovativeProject } = useApiInnovativeProjects();
+  const { getInnovativeProjectById, updateInnovativeProject, deleteInnovativeProject } = useApiInnovativeProjects();
 
   // Hooks de estado para conteo de caracteres maximos en Titulo
   const [maxTitleChars] = useState(70); // Maximo de caracteres para el titulo
@@ -23,7 +23,7 @@ const CrearProyectoInnovadorP1 = () => {
   const [descCharsExceeded, setDescCharsExceeded] = useState(false);
 
 
-  // Obtiene el ID del paso anterior y lo guarda en projectId
+  // Obtiene el ID del paso anterior y lo guarda en projectId. También muestra los datos guardados del proyecto.
   useEffect(() => {
     const fetchProject = async () => {
       const projectId = new URLSearchParams(window.location.search).get('id');
@@ -40,61 +40,61 @@ const CrearProyectoInnovadorP1 = () => {
 
   // LOGICA TITULO
   // Maneja cambios en el input Titulo y actualiza el estado.
-  const handleTitleInputChange = (event) => {
+  const handleInputChange = (event, setInput, setCount, setExceeded, maxChars) => {
     const text = event.target.value;
-    if (text.length <= maxTitleChars) {
-      setInputTitle(text);
-      setTitleCharsCount(text.length);
-      setTitleCharsExceeded(false);
+    if (text.length <= maxChars) {
+      setInput(text);
+      setCount(text.length);
+      setExceeded(false);
     } else {
-      setTitleCharsExceeded(true);
+      setExceeded(true);
     }
   };
-
-  const handleSaveTitleClick = async () => {
-    const trimmedText = inputTitle.trim();
+  
+  const handleSaveClick = async (input, setEditing, setShowError, updateFunction, field, projectId) => {
+    const trimmedText = input.trim();
     if (trimmedText) {
-      await updateInnovativeProject(projectId, { title: trimmedText }); // <-- Usamos projectId aquí
-      setIsEditingTitle(false);
-      setShowTitleErrorMessage(false);
+      await updateFunction(projectId, { [field]: trimmedText });
+      setEditing(false);
+      setShowError(false);
     } else {
-      setShowTitleErrorMessage(true);
+      setShowError(true);
     }
   };
 
-  const handleEditTitleClick = () => {
+  const handleEditClick = (setState) => {
     // Cambia de nuevo al modo de edicion
-    setIsEditingTitle(true);
+    setState(true);
   };
 
-  // LOGICA DESCRIPCION
-  // Maneja cambios en el input Descripcion y actualiza el estado.
-  const handleDescrInputChange = (event) => {
-    const text = event.target.value;
-    if (text.length <= maxDescChars) {
-      setInputDescr(text);
-      setDescCharsCount(text.length);
-      setDescCharsExceeded(false);
+  const handleSendRequestClick = async () => {
+    if (projectId) {
+      const result = await updateInnovativeProject(projectId, { request_sent: true });
+      console.log("Update result:", result);
+      // Aquí podrías redirigir al usuario o mostrar un mensaje de éxito.
     } else {
-      setDescCharsExceeded(true);
+      console.log("Project ID is not set.");
     }
   };
 
-  const handleSaveDescrClick = async () => {
-    const trimmedText = inputDescr.trim();
-    if (trimmedText) {
-      await updateInnovativeProject(projectId, { description: trimmedText }); // <-- Usamos projectId aquí
-      setIsEditingDescr(false);
-      setShowDescrError(false);
+  const handleDeleteProjectClick = async () => {
+    if (projectId) {
+      const confirmDeletion = window.confirm("¿Estás seguro de que quieres eliminar este proyecto?");
+      if (confirmDeletion) {
+        await deleteInnovativeProject(projectId);
+        console.log("Proyecto eliminado");
+        // Aquí puedes redirigir al usuario o actualizar la lista de proyectos
+      }
     } else {
-      setShowDescrError(true);
+      console.log("ID del proyecto no definido");
     }
-  };
+  };  
 
-  const handleEditDescrClick = () => {
-    // Cambia de nuevo al modo de edicion
-    setIsEditingDescr(true);
-  };
+  const handleTitleInputChange = (event) => handleInputChange(event, setInputTitle, setTitleCharsCount, setTitleCharsExceeded, maxTitleChars);
+  const handleSaveTitleClick = () => handleSaveClick(inputTitle, setIsEditingTitle, setShowTitleErrorMessage, updateInnovativeProject, 'title', projectId);
+
+  const handleDescrInputChange = (event) => handleInputChange(event, setInputDescr, setDescCharsCount, setDescCharsExceeded, maxDescChars);
+  const handleSaveDescrClick = () => handleSaveClick(inputDescr, setIsEditingDescr, setShowDescrError, updateInnovativeProject, 'description', projectId);
 
 
   return (
@@ -141,7 +141,7 @@ const CrearProyectoInnovadorP1 = () => {
                 <h3 className="text-sans-h3">{inputTitle || "Titulo del Proyecto"}</h3>
                 <button
                   className="btn-secundario-s d-flex pb-0 px-3"
-                  onClick={handleEditTitleClick}
+                  onClick={() => handleEditClick(setIsEditingTitle)}
                 >
                   <p className="text-decoration-underline">Editar</p>
                   <i className="material-symbols-rounded ms-2 pt-1">edit</i>
@@ -188,7 +188,7 @@ const CrearProyectoInnovadorP1 = () => {
                 </div>
                 <button
                   className="btn-secundario-s d-flex pb-0 px-3"
-                  onClick={handleEditDescrClick}
+                  onClick={() => handleEditClick(setIsEditingDescr)}
                 >
                   <p className="text-decoration-underline">Editar</p>
                   <i className="material-symbols-rounded ms-2 pt-1">edit</i>
@@ -264,15 +264,15 @@ const CrearProyectoInnovadorP1 = () => {
     </div>
 
       <div className="col-10 mt-5 d-flex justify-content-end">
-        <button className="btn-principal-s d-flex text-sans-h4 pb-0">
+        <button className="btn-principal-s d-flex text-sans-h4 pb-0" onClick={handleSendRequestClick}>
           <p className="text-decoration-underline">Enviar solicitud</p>
           <i className="material-symbols-rounded ms-2">arrow_forward_ios</i> 
         </button>
       </div>
 
       <div className="col-10 mt-5 d-flex justify-content-start mb-5">
-        <button className="red-btn text-sans-h4 d-flex pb-0">
-          <p className="text-decoration-underline">Deshechar solicitud</p>
+        <button className="red-btn text-sans-h4 d-flex pb-0" onClick={handleDeleteProjectClick}>
+          <p className="text-decoration-underline">Desechar solicitud</p>
           <i className="material-symbols-rounded ms-2">delete</i> </button>
       </div>
     </div>
