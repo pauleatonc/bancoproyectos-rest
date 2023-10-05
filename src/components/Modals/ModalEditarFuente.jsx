@@ -14,8 +14,13 @@ const ModalEditarFuente = () => {
           placeholder="fuente a editar" // Aqui poner dinamicamente la fuente a editar
           />
         </div>
+        <button className="red-ghost-btn d-flex mt-3">
+          <p className="text-sans-p-bold-darkred text-decoration-underline mb-0">Borrar fuente</p>
+          <i className="material-symbols-rounded ms-1 mt-1">delete</i>
+        </button>
 
         <hr/>
+
         <div className="d-flex justify-content-between">
           <button className="btn-secundario-s d-flex align-items-center" >
             <i className="material-symbols-rounded me-1">chevron_left</i>

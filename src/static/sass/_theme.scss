@@ -104,6 +104,10 @@ $black-color: #111111;
     @include font-sans(16px, 400, $white-color);
     line-height: 35px;
 }
+.text-sans-p-bold-darkred{
+    @include font-sans(16px, 700, $dark-red);
+    line-height: 35px;
+}
 
 .text-sans-b-gray{
     @include font-sans(16px, 700, $grey-a-color);
@@ -221,6 +225,13 @@ $black-color: #111111;
     width: fit-content;
     background-color: transparent;
     border: 2px solid $dark-red;
+    color: $dark-red;
+    padding: 13px;
+}
+.red-ghost-btn{
+    width: fit-content;
+    background-color: transparent;
+    border: none;
     color: $dark-red;
     padding: 13px;
 }
