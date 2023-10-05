@@ -40,13 +40,21 @@ class InnovativeProjects(BaseModel):
     def application_status(self):
         if not self.fields_completed():
             return "Incompleto"
+
         if self.evaluated:
-            # Check if the related objects exist before accessing them
+            # Verificar si los objetos relacionados existen antes de acceder a ellos
             if ((hasattr(self, 'revision_section_one') and self.revision_section_one.approved_section_one) and
                     (hasattr(self, 'revision_section_two') and self.revision_section_two.approved_section_two)):
-                return "Aceptado"
+
+                # Comprueba si el campo 'public' es True
+                if self.public:
+                    return "Publicado"
+                else:
+                    return "Privado"
+
             else:
                 return "Rechazado"
+
         else:
             if self.request_sent and self.fields_completed():
                 return "Pendiente"

@@ -50,7 +50,8 @@ class InnovativeProjectsViewSet(viewsets.ModelViewSet):
     list_serializer_class = InnovativeProjectsSerializerV1
     queryset = None
 
-    def get_object(self, pk):
+    def get_object(self):
+        pk = self.kwargs.get('pk')
         return get_object_or_404(self.model, pk=pk)
 
     def get_queryset(self):
@@ -95,8 +96,16 @@ class InnovativeProjectsViewSet(viewsets.ModelViewSet):
             try:
                 user_program = user.program
                 innovative_projects = InnovativeProjects.objects.filter(program=user_program)
-                innovative_projects = [proj for proj in innovative_projects if
-                                       proj.historical_date.earliest('history_date').history_user == user]
+                safe_innovative_projects = []
+                for proj in innovative_projects:
+                    try:
+                        earliest_record = proj.historical_date.earliest('history_date')
+                        if earliest_record.history_user == user:
+                            safe_innovative_projects.append(proj)
+                    except HistoricalInnovativeProjects.DoesNotExist:
+                        # manejar el caso donde no existen registros históricos, si es necesario
+                        pass
+                innovative_projects = safe_innovative_projects
             except AttributeError:  # En caso de que el usuario no tenga un programa asociado
                 innovative_projects = InnovativeProjects.objects.none()
 
@@ -222,7 +231,7 @@ class InnovativeProjectsViewSet(viewsets.ModelViewSet):
             return Response({'detail': 'No tienes permiso para actualizar proyectos.'},
                             status=status.HTTP_403_FORBIDDEN)
 
-        instance = self.get_object(pk)
+        instance = self.get_object()
         serializer = InnovativeProjectsUpdateSerializer(instance, data=request.data, partial=True, context={
             'request': request})
 
@@ -233,6 +242,7 @@ class InnovativeProjectsViewSet(viewsets.ModelViewSet):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def retrieve(self, request, *args, **kwargs):
+        print(kwargs)
         """
         Endpoint para visualizar proyecto como administrador
 
@@ -268,8 +278,12 @@ class InnovativeProjectsViewSet(viewsets.ModelViewSet):
         if is_admin(user):
             pass  # El usuario tiene permiso para eliminar cualquier proyecto
         elif 'Profesional Temporal' in user.groups.values_list('name', flat=True):
-            # Verifica si el proyecto fue creado por el usuario actual
-            if project.historical_date.earliest('history_date').history_user != user:
+            try:
+                earliest_record = project.historical_date.earliest('history_date')
+                if earliest_record.history_user != user:
+                    return Response({'detail': 'No tienes permiso para eliminar este proyecto.'},
+                                    status=status.HTTP_403_FORBIDDEN)
+            except HistoricalInnovativeProjects.DoesNotExist:
                 return Response({'detail': 'No tienes permiso para eliminar este proyecto.'},
                                 status=status.HTTP_403_FORBIDDEN)
         else:
@@ -282,7 +296,7 @@ class InnovativeProjectsViewSet(viewsets.ModelViewSet):
             return Response({'detail': 'El título no coincide. No se puede eliminar el proyecto.'},
                             status=status.HTTP_400_BAD_REQUEST)
 
-        # Si llegamos a este punto, está todo bien y podemos eliminar el proyecto
+        # Si llegamos a este punto, podemos eliminar el proyecto
         self.perform_destroy(project)
         return Response({'detail': 'Proyecto eliminado con éxito'}, status=status.HTTP_204_NO_CONTENT)
 

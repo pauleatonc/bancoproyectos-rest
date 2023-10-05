@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.core.exceptions import ObjectDoesNotExist
 #
 from applications.innovative_projects.models import (
     InnovativeProjects,
@@ -82,14 +83,12 @@ class InnovativeProjectsAdminListSerializer(serializers.ModelSerializer):
     def get_application_status(self, obj):
         return obj.application_status
 
-    def get_author_email(self, obj):  # Method to get the author's email
-        # Access the historical records and get the earliest one
-        historical_record = obj.historical_date.earliest('history_date')
-
-        if historical_record.history_user:  # Check if history_user is not None
-            return historical_record.history_user.email
-        else:
-            return None  # or return a default value like 'N/A' or an empty string
+    def get_author_email(self, obj):
+        if obj.historical_date.exists():
+            historical_record = obj.historical_date.earliest('history_date')
+            if historical_record.history_user:
+                return historical_record.history_user.email
+        return None  # o cualquier valor por defecto
 
 
 class RevisionSectionOneSerializer(serializers.ModelSerializer):
@@ -214,6 +213,24 @@ class InnovativeProjectsUpdateSerializer(serializers.ModelSerializer):
                 'approved_web_source': RevisionSectionTwo._meta.get_field('approved_web_source').default,
                 'approved_section_two': RevisionSectionTwo._meta.get_field('approved_section_two').default,
             }
+
+        # Para revision_section_one
+        try:
+            for field, value in revision_section_one_data.items():
+                setattr(instance.revision_section_one, field, value)
+            instance.revision_section_one.save()
+        except ObjectDoesNotExist:
+            # Crea el objeto si no existe
+            RevisionSectionOne.objects.create(project=instance, **revision_section_one_data)
+
+        # Para revision_section_two
+        try:
+            for field, value in revision_section_two_data.items():
+                setattr(instance.revision_section_two, field, value)
+            instance.revision_section_two.save()
+        except ObjectDoesNotExist:
+            # Crea el objeto si no existe
+            RevisionSectionTwo.objects.create(project=instance, **revision_section_two_data)
 
         # Actualiza los campos foráneos del modelo
         program_name = validated_data.get('program')
