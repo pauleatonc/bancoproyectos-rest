@@ -22,9 +22,9 @@ export const Sidebar = () =>
           <span className="text-serif-h3 mx-2 title-siderbar"><u>Banco de Proyectos</u></span>
           <p className="text-end px-2 mb-0">Admin</p>
         </div>
-        <hr className="w-100 " />
+        <hr className="w-100 mt-0" />
       </div>
-      <ul className="nav nav-pills flex-column mb-auto">
+      <ul className="nav nav-pills flex-column mb-auto mt-0">
         <li className="my-1">
           <NavLink to="/dashboard" className="mx-4 btn-link"  aria-current="page" type="button" >
             <i className="material-symbols-outlined mx-3 ">
@@ -49,13 +49,13 @@ export const Sidebar = () =>
           </NavLink>
         </li>
         <li className="my-1">
-          <NavLink to="#" className="mx-4 btn-link" activeClassName="active" type="button">
+          <NavLink to="#" className="mx-4 btn-link"  type="button">
             <i className="badge badge-notification mx-3"> +99 </i>
             <u>Banco de Proyectos</u>
           </NavLink>
         </li>
         <li className="my-1">
-          <NavLink to="#" className="mx-4 btn-link" activeClassName="active" type="button">
+          <NavLink to="administrarproyectosinnovadores" className="mx-4 btn-link" activeClassName="active" type="button">
             <i className="material-symbols-outlined mx-3">
               library_books
             </i><u>Proyectos Innovadores</u>
@@ -94,13 +94,13 @@ export const Sidebar = () =>
                 local_parking
               </i><u>Programas</u></NavLink></li>
             <li className="my-1">
-              <NavLink to="#" className="btn-link" activeClassName="active" type="button">
+              <NavLink to="#" className="btn-link" type="button">
                 <i className="material-symbols-outlined mx-3">
                   file_copy
                 </i><u>Documentos</u></NavLink>
             </li>
             <li className="my-1" >
-              <NavLink to="#" className="btn-link" activeClassName="active" type="button">
+              <NavLink to="#" className="btn-link" type="button">
                 <i className="material-symbols-outlined mx-3">
                   admin_panel_settings
 

@@ -4,8 +4,8 @@ import { apiBancoProyecto } from '../services/bancoproyecto.api';
 export const UseApiPrograms = () =>
 {
   const [ dataPrograms, setDataPrograms ] = useState([]);
-  const [ loading, setLoading ] = useState(true);
-  const [ error, setError ] = useState(null);
+  const [ loadingPrograms, setLoadingPorgrams ] = useState(true);
+  const [ errorPrograms, setErrorPrograms ] = useState(null);
 
   useEffect(() =>
   {
@@ -14,16 +14,16 @@ export const UseApiPrograms = () =>
       try
       {
         const response = await apiBancoProyecto.get('programs/v1/');
-        setDataPrograms(response.dataPrograms);
-        setLoading(false);
+        setDataPrograms(response.data);
+        setLoadingPorgrams(false);
       } catch (error)
       {
-        setError(error);
-        setLoading(false);
+        setErrorPrograms(error);
+        setLoadingPorgrams(false);
       }
     };
     fetchData();
   }, []);
   console.log(dataPrograms)
-  return { dataPrograms, loading, error }
+  return { dataPrograms, loadingPrograms, errorPrograms }
 }
