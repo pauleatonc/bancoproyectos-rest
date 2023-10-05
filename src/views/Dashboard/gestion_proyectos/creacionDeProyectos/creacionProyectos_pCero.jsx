@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import useApiInnovativeProjects from '../../../../hooks/useApiInnovativeProjects';
+
 
 const CrearProyectos = () => {
   // Hooks de estado
@@ -7,6 +9,7 @@ const CrearProyectos = () => {
   const [inputText, setInputText] = useState('');
   const [isEditing, setIsEditing] = useState(true);
   const [showTitleErrorMessage, setShowTitleErrorMessage] = useState(false);
+  const { createInnovativeProject } = useApiInnovativeProjects();
 
   //Hooks para conteo y manejo de caracteres maximos
   const [maxTitleChars] = useState(70); // Maximo de caracteres para el titulo
@@ -36,7 +39,7 @@ const CrearProyectos = () => {
     setIsEditing(true);
   };
 
-  const handleSubirProyectoClick = () => {
+  const handleSubirProyectoClick = async () => {
     if (selectedOption) {
       // Verifica si se ha ingresado un título
       const trimmedTitle = inputText.trim();
@@ -46,7 +49,12 @@ const CrearProyectos = () => {
         if (selectedOption === 'bancoProyectos') {
           window.location.href = '/dashboard/crearproyecto_paso1';
         } else if (selectedOption === 'proyectosInnovadores') {
-          window.location.href = '/dashboard/crearinnovador_paso1';
+          const newProjectId = await createInnovativeProject(inputText.trim());
+          if (newProjectId) {
+            window.location.href = `/dashboard/crearinnovador_paso1?id=${newProjectId}`;
+          } else {
+            // Manejar el error aquí, quizás mostrando un mensaje al usuario
+          }
         }
       }
     } else {

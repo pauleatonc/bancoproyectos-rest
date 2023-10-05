@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import  ModalAgregarFuente  from "../../../../components/Modals/ModalAgregarFuente";
 import ModalEditarFuente from "../../../../components/Modals/ModalEditarFuente";
+import useApiInnovativeProjects from "../../../../hooks/useApiInnovativeProjects";
 
 const CrearProyectoInnovadorP1 = () => {
   const [inputTitle, setInputTitle] = useState('');
@@ -9,6 +10,8 @@ const CrearProyectoInnovadorP1 = () => {
   const [inputDescr, setInputDescr] = useState('');
   const [isEditingDescr, setIsEditingDescr] = useState(true); // comienza en modo edicion
   const [showDescrError, setShowDescrError] = useState(false);
+  const [projectId, setProjectId] = useState(null);
+  const { getInnovativeProjectById, updateInnovativeProject } = useApiInnovativeProjects();
 
   // Hooks de estado para conteo de caracteres maximos en Titulo
   const [maxTitleChars] = useState(70); // Maximo de caracteres para el titulo
@@ -19,6 +22,21 @@ const CrearProyectoInnovadorP1 = () => {
   const [descCharsCount, setDescCharsCount] = useState(0);
   const [descCharsExceeded, setDescCharsExceeded] = useState(false);
 
+
+  // Obtiene el ID del paso anterior y lo guarda en projectId
+  useEffect(() => {
+    const fetchProject = async () => {
+      const projectId = new URLSearchParams(window.location.search).get('id');
+      setProjectId(projectId);  // <-- Aquí guardamos el projectId
+      const project = await getInnovativeProjectById(projectId);
+      if (project) {
+        setInputTitle(project.title);
+        setInputDescr(project.description);
+      }
+    };
+    
+    fetchProject();
+  }, []);
 
   // LOGICA TITULO
   // Maneja cambios en el input Titulo y actualiza el estado.
@@ -33,15 +51,14 @@ const CrearProyectoInnovadorP1 = () => {
     }
   };
 
-  const handleSaveTitleClick = () => {
+  const handleSaveTitleClick = async () => {
     const trimmedText = inputTitle.trim();
-    if (!trimmedText) {
-      // Si no hay texto en el input, muestra el mensaje de error
-      setShowTitleErrorMessage(true);
-    } else {
-      // Si hay texto en el input, cambia al modo de visualizacion
+    if (trimmedText) {
+      await updateInnovativeProject(projectId, { title: trimmedText }); // <-- Usamos projectId aquí
       setIsEditingTitle(false);
       setShowTitleErrorMessage(false);
+    } else {
+      setShowTitleErrorMessage(true);
     }
   };
 
@@ -63,15 +80,14 @@ const CrearProyectoInnovadorP1 = () => {
     }
   };
 
-  const handleSaveDescrClick = () => {
+  const handleSaveDescrClick = async () => {
     const trimmedText = inputDescr.trim();
-    if (!trimmedText) {
-      // Si no hay texto en el input, muestra el mensaje de error
-      setShowDescrError(true);
-    } else {
-      // Si hay texto en el input, cambia al modo de visualizacion
+    if (trimmedText) {
+      await updateInnovativeProject(projectId, { description: trimmedText }); // <-- Usamos projectId aquí
       setIsEditingDescr(false);
       setShowDescrError(false);
+    } else {
+      setShowDescrError(true);
     }
   };
 
@@ -79,6 +95,7 @@ const CrearProyectoInnovadorP1 = () => {
     // Cambia de nuevo al modo de edicion
     setIsEditingDescr(true);
   };
+
 
   return (
     <div className="container view-container">
