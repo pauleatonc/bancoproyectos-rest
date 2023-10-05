@@ -4,7 +4,7 @@ export const NavbarUser = () => {
   const { isLoggedIn, userData, logout } = useAuth();
 
   return (
-    <nav className="d-flex  bg-white border-bottom justify-content-end me-5 w-100 sticky-top">
+    <nav className="d-flex  bg-white border-bottom justify-content-end me-5 w-100 sticky-top my-1">
       <div className="align-self-center mx-2 text-sans-h5">
         <span >Hola, {userData.full_name || userData.rut}</span>
       </div>

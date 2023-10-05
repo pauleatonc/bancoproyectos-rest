@@ -1,17 +1,22 @@
 import { useRef, useState } from 'react';
 import { useApiRegionComuna } from '../../hooks/useApiRegionComuna';
+import { useApiTypeProject } from '../../hooks/useTypeProject';
+import { UseApiPrograms } from '../../hooks/usePrograms';
 import ModalBase from './ModalBase';
 import YearPicker from '../Commons/YearPicker';
+
 
 const ModalDetalles = ({ setDetalles }) =>
 {
   const { data, loading, error } = useApiRegionComuna();
+  const { dataType, typeLoading, typeError } = useApiTypeProject();
+  const { dataPrograms, loadingPrograms, errorPrograms } = UseApiPrograms();
   const [ selectedRegion, setSelectedRegion ] = useState(null);
   const [ selectedRegionID, setSelectedRegionID ] = useState(null);
   const [ selectedComuna, setSelectedComuna ] = useState(null);
   const [ selectedYear, setSelectedYear ] = useState(new Date().getFullYear());
 
-  const programaRef = useRef(null);
+  const programaNameRef = useRef(null);
   const tipoProyectoRef = useRef(null);
   const regionRef = useRef(null);
   const comunaRef = useRef(null);
@@ -36,12 +41,13 @@ const ModalDetalles = ({ setDetalles }) =>
 
   const handleGuardar = () =>
   {
-    const programa = programaRef.current ? programaRef.current.value : "";
-    const tipoProyecto = tipoProyectoRef.current ? tipoProyectoRef.current.value : "";
+    const programa = programaNameRef.current;
+    const tipoProyectoID = tipoProyectoRef.current ? tipoProyectoRef.current.value : "";
+    const tipoProyectoName = dataType.find(type => type.id === parseInt(tipoProyectoID))?.name;
     const idSubdere = idSubereRef.current ? idSubereRef.current.value : "";
     setDetalles({
       programa,
-      tipoProyecto,
+      tipoProyecto: tipoProyectoName,
       region: selectedRegion,
       comuna: selectedComuna,
       year: `${selectedYear}`,
@@ -60,18 +66,23 @@ const ModalDetalles = ({ setDetalles }) =>
               <select
                 className="custom-select px-3"
                 id=""
-                ref={programaRef}>
+                ref={programaNameRef}
+                onChange={(e) => programaNameRef.current = e.target.options[ e.target.selectedIndex ].text}
+              >
                 <option value="">Elige una opción</option>
+                {!loadingPrograms && !errorPrograms && dataPrograms?.map(program => (
+                  <option key={program.id} value={program.id}>{program.name}</option>
+                ))}
               </select>
             </div>
 
             <div className="col-12  d-flex flex-column my-4 ">
               <label className="text-sans-p px-3">Elige el tipo de proyecto (Obligatorio)</label>
-              <select
-                className="custom-select px-3"
-                id=""
-                ref={tipoProyectoRef}>
+              <select className="custom-select px-3" id="" ref={tipoProyectoRef}>
                 <option value="">Elige una opción</option>
+                {!typeLoading && !typeError && dataType?.map(type => (
+                  <option key={type.id} value={type.id}>{type.name}</option>
+                ))}
               </select>
             </div>
 
@@ -123,6 +134,7 @@ const ModalDetalles = ({ setDetalles }) =>
             <button
               className="btn-principal-s d-flex text-sans-h4 pb-0 me-3 align-self-center"
               onClick={handleGuardar}
+              data-bs-dismiss="modal"
             >
               <p className="text-sans-p-white text-decoration-underline">Guardar</p>
               <i className="material-symbols-rounded ms-2 pt-1">save</i>

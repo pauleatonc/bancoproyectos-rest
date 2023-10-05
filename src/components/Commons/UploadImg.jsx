@@ -1,8 +1,10 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 
 export default function UploadImg()
 {
   const [ imageURL, setImageURL ] = useState(null);
+  const [ showModal, setShowModal ] = useState(false);
+  const modalRef = useRef(null);
 
   const handleImageChange = (e) =>
   {
@@ -26,45 +28,66 @@ export default function UploadImg()
     setImageURL(null);
   };
 
+  const openModal = () =>
+  {
+    setShowModal(true);
+  };
+
+  const closeModal = () =>
+  {
+    setShowModal(false);
+  };
+
+  const handleOutsideClick = (e) =>
+  {
+    if (e.target === modalRef.current)
+    {
+      closeModal();
+    }
+  };
+
   return (
     <div
       className="img-section-xl my-3"
       onDrop={handleImageChange}
       onDragOver={onDragOver}
     >
-      <label htmlFor="formFile">
-        {!imageURL && (
+      {!imageURL ? (
+        <label htmlFor="formFile">
           <div className="img-section-xl">
             <i className="material-symbols-rounded me-2">add_a_photo</i>
             <span className="form-label">Agregar foto de portada</span>
           </div>
-        )}
-        <input
-          className="text-sans-p"
-          style={{ display: 'none' }}
-          type="file"
-          id="formFile"
-          onChange={handleImageChange}
-        />
-        {imageURL && (
-          <div className="image-container">
-            <img
-              className="upload-image "
-              src={imageURL}
-              alt="Portada"
-            />
-            <div className="overlay">
-              <button className="btn-borderless-white d-flex align-content-center mx-3" onClick={() => alert('Ver imagen')}>
-                <i className="material-symbols-outlined mx-1">
-                  visibility
-                </i>Ver</button>
-              <button className="btn-borderless-white d-flex align-content-center mx-3" onClick={handleDelete}><i className="material-symbols-outlined mx-1">
-                delete
-              </i>Borrar</button>
-            </div>
+          <input
+            className="text-sans-p"
+            style={{ display: 'none' }}
+            type="file"
+            id="formFile"
+            onChange={handleImageChange}
+          />
+        </label>
+      ) : (
+        <div className="image-container">
+          <img className="upload-image" src={imageURL} alt="Portada" />
+          <div className="overlay">
+            <button className="btn-borderless-white  d-flex align-content-center mx-3 px-3" onClick={openModal}>
+              <i className="material-symbols-outlined mx-1">visibility</i>Ver
+            </button>
+            <button className="btn-borderless-white d-flex align-content-center mx-3 px-3" onClick={handleDelete}>
+              <i className="material-symbols-outlined mx-1">delete</i>Borrar
+            </button>
           </div>
-        )}
-      </label>
+        </div>
+      )}
+
+      {showModal && (
+        <div ref={modalRef} className="modal-uploadImg" onClick={handleOutsideClick}>
+          <div className="modalImg-content">
+            <button type="button" onClick={closeModal} className="btn-close btn-close-img" data-bs-dismiss="modal" aria-label="Close"></button>
+            <img src={imageURL} alt="Modal view" className="img-modal" />
+          </div>
+        </div>
+      )}
     </div>
   );
 }
