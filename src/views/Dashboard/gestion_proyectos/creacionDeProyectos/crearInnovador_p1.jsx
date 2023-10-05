@@ -10,6 +10,7 @@ const CrearProyectoInnovadorP1 = () => {
   const [inputDescr, setInputDescr] = useState('');
   const [isEditingDescr, setIsEditingDescr] = useState(true); // comienza en modo edicion
   const [showDescrError, setShowDescrError] = useState(false);
+  const [projectId, setProjectId] = useState(null);
   const { getInnovativeProjectById, updateInnovativeProject } = useApiInnovativeProjects();
 
   // Hooks de estado para conteo de caracteres maximos en Titulo
@@ -22,13 +23,15 @@ const CrearProyectoInnovadorP1 = () => {
   const [descCharsExceeded, setDescCharsExceeded] = useState(false);
 
 
-  // Obtiene el ID del paso anterior
+  // Obtiene el ID del paso anterior y lo guarda en projectId
   useEffect(() => {
     const fetchProject = async () => {
       const projectId = new URLSearchParams(window.location.search).get('id');
+      setProjectId(projectId);  // <-- Aquí guardamos el projectId
       const project = await getInnovativeProjectById(projectId);
       if (project) {
         setInputTitle(project.title);
+        setInputDescr(project.description);
       }
     };
     
@@ -51,9 +54,8 @@ const CrearProyectoInnovadorP1 = () => {
   const handleSaveTitleClick = async () => {
     const trimmedText = inputTitle.trim();
     if (trimmedText) {
-      await updateInnovativeProject(projectId, { title: trimmedText });
+      await updateInnovativeProject(projectId, { title: trimmedText }); // <-- Usamos projectId aquí
       setIsEditingTitle(false);
-      // Si no hay texto en el input, muestra el mensaje de error
       setShowTitleErrorMessage(false);
     } else {
       setShowTitleErrorMessage(true);
@@ -81,10 +83,8 @@ const CrearProyectoInnovadorP1 = () => {
   const handleSaveDescrClick = async () => {
     const trimmedText = inputDescr.trim();
     if (trimmedText) {
-      await updateInnovativeProject(projectId, { description: trimmedText });
-      // Si hay texto en el input, cambia al modo de visualizacion
+      await updateInnovativeProject(projectId, { description: trimmedText }); // <-- Usamos projectId aquí
       setIsEditingDescr(false);
-      // Si no hay texto en el input, muestra el mensaje de error
       setShowDescrError(false);
     } else {
       setShowDescrError(true);
