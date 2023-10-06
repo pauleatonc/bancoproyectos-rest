@@ -50,7 +50,7 @@ const Proyecto = () =>
       </div>
 
       {/* Tabla detalles del proyecto */}
-      <div className="detalles-del-proyecto my-4 mt-5">
+      <div className="detalles-proyecto my-4 mt-5">
         <h2 className="text-sans-h2-white ms-3 ">Detalles del proyecto</h2>
       </div>
       <div className="ms-3">

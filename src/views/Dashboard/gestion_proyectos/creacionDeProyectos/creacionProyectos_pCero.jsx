@@ -63,7 +63,7 @@ const CrearProyectos = () => {
   };
 
   return (
-    <div className="container view-container mb-5">
+    <div className="container view-container mx-5 mb-5">
       <h2 className="text-sans-h2 mt-4 mb-5">Subir Proyecto</h2>
       <div className="col-10 mx-5">
         <h3 className="text-sans-h3 ms-1">Elige donde quieres mostrar el proyecto:</h3>
