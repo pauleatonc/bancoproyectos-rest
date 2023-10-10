@@ -98,3 +98,11 @@ border-radius: 0% !important;
   .container-detalle{
     width:750px; 
   }
+
+  // Vista Success
+  .success-container{
+    border: 1px solid $success-color;
+    border-radius: 4px;
+    box-shadow: 2px 5px 10px $grey-light-color;
+    margin-left: 10%;
+  }
