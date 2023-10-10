@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const Buscador = ({ searchTerm, onSearch, isSearching, setIsSearching }) => {
+const Buscador = ({ searchTerm, onSearch, isSearching, setIsSearching, placeholder }) => {
   const [ searchInput, setSearchInput ] = useState(searchTerm);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const Buscador = ({ searchTerm, onSearch, isSearching, setIsSearching }) => {
           type="text"
           value={searchInput}
           onChange={handleInputChange}
-          placeholder='Buscar documento por palabras claves'
+          placeholder= {placeholder}
         />
         {isSearching && (
           <button className="btn border border-0 " onClick={handleClearSearch} id="icon-inputClose">

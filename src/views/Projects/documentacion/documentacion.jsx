@@ -85,6 +85,7 @@ const Documentacion = () => {
         onSearch={handleSearch}
         isSearching={isSearching}
         setIsSearching={setIsSearching}
+        placeholder='Buscar documento por palabras claves'
         />
       </div>
 
