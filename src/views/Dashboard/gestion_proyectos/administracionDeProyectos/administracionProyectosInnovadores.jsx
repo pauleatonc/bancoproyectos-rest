@@ -6,7 +6,7 @@ const AdministrarProyectosInnovadores = () => {
 
   useEffect(() => {
     InnovativeAdminProjectsList();
-  }, [InnovativeAdminProjectsList]);
+  }, []);
 
   return (
     <div className="container view-container mx-5">
