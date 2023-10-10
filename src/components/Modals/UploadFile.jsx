@@ -10,53 +10,47 @@ const UploadFile = ({
   editingIndex
 }) =>
 {
-  const isEditing = editingFile !== null;
-  const [ file, setFile ] = useState(isEditing ? editingFile.file : null);
-  const [ inputValue, setInputValue ] = useState(isEditing ? editingFile.title : '');
-
+  const [file, setFile] = useState(isEditMode ? editingFile.file : null);
+  const [inputValue, setInputValue] = useState(isEditMode ? editingFile.title : '');
 
   const triggerFileInput = () => document.getElementById('fileInput').click();
 
-  const resetState = () =>
-  {
+  const resetState = () => {
     setFile(null);
     setInputValue('');
   };
 
-  const handleSave = () =>
-  {
-    if (isEditing)
-    {
-      onFileUpdated(file, inputValue, editingIndex);  
-    } else
-    {
+  const handleSave = () => {
+    if (!file || !inputValue) {
+      alert('Por favor, asegúrate de seleccionar un archivo y proporcionar un nombre para el documento.');
+      return;
+    }
+
+    if (isEditMode) {
+      onFileUpdated(editingIndex, file, inputValue);
+    } else {
       onFileAdded(file, inputValue);
     }
+
     resetState();
   }
 
-  useEffect(() =>
-  {
+  useEffect(() => {
     if (reset) resetState();
-  }, [ reset ]);
+  }, [reset]);
 
-
-  useEffect(() =>
-  {
-    if (isEditMode && editingFile)
-    {
+  useEffect(() => {
+    if (isEditMode && editingFile) {
       setFile(editingFile.file);
       setInputValue(editingFile.title);
-    } else
-    {
+    } else {
       resetState(); // Si no está editando, reinicia el estado.
     }
-  }, [ isEditMode, editingFile ]);
+  }, [isEditMode, editingFile]);
 
-  const handleFileChange = (e) =>
-  {
-    if (!isEditMode) setFile(e.target.files[ 0 ]);
-  };
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+};
 
 
   return (

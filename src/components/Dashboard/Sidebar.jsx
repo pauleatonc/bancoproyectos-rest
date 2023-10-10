@@ -55,7 +55,7 @@ export const Sidebar = () =>
           </NavLink>
         </li>
         <li className="my-1">
-          <NavLink to="administrarproyectosinnovadores" className="mx-4 btn-link" activeClassName="active" type="button">
+          <NavLink to="administrarproyectosinnovadores" className="mx-4 btn-link" type="button">
             <i className="material-symbols-outlined mx-3">
               library_books
             </i><u>Proyectos Innovadores</u>
