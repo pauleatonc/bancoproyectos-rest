@@ -34,7 +34,6 @@ const AdministrarProyectosInnovadores = () => {
   return (
     <div className="container view-container">
       <div>ADMINISTRAR PROYECTOS</div>
-      <div className="col p-3">{userData.tipo_de_usuario}</div>
       <h2 className="text-sans-h2 my-4">Documentos del proyecto</h2>
       <div className="row my-4 fw-bold border-top">
         <div className="col-1 mt-3">#</div>
