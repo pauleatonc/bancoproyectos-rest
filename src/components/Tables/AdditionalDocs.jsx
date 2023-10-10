@@ -1,8 +1,15 @@
 
-export const AdditionalDocs = (props) => {
-  const getFileExtension = (fileName) => {
+export const AdditionalDocs = (props) =>
+{
+  const getFileExtension = (fileName) =>
+  {
     return fileName.split('.').pop();
   }
+
+  const handleDelete = (index) => {
+    props.onDelete(index);
+}
+
 
   return (
     <>
@@ -17,18 +24,24 @@ export const AdditionalDocs = (props) => {
           <div className="col-1 p-3">{index + 1}</div>
           <div className="col p-3">{fileObj.title}</div>
           <div className="col p-3">{getFileExtension(fileObj.file.name)}</div>
-          <div className="col p-3">
-          <button className="btn-secundario-s text-sans-p-blue d-flex" 
-          type="button" 
-          id="button-addon2" 
-          data-bs-toggle="modal"   
-          data-bs-target="#uploadFile"   
-          onClick={() => props.onEdit(index)}>
-          <u className="text-decoration-underline mx-2">Modificar</u>
-          <i className="material-symbols-outlined "> edit</i>
-        </button>
-          </div>
+          <div className="col p-3 d-flex">
+            <button className="btn-secundario-s text-sans-p-blue d-flex"
+              type="button"
+              id="button-addon2"
+              data-bs-toggle="modal"
+              data-bs-target="#uploadFile"
+              onClick={() => props.onEdit(index)}>
+              <u className="text-decoration-underline mx-2">Modificar</u>
+              <i className="material-symbols-outlined "> edit</i>
+            </button>
+            <button
+              type="button"
+              onClick={() => handleDelete(index)} 
+              className="btn-borderless-red px-2 d-flex align-items-center mx-1">
+              <span className="text-sans-b-red ">Borrar</span><i className="material-symbols-rounded ">delete</i>
+          </button>
         </div>
+        </div >
       ))}
     </>
   )

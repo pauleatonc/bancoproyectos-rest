@@ -17,12 +17,12 @@ const UploadBtn = ({ onFileChange, fileUploaded }) =>
     <>
       <input type="file" className="d-none" onChange={onFileChange} ref={inputFile} />
       {fileUploaded ? (
-        <button className="btn-secundario-s text-sans-p-blue d-flex" type="button" id="button-addon2" onClick={handleButtonClick}>
-          <u className="text-decoration-underline mx-2">Modificar</u>
-          <i className="material-symbols-outlined "> edit</i>
+        <button className="btn-secundario-s text-sans-p-blue d-flex px-1" type="button" onClick={handleButtonClick}>
+          <u>Modificar</u>
+          <i className="material-symbols-outlined"> edit</i>
         </button>
       ) : (
-        <button className="btn-principal-s d-flex" type="button" id="button-addon2" onClick={handleButtonClick}>
+        <button className="btn-principal-s d-flex" type="button" onClick={handleButtonClick}>
           <i className="material-symbols-outlined ">
             upgrade
           </i><u className="align-self-center text-sans-b-white ">Subir Archivo</u>
