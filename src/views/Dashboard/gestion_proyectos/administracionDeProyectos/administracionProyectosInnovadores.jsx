@@ -5,6 +5,8 @@ import Buscador from '../../../../components/Commons/barraDeBusqueda';
 const AdministrarProyectosInnovadores = () => {
   const { InnovativeAdminProjectsList, dataInnovativeProjects } = useApiInnovativeProjects();
   const [searchTerm, setSearchTerm] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+  const [searching, setSearching] = useState(false);
 
   useEffect(() => {
     InnovativeAdminProjectsList();
@@ -13,18 +15,21 @@ const AdministrarProyectosInnovadores = () => {
 
   // Funcion para manejar la busqueda
   const handleSearch = (term) => {
-    setSearchTerm(term.trim().toLowerCase());
-  };
+    // Normaliza el termino de busqueda a minusculas
+    const normalizedTerm = term.trim().toLowerCase();
+    setSearchTerm(normalizedTerm);
 
   // Filtrar proyectos basados en el termino de busqueda
-  const proyectosFiltrados = dataInnovativeProjects.filter((project) => {
+  const filteredProjects = dataInnovativeProjects.filter((project) => {
     const projectTitleLower = project.title.toLowerCase();
     return (
-      projectTitleLower.includes(searchTerm) || // Filtrar por nombre del proyecto
-      project.subdereId === searchTerm || // Filtrar por ID subdere
-      project.type === searchTerm // Filtrar por tipo de proyecto
+      projectTitleLower.includes(normalizedTerm) ||
+      project.id.toString().includes(normalizedTerm)
     );
   });
+    setSearchResults(filteredProjects);
+    setSearching(!!normalizedTerm);
+  };
 
   return (
     <div className="container view-container mx-5">
@@ -35,9 +40,9 @@ const AdministrarProyectosInnovadores = () => {
           <Buscador
             searchTerm={searchTerm}
             onSearch={handleSearch}
-            isSearching={false} // Puedes ajustar esto según tus necesidades
-            setIsSearching={() => {}} // Puedes ajustar esto según tus necesidades
-            placeholder='Busca palabras clave o código SUBDERE'
+            isSearching={searching}
+            setIsSearching={setSearching}
+            placeholder="Busca palabras clave o código SUBDERE"
           />
         </div>
       </div>
@@ -45,20 +50,18 @@ const AdministrarProyectosInnovadores = () => {
       <div className="row my-4 fw-bold border-top ">
         <div className="col-1 mt-3">#</div>
         <div className="col mt-3">Proyecto</div>
-        <div className="col mt-3">Tipo de Proyecto</div>
         <div className="col mt-3">Estado</div>
         <div className="col mt-3">Programa</div>
         <div className="col mt-3">Acción</div>
       </div>
 
-       {/* Mostrar proyectos según si se aplicó una búsqueda o no */}
-       {searchTerm === undefined || searchTerm === '' ? (
-        // Si no se aplicó ninguna búsqueda, muestra dataInnovativeProjects completa
+       {/* Mostrar proyectos segun si se aplico una busqueda o no */}
+       {searchTerm === '' ? (
+        // Si no se aplico ninguna, muestra dataInnovativeProjects completa
         dataInnovativeProjects.map((project, index) => (
           <div key={index} className={`row border-top ${index % 2 === 0 ? 'grey-table-line' : 'white-table-line'}`}>
             <div className="col-1 p-3">{index + 1}</div>
             <div className="col p-3">{project.title}</div>
-            <div className="col p-3">{project.type}</div>
             <div className="col p-3">{project.application_status}</div>
             <div className="col p-3">{project.program?.sigla || "N/A"}</div>
             <div className="col p-3">
@@ -72,9 +75,9 @@ const AdministrarProyectosInnovadores = () => {
             </div>
           </div>
         ))
-        ) : proyectosFiltrados.length > 0 ? (
-          // Si se aplicó una búsqueda y hay proyectos filtrados, muestra proyectosFiltrados
-          proyectosFiltrados.map((project, index) => (
+        ) : searchTerm !== '' ? (
+          // Si se aplico una busqueda y hay proyectos filtrados, muestra proyectosFiltrados
+          searchResults.map((project, index) => (
             <div key={index} className={`row border-top ${index % 2 === 0 ? 'grey-table-line' : 'white-table-line'}`}>
               <div className="col-1 p-3">{index + 1}</div>
               <div className="col p-3">{project.title}</div>
@@ -93,8 +96,8 @@ const AdministrarProyectosInnovadores = () => {
             </div>
           ))
         ) : (
-          // Si se aplicó una búsqueda pero no hay proyectos filtrados, muestra un mensaje o maneja el caso como desees
-          <div>No se encontraron proyectos.</div>
+          // Si se aplico una busqueda pero no hay proyectos filtrados, muestra un mensaje
+          <div>No se encontraron proyectos coincidentes.</div>
         )}
       </div>
     );
