@@ -63,9 +63,11 @@ const AdministrarProyectosInnovadores = () => {
             <div className="col-1 p-3">{index + 1}</div>
             <div className="col p-3">{project.title}</div>
             <div className="col p-3">
-              <p className={project.application_status ? `px-3 py-1 ${project.application_status.toLowerCase()}` : ''}>{project.application_status}</p>
+              <p className={project.application_status ? `px-3 py-1 ${project.application_status.toLowerCase()}` : ''}> {project.application_status} </p>
             </div>
-            <div className="col p-3">{project.program?.sigla || "N/A"}</div>
+            <div className="col p-3">
+              <p className={project.program ? 'incompleto px-2 py-1' : ''}>{project.program?.sigla || "No seleccionado"}</p>
+            </div>
             <div className="col p-3">
               {
                 (project.application_status !== 'Publicado' && project.application_status !== 'Privado') ? (
