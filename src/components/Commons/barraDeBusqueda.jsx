@@ -21,7 +21,6 @@ const Buscador = ({ searchTerm, onSearch, isSearching, setIsSearching, placehold
     {
       onSearch(searchInput);
     }
-    console.log("activamos el handle search desde componente buscador")
   };
 
   // Maneja evento de limpiar busqueda, reestablece estado de searchInput y llama a onSearch con un string vacio.
@@ -40,13 +39,13 @@ const Buscador = ({ searchTerm, onSearch, isSearching, setIsSearching, placehold
           placeholder= {placeholder}
         />
         {isSearching && (
-          <button className="btn border border-0 " onClick={handleClearSearch} id="icon-inputClose">
-            <i className="material-symbols-outlined " >close</i>
+          <button className="btn border border-0" onClick={handleClearSearch} id="icon-inputClose">
+            <i className="material-symbols-outlined" >close</i>
           </button>
         )}
         <span className="input-group-append">
           <button
-            className="btn border-0 "
+            className="btn border-0"
             type="button"
             onClick={handleSearch}
             disabled={searchInput.trim() === ''} id="icon-inputSearch">

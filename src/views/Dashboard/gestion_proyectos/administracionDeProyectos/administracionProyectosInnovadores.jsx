@@ -71,9 +71,9 @@ const AdministrarProyectosInnovadores = () => {
             <div className="col p-3">
               {
                 (project.application_status !== 'Publicado' && project.application_status !== 'Privado') ? (
-                  <a href={`/dashboard/crearinnovador_paso1?id=${project.id}`} className="btn btn-primary">Ver solicitud</a>
+                  <a href={`/dashboard/crearinnovador_paso1?id=${project.id}`} className="action-btn px-3 py-1">Ver solicitud</a>
                 ) : (
-                  <button className="btn btn-secondary" disabled>Ver proyecto</button>
+                  <button className="action-btn px-3 py-1" disabled>Ver proyecto</button>
                 )
               }
             </div>
@@ -85,15 +85,16 @@ const AdministrarProyectosInnovadores = () => {
             <div key={index} className={`row border-top ${index % 2 === 0 ? 'grey-table-line' : 'white-table-line'}`}>
               <div className="col-1 p-3">{index + 1}</div>
               <div className="col p-3">{project.title}</div>
-              <div className="col p-3">{project.type}</div>
-              <div className="col p-3">{project.application_status}</div>
-              <div className="col p-3">{project.program?.sigla || "N/A"}</div>
+              <div className="col p-3">
+                <p className={project.application_status ? `px-3 py-1 ${project.application_status.toLowerCase()}` : ''}> {project.application_status} </p>
+              </div>
+              <div className="col p-3">{project.program?.sigla || "No seleccionado"}</div>
               <div className="col p-3">
                 {
                   (project.application_status !== 'Publicado' && project.application_status !== 'Privado') ? (
-                    <a href={`/dashboard/crearinnovador_paso1?id=${project.id}`} className="btn btn-primary">Ver solicitud</a>
+                    <a href={`/dashboard/crearinnovador_paso1?id=${project.id}`} className="action-btn px-3 py-1">Ver solicitud</a>
                   ) : (
-                    <button className="btn btn-secondary" disabled>Ver proyecto</button>
+                    <button className="action-btn px-3 py-1" disabled>Ver proyecto</button>
                   )
                 }
               </div>
