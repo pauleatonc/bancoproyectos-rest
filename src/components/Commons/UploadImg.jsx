@@ -54,9 +54,9 @@ export default function UploadImg()
     >
       {!imageURL ? (
         <label htmlFor="formFile">
-          <div className="">
-            <i className="material-symbols-rounded me-2">add_a_photo</i>
-            <span className="form-label">Agregar foto de portada</span>
+          <div className="d-flex  flex-column align-items-center">
+            <i className="material-symbols-rounded">add_a_photo</i>
+            <p className="form-label">Agregar foto</p>
           </div>
           <input
             className="text-sans-p"

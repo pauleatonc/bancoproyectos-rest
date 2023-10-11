@@ -2,18 +2,15 @@ import { useState } from 'react';
 import UploadImg from "../../../../components/Commons/UploadImg";
 import UploadImgsm from "../../../../components/Commons/UploadImgsm";
 import ModalDetalles from "../../../../components/Modals/ModalDetalles";
-import UploadFile from "../../../../components/Modals/UploadFile";
+import DocumentsAditionals from "../../../../components/Commons/DocumentsAditionals";
 import { DocumentsProjects } from "../../../../components/Tables/DocumentsProjects";
 import { EditableTitle } from "../../../../components/Tables/InputTitle";
-import { AdditionalDocs } from '../../../../components/Tables/AdditionalDocs';
+
+
 
 const CrearProyectoP1 = () =>
 {
   const [ videoLink, setVideoLink ] = useState('');
-  const [ files, setFiles ] = useState([]);
-  const [ editingIndex, setEditingIndex ] = useState(null);
-  const [ isEditMode, setIsEditMode ] = useState(false);
-
 
 
   const [ text, setText ] = useState('');
@@ -65,46 +62,22 @@ const CrearProyectoP1 = () =>
     // Aquí puedes agregar código adicional para guardar el enlace donde lo necesites.
   }
 
-  const addFile = (newFile, title) =>
-  {
-    setFiles([ ...files, { file: newFile, title: title } ]);
-  };
-
-  const handleEdit = (index) =>
-  {
-    setEditingIndex(index);
-    setIsEditMode(true);
-    // Aquí podrías abrir el modal usando React (por ejemplo, cambiando un state que controle si el modal está abierto o no).
-  }
-
-  const handleUpdateFile = (index, updatedFile, updatedTitle) =>
-  {
-    const updatedFiles = [ ...files ];
-    updatedFiles[ index ] = { file: updatedFile, title: updatedTitle };
-    setFiles(updatedFiles);
-  }
-  const handleDelete = (index) =>
-  {
-    const newFiles = [ ...files ];
-    newFiles.splice(index, 1);
-    setFiles(newFiles);
-  }
-
 
   return (
     <div className="container view-container ">
-      <div className="row px-5">
+      <div className="row px-3 mx-3">
         <h2 className="text-sans-h2 mt-4 mb-5 ">Subir Proyecto: Banco de Proyectos</h2>
 
         <div className="col-8 mx-auto">
           {/* Titulo editable  */}
           <EditableTitle />
+          {/* texto descripcion */}
           <div className="card-description">
             <div className="input-area">
               <div className="d-flex justify-content-between">
                 <label htmlFor="FormControlTextarea" className="form-label text-sans-h3 ms-1">Descripción del Proyecto</label>
                 <button
-                  className={isEditing ? "btn-principal-s d-flex text-sans-h4 pb-0 me-3" : "btn-secundario-s d-flex pb-0 me-3"}
+                  className={isEditing ? "btn-principal-s d-flex text-sans-h4 pb-0 me-1" : "btn-secundario-s d-flex pb-0 me-3"}
                   onClick={handleButtonClick}
                 >
                   <p className={isEditing ? "text-sans-p-white text-decoration-underline" : " text-decoration-underline"}>{isEditing ? 'Guardar' : 'Editar'}</p>
@@ -188,6 +161,7 @@ const CrearProyectoP1 = () =>
           </div>
           <>
             <span className='text-sans-h2'>Imágenes del proyecto</span>
+            {/* imagen portada  */}
             <div className="img-xl-container">
               <UploadImg />
             </div>
@@ -197,18 +171,20 @@ const CrearProyectoP1 = () =>
               </i>
               <span className="ms-2 align-self-center">La foto de portada será la primera que se verá en la galería y en el buscador de proyectos.</span></div>
             <div>
-              <div className="img-s-container">
+            {/*galeria imagenes */}
+              <div className="mx-1">
                 <UploadImgsm />
               </div>
             </div>
+            {/* imagenes antes-despues*/}
             <span className='text-sans-h3'>Antes del proyecto</span>
             <div className="text-sans-h5-blue info d-flex  align-content-center">
               <i className="material-symbols-outlined">
                 info
               </i>
-              <span className="ms-2 align-self-center">Si subes una foto de como se veia antes de la realización del proyecto, debes obligatoriamente subir una foto de como se ve después de su realización.</span></div>
+              <span className="ms-2 align-self-center me-5">Si subes una foto de como se veia antes de la realización del proyecto, debes obligatoriamente subir una foto de como se ve después de su realización.</span></div>
             <div>
-              <div className="img-xl-container">
+              <div className="img-xl-container mb-4">
                 <UploadImg />
               </div>
               <span className='text-sans-h3'>
@@ -218,7 +194,8 @@ const CrearProyectoP1 = () =>
               </div>
             </div>
           </>
-          <div className="my-5">
+          {/* Input link video  */}
+          <div className="my-5 me-4 pe-4">
             <span className='text-sans-h2'>Video del proyecto</span>
             <p>(Máximo 1 enlace)</p>
             <div className="input-group">
@@ -242,7 +219,8 @@ const CrearProyectoP1 = () =>
               </button>
             </div>
           </div>
-          <div className="my-5">
+          {/* Tabla documentos obligatorios */}
+          <div className="my-5 me-5 pe-3">
             <span className='text-sans-h2'>Documentos del proyecto</span>
             <p className='text-sans-h3 mt-4'>Documentos Obligatorios</p>
             <p>(Máximo 1 archivo, peso máximo 5 MB, formato PDF)</p>
@@ -273,20 +251,12 @@ const CrearProyectoP1 = () =>
                 fileType="No seleccionado" />
             </div>
           </div>
-          <span className='text-sans-h3 mt-4'>Documentos Adicionales (Opcionales)</span>
-          <p>(Número de archivos máximo, peso máximo 20 MB, formato libre)</p>
-          <UploadFile
-            onFileAdded={addFile}
-            isEditMode={isEditMode}
-            editingFile={editingIndex !== null ? files[ editingIndex ] : null}
-            onFileUpdated={handleUpdateFile}
-          />
-          {files.length > 0 && <AdditionalDocs
-            files={files}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
-            onUpdateFile={handleUpdateFile} />}
-          <div className="my-5">
+          {/* Tabla documentos adicionales */}
+          <div className="my-5 me-5 pe-3">
+          <DocumentsAditionals />
+          </div>
+           {/* Tabla documentos normativa general */}
+          <div className="my-5 me-5 pe-3">
             <span className='text-sans-h2'>Documentos con normativa de uso general</span>
             <div className="text-sans-h5-blue info d-flex  align-content-center">
               <i className="material-symbols-outlined">
@@ -307,10 +277,11 @@ const CrearProyectoP1 = () =>
               <a className="col p-3 text-sans-p-tertiary" href="" target="_blank" rel="noopener noreferrer">Ver</a>
             </div>
           </div>
+
         </div>
       </div>
       <div className="col-9 mt-5 d-flex justify-content-end align-items-center mx-5 ">
-        <button className="btn-principal-s d-flex text-sans-h4 pb-0">
+        <button className="btn-principal-s d-flex text-sans-h4 pb-0 me-4">
           <p className="text-decoration-underline">Enviar solicitud</p>
           <i className="material-symbols-rounded ms-2">arrow_forward_ios</i>
         </button>

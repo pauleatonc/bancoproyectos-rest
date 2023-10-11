@@ -53,7 +53,7 @@ export const EditableTitle = () =>
   }, [ isEditing ]);
 
   return (
-    <div className="mb-4">
+    <div className="mb-4 me-3">
       <div className="title-edit-container d-flex flex-row justify-content-between pb-0 ">
         <div className="title-input-container-edit">
           {isEditing ? (
@@ -75,7 +75,7 @@ export const EditableTitle = () =>
           )}
         </div>
         <div className="align-items-center">
-          <button className="btn-secundario-s text-sans-p-blue d-flex pb-0 me-4 mt-4" onClick={isEditing ? handleSaveClick : handleEditClick}>
+          <button className="btn-secundario-s text-sans-p-blue d-flex pb-0 me-5 mt-4" onClick={isEditing ? handleSaveClick : handleEditClick}>
             <p className="text-decoration-underline">{isEditing ? 'Guardar' : 'Editar'}</p>
             <i className="material-symbols-rounded ms-2">{isEditing ? 'save' : 'edit'}</i>
           </button>
