@@ -1,12 +1,33 @@
 import { useEffect, useState } from 'react';
 import useApiInnovativeProjects from "../../../../hooks/useApiInnovativeProjects";
+import { useAuth } from '../../../../context/AuthContext';
 import Buscador from '../../../../components/Commons/barraDeBusqueda';
+
+const renderActionButton = (project, isEditorOrSuperuser) => {
+  if (['Privado', 'Publicado', 'Rechazado'].includes(project.application_status)) {
+    return <button className="action-btn px-3 py-1" disabled>Ver proyecto</button>;
+  } else if (project.application_status === 'Incompleto') {
+    return <a href={`/dashboard/crearinnovador_paso1?id=${project.id}`} className="action-btn px-3 py-1">Ver solicitud</a>;
+  } else if (project.application_status === 'Pendiente') {
+    if (isEditorOrSuperuser) {
+      return <a href={`/dashboard/evaluarinnovador?id=${project.id}`} className="action-btn px-3 py-1">Evaluar solicitud</a>;
+    } else {
+      return <button className="btn btn-secondary" disabled>Ver proyecto</button>;
+    }
+  } else {
+    return <button className="btn btn-secondary" disabled>Estado desconocido</button>;
+  }
+};
+
 
 const AdministrarProyectosInnovadores = () => {
   const { InnovativeAdminProjectsList, dataInnovativeProjects } = useApiInnovativeProjects();
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [searching, setSearching] = useState(false);
+  const { userData } = useAuth();
+
+  const isEditorOrSuperuser = ['Superusuario', 'Editor General', 'Editor Programa'].includes(userData.tipo_de_usuario);
 
   useEffect(() => {
     InnovativeAdminProjectsList();
@@ -69,13 +90,7 @@ const AdministrarProyectosInnovadores = () => {
               <p className={project.program ? 'incompleto px-2 py-1' : ''}>{project.program?.sigla || "No seleccionado"}</p>
             </div>
             <div className="col p-3">
-              {
-                (project.application_status !== 'Publicado' && project.application_status !== 'Privado') ? (
-                  <a href={`/dashboard/crearinnovador_paso1?id=${project.id}`} className="action-btn px-3 py-1">Ver solicitud</a>
-                ) : (
-                  <button className="action-btn px-3 py-1" disabled>Ver proyecto</button>
-                )
-              }
+              {renderActionButton(project, isEditorOrSuperuser)}
             </div>
           </div>
         ))
