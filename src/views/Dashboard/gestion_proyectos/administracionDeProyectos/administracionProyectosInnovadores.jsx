@@ -28,7 +28,7 @@ const AdministrarProyectosInnovadores = () => {
 
   useEffect(() => {
     InnovativeAdminProjectsList();
-  }, []);
+  });
     
 
   return (

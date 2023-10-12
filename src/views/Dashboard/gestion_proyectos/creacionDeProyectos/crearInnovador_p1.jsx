@@ -5,6 +5,9 @@ import ModalEditarFuente from "../../../../components/Modals/ModalEditarFuente";
 import UploadImg from "../../../../components/Commons/UploadImg";
 import UploadImgsm from "../../../../components/Commons/UploadImgsm";
 import useApiInnovativeProjects from "../../../../hooks/useApiInnovativeProjects";
+import { useAuth } from '../../../../context/AuthContext';
+import {UseApiPrograms} from '../../../../hooks/usePrograms';
+
 
 const CrearProyectoInnovadorP1 = () => {
   const [inputTitle, setInputTitle] = useState('');
@@ -16,6 +19,9 @@ const CrearProyectoInnovadorP1 = () => {
   const [projectId, setProjectId] = useState(null);
   const [webSources, setWebSources] = useState([]);
   const { getInnovativeProjectById, updateInnovativeProject, deleteInnovativeProject } = useApiInnovativeProjects();
+  const { dataPrograms, loadingPrograms, errorPrograms } = UseApiPrograms();
+  const [currentProjectId, setCurrentProjectId] = useState(null);
+
 
   // Hooks de estado para conteo de caracteres maximos en Titulo
   const [maxTitleChars] = useState(70); // Maximo de caracteres para el titulo
@@ -32,21 +38,23 @@ const CrearProyectoInnovadorP1 = () => {
     navigate('/dashboard/crearproyectos')
   };
 
-  // Obtiene el ID del paso anterior y lo guarda en projectId. También muestra los datos guardados del proyecto.
+  // Obtiene el ID del paso anterior y lo guarda en projectId. También muestra los datos guardados del proyecto
   useEffect(() => {
     const fetchProject = async () => {
       const projectId = new URLSearchParams(window.location.search).get('id');
-      setProjectId(projectId);  // <-- Aquí guardamos el projectId
-      const project = await getInnovativeProjectById(projectId);
-      if (project) {
-        setInputTitle(project.title);
-        setInputDescr(project.description);
-        setWebSources(project.web_sources);
-      }
+      if (!projectId || projectId === currentProjectId) return;  // Salida temprana si projectId es null o no ha cambiado
+      setCurrentProjectId(projectId);
+        const project = await getInnovativeProjectById(projectId);
+        if (project) {
+            setInputTitle(project.title);
+            setInputDescr(project.description);
+            setWebSources(project.web_sources);
+        }
     };
-    
+
     fetchProject();
-  }, [getInnovativeProjectById]);
+}, [getInnovativeProjectById, currentProjectId]);  // <-- Solo depende de getInnovativeProjectById y currentProjectId
+
 
 
   // LOGICA TITULO
@@ -65,7 +73,7 @@ const CrearProyectoInnovadorP1 = () => {
   const handleSaveClick = async (input, setEditing, setShowError, updateFunction, field, projectId) => {
     const trimmedText = input.trim();
     if (trimmedText) {
-      await updateFunction(projectId, { [field]: trimmedText });
+      await updateFunction(currentProjectId, { [field]: trimmedText });
       setEditing(false);
       setShowError(false);
     } else {
@@ -79,8 +87,8 @@ const CrearProyectoInnovadorP1 = () => {
   };
 
   const handleSendRequestClick = async () => {
-    if (projectId) {
-      const result = await updateInnovativeProject(projectId, { request_sent: true });
+    if (currentProjectId) {
+      const result = await updateInnovativeProject(currentProjectId, { request_sent: true });
       console.log("Update result:", result);
       // Aquí podrías redirigir al usuario o mostrar un mensaje de éxito.
     } else {
@@ -107,6 +115,10 @@ const CrearProyectoInnovadorP1 = () => {
   const handleDescrInputChange = (event) => handleInputChange(event, setInputDescr, setDescCharsCount, setDescCharsExceeded, maxDescChars);
   const handleSaveDescrClick = () => handleSaveClick(inputDescr, setIsEditingDescr, setShowDescrError, updateInnovativeProject, 'description', projectId);
 
+  // Permite fijar como solo lectura el campo Program si el usuario no es Superusuario o Editor General
+  const { userData } = useAuth();
+  const isEditorOrSuperuser = ['Superusuario', 'Editor General'].includes(userData.tipo_de_usuario);
+
 
   return (
     <div className="container col-10 view-container">
@@ -119,10 +131,32 @@ const CrearProyectoInnovadorP1 = () => {
 
       <div className="container mb-4">
         <p className="text-sans-p">Este proyecto corresponde al programa:</p>
-        <select className="custom-selector p-3">
-          <option className="custom-option p-5 ms-4">Programa Mejoramiento Urbano (PMU)</option>
-          <option className="custom-option">Programa Mejoramiento de Barrios (PMB)</option>
-        </select>
+        {isEditorOrSuperuser ? (
+          <select
+            className="custom-selector p-3"
+            onChange={(e) => updateInnovativeProject(projectId, { program: e.target.value })}
+            disabled={loadingPrograms}  // Deshabilita el select mientras se cargan los programas
+          >
+            {loadingPrograms ? (
+              <option>Cargando programas...</option>
+            ) : errorPrograms ? (
+              <option>Error al cargar programas</option>
+            ) : (
+              dataPrograms.map((program, index) => (
+                <option key={index} className="custom-option p-5 ms-4" value={program.id}>
+                  {program.name}
+                </option>
+              ))
+            )}
+          </select>
+        ) : (
+          <input
+            type="text"
+            readOnly
+            value={program.name}
+            className="custom-selector p-3"
+          />
+        )}
       </div>
 
       <div className="row">
