@@ -41,12 +41,20 @@
     border-radius: 4px;
 }
 
-// Boton accion tabla
+// Botones tabla
 .action-btn{
     @include status-font ($grey-a-color);
     text-decoration:none;
     background-color: $grey-light-color;
     height: fit-content;
     width: fit-content;
+    border-radius: 4px;
+}
+.sort-estado-btn{
+    border: none;
+    background-color: transparent;
+}
+.sort-estado-btn:hover{
+    border: 1px solid $blue-sky;
     border-radius: 4px;
 }

@@ -12,13 +12,12 @@ const renderActionButton = (project, isEditorOrSuperuser) => {
     if (isEditorOrSuperuser) {
       return <a href={`/dashboard/evaluarinnovador?id=${project.id}`} className="action-btn px-3 py-1">Evaluar solicitud</a>;
     } else {
-      return <button className="btn btn-secondary" disabled>Ver proyecto</button>;
+      return <button className="action-btn px-3 py-1" disabled>Ver proyecto</button>;
     }
   } else {
-    return <button className="btn btn-secondary" disabled>Estado desconocido</button>;
+    return <button className="action-btn px-3 py-1" disabled>Estado desconocido</button>;
   }
 };
-
 
 const AdministrarProyectosInnovadores = () => {
   const { InnovativeAdminProjectsList, dataInnovativeProjects } = useApiInnovativeProjects();
@@ -26,7 +25,6 @@ const AdministrarProyectosInnovadores = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [searching, setSearching] = useState(false);
   const { userData } = useAuth();
-
   const isEditorOrSuperuser = ['Superusuario', 'Editor General', 'Editor Programa'].includes(userData.tipo_de_usuario);
 
   useEffect(() => {
@@ -68,12 +66,23 @@ const AdministrarProyectosInnovadores = () => {
         </div>
       </div>
       
-      <div className="row my-4 fw-bold border-top ">
+      <div className="row py-2 border-top">
         <div className="col-1 mt-3">#</div>
-        <div className="col mt-3">Proyecto</div>
-        <div className="col mt-3">Estado</div>
-        <div className="col mt-3">Programa</div>
-        <div className="col mt-3">Acción</div>
+        <div className="col mt-3">
+          <p className="text-sans-b-gray">Proyecto</p>
+        </div>
+        <div className="col mt-2">
+          <button className="sort-estado-btn d-flex align-items-top">
+            <p className="text-sans-b-gray mt-1">Estado</p>
+            <i className="material-symbols-rounded ms-2 pt-1">filter_alt</i>
+          </button>
+        </div>
+        <div className="col mt-3">
+          <p className="text-sans-b-gray">Programa</p>
+        </div>
+        <div className="col mt-3">
+          <p className="text-sans-b-gray">Acción</p>
+        </div>
       </div>
 
        {/* Mostrar proyectos segun si se aplico una busqueda o no */}
@@ -95,7 +104,7 @@ const AdministrarProyectosInnovadores = () => {
           </div>
         ))
         ) : searchTerm !== '' ? (
-          // Si se aplico una busqueda y hay proyectos filtrados, muestra proyectosFiltrados
+          // Si se aplico una busqueda y hay proyectos filtrados, muestra searchResults
           searchResults.map((project, index) => (
             <div key={index} className={`row border-top ${index % 2 === 0 ? 'grey-table-line' : 'white-table-line'}`}>
               <div className="col-1 p-3">{index + 1}</div>
