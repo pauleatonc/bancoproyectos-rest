@@ -223,6 +223,10 @@ class InnovativeProjectsUpdateSerializer(serializers.ModelSerializer):
             # Crea el objeto si no existe
             RevisionSectionOne.objects.create(project=instance, **revision_section_one_data)
 
+        for field, value in revision_section_one_data.items():
+            setattr(instance.revision_section_one, field, value)
+        instance.revision_section_one.save()
+
         # Para revision_section_two
         try:
             for field, value in revision_section_two_data.items():
@@ -232,33 +236,49 @@ class InnovativeProjectsUpdateSerializer(serializers.ModelSerializer):
             # Crea el objeto si no existe
             RevisionSectionTwo.objects.create(project=instance, **revision_section_two_data)
 
+        for field, value in revision_section_two_data.items():
+            setattr(instance.revision_section_two, field, value)
+        instance.revision_section_two.save()
+
         # Actualiza los campos foráneos del modelo
         program_name = validated_data.get('program')
         if program_name:
             program_instance = Program.objects.get(name=program_name)
             instance.program = program_instance
 
-        gallery_images_data = validated_data.pop('innovative_gallery_images', [])
-        for gallery_image_data in gallery_images_data:
-            InnovativeGalleryImage.objects.update_or_create(
-                project=instance,
-                defaults=gallery_image_data
-            )
-
+        # Para web_sources
+        existing_web_source_ids = set(ws.id for ws in instance.web_sources.all())
         web_sources_data = validated_data.pop('web_sources', [])
+
         for web_source_data in web_sources_data:
+            web_source_id = web_source_data.get('id', None)
+            if web_source_id and web_source_id in existing_web_source_ids:
+                existing_web_source_ids.remove(web_source_id)
             InnovativeWebSource.objects.update_or_create(
+                id=web_source_id,
                 project=instance,
                 defaults=web_source_data
             )
 
-        for field, value in revision_section_one_data.items():
-            setattr(instance.revision_section_one, field, value)
-        instance.revision_section_one.save()
+        # Elimina las web_sources que ya no están asociadas con el proyecto
+        InnovativeWebSource.objects.filter(id__in=existing_web_source_ids).delete()
 
-        for field, value in revision_section_two_data.items():
-            setattr(instance.revision_section_two, field, value)
-        instance.revision_section_two.save()
+        # Similarmente para innovative_gallery_images
+        existing_gallery_ids = set(img.id for img in instance.innovative_gallery_images.all())
+        gallery_images_data = validated_data.pop('innovative_gallery_images', [])
+
+        for gallery_image_data in gallery_images_data:
+            gallery_id = gallery_image_data.get('id', None)
+            if gallery_id and gallery_id in existing_gallery_ids:
+                existing_gallery_ids.remove(gallery_id)
+            InnovativeGalleryImage.objects.update_or_create(
+                id=gallery_id,
+                project=instance,
+                defaults=gallery_image_data
+            )
+
+        # Elimina las imágenes que ya no están asociadas con el proyecto
+        InnovativeGalleryImage.objects.filter(id__in=existing_gallery_ids).delete()
 
         # Aquí está la lógica para actualizar los otros campos del modelo
         instance.title = validated_data.get('title', instance.title)
