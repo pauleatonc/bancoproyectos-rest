@@ -37,6 +37,12 @@
     height: 356px;
 }
 
+.img-xl-container{
+width: 750px;
+height: 430px;
+
+}
+
 // Vista Paso 1 Creacion Proyectos - Banco de Proyectos
 .card-description {
     display: flex;
@@ -86,4 +92,17 @@ border-radius: 0% !important;
     position: absolute;
     top: 0;
     left: 0;
+  }
+
+
+  .container-detalle{
+    width:750px; 
+  }
+
+  // Vista Success
+  .success-container{
+    border: 1px solid $success-color;
+    border-radius: 4px;
+    box-shadow: 2px 5px 10px $grey-light-color;
+    margin-left: 10%;
   }

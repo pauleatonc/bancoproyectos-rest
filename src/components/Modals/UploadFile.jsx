@@ -1,35 +1,57 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ModalBase from './ModalBase';
 
-const UploadFile = (props) =>
+const UploadFile = ({
+  reset,
+  isEditMode,
+  editingFile,
+  onFileAdded,
+  onFileUpdated,
+  editingIndex
+}) =>
 {
-    const isEditing = props.editingFile !== null;
-    const [file, setFile] = useState(isEditing ? props.editingFile.file : null);
-    const [inputValue, setInputValue] = useState(isEditing ? props.editingFile.title : '');
-  
+  const [file, setFile] = useState(isEditMode ? editingFile.file : null);
+  const [inputValue, setInputValue] = useState(isEditMode ? editingFile.title : '');
 
-  const handleFileChange = (e) =>
-  {
-    setFile(e.target.files[ 0 ]);
-  };
-  const triggerFileInput = () =>
-  {
-    document.getElementById('fileInput').click();
-  };
+  const triggerFileInput = () => document.getElementById('fileInput').click();
 
-    const resetState = () => {
+  const resetState = () => {
     setFile(null);
     setInputValue('');
   };
 
   const handleSave = () => {
-    if (isEditing) {
-      props.onFileUpdated(file, inputValue, props.editingIndex);
-    } else {
-      props.onFileAdded(file, inputValue);
+    if (!file || !inputValue) {
+      alert('Por favor, asegúrate de seleccionar un archivo y proporcionar un nombre para el documento.');
+      return;
     }
+
+    if (isEditMode) {
+      onFileUpdated(editingIndex, file, inputValue);
+    } else {
+      onFileAdded(file, inputValue);
+    }
+
     resetState();
-  };
+  }
+
+  useEffect(() => {
+    if (reset) resetState();
+  }, [reset]);
+
+  useEffect(() => {
+    if (isEditMode && editingFile) {
+      setFile(editingFile.file);
+      setInputValue(editingFile.title);
+    } else {
+      resetState(); // Si no está editando, reinicia el estado.
+    }
+  }, [isEditMode, editingFile]);
+
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+};
+
 
   return (
     <>
@@ -48,9 +70,9 @@ const UploadFile = (props) =>
           )}
           {file && (
             <div className="container-file">
-              <div className="file-name justify-content-between ">
-                <span><i className="material-symbols-rounded ms-2 pt-1">draft</i>{file.name}</span>
-                <button className="btn-borderless-red" onClick={() => setFile(null)}>Borrar  <i className="material-symbols-rounded ms-2 pt-1">delete</i></button>
+              <div className="file-name justify-content-between d-flex">
+                <span className=" d-flex align-items-center ms-2"><i className="material-symbols-rounded">draft</i>{file.name}</span>
+                <button className="btn-borderless-red px-2 d-flex align-items-center mx-1" onClick={() => setFile(null)}>Borrar  <i className="material-symbols-rounded">delete</i></button>
               </div>
               <div className="text-sans-h5-blue info d-flex  align-content-center">
                 <i className="material-symbols-outlined">

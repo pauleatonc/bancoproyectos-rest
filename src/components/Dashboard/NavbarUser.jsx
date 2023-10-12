@@ -1,7 +1,7 @@
 import { useAuth } from '../../context/AuthContext';
 
 export const NavbarUser = () => {
-  const { isLoggedIn, userData, logout } = useAuth();
+  const {  userData, logout } = useAuth();
 
   return (
     <nav className="d-flex  bg-white border-bottom justify-content-end me-5 w-100 sticky-top my-1">

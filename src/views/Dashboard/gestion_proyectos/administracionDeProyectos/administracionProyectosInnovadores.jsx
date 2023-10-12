@@ -32,10 +32,10 @@ const AdministrarProyectosInnovadores = () => {
     
 
   return (
-    <div className="container view-container">
+    <div className="container view-container mx-5">
       <div>ADMINISTRAR PROYECTOS</div>
-      <h2 className="text-sans-h2 my-4">Documentos del proyecto</h2>
-      <div className="row my-4 fw-bold border-top">
+      <h2 className="text-sans-h2 my-4 mx-5">Documentos del proyecto</h2>
+      <div className="row my-4 fw-bold border-top ">
         <div className="col-1 mt-3">#</div>
         <div className="col mt-3">Proyecto</div>
         <div className="col mt-3">Estado</div>

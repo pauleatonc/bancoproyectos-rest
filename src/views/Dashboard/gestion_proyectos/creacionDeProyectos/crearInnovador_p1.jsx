@@ -48,6 +48,7 @@ const CrearProyectoInnovadorP1 = () => {
     fetchProject();
   }, [getInnovativeProjectById]);
 
+
   // LOGICA TITULO
   // Maneja cambios en el input Titulo y actualiza el estado.
   const handleInputChange = (event, setInput, setCount, setExceeded, maxChars) => {
@@ -262,7 +263,7 @@ const CrearProyectoInnovadorP1 = () => {
         <div className="img-l-container">  
           <UploadImg/>
         </div>
-        <div className="d-flex flex-row text-sans-h5-blue">
+        <div className="d-flex flex-row text-sans-h5-blue mt-2">
           <i className="material-symbols-rounded me-2">info</i>
           <p className="pt-1">La imagen de portada será la primera que se verá en la galería y en el sitio web.</p>
         </div>
