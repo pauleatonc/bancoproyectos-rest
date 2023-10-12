@@ -291,9 +291,12 @@ class InnovativeProjectsViewSet(viewsets.ModelViewSet):
 
         # Comprueba si el nombre del proyecto coincide con el título enviado para confirmación
         confirmation_title = request.data.get('confirmation_title', '')
-        if slugify(confirmation_title) != slugify(project.title):
-            return Response({'detail': 'El título no coincide. No se puede eliminar el proyecto.'},
-                            status=status.HTTP_400_BAD_REQUEST)
+
+        # Solo se requiere confirmación si el estado de la aplicación es 'Privado' o 'Publicado'
+        if project.application_status in ['Privado', 'Publicado']:
+            if slugify(confirmation_title) != slugify(project.title):
+                return Response({'detail': 'El título no coincide. No se puede eliminar el proyecto.'},
+                                status=status.HTTP_400_BAD_REQUEST)
 
         # Si llegamos a este punto, podemos eliminar el proyecto
         self.perform_destroy(project)
