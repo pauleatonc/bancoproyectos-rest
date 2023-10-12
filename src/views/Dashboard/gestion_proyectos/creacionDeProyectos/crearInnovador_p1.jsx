@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom"
 import  ModalAgregarFuente  from "../../../../components/Modals/ModalAgregarFuente";
 import ModalEditarFuente from "../../../../components/Modals/ModalEditarFuente";
 import UploadImg from "../../../../components/Commons/UploadImg";
@@ -33,9 +33,9 @@ const CrearProyectoInnovadorP1 = () => {
   const [descCharsExceeded, setDescCharsExceeded] = useState(false);
 
   // Maneja boton de volver atras
-  const navigate = useNavigate();
+  const history = useNavigate();
   const handleBackButtonClick = () => {
-    navigate('/dashboard/crearproyectos')
+    history(-1); 
   };
 
   // Obtiene el ID del paso anterior y lo guarda en projectId. También muestra los datos guardados del proyecto
