@@ -1,12 +1,35 @@
 import { useEffect } from 'react';
 import useApiInnovativeProjects from "../../../../hooks/useApiInnovativeProjects";
+import { useAuth } from '../../../../context/AuthContext';
+
+
+const renderActionButton = (project, isEditorOrSuperuser) => {
+  if (['Privado', 'Publicado', 'Rechazado'].includes(project.application_status)) {
+    return <button className="btn btn-secondary" disabled>Ver proyecto</button>;
+  } else if (project.application_status === 'Incompleto') {
+    return <a href={`/dashboard/crearinnovador_paso1?id=${project.id}`} className="btn btn-primary">Ver solicitud</a>;
+  } else if (project.application_status === 'Pendiente') {
+    if (isEditorOrSuperuser) {
+      return <a href={`/dashboard/evaluarinnovador?id=${project.id}`} className="btn btn-primary">Evaluar solicitud</a>;
+    } else {
+      return <button className="btn btn-secondary" disabled>Ver proyecto</button>;
+    }
+  } else {
+    return <button className="btn btn-secondary" disabled>Estado desconocido</button>;
+  }
+};
+
 
 const AdministrarProyectosInnovadores = () => {
   const { InnovativeAdminProjectsList, dataInnovativeProjects } = useApiInnovativeProjects();
+  const { userData } = useAuth();
+
+  const isEditorOrSuperuser = ['Superusuario', 'Editor General', 'Editor Programa'].includes(userData.tipo_de_usuario);
 
   useEffect(() => {
     InnovativeAdminProjectsList();
-  }, []);
+  });
+    
 
   return (
     <div className="container view-container mx-5">
@@ -27,13 +50,7 @@ const AdministrarProyectosInnovadores = () => {
             <div className="col p-3">{project.application_status}</div>
             <div className="col p-3">{project.program?.sigla || "N/A"}</div>
             <div className="col p-3">
-              {
-                (project.application_status !== 'Publicado' && project.application_status !== 'Privado') ? (
-                  <a href={`/dashboard/crearinnovador_paso1?id=${project.id}`} className="btn btn-primary">Ver solicitud</a>
-                ) : (
-                  <button className="btn btn-secondary" disabled>Ver proyecto</button>
-                )
-              }
+              {renderActionButton(project, isEditorOrSuperuser)}
             </div>
           </div>
         ))

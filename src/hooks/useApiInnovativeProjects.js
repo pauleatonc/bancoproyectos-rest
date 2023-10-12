@@ -61,7 +61,6 @@ const useApiInnovativeProjects = () => {
   
   const updateInnovativeProject = async (id, data) => {
     try {
-      console.log("Updating project with ID:", id, "Data:", data);
       const response = await apiBancoProyecto.patch(`innovative_projects/v1/${id}/`, data);
       console.log("Server response:", response.data);
     } catch (error) {
