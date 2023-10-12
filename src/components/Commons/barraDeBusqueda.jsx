@@ -1,16 +1,20 @@
 import { useState, useEffect } from 'react';
 
-const Buscador = ({ searchTerm, onSearch, isSearching, setIsSearching }) => {
+const Buscador = ({ searchTerm, onSearch, isSearching, setIsSearching, placeholder }) => {
+  // Estado local para almacenar el termino de busuqeda ingresado.
   const [ searchInput, setSearchInput ] = useState(searchTerm);
 
+  // Detecta cambios en searchTerm y actualiza el estado acorde a ellos.
   useEffect(() => {
     setIsSearching(!!searchTerm); 
   }, [ searchTerm, setIsSearching ]);
 
+  // Maneja cambios en el input de busqueda y actualiza el estado searchInput.
   const handleInputChange = (e) => {
     setSearchInput(e.target.value);
   };
 
+  // Maneja evento de busqueda, llamando a la funcion onSearch con el termino de busuqeda actual.
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchInput.trim() !== '')
@@ -19,6 +23,7 @@ const Buscador = ({ searchTerm, onSearch, isSearching, setIsSearching }) => {
     }
   };
 
+  // Maneja evento de limpiar busqueda, reestablece estado de searchInput y llama a onSearch con un string vacio.
   const handleClearSearch = () => {
     setSearchInput('');
     onSearch('');
@@ -31,16 +36,16 @@ const Buscador = ({ searchTerm, onSearch, isSearching, setIsSearching }) => {
           type="text"
           value={searchInput}
           onChange={handleInputChange}
-          placeholder='Buscar documento por palabras claves'
+          placeholder= {placeholder}
         />
         {isSearching && (
-          <button className="btn border border-0 " onClick={handleClearSearch} id="icon-inputClose">
-            <i className="material-symbols-outlined " >close</i>
+          <button className="btn border border-0" onClick={handleClearSearch} id="icon-inputClose">
+            <i className="material-symbols-outlined" >close</i>
           </button>
         )}
         <span className="input-group-append">
           <button
-            className="btn border-0 "
+            className="btn border-0"
             type="button"
             onClick={handleSearch}
             disabled={searchInput.trim() === ''} id="icon-inputSearch">

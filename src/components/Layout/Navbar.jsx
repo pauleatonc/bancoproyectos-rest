@@ -28,10 +28,13 @@ const Navbar = () =>{
           </Link>
         </div>
 
-        <div className="col d-flex justify-content-end">
+        <div className="col d-flex justify-content-end align-items-center">
         { isLoggedIn ? (
           <>
             <span>Hola, {userData.full_name || userData.rut}</span>
+            <button className="btn-secundario-s mx-3 mt-4 me-md-4 d-none d-md-block">
+              <Link to="/dashboard">ir a Admin</Link>
+            </button>
             <button className="btn-principal-s mt-4 me-md-5 d-none d-md-block" type="button" onClick={logout}>
                 Cerrar sesión
             </button>
