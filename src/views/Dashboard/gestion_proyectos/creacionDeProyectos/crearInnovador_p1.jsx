@@ -11,9 +11,10 @@ const CrearProyectoInnovadorP1 = () => {
   const [isEditingTitle, setIsEditingTitle] = useState(false); // comienza en modo visualizacion
   const [showTitleErrorMessage, setShowTitleErrorMessage] = useState(false);
   const [inputDescr, setInputDescr] = useState('');
-  const [isEditingDescr, setIsEditingDescr] = useState(true); // comienza en modo edicion
+  const [isEditingDescr, setIsEditingDescr] = useState(false); // comienza en modo visualizacion
   const [showDescrError, setShowDescrError] = useState(false);
   const [projectId, setProjectId] = useState(null);
+  const [webSources, setWebSources] = useState([]);
   const { getInnovativeProjectById, updateInnovativeProject, deleteInnovativeProject } = useApiInnovativeProjects();
 
   // Hooks de estado para conteo de caracteres maximos en Titulo
@@ -40,6 +41,7 @@ const CrearProyectoInnovadorP1 = () => {
       if (project) {
         setInputTitle(project.title);
         setInputDescr(project.description);
+        setWebSources(project.web_sources);
       }
     };
     
@@ -220,42 +222,38 @@ const CrearProyectoInnovadorP1 = () => {
         </div>
 
         {/* Fuentes */}
-        {/* if no hay fuentes ingresadas */}
-        <div className="container d-flex flex-row justify-content-between my-4">
-          <div className="d-flex flex-column">
-            <h3 className="text-sans-h35">Fuentes </h3>
-            <p className="text-sans-h5">(Opcional)</p>
-          </div>
-          <ModalAgregarFuente/>
-        </div>
-
-        {/* if hay fuentes ingresadas */}
-        <div className="container">
-          <div className="d-flex flex-column">
-            <h3 className="text-sans-h35">Fuentes </h3>
-            <p className="text-sans-h5">(Opcional)</p>
-          </div>
-          {/* Renderizar dinamicamente segun informacion de la base de datos */}
-          <div>
-            <div className="my-2 d-flex justify-content-between">
-              <div className="d-flex flex-row">
-                <p className="text-decoration-underline">Fuente Ejemplo 1</p>
-                <i className="material-symbols-rounded ms-2 pt-1">open_in_new</i>
+        { webSources.length === 0 ? (
+            // Si no hay fuentes ingresadas
+            <div className="container d-flex flex-row justify-content-between my-4">
+              <div className="d-flex flex-column">
+                <h3 className="text-sans-h35">Fuentes </h3>
+                <p className="text-sans-h5">(Opcional)</p>
               </div>
-              <ModalEditarFuente/>
+              <ModalAgregarFuente projectId={projectId}/>
             </div>
-            <div className="my-2 d-flex justify-content-between">
-              <div className="d-flex flex-row">
-                <p className="text-decoration-underline">Fuente Ejemplo 2</p>
-                <i className="material-symbols-rounded ms-2 pt-1">open_in_new</i>
+          ) : (
+            // Si hay fuentes ingresadas
+            <div className="container">
+              <div className="d-flex flex-column">
+                <h3 className="text-sans-h35">Fuentes </h3>
+                <p className="text-sans-h5">(Opcional)</p>
               </div>
-              <ModalEditarFuente/>
+              <div>
+                {webSources.map((source, index) => (
+                  <div key={index} className="my-2 d-flex justify-content-between">
+                    <div className="d-flex flex-row">
+                      <p className="text-decoration-underline">{source.url}</p>
+                      <i className="material-symbols-rounded ms-2 pt-1">open_in_new</i>
+                    </div>
+                    <ModalEditarFuente projectId={projectId}/>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-5">
+                <ModalAgregarFuente projectId={projectId}/>
+              </div> 
             </div>
-          </div>
-          <div className="mt-5">
-            <ModalAgregarFuente/>
-          </div> 
-        </div> 
+          )} 
       </div>
       
       <div className="col-6 ms-5">

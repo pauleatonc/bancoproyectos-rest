@@ -170,7 +170,7 @@ const CrearProyectoInnovadorP1 = () => {
                 {webSources.map((source, index) => (
                   <div key={index} className="my-2 d-flex justify-content-between">
                     <div className="d-flex flex-row">
-                      <p className="text-decoration-underline">{source.url}</p> {/* Asumiendo que la propiedad se llama 'url' */}
+                      <p className="text-decoration-underline">{source.url}</p>
                       <i className="material-symbols-rounded ms-2 pt-1">open_in_new</i>
                     </div>
                     <ModalEditarFuente/>
