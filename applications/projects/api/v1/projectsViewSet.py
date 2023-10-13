@@ -44,11 +44,12 @@ class ProjectViewSet(viewsets.ModelViewSet):
     """
     queryset = Project.objects.filter(public=True)
     serializer_class = ProjectDetailSerializerV1
-    lookup_field = 'slug'
+    lookup_field = 'slug' # Usado para generar las vistas retrieve, update, destroy
     filter_backends = [filters.SearchFilter, DjangoFilterBackend, filters.OrderingFilter]
 
-    #El término 'in' es propio de django, puedes encontrar la documentación para otros lookups en
+    # El término 'in' es propio de django, puedes encontrar la documentación para otros lookups en
     # https://docs.djangoproject.com/en/3.2/ref/models/querysets/#field-lookups
+    # Filterser_fields es usado para generar los filtros de búsqueda
     filterset_fields = {
         'comuna__region': ['in'],
         'comuna': ['in'],

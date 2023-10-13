@@ -298,6 +298,8 @@ class InnovativeProjectsRetrieveSerializer(serializers.ModelSerializer):
     innovative_gallery_images = InnovativeGalleryImageSerializerV1(many=True)
     web_sources = InnovativeWebSourceSerializerV1(many=True)
     application_status = serializers.SerializerMethodField()
+    revision_section_one = RevisionSectionOneSerializer(required=False)
+    revision_section_two = RevisionSectionTwoSerializer(required=False)
 
     class Meta:
         model = InnovativeProjects
@@ -311,6 +313,8 @@ class InnovativeProjectsRetrieveSerializer(serializers.ModelSerializer):
             'innovative_gallery_images',
             'public',
             'application_status',
+            'revision_section_one',
+            'revision_section_two'
         )
 
         def get_application_status(self, obj):
