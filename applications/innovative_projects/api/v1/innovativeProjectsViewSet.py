@@ -9,6 +9,9 @@ from rest_framework.permissions import BasePermission
 from django.utils.text import slugify
 from django.db.models import Q
 from collections import defaultdict
+from rest_framework.filters import OrderingFilter
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework.pagination import PageNumberPagination
 
 #
 from applications.innovative_projects.models import (
@@ -25,12 +28,17 @@ from .innovativeProjectSerializer import (
     ProjectEvaluationSerializer,
     InnovativeProjectsHistorySerializer,
     InnovativeGalleryImageHistorySerializer,
-    InnovativeWebSourceHistorySerializer
+    InnovativeWebSourceHistorySerializer,
+    InnovativeProjectsRetrieveSerializer
 )
 from applications.users.permissions import is_admin, is_editor_general_or_superuser, is_program_related_user, is_any_editor_or_superuser
 from applications.projects.models import Program
 from applications.innovative_projects.models import HistoricalInnovativeProjects, HistoricalInnovativeWebSource, HistoricalInnovativeGalleryImage
 
+
+# Paginación para list_admin
+class CustomPageNumberPagination(PageNumberPagination):
+    page_size = 20
 
 
 class HasProjectPermissions(BasePermission):
@@ -48,6 +56,10 @@ class InnovativeProjectsViewSet(viewsets.ModelViewSet):
     model = InnovativeProjects
     serializer_class = InnovativeProjectsSerializerV1
     list_serializer_class = InnovativeProjectsSerializerV1
+    filter_backends = (DjangoFilterBackend, OrderingFilter)
+    search_fields = ['id', 'program__sigla', 'title', 'application_status', 'author__email']
+    ordering_fields = ['title', 'program__sigla', 'application_status']
+    pagination_class = CustomPageNumberPagination
     queryset = None
 
     def get_object(self):
@@ -68,6 +80,7 @@ class InnovativeProjectsViewSet(viewsets.ModelViewSet):
         innovative_projects = self.get_queryset()
         innovative_projects = self.list_serializer_class(innovative_projects, many=True)
         return Response(innovative_projects.data, status=status.HTTP_200_OK)
+
 
     @action(detail=False, methods=['GET'], permission_classes=[HasProjectPermissions])
     def list_admin(self, request):
@@ -253,7 +266,7 @@ class InnovativeProjectsViewSet(viewsets.ModelViewSet):
                             status=status.HTTP_403_FORBIDDEN)
 
         instance = self.get_object()
-        serializer = self.get_serializer(instance)
+        serializer = InnovativeProjectsRetrieveSerializer(instance)
 
         # Campo public solo editable y visible para editores o superusuarios.
         data = serializer.data
