@@ -6,7 +6,8 @@ $tertiary-color: #001C41;
 $grey-color: #363636;
 $grey-a-color: #373737;
 $grey-b-color: #8a8a8a;
-$grey-c-color:#656565; 
+$grey-c-color:#656565;
+$grey-d-color:#F8F8F8; 
 $grey-light-color:#BBBBBB;
 $white-color: #FFF;
 $neutral-color: #EEEEEE;
@@ -58,6 +59,9 @@ $black-color: #111111;
 .text-sans-h2-white{
     @include font-sans(31px, 500, $white-color);
 }
+.text-sans-h2-tertiary{
+    @include font-sans(31px, 500, $tertiary-color);
+}
 .text-sans-h3{
     @include font-sans(25px, 500, $grey-a-color);
 }
@@ -107,6 +111,10 @@ $black-color: #111111;
 .text-sans-p-bold-darkred{
     @include font-sans(16px, 700, $dark-red);
     line-height: 35px;
+}
+.text-sans-p-bold-blue{
+    @include font-sans(16px, 700, $blue-color);
+    line-height:24px;
 }
 
 .text-sans-b-gray{
@@ -182,7 +190,7 @@ $black-color: #111111;
     background-color: $blue-color;
     color: $white-color;
 }
-.btn-secundario-s-active{
+.btn-secundario-s:active{
     background-color: $blue-color;
     color: $white-color;
 }
@@ -210,6 +218,41 @@ $black-color: #111111;
     background-color:$blue-color;
     color: $white-color;
 }
+
+@mixin button-base {
+    display: flex;
+    height: 40px;
+    padding: 0px 15px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 30px;
+    border: 1px solid $blue-color;
+    transition: background-color 0.3s, color 0.3s;
+
+    &:hover {
+      background-color: $blue-color;
+      color: $white-color;
+    }
+
+    &:focus {
+      outline: none;
+      box-shadow: 0 0 0 3px rgba($blue-color, 0.3);
+    }
+  }
+  
+  .btn-pill-white {
+    @include button-base;
+    background-color: $white-color;
+    color: $blue-color;
+  }
+  
+  .btn-pill-blue {
+    @include button-base;
+    background-color: $blue-color;
+    color: $white-color;
+  }
+
 .selected-button{
     background-color: $blue-color;
     color: $white-color;
