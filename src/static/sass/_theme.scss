@@ -150,22 +150,22 @@ $black-color: #111111;
 }
 
 // Botones
-@mixin btn-principal ($btnSize){
+@mixin btn-principal ($btnSize, $btnColor){
     width: $btnSize;
-    background-color: $blue-color;
+    background-color: $btnColor;
     border: none;
     color: $white-color;
     padding: 13px;
 }
 .btn-principal-s{
-   @include btn-principal(fit-content);
+   @include btn-principal(fit-content, $blue-color);
    height: fit-content; 
 }
 .btn-principal-l{
-    @include btn-principal(90%); 
+    @include btn-principal(90%, $blue-color); 
 }
 .btn-principal-xl{
-    @include btn-principal(100%); 
+    @include btn-principal(100%, $blue-color); 
 }
 
 @mixin btn-secundario ($btnSize, $btnBG, $btnColor){
@@ -215,6 +215,10 @@ $black-color: #111111;
     color: $white-color;
 }
 
+.alert-btn{
+    @include btn-principal(fit-content, $dark-red); 
+}
+
 .custom-pagination-btn{
     border: none;
     background-color: transparent;
@@ -224,7 +228,6 @@ $black-color: #111111;
     background-color:$blue-color;
     color: $white-color;
 }
-
 
 .red-btn{
     width: fit-content;
@@ -286,6 +289,10 @@ $black-color: #111111;
 }
 .neutral-container{
     background-color: $neutral-color;
+}
+.blue-sky-container{
+    border-radius: 4px;
+    background-color:$blue-sky;
 }
 
 

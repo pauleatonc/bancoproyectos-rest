@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import icon from "../../../../static/img/icons/InfoBlue.svg"
+import EvaluarSeccion from "../../../../components/Dashboard/EvaluarSeccion";
 
 const EvaluarInnovador = () => {
 
@@ -44,7 +45,9 @@ const EvaluarInnovador = () => {
             </ul>
           </div>
 
-          <div>COMPONENTE EVALUACION</div>
+          <div className="mt-4">
+            <EvaluarSeccion />
+          </div>
         </div>
 
         {/* Imagenes del proyecto */}
@@ -56,7 +59,9 @@ const EvaluarInnovador = () => {
             <div className="img-s">MINIATURAS</div>
           </div>
 
-          <div>COMPONENTE EVALUACION</div>
+          <div className="mt-4">
+            <EvaluarSeccion />
+          </div>
         </div>
       </div>
 
