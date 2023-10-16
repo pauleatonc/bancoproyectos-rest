@@ -36,7 +36,6 @@
     width: 550px;
     height: 356px;
 }
-
 .img-xl-container{
 width: 750px;
 height: 430px;
@@ -59,7 +58,6 @@ height: 430px;
     width:720px;
     height: 258px;
     margin: 10px 12px 13px 14px ; 
-
 }
 
 .info i.material-symbols-outlined {
@@ -97,12 +95,4 @@ border-radius: 0% !important;
 
   .container-detalle{
     width:750px; 
-  }
-
-  // Vista Success
-  .success-container{
-    border: 1px solid $success-color;
-    border-radius: 4px;
-    box-shadow: 2px 5px 10px $grey-light-color;
-    margin-left: 10%;
   }

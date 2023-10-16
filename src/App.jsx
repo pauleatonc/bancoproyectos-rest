@@ -22,7 +22,7 @@ const CrearInnovador_paso1 = React.lazy(() => import('./views/Dashboard/gestion_
 const AdministrarProyectos = React.lazy(() => import('./views/Dashboard/gestion_proyectos/administracionDeProyectos/administracionProyectos'));
 const AdministrarProyectosInnovadores = React.lazy(() => import('./views/Dashboard/gestion_proyectos/administracionDeProyectos/administracionProyectosInnovadores'));
 const Success = React.lazy(() => import ('./views/Dashboard/gestion_proyectos/creacionDeProyectos/success'));
-const EvaluarProyectosInnovadores = React.lazy(() => import('./views/Dashboard/gestion_proyectos/evaluacionDeProyectos/evaluarInnovador'));
+const EvaluarProyectosInnovadores = React.lazy(() => import('./views/Dashboard/gestion_proyectos/evaluacionDeProyectos/evaluarInnovadores'));
 
 function App()
 {
