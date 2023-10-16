@@ -18,7 +18,7 @@ const Notification = ({ title, titleNone, description, date, button, count }) =>
                 <div className="ms-auto p-2 text-sans-c-gray">{date}</div>
               </div>
               <div className="d-flex justify-content-end px-0 mx-0 my-2">
-                <button className="btn-pill-white"><u className="text-sans-p-bold-blue">{button}</u>
+                <button className="btn-pill-white"><u>{button}</u>
                   <i className="material-symbols-outlined">
                     chevron_right
                   </i>
@@ -32,7 +32,7 @@ const Notification = ({ title, titleNone, description, date, button, count }) =>
                 <div className="ms-auto p-2 text-sans-c-gray">{date}</div>
               </div>
               <div className="d-flex justify-content-end px-0 mx-0">
-                <button className="btn-pill-white"><u className="text-sans-p-bold-blue">{button}</u>
+                <button className="btn-pill-white"><u>{button}</u>
                   <i className="material-symbols-outlined">
                     chevron_right
                   </i>
@@ -45,7 +45,7 @@ const Notification = ({ title, titleNone, description, date, button, count }) =>
       </div>
       {/* boton debe aparece  cuando hay mas de tres  notificaciones */}
       <div className="my-4 d-flex justify-content-end  mx-2">
-        <button className="btn-pill-blue">Ver más  <i className="material-symbols-outlined">
+        <button className="btn-pill-blue"><u>Ver más </u> <i className="material-symbols-outlined">
           chevron_right
         </i> </button>
       </div>
@@ -56,7 +56,7 @@ const Notification = ({ title, titleNone, description, date, button, count }) =>
           <span className="text-sans-h35"><span className="material-symbols-outlined py-2 mx-2">
             check_circle
           </span>
-          Estás al día con {titleNone}</span>
+            Estás al día con {titleNone}</span>
         </div>
       </div>
       {/* */}
