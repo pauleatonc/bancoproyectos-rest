@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import UploadImg from "../../../../components/Commons/UploadImg";
 import UploadImgsm from "../../../../components/Commons/UploadImgsm";
 import ModalDetalles from "../../../../components/Modals/ModalDetalles";
@@ -10,8 +11,8 @@ import { EditableTitle } from "../../../../components/Tables/InputTitle";
 
 const CrearProyectoP1 = () =>
 {
+  let history= useNavigate();
   const [ videoLink, setVideoLink ] = useState('');
-
 
   const [ text, setText ] = useState('');
   const [ count, setCount ] = useState(0);
@@ -61,6 +62,11 @@ const CrearProyectoP1 = () =>
     console.log("Enlace guardado:", videoLink);
     // Aquí puedes agregar código adicional para guardar el enlace donde lo necesites.
   }
+
+  const handleSaveProject = async () => {
+
+    history('/dashboard/envio_exitoso', { state: { origen: 'BancoDeProyectos' } });
+  };
 
 
   return (
@@ -281,7 +287,7 @@ const CrearProyectoP1 = () =>
         </div>
       </div>
       <div className="col-9 mt-5 d-flex justify-content-end align-items-center mx-5 ">
-        <button className="btn-principal-s d-flex text-sans-h4 pb-0 me-4">
+        <button className="btn-principal-s d-flex text-sans-h4 pb-0 me-4"  onClick={handleSaveProject} >
           <p className="text-decoration-underline">Enviar solicitud</p>
           <i className="material-symbols-rounded ms-2">arrow_forward_ios</i>
         </button>
