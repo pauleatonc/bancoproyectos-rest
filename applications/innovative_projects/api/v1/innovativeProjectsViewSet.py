@@ -28,7 +28,8 @@ from .innovativeProjectSerializer import (
     ProjectEvaluationSerializer,
     InnovativeProjectsHistorySerializer,
     InnovativeGalleryImageHistorySerializer,
-    InnovativeWebSourceHistorySerializer
+    InnovativeWebSourceHistorySerializer,
+    InnovativeProjectsRetrieveSerializer
 )
 from applications.users.permissions import is_admin, is_editor_general_or_superuser, is_program_related_user, is_any_editor_or_superuser
 from applications.projects.models import Program
@@ -265,7 +266,7 @@ class InnovativeProjectsViewSet(viewsets.ModelViewSet):
                             status=status.HTTP_403_FORBIDDEN)
 
         instance = self.get_object()
-        serializer = self.get_serializer(instance)
+        serializer = InnovativeProjectsRetrieveSerializer(instance)
 
         # Campo public solo editable y visible para editores o superusuarios.
         data = serializer.data
