@@ -40,7 +40,31 @@ const EvaluarSeccion = () => {
       {mostrarRazones && (
         <div>
           <p className="text-sans-p fw-bolder my-3">Justifica</p>
-          <div>DROPDOWN DE CHECKBOXES - SE GENERAN DE MANERA DINAMICA</div>
+          
+          <div className="dropdown">
+            <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              Dropdown button
+            </button>
+            <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li>
+                <label className="form-check-label">
+                  <input type="checkbox" className="form-check-input" value="Opcion 1" /> Opcion 1
+                </label>
+              </li>
+              <li>
+                <label className="form-check-label">
+                  <input type="checkbox" className="form-check-input" value="Opcion 2" /> Opcion 2
+                </label>
+              </li>
+              <li>
+                <label className="form-check-label">
+                  <input type="checkbox" className="form-check-input" value="Opcion 3" /> Opcion 3
+                </label>
+              </li>
+            </ul>
+          </div>
+
+
         </div>
       )}
 
