@@ -218,6 +218,9 @@ $black-color: #111111;
 .alert-btn{
     @include btn-principal(fit-content, $dark-red); 
 }
+.success-btn{
+    @include btn-principal(fit-content, $success-color); 
+}
 
 .custom-pagination-btn{
     border: none;
