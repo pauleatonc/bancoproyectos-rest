@@ -1,8 +1,10 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import icon from "../../../../static/img/icons/InfoBlue.svg"
 import EvaluarSeccion from "../../../../components/Dashboard/EvaluarSeccion";
 
 const EvaluarInnovador = () => {
+  const [comentario, setComentario] = useState("");
 
   // Maneja boton de volver atras
   const history = useNavigate();
@@ -97,10 +99,12 @@ const EvaluarInnovador = () => {
             className="input-l p-3"
             id="message"
             placeholder="Escribe un comentario adicional."
+            value={comentario}
+            onChange={(e) => setComentario(e.target.value)}
           ></textarea>
         </div>
-        <div className="d-flex justify-content-end">
-          <p>CONTADOR CARACTERES</p>
+        <div className="d-flex justify-content-end mt-1">
+          <p className="text-sans-h5">{comentario.length} / 200 caracteres</p>
         </div>
 
         <div className="d-flex justify-content-between my-5">
