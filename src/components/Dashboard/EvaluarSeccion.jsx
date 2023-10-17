@@ -3,6 +3,7 @@ import { useState } from 'react';
 const EvaluarSeccion = ({ opciones }) => {
   const [mostrarRazones, setMostrarRazones] = useState(false);
   const [respuesta, setRespuesta] = useState(null);
+  const [opcionesSeleccionadas, setOpcionesSeleccionadas] = useState([]);
 
   const handleSiClick = () => {
     setRespuesta('Si');
@@ -12,6 +13,17 @@ const EvaluarSeccion = ({ opciones }) => {
   const handleNoClick = () => {
     setRespuesta('No');
     setMostrarRazones(true);
+  };
+
+  const handleOpcionSeleccionada = (event, value) => {
+    const seleccionada = event.target.checked;
+    if (seleccionada) {
+      // Agrega la opcion a las opciones seleccionadas
+      setOpcionesSeleccionadas((prevSeleccionadas) => [...prevSeleccionadas, value]);
+    } else {
+      // Elimina la opcion de las opciones seleccionadas
+      setOpcionesSeleccionadas((prevSeleccionadas) => prevSeleccionadas.filter((opcion) => opcion !== value));
+    }
   };
 
   return (
@@ -41,23 +53,26 @@ const EvaluarSeccion = ({ opciones }) => {
       {mostrarRazones && (
         <div>
           <p className="text-sans-p fw-bolder my-3">Justifica</p>
-          
           <div className="dropdown">
-            <button className="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown button
+            <button className="dropdown-btn dropdown-toggle p-2 px-4 text-sans-p-lightgrey text-decoration-underline" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+              {opcionesSeleccionadas.length > 0 ? `${opcionesSeleccionadas.length} Razones seleccionadas` : 'Elige una o más razones'}
             </button>
             <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
               {opciones.map((opcion) => (
                 <li key={opcion.value}>
                   <label className="form-check-label">
-                    <input type="checkbox" className="form-check-input" value={opcion.value} /> {opcion.label}
+                    <input 
+                    type="checkbox" 
+                    className="form-check-input" 
+                    value={opcion.value}
+                    onChange={(e) => handleOpcionSeleccionada(e, opcion.value)} 
+                    /> 
+                    {opcion.label}
                   </label>
                 </li>
               ))}
             </ul>
           </div>
-
-
         </div>
       )}
 

@@ -86,7 +86,6 @@ $black-color: #111111;
 .text-sans-h5-red{
     @include font-sans(14px, 400, $dark-red);
 }
-
 .text-sans-h5-grey{
     @include font-sans(14px, 400, $grey-a-color);
 }
@@ -103,6 +102,9 @@ $black-color: #111111;
 .text-sans-p-white{
     @include font-sans(16px, 400, $white-color);
     line-height: 35px;
+}
+.text-sans-p-lightgrey{
+    @include font-sans(16px, 400, $grey-light-color); 
 }
 .text-sans-p-bold-darkred{
     @include font-sans(16px, 700, $dark-red);
