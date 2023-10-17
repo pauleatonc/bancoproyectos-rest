@@ -92,7 +92,7 @@ class InnovativeProjectsViewSet(viewsets.ModelViewSet):
         user = request.user
 
         if is_editor_general_or_superuser(user):
-            innovative_projects = InnovativeProjects.objects.all()
+            innovative_projects = InnovativeProjects.objects.all().order_by('-created_date')
 
         # Editor Programa y Profesional: pueden ver innovative projects que compartan el mismo program
         elif "Editor Programa" in user.groups.values_list('name', flat=True) or \
@@ -100,7 +100,7 @@ class InnovativeProjectsViewSet(viewsets.ModelViewSet):
             # Asegurarse de que el usuario tiene un programa asociado
             try:
                 user_program = user.program
-                innovative_projects = InnovativeProjects.objects.filter(program=user_program)
+                innovative_projects = InnovativeProjects.objects.filter(program=user_program).order_by('-created_date')
             except AttributeError:  # En caso de que el usuario no tenga un programa asociado
                 innovative_projects = InnovativeProjects.objects.none()
 
@@ -108,7 +108,7 @@ class InnovativeProjectsViewSet(viewsets.ModelViewSet):
         elif "Profesional Temporal" in user.groups.values_list('name', flat=True):
             try:
                 user_program = user.program
-                innovative_projects = InnovativeProjects.objects.filter(program=user_program)
+                innovative_projects = InnovativeProjects.objects.filter(program=user_program).order_by('-created_date')
                 safe_innovative_projects = []
                 for proj in innovative_projects:
                     try:
