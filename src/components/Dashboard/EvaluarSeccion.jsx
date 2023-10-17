@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const EvaluarSeccion = () => {
+const EvaluarSeccion = ({ opciones }) => {
   const [mostrarRazones, setMostrarRazones] = useState(false);
   const [respuesta, setRespuesta] = useState(null);
 
@@ -37,6 +37,7 @@ const EvaluarSeccion = () => {
           )}
         </button>
       </div>
+
       {mostrarRazones && (
         <div>
           <p className="text-sans-p fw-bolder my-3">Justifica</p>
@@ -46,21 +47,13 @@ const EvaluarSeccion = () => {
               Dropdown button
             </button>
             <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-              <li>
-                <label className="form-check-label">
-                  <input type="checkbox" className="form-check-input" value="Opcion 1" /> Opcion 1
-                </label>
-              </li>
-              <li>
-                <label className="form-check-label">
-                  <input type="checkbox" className="form-check-input" value="Opcion 2" /> Opcion 2
-                </label>
-              </li>
-              <li>
-                <label className="form-check-label">
-                  <input type="checkbox" className="form-check-input" value="Opcion 3" /> Opcion 3
-                </label>
-              </li>
+              {opciones.map((opcion) => (
+                <li key={opcion.value}>
+                  <label className="form-check-label">
+                    <input type="checkbox" className="form-check-input" value={opcion.value} /> {opcion.label}
+                  </label>
+                </li>
+              ))}
             </ul>
           </div>
 

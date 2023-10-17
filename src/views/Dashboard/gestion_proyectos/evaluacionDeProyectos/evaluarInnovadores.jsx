@@ -10,6 +10,20 @@ const EvaluarInnovador = () => {
     history(-1); 
   };
 
+  // Opciones EvaluarSeccion Contenido
+  const opcionesEvaluarContenido = [
+    { value: 'opcion1', label: 'Alternativa 1' },
+    { value: 'opcion2', label: 'Otra razon' },
+    { value: 'opcion3', label: 'Razon de peso' },
+  ];
+
+  // Opciones EvaluarSeccion Img
+  const opcionesEvaluarImg = [
+    { value: 'opcion1', label: 'Opción 1' },
+    { value: 'opcion2', label: 'Otra Opcion' },
+    { value: 'opcion3', label: 'y Una mas' },
+  ];
+
   return (
     <div className="container view-container ms-5">
       <h1 className="text-sans-h2 mb-3 mt-2">Proyectos Innovadores: Ver solicitud</h1>
@@ -46,7 +60,7 @@ const EvaluarInnovador = () => {
           </div>
 
           <div className="mt-4">
-            <EvaluarSeccion />
+            <EvaluarSeccion opciones={opcionesEvaluarContenido} />
           </div>
         </div>
 
@@ -60,7 +74,7 @@ const EvaluarInnovador = () => {
           </div>
 
           <div className="mt-4">
-            <EvaluarSeccion />
+            <EvaluarSeccion opciones={opcionesEvaluarImg} />
           </div>
         </div>
       </div>
