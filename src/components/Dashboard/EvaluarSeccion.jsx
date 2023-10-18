@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-const EvaluarSeccion = ({ opciones }) => {
+const EvaluarSeccion = ({ opciones, onCheckboxSelect }) => {
   const [mostrarRazones, setMostrarRazones] = useState(false);
   const [respuesta, setRespuesta] = useState(null);
   const [opcionesSeleccionadas, setOpcionesSeleccionadas] = useState([]);
@@ -17,15 +17,18 @@ const EvaluarSeccion = ({ opciones }) => {
 
   const handleOpcionSeleccionada = (event, value) => {
     const seleccionada = event.target.checked;
-    if (seleccionada) {
-      // Agrega la opcion a las opciones seleccionadas
-      setOpcionesSeleccionadas((prevSeleccionadas) => [...prevSeleccionadas, value]);
-    } else {
-      // Elimina la opcion de las opciones seleccionadas
-      setOpcionesSeleccionadas((prevSeleccionadas) => prevSeleccionadas.filter((opcion) => opcion !== value));
-    }
+    setOpcionesSeleccionadas((prevSelecciones) => {
+      if (seleccionada) {
+        return [...prevSelecciones, value];
+      } else {
+        return prevSelecciones.filter((opcion) => opcion !== value);
+      }
+    });
+    onCheckboxSelect(opcionesSeleccionadas);
   };
 
+  console.log('opcionesSeleccionadas:', opcionesSeleccionadas);
+  
   return (
     <div className="blue-sky-container p-3">
       <p className="text-sans-p fw-bolder">¿El contenido de esta sección es correcto?</p>

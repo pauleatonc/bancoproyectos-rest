@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import ImageModal from '../../components/Commons/modal'; 
 
-const MiniaturasCarousel = ({ img }) => {
+const MiniaturasCarousel = ({ img, context }) => {
   const [showModal, setShowModal] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
 
@@ -26,6 +26,7 @@ const MiniaturasCarousel = ({ img }) => {
           selectedImageIndex={selectedImageIndex}
           setSelectedImageIndex={setSelectedImageIndex}
           setShowModal={setShowModal}
+          context= {context}
         />
       )}
     </div>

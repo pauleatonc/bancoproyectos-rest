@@ -8,6 +8,10 @@ import useApiInnovativeProjects from "../../../../hooks/useApiInnovativeProjects
 const EvaluarInnovador = () => {
   const [comentario, setComentario] = useState("");
   const [miniaturas, setMiniaturas] = useState([]);
+  const [todasLasSelecciones, setTodasLasSelecciones] = useState({
+    contenido: [],
+    imagenes: [],
+  });
 
   const { getInnovativeProjectById } = useApiInnovativeProjects();
   // Aqui entregar el id del proyecto de manera dinamica.
@@ -21,16 +25,16 @@ const EvaluarInnovador = () => {
 
   // Opciones EvaluarSeccion Contenido
   const opcionesEvaluarContenido = [
-    { value: 'opcion1', label: 'Alternativa 1' },
-    { value: 'opcion2', label: 'Otra razon' },
-    { value: 'opcion3', label: 'Razon de peso' },
+    { value: 'cont1', label: 'Alternativa 1' },
+    { value: 'cont2', label: 'Otra razon' },
+    { value: 'cont3', label: 'Razon de peso' },
   ];
 
   // Opciones EvaluarSeccion Img
   const opcionesEvaluarImg = [
-    { value: 'opcion1', label: 'Opción 1' },
-    { value: 'opcion2', label: 'Otra Opcion' },
-    { value: 'opcion3', label: 'y Una mas' },
+    { value: 'img1', label: 'Opción 1' },
+    { value: 'img2', label: 'Otra Opcion' },
+    { value: 'img3', label: 'y Una mas' },
   ];
 
   // Cargar miniaturas de imagenes
@@ -46,6 +50,9 @@ const EvaluarInnovador = () => {
       });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  console.log('razones img:', todasLasSelecciones.imagenes);
+  console.log('razones contenido:', todasLasSelecciones.contenido);
 
   return (
     <div className="container view-container ms-5">
@@ -83,7 +90,15 @@ const EvaluarInnovador = () => {
           </div>
 
           <div className="mt-4">
-            <EvaluarSeccion opciones={opcionesEvaluarContenido} />
+            <EvaluarSeccion
+              opciones={opcionesEvaluarContenido}
+              onCheckboxSelect={(seleccionados) => {
+                setTodasLasSelecciones((prevSelecciones) => ({
+                  ...prevSelecciones,
+                  contenido: seleccionados,
+                }));
+              }}
+            />
           </div>
         </div>
 
@@ -93,15 +108,21 @@ const EvaluarInnovador = () => {
             <h3 className="text-sans-h35">Imagen de Portada</h3>
             <div className="img-l">IMAGEN PORTADA</div>
             <h3 className="text-sans-h35">Imágenes para la galería</h3>
-
-
             <div className="">
               <MiniaturasCarousel img={miniaturas}/>
             </div>
           </div>
 
           <div className="mt-4">
-            <EvaluarSeccion opciones={opcionesEvaluarImg} />
+            <EvaluarSeccion
+              opciones={opcionesEvaluarImg}
+              onCheckboxSelect={(seleccionados) => {
+                setTodasLasSelecciones((prevSelecciones) => ({
+                  ...prevSelecciones,
+                  imagenes: seleccionados,
+                }));
+              }}
+            />
           </div>
         </div>
       </div>
@@ -110,7 +131,25 @@ const EvaluarInnovador = () => {
      <div className="col-11">
         <h3 className="text-sans-h3">Evaluación de la solicitud</h3>
         <p className="text-sans-p">Marcaste que estas secciones tienen problemas:</p>
-        <div>TABLA EVALUACION</div>
+
+        <ul>
+          <li>
+            <strong>Selecciones de Contenido:</strong>
+            <ul>
+              {todasLasSelecciones.contenido.map((seleccion) => (
+                <li key={seleccion}>{seleccion}</li>
+              ))}
+            </ul>
+          </li>
+          <li>
+            <strong>Selecciones de Imágenes:</strong>
+            <ul>
+              {todasLasSelecciones.imagenes.map((seleccion) => (
+                <li key={seleccion}>{seleccion}</li>
+              ))}
+            </ul>
+          </li>
+        </ul>
 
         <div className="d-flex">
           <p className="text-sans-p-tertiary"><strong>Por lo tanto la solicitud será:</strong></p>
