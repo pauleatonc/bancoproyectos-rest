@@ -66,7 +66,7 @@ class InnovativeProjectsAdminListSerializer(serializers.ModelSerializer):
     program = ProgramSerializer()
     application_status = serializers.SerializerMethodField()
     author_email = serializers.SerializerMethodField()
-    created = serializers.SerializerMethodField()
+    modified = serializers.SerializerMethodField()
 
     class Meta:
         model = InnovativeProjects
@@ -76,7 +76,7 @@ class InnovativeProjectsAdminListSerializer(serializers.ModelSerializer):
             'title',
             'application_status',
             'author_email',
-            'created'
+            'modified'
         )
 
     def get_application_status(self, obj):
@@ -89,8 +89,8 @@ class InnovativeProjectsAdminListSerializer(serializers.ModelSerializer):
                 return historical_record.history_user.email
         return None  # o cualquier valor por defecto
 
-    def get_created(self, obj):
-        return obj.created_date.strftime('%d/%m/%Y')
+    def get_modified(self, obj):
+        return obj.modified_date.strftime('%d/%m/%Y')
 
 
 class RevisionSectionOneSerializer(serializers.ModelSerializer):

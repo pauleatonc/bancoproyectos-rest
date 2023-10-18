@@ -6,12 +6,13 @@ from applications.innovative_projects.api.v1.innovativeProjectSerializer import 
 from applications.innovative_projects.api.v1.innovativeProjectsViewSet import HasProjectPermissions
 from applications.innovative_projects.models import HistoricalInnovativeProjects, HistoricalInnovativeWebSource, HistoricalInnovativeGalleryImage
 from applications.users.permissions import is_admin, is_editor_general_or_superuser, is_program_related_user, is_any_editor_or_superuser
+from collections import Counter
 
 
 class NotificationViewSet(viewsets.ViewSet):
 
     @action(detail=False, methods=['GET'], permission_classes=[HasProjectPermissions])
-    def project_notifications(self, request):
+    def innovative_projects_notifications(self, request):
         user = request.user
 
         if is_editor_general_or_superuser(user):
@@ -49,25 +50,30 @@ class NotificationViewSet(viewsets.ViewSet):
             # Se devuelve un conjunto vacío si no se cumple ningún criterio anterior
             innovative_projects = InnovativeProjects.objects.none()
 
-        filtered_projects = {'Incompleto': [], 'Pendiente': [], 'Rechazado': []}
-        counters = {'Incompleto': 0, 'Pendiente': 0, 'Rechazado': 0}
 
-        for project in innovative_projects:
-            project_status = project.application_status  # Calcula la propiedad
-            if project_status in filtered_projects:
-                counters[project_status] += 1  # Actualiza el contador
-                if len(filtered_projects[project_status]) < 2:  # Sólo guarda los dos últimos
-                    filtered_projects[project_status].append(project)
+        # Filtrar estados según el grupo del usuario
+        if is_any_editor_or_superuser(request.user):
+            allowed_statuses = ["Incompleto", "Pendiente"]
+        else:
+            allowed_statuses = ["Incompleto", "Pendiente", "Rechazado"]
 
-        # Serializa los proyectos filtrados
-        serialized_data = {}
-        for project_status, projects in filtered_projects.items():
-            serialized_data[project_status] = {
-                'latest_projects': InnovativeProjectsAdminListSerializer(projects, many=True).data,
-                'count': counters[project_status]
-            }
+        # Filtrar proyectos y contarlos
+        filtered_projects = [project for project in innovative_projects if
+                             project.application_status in allowed_statuses]
+        status_list = [project.application_status for project in filtered_projects]
+        counters = Counter(status_list)
+        total_count = sum(counters.values())
 
-        # Contador total
-        serialized_data['total_count'] = sum(counters.values())
+        # Obtener los últimos 4 proyectos filtrados ordenados por fecha de modificación más reciente
+        latest_projects = sorted(filtered_projects, key=lambda x: x.modified_date, reverse=True)[:4]
+
+        # Serializar los últimos 4 proyectos
+        serialized_latest_projects = InnovativeProjectsAdminListSerializer(latest_projects, many=True).data
+
+        # Respuesta
+        serialized_data = {
+            'total_count': total_count,
+            'latest_projects': serialized_latest_projects,
+        }
 
         return Response(serialized_data, status=status.HTTP_200_OK)
