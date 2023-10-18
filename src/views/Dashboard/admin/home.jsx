@@ -33,18 +33,19 @@ const HomeDashboard = () =>{
               </div>
             </div>
           </div>
+
           <div className="row">
             <div className="col-6 ">
+
+              {/* Solicitudes de Banco de Proyectos  */}
               <div className="my-4">
                 <Notification
-                  title="Solicitudes de Usuarios"
-                  titleNone="las solicitudes de usuarios"
-                  count="4"
-                  description="Usuario creado"
-                  date="12/13/2033"
-                  button="Evaluar solicitud " />
+                  title="Banco de Proyectos"
+                  count="0"
+                />
               </div>
 
+              {/* Solicitudes de Proyectos Innovadores  */}
               {dataInnovativeProjectNotificacions && (
                 <div>
                   <div className="my-4">
@@ -53,7 +54,7 @@ const HomeDashboard = () =>{
                       title="Proyectos Innovadores"
                       ver_mas="dashboard/administrarproyectosinnovadores"
                       latest_projects={dataInnovativeProjectNotificacions.latest_projects.map(project => ({
-                        status: project.application_status.toLowerCase(),
+                        status: project.application_status,
                         title: project.title,
                         date: project.modified,
                         id: project.id
@@ -65,8 +66,16 @@ const HomeDashboard = () =>{
 
             </div>
 
-
             <div className="col-3">
+
+              {/* Solicitudes de usuario  */}
+              <div className="container-history my-4">
+                  <Notification
+                    title="Solicitudes de Usuarios"
+                    count="0"
+                  />
+              </div>
+
               <div className="container-history my-4">
                 <div className="title-history text-sans-h4"><i className="material-symbols-outlined">
                   history
@@ -78,7 +87,7 @@ const HomeDashboard = () =>{
                       {/* item solo se debe mostrar cuando no hay historial*/}
                       <li className="list-group-item">Aun no haz realizado acciones dentro de la plataforma.</li>
                       {/**/}
-                      {/* item de hisotial  */}
+                      {/* item de historial  */}
                       <li className="list-group-item">
                         <div className="d-flex mb-1 ">
                           <div className="text-start text-sans-b-gray">Proyecto creado</div>
