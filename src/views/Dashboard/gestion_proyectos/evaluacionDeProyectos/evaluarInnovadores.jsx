@@ -1,10 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import icon from "../../../../static/img/icons/InfoBlue.svg"
 import EvaluarSeccion from "../../../../components/Dashboard/EvaluarSeccion";
+import MiniaturasCarousel from "../../../../components/Dashboard/MiniaturasCarrusel";
+import useApiInnovativeProjects from "../../../../hooks/useApiInnovativeProjects";
 
 const EvaluarInnovador = () => {
   const [comentario, setComentario] = useState("");
+  const [miniaturas, setMiniaturas] = useState([]);
+
+  const { getInnovativeProjectById } = useApiInnovativeProjects();
+  // Aqui entregar el id del proyecto de manera dinamica.
+  const id = '9';
 
   // Maneja boton de volver atras
   const history = useNavigate();
@@ -25,6 +32,20 @@ const EvaluarInnovador = () => {
     { value: 'opcion2', label: 'Otra Opcion' },
     { value: 'opcion3', label: 'y Una mas' },
   ];
+
+  // Cargar miniaturas de imagenes
+  useEffect(() => {
+    getInnovativeProjectById(id)
+      .then((projectData) => {
+        if (projectData && projectData.innovative_gallery_images) {
+          setMiniaturas(projectData.innovative_gallery_images);
+        }
+      })
+      .catch((error) => {
+        console.error('Error al cargar las miniaturas de imágenes', error);
+      });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="container view-container ms-5">
@@ -72,7 +93,11 @@ const EvaluarInnovador = () => {
             <h3 className="text-sans-h35">Imagen de Portada</h3>
             <div className="img-l">IMAGEN PORTADA</div>
             <h3 className="text-sans-h35">Imágenes para la galería</h3>
-            <div className="img-s">MINIATURAS</div>
+
+
+            <div className="">
+              <MiniaturasCarousel img={miniaturas}/>
+            </div>
           </div>
 
           <div className="mt-4">
