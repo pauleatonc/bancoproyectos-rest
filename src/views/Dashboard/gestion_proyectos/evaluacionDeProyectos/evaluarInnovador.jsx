@@ -1,85 +1,48 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import  ModalAgregarFuente  from "../../../../components/Modals/ModalAgregarFuente";
-import ModalEditarFuente from "../../../../components/Modals/ModalEditarFuente";
-import UploadImg from "../../../../components/Commons/UploadImg";
-import UploadImgsm from "../../../../components/Commons/UploadImgsm";
+import { useLocation, useNavigate } from "react-router-dom"
 import useApiInnovativeProjects from "../../../../hooks/useApiInnovativeProjects";
+import { useAuth } from '../../../../context/AuthContext';
+import Carrusel from '../../../../components/Commons/carrusel';
+import Dropdown from "../../../../components/Bancodeproyectos/DropdowSelect";
 
-const CrearProyectoInnovadorP1 = () => {
-  const [inputTitle, setInputTitle] = useState('');
-  const [isEditingTitle, setIsEditingTitle] = useState(false); // comienza en modo visualizacion
-  const [showTitleErrorMessage, setShowTitleErrorMessage] = useState(false);
-  const [inputDescr, setInputDescr] = useState('');
-  const [isEditingDescr, setIsEditingDescr] = useState(true); // comienza en modo edicion
-  const [showDescrError, setShowDescrError] = useState(false);
-  const [projectId, setProjectId] = useState(null);
-  const [webSources, setWebSources] = useState([]);
-  const { getInnovativeProjectById, updateInnovativeProject, deleteInnovativeProject } = useApiInnovativeProjects();
 
-  // Hooks de estado para conteo de caracteres maximos en Titulo
-  const [maxTitleChars] = useState(70); // Maximo de caracteres para el titulo
-  const [titleCharsCount, setTitleCharsCount] = useState(0);
-  const [titleCharsExceeded, setTitleCharsExceeded] = useState(false);
-  //Hooks de estado para conteo de caracteres maximos en Descripcion
-  const [maxDescChars] = useState(700); // Maximo de caracteres para la descripcion
-  const [descCharsCount, setDescCharsCount] = useState(0);
-  const [descCharsExceeded, setDescCharsExceeded] = useState(false);
+const EvaluarProyectoInnovador = () => {
+  const location = useLocation();
+  const query = new URLSearchParams(location.search);
+  const id = query.get("id");
 
-  // Maneja boton de volver atras
-  const navigate = useNavigate();
-  const handleBackButtonClick = () => {
-    navigate('/dashboard/crearproyectos')
-  };
+  const [dataProject, setDataProject] = useState(null);  // <-- Nuevo estado
+  const [loadingProject, setLoadingProject] = useState(true);  // <-- Nuevo estado
+  const [errorProject, setErrorProject] = useState(null);  // <-- Nuevo estado
 
-  // Obtiene el ID del paso anterior y lo guarda en projectId. También muestra los datos guardados del proyecto.
+  const { getInnovativeProjectById, updateInnovativeProject, deleteInnovativeProject, evaluateInnovativeProject } = useApiInnovativeProjects();
+
   useEffect(() => {
-    const fetchProject = async () => {
-      const projectId = new URLSearchParams(window.location.search).get('id');
-      setProjectId(projectId);  // <-- Aquí guardamos el projectId
-      const project = await getInnovativeProjectById(projectId);
-      if (project) {
-        setInputTitle(project.title);
-        setInputDescr(project.description);
-        setWebSources(project.web_sources);
+    const fetchData = async () => {
+      setLoadingProject(true);
+      try {
+        const result = await getInnovativeProjectById(id);
+        setDataProject(result);  // <-- Actualizar el estado
+        setErrorProject(null);
+      } catch (error) {
+        setErrorProject(error);
+      } finally {
+        setLoadingProject(false);
       }
     };
-    
-    fetchProject();
-  }, [getInnovativeProjectById]);
+    fetchData();
+  }, [id]);
 
-  // LOGICA TITULO
-  // Maneja cambios en el input Titulo y actualiza el estado.
-  const handleInputChange = (event, setInput, setCount, setExceeded, maxChars) => {
-    const text = event.target.value;
-    if (text.length <= maxChars) {
-      setInput(text);
-      setCount(text.length);
-      setExceeded(false);
-    } else {
-      setExceeded(true);
-    }
-  };
-  
-  const handleSaveClick = async (input, setEditing, setShowError, updateFunction, field, projectId) => {
-    const trimmedText = input.trim();
-    if (trimmedText) {
-      await updateFunction(projectId, { [field]: trimmedText });
-      setEditing(false);
-      setShowError(false);
-    } else {
-      setShowError(true);
-    }
-  };
 
-  const handleEditClick = (setState) => {
-    // Cambia de nuevo al modo de edicion
-    setState(true);
+  // Maneja boton de volver atras
+  const history = useNavigate();
+  const handleBackButtonClick = () => {
+    history(-1); 
   };
 
   const handleSendRequestClick = async () => {
-    if (projectId) {
-      const result = await updateInnovativeProject(projectId, { request_sent: true });
+    if (dataProject.id) {
+      const result = await updateInnovativeProject(dataProject.id, { evaluated: true });
       console.log("Update result:", result);
       // Aquí podrías redirigir al usuario o mostrar un mensaje de éxito.
     } else {
@@ -88,10 +51,10 @@ const CrearProyectoInnovadorP1 = () => {
   };
 
   const handleDeleteProjectClick = async () => {
-    if (projectId) {
+    if (dataProject.id) {
       const confirmDeletion = window.confirm("¿Estás seguro de que quieres eliminar este proyecto?");
       if (confirmDeletion) {
-        await deleteInnovativeProject(projectId);
+        await deleteInnovativeProject(dataProject.id);
         console.log("Proyecto eliminado");
         // Aquí puedes redirigir al usuario o actualizar la lista de proyectos
       }
@@ -100,12 +63,19 @@ const CrearProyectoInnovadorP1 = () => {
     }
   };  
 
-  const handleTitleInputChange = (event) => handleInputChange(event, setInputTitle, setTitleCharsCount, setTitleCharsExceeded, maxTitleChars);
-  const handleSaveTitleClick = () => handleSaveClick(inputTitle, setIsEditingTitle, setShowTitleErrorMessage, updateInnovativeProject, 'title', projectId);
 
-  const handleDescrInputChange = (event) => handleInputChange(event, setInputDescr, setDescCharsCount, setDescCharsExceeded, maxDescChars);
-  const handleSaveDescrClick = () => handleSaveClick(inputDescr, setIsEditingDescr, setShowDescrError, updateInnovativeProject, 'description', projectId);
+  // Acceso solo a isEditorOrSuperuser
+  const { userData } = useAuth();
+  const isEditorOrSuperuser = ['Superusuario', 'Editor General', 'Editor Programa'].includes(userData.tipo_de_usuario);
 
+  if (loadingProject)
+  {
+    return <div>CARGANDO DATOS...</div>
+  }
+  if (errorProject)
+  {
+    return <div>Error de conexión: {errorProject}</div>
+  }
 
   return (
     <div className="container col-10 view-container">
@@ -116,23 +86,14 @@ const CrearProyectoInnovadorP1 = () => {
         <p className="mb-0 text-decoration-underline">Volver atrás</p>
       </button>
 
-      <div className="container mb-4">
-        <p className="text-sans-p">Este proyecto corresponde al programa:</p>
-        <select className="custom-selector p-3">
-          <option className="custom-option p-5 ms-4">Programa Mejoramiento Urbano (PMU)</option>
-          <option className="custom-option">Programa Mejoramiento de Barrios (PMB)</option>
-        </select>
-      </div>
-
       <div className="row">
         <div className="col-5">
           {/* Titulo */}
           <div className="container">
           
             <div>
-              <p className="text-sans-p">Título del Proyecto</p>
               <div className="d-flex flex-row justify-content-between my-3">
-                <h3 className="text-sans-h3">{inputTitle || "Titulo del Proyecto"}</h3>
+                <h3 className="text-sans-h3">{dataProject.title}</h3>
               </div>
             </div>
         </div>
@@ -140,71 +101,64 @@ const CrearProyectoInnovadorP1 = () => {
         {/* Descripcion */}
         <div className="container">
             <div>
-              <p className="text-sans-p">Descripción del proyecto</p>
               <div className="d-flex flex-column my-3">
                 <div className="description-container">
-                  <p className="text-sans-p">{inputDescr || "Descripción del proyecto"} </p>
+                  <p className="text-sans-p">{dataProject.description} </p>
                 </div>
               </div>
             </div>
         </div>
 
         {/* Fuentes */}
-        { webSources.length === 0 ? (
+        { (dataProject && dataProject.web_sources && dataProject.web_sources.length === 0) ? (
             // Si no hay fuentes ingresadas
             <div className="container d-flex flex-row justify-content-between my-4">
               <div className="d-flex flex-column">
                 <h3 className="text-sans-h35">Fuentes </h3>
-                <p className="text-sans-h5">(Opcional)</p>
               </div>
-              <ModalAgregarFuente/>
             </div>
           ) : (
             // Si hay fuentes ingresadas
             <div className="container">
               <div className="d-flex flex-column">
                 <h3 className="text-sans-h35">Fuentes </h3>
-                <p className="text-sans-h5">(Opcional)</p>
               </div>
               <div>
-                {webSources.map((source, index) => (
+                {dataProject.web_sources.map((source, index) => (
                   <div key={index} className="my-2 d-flex justify-content-between">
                     <div className="d-flex flex-row">
                       <p className="text-decoration-underline">{source.url}</p>
                       <i className="material-symbols-rounded ms-2 pt-1">open_in_new</i>
                     </div>
-                    <ModalEditarFuente/>
                   </div>
                 ))}
               </div>
-              <div className="mt-5">
-                <ModalAgregarFuente/>
-              </div> 
             </div>
           )}
       </div>
-      
-      <div className="col-6 ms-5">
-        {/* Img Portada - componente */}
-        <h3 className="text-sans-h35">Imagen de Portada</h3>
-        <div className="img-l-container">  
-          <UploadImg/>
-        </div>
-        <div className="d-flex flex-row text-sans-h5-blue">
-          <i className="material-symbols-rounded me-2">info</i>
-          <p className="pt-1">La imagen de portada será la primera que se verá en la galería y en el sitio web.</p>
-        </div>
-
-        {/* Img Miniatura - componente */}
-        <div className="mt-5">
-          <UploadImgsm />
-        </div>
+      <div className="carrusel-container container col-xl-7 float-md-end m-4">
+          <Carrusel
+              imgPortada={dataProject.portada}
+              imgGeneral={dataProject.innovative_gallery_images}
+              context="proyectosInnovadores"
+            />
       </div>
+
+      <div className='my-4'>
+        <h3 className="text-sans-p px-1 ">¿Qué años de construcción quieres ver?</h3>
+        <Dropdown
+          items={years}
+          selectedItems={selectedYears}
+          singleItemName="años"
+          onItemChange={handleYearChange}
+        />
+      </div>
+
     </div>
 
       <div className="col-10 mt-5 d-flex justify-content-end">
         <button className="btn-principal-s d-flex text-sans-h4 pb-0" onClick={handleSendRequestClick}>
-          <p className="text-decoration-underline">Enviar solicitud</p>
+          <p className="text-decoration-underline">Evaluar solicitud</p>
           <i className="material-symbols-rounded ms-2">arrow_forward_ios</i> 
         </button>
       </div>
@@ -218,4 +172,4 @@ const CrearProyectoInnovadorP1 = () => {
   )
 }
 
-export default CrearProyectoInnovadorP1; 
+export default EvaluarProyectoInnovador; 
