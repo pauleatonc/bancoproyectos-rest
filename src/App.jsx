@@ -24,6 +24,8 @@ const AdministrarProyectosInnovadores = React.lazy(() => import('./views/Dashboa
 const Success = React.lazy(() => import ('./views/Dashboard/gestion_proyectos/creacionDeProyectos/success'));
 const EvaluarInnovadores = React.lazy(() => import ('./views/Dashboard/gestion_proyectos/evaluacionDeProyectos/evaluarInnovadores'))
 const EvaluarProyecto = React.lazy(() => import('./views/Dashboard/gestion_proyectos/evaluacionDeProyectos/evaluarProyecto'));
+const SuccessViews = React.lazy(() => import ('./views/Dashboard/gestion_proyectos/creacionDeProyectos/success'));
+const EvaluarProyectosInnovadores = React.lazy(() => import('./views/Dashboard/gestion_proyectos/evaluacionDeProyectos/evaluarInnovador'));
 
 function App()
 {
@@ -56,6 +58,8 @@ function App()
             <Route path="success" element={<Success/>} />
             <Route path="evaluarinnovadores" element={<EvaluarInnovadores />} />
             <Route path="evaluarproyecto" element={<EvaluarProyecto />} />
+            <Route path="envio_exitoso" element={<SuccessViews/>} />
+            <Route path="evaluarinnovador" element={<EvaluarProyectosInnovadores />} />
           </Route>
         </Routes>
       </Suspense>

@@ -1,10 +1,22 @@
+import { useLocation } from 'react-router-dom';
 import successIcon from '../../../../static/img/icons/Success.svg'
 
-const AdministrarProyectosInnovadores = () => {
+const SuccessViews = () => {
+
+  const location = useLocation();
+  const origen = location.state?.origen;
+
+  let tituloComplemento = "";
+  if (origen === "ProyectosInnovadores") {
+    tituloComplemento = "Proyectos Innovadores";
+  } else {
+    tituloComplemento = "Banco de Proyectos";
+  }
+
   return (
     <div className="container view-container ms-5">
       {/* Titulo deberia ser condicional, segun de donde venga el usuario */}
-      <h1 className="text-sans-h1 mt-3 mb-5">Subir Proyecto: Banco de Proyectos</h1>
+      <h1 className="text-sans-h1 mt-3 mb-5">Subir Proyecto: {tituloComplemento}</h1>
 
       <div className="success-container col-7 p-3 px-5">
         <div className="row align-items-center">
@@ -23,5 +35,5 @@ const AdministrarProyectosInnovadores = () => {
   );
 }
   
-export default AdministrarProyectosInnovadores;
+export default SuccessViews ;
   
