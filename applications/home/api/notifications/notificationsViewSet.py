@@ -16,7 +16,7 @@ class NotificationViewSet(viewsets.ViewSet):
         user = request.user
 
         if is_editor_general_or_superuser(user):
-            innovative_projects = InnovativeProjects.objects.all().order_by('-created_date')
+            innovative_projects = InnovativeProjects.objects.all()
 
         # Editor Programa y Profesional: pueden ver innovative projects que compartan el mismo program
         elif "Editor Programa" in user.groups.values_list('name', flat=True) or \
@@ -24,7 +24,7 @@ class NotificationViewSet(viewsets.ViewSet):
             # Asegurarse de que el usuario tiene un programa asociado
             try:
                 user_program = user.program
-                innovative_projects = InnovativeProjects.objects.filter(program=user_program).order_by('-created_date')
+                innovative_projects = InnovativeProjects.objects.filter(program=user_program)
             except AttributeError:  # En caso de que el usuario no tenga un programa asociado
                 innovative_projects = InnovativeProjects.objects.none()
 
@@ -32,7 +32,7 @@ class NotificationViewSet(viewsets.ViewSet):
         elif "Profesional Temporal" in user.groups.values_list('name', flat=True):
             try:
                 user_program = user.program
-                innovative_projects = InnovativeProjects.objects.filter(program=user_program).order_by('-created_date')
+                innovative_projects = InnovativeProjects.objects.filter(program=user_program)
                 safe_innovative_projects = []
                 for proj in innovative_projects:
                     try:
@@ -57,17 +57,33 @@ class NotificationViewSet(viewsets.ViewSet):
         else:
             allowed_statuses = ["Incompleto", "Pendiente", "Rechazado"]
 
-        # Filtrar proyectos y contarlos
+        # Filtrar proyectos
         filtered_projects = [project for project in innovative_projects if
                              project.application_status in allowed_statuses]
+
+        # Contar los proyectos
         status_list = [project.application_status for project in filtered_projects]
         counters = Counter(status_list)
         total_count = sum(counters.values())
 
-        # Obtener los últimos 4 proyectos filtrados ordenados por fecha de modificación más reciente
-        latest_projects = sorted(filtered_projects, key=lambda x: x.modified_date, reverse=True)[:4]
+        # Para usuarios que son editores o superusuarios
+        if is_any_editor_or_superuser(request.user):
+            latest_projects = sorted(
+                filtered_projects,
+                key=lambda x: (x.application_status == "Pendiente", x.modified_date),
+                reverse=True
+            )[:3]
 
-        # Serializar los últimos 4 proyectos
+        # Para otros usuarios
+        else:
+            order_values = {"Pendiente": 1, "Rechazado": 2, "Incompleto": 3}
+            latest_projects = sorted(
+                filtered_projects,
+                key=lambda x: (order_values.get(x.application_status, 4), x.modified_date),
+                reverse=True
+            )[:3]
+
+        # Serializar los últimos 3 proyectos
         serialized_latest_projects = InnovativeProjectsAdminListSerializer(latest_projects, many=True).data
 
         # Respuesta
