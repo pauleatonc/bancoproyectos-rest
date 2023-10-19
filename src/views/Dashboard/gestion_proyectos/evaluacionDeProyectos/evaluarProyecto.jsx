@@ -4,6 +4,7 @@ import icon from "../../../../static/img/icons/InfoBlue.svg";
 import EvaluarSeccion from "../../../../components/Dashboard/EvaluarSeccion";
 
 const EvaluarProyecto = () => {
+  const [comentario, setComentario] = useState("");
   const [todasLasSelecciones, setTodasLasSelecciones] = useState({
     contenido: [],
     imagenes: [],
@@ -207,7 +208,7 @@ const EvaluarProyecto = () => {
 
         <div className="d-flex">
           <p className="text-sans-p-tertiary"><strong>Por lo tanto la solicitud será:</strong></p>
-          <p className="text-sans-p ms-2 border">etiqueta</p>
+          <p className="text-sans-p ms-2 border ms-5">etiqueta</p>
         </div>
 
         <p className="text-sans-p-tertiary">Esta retroalimentación le llegará a $userName(solicitante), si crees que necesita más detalles para hacer las correcciones, puedes agregarlos a continuación.</p>
@@ -218,10 +219,12 @@ const EvaluarProyecto = () => {
             className="input-l p-3"
             id="message"
             placeholder="Escribe un comentario adicional."
+            value={comentario}
+            onChange={(e) => setComentario(e.target.value)}
           ></textarea>
         </div>
         <div className="d-flex justify-content-end">
-          <p>CONTADOR CARACTERES</p>
+          <p className="text-sans-h5">{comentario.length} / 200 caracteres</p>
         </div>
 
         <div className="d-flex justify-content-between my-5">
