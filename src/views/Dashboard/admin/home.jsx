@@ -5,7 +5,7 @@ import useApiAdminNotificacions from "../../../hooks/useApiAdminNotificacions";
 const HomeDashboard = () =>{
 
   const { userData } = useAuth();
-  const { dataInnovativeProjectNotificacions, loadingInnovativeProjectNotificacions, errorInnovativeProjectNotificacions } = useApiAdminNotificacions();
+  const { dataInnovativeProjectNotificacions, loadingInnovativeProjectNotificacions, errorInnovativeProjectNotificacions, dataRecentActions, loadingRecentActions, errorRecentActions } = useApiAdminNotificacions();
 
   if (loadingInnovativeProjectNotificacions) {
     return <p>Cargando...</p>;
@@ -84,17 +84,26 @@ const HomeDashboard = () =>{
                 <div>
                   <div className="body-history">
                     <ul className="list-group list-group-flush">
-                      {/* item solo se debe mostrar cuando no hay historial*/}
-                      <li className="list-group-item">Aun no haz realizado acciones dentro de la plataforma.</li>
-                      {/**/}
-                      {/* item de historial  */}
-                      <li className="list-group-item">
-                        <div className="d-flex mb-1 ">
-                          <div className="text-start text-sans-b-gray">Proyecto creado</div>
-                          <div className="ms-auto text-sans-c-gray">24/08/2023</div>
-                        </div>
-                        <div className="text-sans-p">$projectName</div>
-                      </li>
+                      {/* Mostrar mensaje si no hay acciones recientes */}
+            {!loadingRecentActions && dataRecentActions.length === 0 && (
+              <li className="list-group-item">Aun no haz realizado acciones dentro de la plataforma.</li>
+            )}
+
+            {/* Iterar y mostrar las acciones recientes */}
+            {!loadingRecentActions && dataRecentActions.length > 0 && dataRecentActions.map((action, index) => (
+              <li key={index} className="list-group-item">
+                <div className="d-flex mb-1">
+                  <div className="text-start text-sans-b-gray">{`${action.action}`}</div>
+                  <div className="ms-auto text-sans-c-gray">{action.history_date}</div>
+                </div>
+                <div className="text-sans-p">{action.title}</div>
+              </li>
+            ))}
+
+            {/* Manejar errores */}
+            {errorRecentActions && (
+              <li className="list-group-item">Hubo un error al cargar las acciones recientes.</li>
+            )}
                     </ul>
                   </div>
                 </div>
