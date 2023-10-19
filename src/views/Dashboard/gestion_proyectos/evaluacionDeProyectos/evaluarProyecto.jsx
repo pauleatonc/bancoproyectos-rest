@@ -87,7 +87,9 @@ const EvaluarProyecto = () => {
       {/* Imagenes del proyecto */}
       <div className="dashed-container my-5 p-2">
         <h2 className="text-sans-h2 ms-5">Imágenes del proyecto</h2>
-        <div className="ms-5">img</div>
+        <div className="col-5">
+          <div className="img-l ms-5 my-3"></div>
+        </div>
         <div className="d-flex flex-row text-sans-h5-blue mt-2 ms-5">
           <i className="material-symbols-rounded me-2">info</i>
           <p className="pt-1">La foto de portada será la primera que se verá en la galería y en el buscador de proyectos.</p>
@@ -98,12 +100,18 @@ const EvaluarProyecto = () => {
         <div className="ms-5">COMPONENTE GALERIA</div>
 
         <h3 className="text-sans-h3 ms-5">Antes del proyecto</h3>
-        <div className="ms-5">img</div>
+        <div className="col-5">
+          <div className="img-l ms-5 my-3"></div>
+        </div>
         <h3 className="text-sans-h3 ms-5">Después del proyecto</h3>
-        <div className="ms-5">img</div>
+        <div className="col-5">
+          <div className="img-l ms-5 my-3"></div>
+        </div>
 
         <h2 className="text-sans-h2 ms-5">Video del proyecto</h2>
-        <div className="ms-5">img</div>
+        <div className="col-5">
+          <div className="img-l ms-5 my-3"></div>
+        </div>
 
         <EvaluarSeccion 
         opciones={opcionesEvaluarImgs}
