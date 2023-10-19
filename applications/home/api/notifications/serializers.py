@@ -13,3 +13,10 @@ class UnifiedHistorySerializer(serializers.Serializer):
             "Fecha de creación": "creado"
         }
         return f"{obj['model_type']} {translations.get(obj['history_type'], obj['history_type'])}"
+
+
+class ProjectStatusSerializer(serializers.Serializer):
+    project_name = serializers.CharField()
+    history_date = serializers.DateTimeField(format="%d/%m/%Y")
+    action = serializers.CharField()
+    read = serializers.BooleanField()

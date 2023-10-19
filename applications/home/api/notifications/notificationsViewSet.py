@@ -10,8 +10,10 @@ from applications.users.permissions import is_admin, is_editor_general_or_superu
 from collections import Counter
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
-from .serializers import UnifiedHistorySerializer
+from .serializers import UnifiedHistorySerializer, ProjectStatusSerializer
 from ...functions import filter_and_sort_projects
+from ...models import Notification
+
 
 User = get_user_model()
 
@@ -95,3 +97,70 @@ class NotificationViewSet(viewsets.ViewSet):
         serializer = UnifiedHistorySerializer(combined_history, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=['GET'])
+    def notifications(self, request):
+        user = request.user
+        result = []
+
+        # Filtrar proyectos basados en el tipo de usuario
+        innovative_projects = filter_user_type_projects(user, InnovativeProjects, HistoricalInnovativeProjects)
+
+        # Juntar ambos QuerySets en una lista
+        combined = list(innovative_projects)
+
+        # Filtrar y formatear la información
+        for project in combined:
+            content_type = ContentType.objects.get_for_model(project)
+
+            # Buscar la notificación correspondiente en la base de datos
+            notification = Notification.objects.get_or_create(
+                user=user,
+                content_type=content_type,
+                object_id=project.id,
+            )[0]
+
+            # Aquí obtienes el campo del título según el modelo
+            field_name = model_to_title_field.get(type(project), "Desconocido")
+            project_name = getattr(project, field_name, "Desconocido")
+
+            if is_any_editor_or_superuser(user):
+                if project.request_sent:
+                    result.append({
+                        'project_name': project_name,
+                        'history_date': project.modified_date,
+                        'action': f'Solicitud de {content_type.name} pendiente',
+                        'read': notification.read
+                    })
+            else:
+                if project.evaluated:
+                    action_text = f"Solicitud de {content_type.name} "
+                    action_text += 'rechazada' if project.application_status == 'Rechazado' else 'aceptada'
+
+                    result.append({
+                        'project_name': project_name,
+                        'history_date': project.modified_date,
+                        'action': action_text,
+                        'read': notification.read
+                    })
+
+        # ordenar desde el más reciente
+        sorted_result = sorted(result, key=lambda x: x['history_date'], reverse=True)
+
+        # Serializar el resultado
+        serializer = ProjectStatusSerializer(sorted_result, many=True)
+
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['POST'])
+    def mark_as_read(self, request):
+        user = request.user
+        notifications = Notification.objects.filter(user=user)
+        notifications.update(read=True)
+        return Response({"message": "Notificaciones marcadas como leídas"})
+
+    @action(detail=False, methods=['GET'])
+    def unread_count(self, request):
+        user = request.user
+        unread_count = Notification.objects.filter(user=user, read=False).count()
+        return Response({"unread_count": unread_count})
