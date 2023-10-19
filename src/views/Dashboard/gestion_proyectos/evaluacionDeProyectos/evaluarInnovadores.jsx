@@ -102,7 +102,7 @@ const EvaluarInnovador = () => {
         <div className="dashed-container d-flex flex-column justify-content-between ms-3 col-6 p-3">
           <div>
             <h3 className="text-sans-h35">Imagen de Portada</h3>
-            <div className="img-l">IMAGEN PORTADA</div>
+            <div className="img-l"></div>
             <h3 className="text-sans-h35">Imágenes para la galería</h3>
             <div className="">
               <MiniaturasCarousel img={miniaturas}/>
@@ -128,24 +128,42 @@ const EvaluarInnovador = () => {
         <h3 className="text-sans-h3">Evaluación de la solicitud</h3>
         <p className="text-sans-p">Marcaste que estas secciones tienen problemas:</p>
 
-        <ul>
-          <li>
-            <strong>Selecciones de Contenido:</strong>
-            <ul>
-              {todasLasSelecciones.contenido.map((seleccion) => (
-                <li key={seleccion}>{seleccion}</li>
-              ))}
-            </ul>
-          </li>
-          <li>
-            <strong>Selecciones de Imágenes:</strong>
-            <ul>
-              {todasLasSelecciones.imagenes.map((seleccion) => (
-                <li key={seleccion}>{seleccion}</li>
-              ))}
-            </ul>
-          </li>
-        </ul>
+        <div className="container row my-5">
+          <div className="col-4">
+            <div>
+              <p className="text-sans-p ms-3">Sección 1</p>
+              <div>
+                {todasLasSelecciones.contenido.map((seleccion, index) => (
+                  <div 
+                  key={seleccion} 
+                  className={`d-flex py-4 text-sans-h5-red ${index % 2 === 0 ? 'grey-table-line' : 'white-table-line'}`}
+                  >
+                    <i className="material-symbols-rounded ms-3">warning</i>
+                    <p className="text-sans-p ms-4 mb-0">{seleccion}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          <div className="col-4">
+            <div>
+              <p className="text-sans-p ms-3">Sección 2</p>
+              <div>
+                {todasLasSelecciones.imagenes.map((seleccion, index) => (
+                  <div 
+                  key={seleccion} 
+                  className={`d-flex py-4 text-sans-h5-red ${index % 2 === 0 ? 'grey-table-line' : 'white-table-line'}`}
+                  >
+                    <i className="material-symbols-rounded ms-2">warning</i>
+                    <p className="text-sans-p ms-4 mb-0">{seleccion}</p>
+                </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+
 
         <div className="d-flex">
           <p className="text-sans-p-tertiary"><strong>Por lo tanto la solicitud será:</strong></p>

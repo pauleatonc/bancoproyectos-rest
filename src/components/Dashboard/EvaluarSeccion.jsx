@@ -69,11 +69,11 @@ const EvaluarSeccion = ({ opciones, onCheckboxSelect }) => {
                     {opcion.label}
                   </label>
                 </li>
-              ))};
+              ))}
             </ul>
           </div>
         </div>
-      )};
+      )}
     </div>
   )
 };
