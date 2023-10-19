@@ -1,13 +1,46 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import icon from "../../../../static/img/icons/InfoBlue.svg"
+import icon from "../../../../static/img/icons/InfoBlue.svg";
+import EvaluarSeccion from "../../../../components/Dashboard/EvaluarSeccion";
 
 const EvaluarProyecto = () => {
+  const [todasLasSelecciones, setTodasLasSelecciones] = useState({
+    contenido: [],
+    imagenes: [],
+    documentos: [],
+  });
 
   // Maneja boton de volver atras
   const history = useNavigate();
   const handleBackButtonClick = () => {
     history(-1); 
   };
+
+  // Opciones EvaluarSeccion Contenido
+  const opcionesEvaluarContenido = [
+    { value: 'Error en el título', label: 'Error en el título' },
+    { value: 'Error en la descripción del proyecto', label: 'Error en la descripción del proyecto' },
+    { value: 'Programa incorrecto', label: 'Programa incorrecto' },
+    { value: 'Tipo de proyecto incorrecto', label: 'Tipo de proyecto incorrecto' },
+    { value: 'Región incorrecta', label: 'Región incorrecta' },
+    { value: 'Comuna incorrecta', label: 'Comuna incorrecta' },
+    { value: 'Código SUBDERE incorrecto', label: 'Código SUBDERE incorrecto' },
+  ];
+
+  // Opciones EvaluarSeccion Imagenes
+  const opcionesEvaluarImgs = [
+    { value: 'Foto de portada con problemas', label: 'Foto de portada con problemas' },
+    { value: 'Fotos de la galería con problemas', label: 'Fotos de la galería con problemas' },
+    { value: 'Fotos antes y despues con problemas', label: 'Fotos antes y despues con problemas' },
+    { value: 'Video del proyecto con problemas', label: 'Video del proyecto con problemas' },
+  ];
+
+  // Opciones EvaluarSeccion Imagenes
+  const opcionesEvaluarDocs = [
+    { value: 'Especificaciones Técnicas incorrectas o con errores', label: 'Especificaciones Técnicas incorrectas o con errores' },
+    { value: 'Presupuesto incorrecto o con errores', label: 'Presupuesto incorrecto o con errores' },
+    { value: 'Otros documentos del proyecto con errores', label: 'Otros documentos del proyecto con errores' },
+  ];
 
   return (
     <div className="container view-container ms-4">
@@ -31,7 +64,7 @@ const EvaluarProyecto = () => {
       </div>
 
       {/* Detalles del proyecto */}
-      <div className="dashed-container my-5">
+      <div className="dashed-container my-5 p-2">
         <h1 className="text-sans-h1 ms-5 my-3">Titulo  del Proyecto - dinamico</h1>
         <div className="neutral-container mx-5 my-5 p-3">
           <h3 className="text-sans-h2">Descripción del proyecto</h3>
@@ -40,11 +73,18 @@ const EvaluarProyecto = () => {
 
         <div>traer tabla de la otra vista</div>
 
-        <div>COMPONENTE EVALUADOR</div>
+        <EvaluarSeccion 
+        opciones={opcionesEvaluarContenido}
+        onCheckboxSelect={(seleccionados) => {
+          setTodasLasSelecciones((prevSelecciones) => ({
+            ...prevSelecciones,
+            contenido: seleccionados,
+          }));
+        }}/>
       </div>
 
       {/* Imagenes del proyecto */}
-      <div className="dashed-container my-5">
+      <div className="dashed-container my-5 p-2">
         <h2 className="text-sans-h2 ms-5">Imágenes del proyecto</h2>
         <div className="ms-5">img</div>
         <div className="d-flex flex-row text-sans-h5-blue mt-2 ms-5">
@@ -64,11 +104,18 @@ const EvaluarProyecto = () => {
         <h2 className="text-sans-h2 ms-5">Video del proyecto</h2>
         <div className="ms-5">img</div>
 
-        <div className="ms-5">COMPONENTE EVALUADOR</div>
+        <EvaluarSeccion 
+        opciones={opcionesEvaluarImgs}
+        onCheckboxSelect={(seleccionados) => {
+          setTodasLasSelecciones((prevSelecciones) => ({
+            ...prevSelecciones,
+            imagenes: seleccionados,
+          }));
+        }}/>
       </div>
 
       {/* Documentos del proyecto */}
-      <div className="dashed-container my-5">
+      <div className="dashed-container my-5 p-2">
         <h3 className="text-sans-h2 ms-5">Documentos del proyecto</h3>
         <h4 className="text-sans-h4 ms-5">Documentos Obligatorios</h4>
         <p className="text-sans-h5 ms-5">(Máximo 1 archivo, peso máximo 5 MB, formato PDF)</p>
@@ -80,14 +127,83 @@ const EvaluarProyecto = () => {
         <h3 className="text-sans-h2 ms-5">Documentos con normativa de uso general</h3>
         <div className="ms-5">TABLA 3</div>
 
-        <div className="ms-5">COMPONENTE EVALUADOR</div>
+        <EvaluarSeccion 
+        opciones={opcionesEvaluarDocs}
+        onCheckboxSelect={(seleccionados) => {
+          setTodasLasSelecciones((prevSelecciones) => ({
+            ...prevSelecciones,
+            documentos: seleccionados,
+          }));
+        }}/>
       </div>
 
       {/* Resumen evaluacion */}
-      <div className="ms-5">
-        <h3 className="text-sans-h3">Evaluación de la solicitud</h3>
-        <p className="text-sans-p">Marcaste que estas secciones tienen problemas:</p>
-        <div>TABLA EVALUACION</div>
+      <div className="col-11">
+        <h3 className="text-sans-h3-tertiary">Evaluación de la solicitud</h3>
+        <p className="text-sans-p-tertiary">Marcaste que estas secciones tienen problemas:</p>
+
+        <div className="container row mt-4 mb-5">
+          {todasLasSelecciones.contenido.length > 0 && (
+          <div className="col-4">
+            <div>
+              <p className="text-sans-p ms-3">Sección 1</p>
+              <div>
+                {todasLasSelecciones.contenido.map((seleccion, index) => (
+                  <div 
+                  key={seleccion} 
+                  className={`d-flex py-4 text-sans-h5-red ${index % 2 === 0 ? 'grey-table-line' : 'white-table-line'}`}
+                  >
+                    <i className="material-symbols-rounded ms-3">warning</i>
+                    <p className="text-sans-p ms-4 mb-0">{seleccion}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          )}
+          {todasLasSelecciones.imagenes.length > 0 && (
+          <div className="col-4">
+            <div>
+              <p className="text-sans-p ms-3">Sección 2</p>
+              <div>
+                {todasLasSelecciones.imagenes.map((seleccion, index) => (
+                  <div 
+                  key={seleccion} 
+                  className={`d-flex py-4 text-sans-h5-red ${index % 2 === 0 ? 'grey-table-line' : 'white-table-line'}`}
+                  >
+                    <i className="material-symbols-rounded ms-2 red-icon">warning</i>
+                    <p className="text-sans-p ms-4 mb-0">{seleccion}</p>
+                </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          )}
+          {todasLasSelecciones.imagenes.length > 0 && (
+          <div className="col-4">
+            <div>
+              <p className="text-sans-p ms-3">Sección 3</p>
+              <div>
+                {todasLasSelecciones.documentos.map((seleccion, index) => (
+                  <div 
+                  key={seleccion} 
+                  className={`d-flex py-4 text-sans-h5-red ${index % 2 === 0 ? 'grey-table-line' : 'white-table-line'}`}
+                  >
+                    <i className="material-symbols-rounded ms-2 red-icon">warning</i>
+                    <p className="text-sans-p ms-4 mb-0">{seleccion}</p>
+                </div>
+                ))}
+              </div>
+            </div>
+          </div>
+          )}
+          {/* Mensaje si no hay selecciones */}
+          {todasLasSelecciones.contenido.length === 0 && todasLasSelecciones.imagenes.length === 0 && todasLasSelecciones.documentos.length === 0 && (
+            <div className="col-8">
+              <p className="text-sans-p ms-3">Aún no has detectado problemas en ninguna de las secciones.</p>
+            </div>
+          )}
+        </div>
 
         <div className="d-flex">
           <p className="text-sans-p-tertiary"><strong>Por lo tanto la solicitud será:</strong></p>
