@@ -15,7 +15,7 @@ const EvaluarInnovador = () => {
 
   const { getInnovativeProjectById } = useApiInnovativeProjects();
   // Aqui entregar el id del proyecto de manera dinamica.
-  const id = '9';
+  const id = '23';
 
   // Maneja boton de volver atras
   const history = useNavigate();
@@ -25,16 +25,15 @@ const EvaluarInnovador = () => {
 
   // Opciones EvaluarSeccion Contenido
   const opcionesEvaluarContenido = [
-    { value: 'cont1', label: 'Alternativa 1' },
-    { value: 'cont2', label: 'Otra razon' },
-    { value: 'cont3', label: 'Razon de peso' },
+    { value: 'Error en el título', label: 'Error en el título' },
+    { value: 'Error en la descripción', label: 'Error en la descripción' },
+    { value: 'Fuente no corresponde', label: 'Fuente no corresponde' },
   ];
 
   // Opciones EvaluarSeccion Img
   const opcionesEvaluarImg = [
-    { value: 'img1', label: 'Opción 1' },
-    { value: 'img2', label: 'Otra Opcion' },
-    { value: 'img3', label: 'y Una mas' },
+    { value: 'Foto de portada con problemas', label: 'Foto de portada con problemas' },
+    { value: 'Fotos de la galería con problemas', label: 'Fotos de la galería con problemas' },
   ];
 
   // Cargar miniaturas de imagenes
@@ -50,9 +49,6 @@ const EvaluarInnovador = () => {
       });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  console.log('razones img:', todasLasSelecciones.imagenes);
-  console.log('razones contenido:', todasLasSelecciones.contenido);
 
   return (
     <div className="container view-container ms-5">

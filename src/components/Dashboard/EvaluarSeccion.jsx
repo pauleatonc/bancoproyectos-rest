@@ -17,17 +17,13 @@ const EvaluarSeccion = ({ opciones, onCheckboxSelect }) => {
 
   const handleOpcionSeleccionada = (event, value) => {
     const seleccionada = event.target.checked;
-    setOpcionesSeleccionadas((prevSelecciones) => {
-      if (seleccionada) {
-        return [...prevSelecciones, value];
-      } else {
-        return prevSelecciones.filter((opcion) => opcion !== value);
-      }
-    });
-    onCheckboxSelect(opcionesSeleccionadas);
+    const nuevasOpcionesSeleccionadas = seleccionada
+      ? [...opcionesSeleccionadas, value]
+      : opcionesSeleccionadas.filter((opcion) => opcion !== value);
+  
+    setOpcionesSeleccionadas(nuevasOpcionesSeleccionadas);
+    onCheckboxSelect(nuevasOpcionesSeleccionadas);
   };
-
-  console.log('opcionesSeleccionadas:', opcionesSeleccionadas);
   
   return (
     <div className="blue-sky-container p-3">
@@ -73,12 +69,11 @@ const EvaluarSeccion = ({ opciones, onCheckboxSelect }) => {
                     {opcion.label}
                   </label>
                 </li>
-              ))}
+              ))};
             </ul>
           </div>
         </div>
-      )}
-
+      )};
     </div>
   )
 };
