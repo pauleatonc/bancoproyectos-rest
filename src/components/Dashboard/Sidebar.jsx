@@ -7,6 +7,7 @@ export const Sidebar = () =>
 
   const [ openDropdownSidebar, setOpenDropdownSidebar ] = useState(false);
   const { dataInnovativeProjectNotificacions, loadingInnovativeProjectNotificacions, errorInnovativeProjectNotificacions } = useApiAdminNotificacions();
+  const [count, setCount] = useState(0); // contador para pruebas
 
   if (loadingInnovativeProjectNotificacions) {
     return <p>Cargando...</p>;
@@ -60,7 +61,11 @@ export const Sidebar = () =>
         </li>
         <li className="my-1">
           <NavLink to="#" className="mx-4 btn-link"  type="button">
-            <i className="badge badge-notification mx-3"> +99 </i>
+            { 
+              count === 0 ?
+              <i className="material-symbols-outlined mx-3">library_books</i> :
+              <i className="badge badge-notification mx-3"> {count} </i> 
+            }
             <u>Banco de Proyectos</u>
           </NavLink>
         </li>
@@ -68,7 +73,7 @@ export const Sidebar = () =>
           <NavLink to="administrarproyectosinnovadores" className="mx-4 btn-link" type="button">
             { 
               dataInnovativeProjectNotificacions.total_count === 0 ?
-              <i className="material-symbols-outlined mx-3">library_books</i> :
+              <i className="material-symbols-outlined mx-3">filter_none</i> :
               <i className="badge badge-notification mx-3"> {dataInnovativeProjectNotificacions.total_count} </i> 
             }
             <u>Proyectos Innovadores</u>
@@ -86,7 +91,11 @@ export const Sidebar = () =>
 
         <li className="my-1">
           <NavLink to="#" className="mx-4 btn-link" type="button">
-            <i className="badge rounded-circle badge-notification mx-3">8</i>
+            { 
+              count === 0 ?
+              <i className="material-symbols-outlined mx-3">supervised_user_circle</i> :
+              <i className="badge badge-notification mx-3"> {count} </i> 
+            }
             <u>Administrar Usuarios</u>
           </NavLink>
         </li>
