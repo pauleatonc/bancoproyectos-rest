@@ -1,10 +1,20 @@
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import useApiAdminNotificacions from '../../hooks/useApiAdminNotificacions';
 
 export const Sidebar = () =>
 {
 
   const [ openDropdownSidebar, setOpenDropdownSidebar ] = useState(false);
+  const { dataInnovativeProjectNotificacions, loadingInnovativeProjectNotificacions, errorInnovativeProjectNotificacions } = useApiAdminNotificacions();
+
+  if (loadingInnovativeProjectNotificacions) {
+    return <p>Cargando...</p>;
+  }
+
+  if (errorInnovativeProjectNotificacions) {
+    return <p>Error: {errorInnovativeProjectNotificacions}</p>;
+  }
 
   const handleDropdownClick = () =>
   {
@@ -56,9 +66,12 @@ export const Sidebar = () =>
         </li>
         <li className="my-1">
           <NavLink to="administrarproyectosinnovadores" className="mx-4 btn-link" type="button">
-            <i className="material-symbols-outlined mx-3">
-              library_books
-            </i><u>Proyectos Innovadores</u>
+            { 
+              dataInnovativeProjectNotificacions.total_count === 0 ?
+              <i className="material-symbols-outlined mx-3">library_books</i> :
+              <i className="badge badge-notification mx-3"> {dataInnovativeProjectNotificacions.total_count} </i> 
+            }
+            <u>Proyectos Innovadores</u>
           </NavLink>
         </li>
         <hr className="w-85 mx-4" />
