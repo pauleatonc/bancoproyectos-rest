@@ -1,7 +1,15 @@
 from rest_framework import serializers
-from applications.home.models import Contact
 
-class ContactSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Contact
-        fields = '__all__'
+class UnifiedHistorySerializer(serializers.Serializer):
+    history_date = serializers.DateTimeField(format="%d/%m/%Y")  # Cambia el formato de la fecha
+    action = serializers.SerializerMethodField()  # Usaremos un método para personalizar la salida
+    title = serializers.CharField()
+
+    def get_action(self, obj):
+        # Traduce 'history_type' al español y lo combina con 'model_type'
+        translations = {
+            "Deleted": "eliminado",
+            "Changed": "editado",
+            "Fecha de creación": "creado"
+        }
+        return f"{obj['model_type']} {translations.get(obj['history_type'], obj['history_type'])}"

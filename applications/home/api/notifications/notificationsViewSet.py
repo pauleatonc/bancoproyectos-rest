@@ -2,86 +2,48 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from applications.innovative_projects.models import InnovativeProjects
+from applications.projects.models import Project, Program, Type
+from applications.documents.models import Documents
 from applications.innovative_projects.api.v1.innovativeProjectSerializer import InnovativeProjectsAdminListSerializer
-from applications.innovative_projects.api.v1.innovativeProjectsViewSet import HasProjectPermissions
 from applications.innovative_projects.models import HistoricalInnovativeProjects, HistoricalInnovativeWebSource, HistoricalInnovativeGalleryImage
-from applications.users.permissions import is_admin, is_editor_general_or_superuser, is_program_related_user, is_any_editor_or_superuser
+from applications.users.permissions import is_admin, is_editor_general_or_superuser, is_program_related_user, is_any_editor_or_superuser, filter_user_type_projects, has_project_permissions
 from collections import Counter
+from django.contrib.auth import get_user_model
+from django.contrib.contenttypes.models import ContentType
+from .serializers import UnifiedHistorySerializer
+from ...functions import filter_and_sort_projects
+
+User = get_user_model()
+
+model_to_title_field = {
+    InnovativeProjects: 'title',
+    Project: 'name',
+    User: 'get_full_name',
+    Program: 'name',
+    Type: 'name',
+    Documents: 'title'
+}
+
+tracked_models = [InnovativeProjects, Project, User, Program, Type, Documents]
+
+def get_title_from_model(model, object_id, model_to_title_field):
+    field_name = model_to_title_field.get(model, "Desconocido")
+    try:
+        obj = model.objects.get(id=object_id)
+        return getattr(obj, field_name, "Desconocido")
+    except model.DoesNotExist:
+        return "Desconocido"
 
 
 class NotificationViewSet(viewsets.ViewSet):
 
-    @action(detail=False, methods=['GET'], permission_classes=[HasProjectPermissions])
+    @action(detail=False, methods=['GET'], permission_classes=[has_project_permissions])
     def innovative_projects_notifications(self, request):
         user = request.user
 
-        if is_editor_general_or_superuser(user):
-            innovative_projects = InnovativeProjects.objects.all()
+        innovative_projects = filter_user_type_projects(user, InnovativeProjects, HistoricalInnovativeProjects)
 
-        # Editor Programa y Profesional: pueden ver innovative projects que compartan el mismo program
-        elif "Editor Programa" in user.groups.values_list('name', flat=True) or \
-                "Profesional" in user.groups.values_list('name', flat=True):
-            # Asegurarse de que el usuario tiene un programa asociado
-            try:
-                user_program = user.program
-                innovative_projects = InnovativeProjects.objects.filter(program=user_program)
-            except AttributeError:  # En caso de que el usuario no tenga un programa asociado
-                innovative_projects = InnovativeProjects.objects.none()
-
-        # Profesional Temporal: pueden ver innovative projects que compartan el mismo program y que haya sido creado por él
-        elif "Profesional Temporal" in user.groups.values_list('name', flat=True):
-            try:
-                user_program = user.program
-                innovative_projects = InnovativeProjects.objects.filter(program=user_program)
-                safe_innovative_projects = []
-                for proj in innovative_projects:
-                    try:
-                        earliest_record = proj.historical_date.earliest('history_date')
-                        if earliest_record.history_user == user:
-                            safe_innovative_projects.append(proj)
-                    except HistoricalInnovativeProjects.DoesNotExist:
-                        # manejar el caso donde no existen registros históricos, si es necesario
-                        pass
-                innovative_projects = safe_innovative_projects
-            except AttributeError:  # En caso de que el usuario no tenga un programa asociado
-                innovative_projects = InnovativeProjects.objects.none()
-
-        else:
-            # Se devuelve un conjunto vacío si no se cumple ningún criterio anterior
-            innovative_projects = InnovativeProjects.objects.none()
-
-
-        # Filtrar estados según el grupo del usuario
-        if is_any_editor_or_superuser(request.user):
-            allowed_statuses = ["Incompleto", "Pendiente"]
-        else:
-            allowed_statuses = ["Incompleto", "Pendiente", "Rechazado"]
-
-        # Filtrar proyectos
-        filtered_projects = [project for project in innovative_projects if
-                             project.application_status in allowed_statuses]
-
-        # Contar los proyectos
-        status_list = [project.application_status for project in filtered_projects]
-        counters = Counter(status_list)
-        total_count = sum(counters.values())
-
-        # Para usuarios que son editores o superusuarios
-        if is_any_editor_or_superuser(request.user):
-            latest_projects = sorted(
-                filtered_projects,
-                key=lambda x: (x.application_status == "Pendiente", x.modified_date),
-                reverse=True
-            )[:3]
-
-        # Para otros usuarios
-        else:
-            order_values = {"Pendiente": 1, "Rechazado": 2, "Incompleto": 3}
-            latest_projects = sorted(
-                filtered_projects,
-                key=lambda x: (order_values.get(x.application_status, 4), x.modified_date),
-                reverse=True
-            )[:3]
+        total_count, latest_projects = filter_and_sort_projects(innovative_projects, user)
 
         # Serializar los últimos 3 proyectos
         serialized_latest_projects = InnovativeProjectsAdminListSerializer(latest_projects, many=True).data
@@ -93,3 +55,43 @@ class NotificationViewSet(viewsets.ViewSet):
         }
 
         return Response(serialized_data, status=status.HTTP_200_OK)
+
+    @action(detail=False, methods=['GET'], permission_classes=[has_project_permissions])
+    def recent_actions(self, request):
+        user = request.user
+
+        # Inicializar lista para almacenar todos los registros históricos
+        combined_history = []
+
+        for model in tracked_models:
+            content_type = ContentType.objects.get_for_model(model)
+            try:
+                historical_model = model.historical_date.filter(history_user=user)
+            except AttributeError as e:
+                print(f"AttributeError para el modelo {model}: {e}")
+                continue  # Saltar al siguiente modelo si este no tiene 'historical_date'
+
+            for record in historical_model:
+                # Usar record.instance para acceder a los campos del objeto
+                original_object_id = record.instance.id
+                field_name = model_to_title_field.get(model, "Desconocido")
+                original_title = getattr(record.instance, field_name, "Desconocido")
+
+                combined_history.append({
+                    'history_date': record.history_date,
+                    'history_type': record.get_history_type_display(),
+                    'model_type': content_type.name,
+                    'object_id': original_object_id,
+                    'title': original_title
+                })
+
+        # Ordenar la lista combinada por history_date
+        combined_history = sorted(combined_history, key=lambda x: x['history_date'], reverse=True)
+
+        # Aquí toma los últimos 10 registros
+        combined_history = combined_history[:10]
+
+        # Serializar la lista combinada
+        serializer = UnifiedHistorySerializer(combined_history, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)

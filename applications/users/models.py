@@ -35,6 +35,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField('Usuario administrador', default=False)
     is_active = models.BooleanField(default=True)
 
+    historical_date = HistoricalRecords(user_model='users.User', inherit=True)
+
     #Campos requeridos
     REQUIRED_FIELDS = ['email']
 

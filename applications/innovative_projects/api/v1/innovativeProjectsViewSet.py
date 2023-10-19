@@ -31,7 +31,7 @@ from .innovativeProjectSerializer import (
     InnovativeWebSourceHistorySerializer,
     InnovativeProjectsRetrieveSerializer
 )
-from applications.users.permissions import is_admin, is_editor_general_or_superuser, is_program_related_user, is_any_editor_or_superuser
+from applications.users.permissions import is_admin, is_editor_general_or_superuser, is_program_related_user, is_any_editor_or_superuser, filter_user_type_projects, has_project_permissions
 from applications.projects.models import Program
 from applications.innovative_projects.models import HistoricalInnovativeProjects, HistoricalInnovativeWebSource, HistoricalInnovativeGalleryImage
 
@@ -39,17 +39,6 @@ from applications.innovative_projects.models import HistoricalInnovativeProjects
 # Paginación para list_admin
 class CustomPageNumberPagination(PageNumberPagination):
     page_size = 20
-
-
-class HasProjectPermissions(BasePermission):
-    """
-    Custom permission to check if a user has the right permissions based on their group.
-    """
-    def has_permission(self, request, view):
-        user = request.user
-        if is_admin(user):
-            return True
-        return False
 
 
 class InnovativeProjectsViewSet(viewsets.ModelViewSet):
@@ -82,7 +71,7 @@ class InnovativeProjectsViewSet(viewsets.ModelViewSet):
         return Response(innovative_projects.data, status=status.HTTP_200_OK)
 
 
-    @action(detail=False, methods=['GET'], permission_classes=[HasProjectPermissions])
+    @action(detail=False, methods=['GET'], permission_classes=[has_project_permissions])
     def list_admin(self, request):
         """
         Listado de todos los Proyectos Innovadores para administración.
@@ -91,40 +80,7 @@ class InnovativeProjectsViewSet(viewsets.ModelViewSet):
         """
         user = request.user
 
-        if is_editor_general_or_superuser(user):
-            innovative_projects = InnovativeProjects.objects.all().order_by('-created_date')
-
-        # Editor Programa y Profesional: pueden ver innovative projects que compartan el mismo program
-        elif "Editor Programa" in user.groups.values_list('name', flat=True) or \
-                "Profesional" in user.groups.values_list('name', flat=True):
-            # Asegurarse de que el usuario tiene un programa asociado
-            try:
-                user_program = user.program
-                innovative_projects = InnovativeProjects.objects.filter(program=user_program).order_by('-created_date')
-            except AttributeError:  # En caso de que el usuario no tenga un programa asociado
-                innovative_projects = InnovativeProjects.objects.none()
-
-        # Profesional Temporal: pueden ver innovative projects que compartan el mismo program y que haya sido creado por él
-        elif "Profesional Temporal" in user.groups.values_list('name', flat=True):
-            try:
-                user_program = user.program
-                innovative_projects = InnovativeProjects.objects.filter(program=user_program).order_by('-created_date')
-                safe_innovative_projects = []
-                for proj in innovative_projects:
-                    try:
-                        earliest_record = proj.historical_date.earliest('history_date')
-                        if earliest_record.history_user == user:
-                            safe_innovative_projects.append(proj)
-                    except HistoricalInnovativeProjects.DoesNotExist:
-                        # manejar el caso donde no existen registros históricos, si es necesario
-                        pass
-                innovative_projects = safe_innovative_projects
-            except AttributeError:  # En caso de que el usuario no tenga un programa asociado
-                innovative_projects = InnovativeProjects.objects.none()
-
-        else:
-            # Se devuelve un conjunto vacío si no se cumple ningún criterio anterior
-            innovative_projects = InnovativeProjects.objects.none()
+        innovative_projects = filter_user_type_projects(user, InnovativeProjects, HistoricalInnovativeProjects)
 
         serialized_data = InnovativeProjectsAdminListSerializer(innovative_projects, many=True)
         return Response(serialized_data.data, status=status.HTTP_200_OK)
@@ -169,7 +125,7 @@ class InnovativeProjectsViewSet(viewsets.ModelViewSet):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    @action(detail=True, methods=['get'], permission_classes=[HasProjectPermissions])
+    @action(detail=True, methods=['get'], permission_classes=[has_project_permissions])
     def get_last_editors(self, request, pk=None):
         """
         Endpoint para obtener los últimos datos de 'solicitud' y 'aprobación/rechazo'
@@ -315,7 +271,7 @@ class InnovativeProjectsViewSet(viewsets.ModelViewSet):
         self.perform_destroy(project)
         return Response({'detail': 'Proyecto eliminado con éxito'}, status=status.HTTP_204_NO_CONTENT)
 
-    @action(detail=True, methods=['PATCH'], permission_classes=[HasProjectPermissions])
+    @action(detail=True, methods=['PATCH'], permission_classes=[has_project_permissions])
     def evaluate(self, request, pk=None):
         """
         Endpoint para evaluación de proyecto
