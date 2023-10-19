@@ -72,16 +72,19 @@ const EvaluarProyecto = () => {
           <p className="text-sans-p">descripcion - dinamico</p>
         </div>
 
-        <div>traer tabla de la otra vista</div>
+        <div className="mx-5">traer tabla de la otra vista</div>
 
-        <EvaluarSeccion 
-        opciones={opcionesEvaluarContenido}
-        onCheckboxSelect={(seleccionados) => {
-          setTodasLasSelecciones((prevSelecciones) => ({
-            ...prevSelecciones,
-            contenido: seleccionados,
-          }));
-        }}/>
+        <div className="mx-5">
+          <EvaluarSeccion 
+          opciones={opcionesEvaluarContenido}
+          onCheckboxSelect={(seleccionados) => {
+            setTodasLasSelecciones((prevSelecciones) => ({
+              ...prevSelecciones,
+              contenido: seleccionados,
+            }));
+          }}/>
+        </div>
+        
       </div>
 
       {/* Imagenes del proyecto */}
@@ -97,7 +100,7 @@ const EvaluarProyecto = () => {
 
         <h3 className="text-sans-h3 ms-5">Imágenes para la gallería</h3>
         <p className="text-sans-h5 ms-5">(máximo 10 imágenes)</p>
-        <div className="ms-5">COMPONENTE GALERIA</div>
+        <div className="ms-5 my-3 text-danger">IMPORTAR AQUI COMPONENTE MINIATURASCARRUSEL, CONECTAR AL BACK</div>
 
         <h3 className="text-sans-h3 ms-5">Antes del proyecto</h3>
         <div className="col-5">
@@ -112,15 +115,17 @@ const EvaluarProyecto = () => {
         <div className="col-5">
           <div className="img-l ms-5 my-3"></div>
         </div>
-
-        <EvaluarSeccion 
-        opciones={opcionesEvaluarImgs}
-        onCheckboxSelect={(seleccionados) => {
-          setTodasLasSelecciones((prevSelecciones) => ({
-            ...prevSelecciones,
-            imagenes: seleccionados,
-          }));
-        }}/>
+        
+        <div className="mx-5">
+          <EvaluarSeccion 
+          opciones={opcionesEvaluarImgs}
+          onCheckboxSelect={(seleccionados) => {
+            setTodasLasSelecciones((prevSelecciones) => ({
+              ...prevSelecciones,
+              imagenes: seleccionados,
+            }));
+          }}/>
+        </div>
       </div>
 
       {/* Documentos del proyecto */}
@@ -136,18 +141,20 @@ const EvaluarProyecto = () => {
         <h3 className="text-sans-h2 ms-5">Documentos con normativa de uso general</h3>
         <div className="ms-5">TABLA 3</div>
 
-        <EvaluarSeccion 
-        opciones={opcionesEvaluarDocs}
-        onCheckboxSelect={(seleccionados) => {
-          setTodasLasSelecciones((prevSelecciones) => ({
-            ...prevSelecciones,
-            documentos: seleccionados,
-          }));
-        }}/>
+        <div className="mx-5">
+          <EvaluarSeccion 
+          opciones={opcionesEvaluarDocs}
+          onCheckboxSelect={(seleccionados) => {
+            setTodasLasSelecciones((prevSelecciones) => ({
+              ...prevSelecciones,
+              documentos: seleccionados,
+            }));
+          }}/>
+        </div>
       </div>
 
       {/* Resumen evaluacion */}
-      <div className="col-11">
+      <div className="col-11 mx-5">
         <h3 className="text-sans-h3-tertiary">Evaluación de la solicitud</h3>
         <p className="text-sans-p-tertiary">Marcaste que estas secciones tienen problemas:</p>
 
