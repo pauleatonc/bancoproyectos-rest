@@ -129,6 +129,7 @@ const EvaluarInnovador = () => {
         <p className="text-sans-p">Marcaste que estas secciones tienen problemas:</p>
 
         <div className="container row my-5">
+          {todasLasSelecciones.contenido.length > 0 && (
           <div className="col-4">
             <div>
               <p className="text-sans-p ms-3">Sección 1</p>
@@ -145,6 +146,8 @@ const EvaluarInnovador = () => {
               </div>
             </div>
           </div>
+          )}
+          {todasLasSelecciones.imagenes.length > 0 && (
           <div className="col-4">
             <div>
               <p className="text-sans-p ms-3">Sección 2</p>
@@ -154,13 +157,20 @@ const EvaluarInnovador = () => {
                   key={seleccion} 
                   className={`d-flex py-4 text-sans-h5-red ${index % 2 === 0 ? 'grey-table-line' : 'white-table-line'}`}
                   >
-                    <i className="material-symbols-rounded ms-2">warning</i>
+                    <i className="material-symbols-rounded ms-2 red-icon">warning</i>
                     <p className="text-sans-p ms-4 mb-0">{seleccion}</p>
                 </div>
                 ))}
               </div>
             </div>
           </div>
+          )}
+          {/* Mensaje si no hay selecciones */}
+          {todasLasSelecciones.contenido.length === 0 && todasLasSelecciones.imagenes.length === 0 && (
+            <div className="col-8">
+              <p className="text-sans-p ms-3">Aún no has detectado problemas en ninguna de las secciones.</p>
+            </div>
+          )}
         </div>
 
 

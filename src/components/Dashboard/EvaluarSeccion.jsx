@@ -59,14 +59,14 @@ const EvaluarSeccion = ({ opciones, onCheckboxSelect }) => {
             <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
               {opciones.map((opcion) => (
                 <li key={opcion.value}>
-                  <label className="form-check-label">
+                  <label className="form-check-label d-flex">
                     <input 
                     type="checkbox" 
                     className="form-check-input" 
                     value={opcion.value}
                     onChange={(e) => handleOpcionSeleccionada(e, opcion.value)} 
                     /> 
-                    {opcion.label}
+                    <p className="ms-2">{opcion.label}</p>
                   </label>
                 </li>
               ))}
