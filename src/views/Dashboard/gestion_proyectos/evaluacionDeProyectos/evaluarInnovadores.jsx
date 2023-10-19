@@ -125,10 +125,10 @@ const EvaluarInnovador = () => {
 
      {/* Resumen evaluacion */}
      <div className="col-11">
-        <h3 className="text-sans-h3">Evaluación de la solicitud</h3>
-        <p className="text-sans-p">Marcaste que estas secciones tienen problemas:</p>
+        <h3 className="text-sans-h3-tertiary">Evaluación de la solicitud</h3>
+        <p className="text-sans-p-tertiary">Marcaste que estas secciones tienen problemas:</p>
 
-        <div className="container row my-5">
+        <div className="container row mt-4 mb-5">
           {todasLasSelecciones.contenido.length > 0 && (
           <div className="col-4">
             <div>
@@ -173,11 +173,9 @@ const EvaluarInnovador = () => {
           )}
         </div>
 
-
-
         <div className="d-flex">
           <p className="text-sans-p-tertiary"><strong>Por lo tanto la solicitud será:</strong></p>
-          <p className="text-sans-p ms-2 border">etiqueta</p>
+          <p className="text-sans-p ms-2 border ms-5">etiqueta</p>
         </div>
         <p className="text-sans-p-tertiary">Esta retroalimentación le llegará a $userName(solicitante), si crees que necesita más detalles para hacer las correcciones, puedes agregarlos a continuación.</p>
 

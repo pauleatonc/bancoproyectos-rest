@@ -65,6 +65,9 @@ $black-color: #111111;
 .text-sans-h3{
     @include font-sans(25px, 500, $grey-a-color);
 }
+.text-sans-h3-tertiary{
+    @include font-sans(25px, 500, $tertiary-color);
+}
 .text-sans-h3-lightgrey{
     @include font-sans(25px, 500, $grey-c-color);
 }
