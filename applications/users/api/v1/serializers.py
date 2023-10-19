@@ -2,6 +2,7 @@ from rest_framework import serializers
 from applications.users.models import User
 from django.contrib.auth.models import Group, Permission
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from applications.projects.api.v1.projectSerializer import ProgramSerializerV1
 
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
@@ -10,10 +11,11 @@ class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
 class UserSerializer(serializers.ModelSerializer):
     tipo_de_usuario = serializers.SerializerMethodField()
     full_name = serializers.SerializerMethodField()
+    program = ProgramSerializerV1()
 
     class Meta:
         model = User
-        fields = ('id', 'full_name', 'rut', 'email', 'tipo_de_usuario', 'is_active')
+        fields = ('id', 'full_name', 'rut', 'email', 'tipo_de_usuario', 'is_active', 'program')
 
     def create(self, validated_data):
         user = User(**validated_data)
