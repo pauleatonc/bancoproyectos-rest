@@ -5,6 +5,11 @@ const useApiAdminNotificacions = () => {
   const [dataInnovativeProjectNotificacions, setDataInnovativeProjectNotificacions] = useState([]);
   const [loadingInnovativeProjectNotificacions, setLoadingInnovativeProjectNotificacions] = useState(true);
   const [errorInnovativeProjectNotificacions, setErrorInnovativeProjectNotificacions] = useState(null);
+  
+  const [dataRecentActions, setDataRecentActions] = useState([]);
+  const [loadingRecentActions, setLoadingRecentActions] = useState(true);
+  const [errorRecentActions, setErrorRecentActions] = useState(null);
+
 
   const fetchInnovativeProjectNotificacions = async (endpoint = 'notifications/v1/innovative_projects_notifications/') => {
     setLoadingInnovativeProjectNotificacions(true);
@@ -21,14 +26,33 @@ const useApiAdminNotificacions = () => {
     }
   };
 
+  const fetchRecentActions = async (endpoint = 'notifications/v1/recent_actions/') => {
+    setLoadingRecentActions(true);
+    try {
+      const response = await apiBancoProyecto.get(endpoint);
+      setDataRecentActions(response.data);
+      setErrorRecentActions(null);
+    } catch (error) {
+      setErrorRecentActions(
+        error.response ? error.response.data : error.message
+      );
+    } finally {
+      setLoadingRecentActions(false);
+    }
+  };
+
   useEffect(() => {
     fetchInnovativeProjectNotificacions();
+    fetchRecentActions();
   }, []);
 
   return {
     dataInnovativeProjectNotificacions,
     loadingInnovativeProjectNotificacions,
     errorInnovativeProjectNotificacions,
+    dataRecentActions,
+    loadingRecentActions,
+    errorRecentActions,
   };
 };
 
