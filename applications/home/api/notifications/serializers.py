@@ -20,3 +20,4 @@ class ProjectStatusSerializer(serializers.Serializer):
     history_date = serializers.DateTimeField(format="%d/%m/%Y")
     action = serializers.CharField()
     read = serializers.BooleanField()
+    notification_id = serializers.CharField()

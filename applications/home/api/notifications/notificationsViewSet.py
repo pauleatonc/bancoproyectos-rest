@@ -67,11 +67,11 @@ class NotificationViewSet(viewsets.ViewSet):
 
         for model in tracked_models:
             content_type = ContentType.objects.get_for_model(model)
-            try:
+            if hasattr(model, 'historical_date'):
                 historical_model = model.historical_date.filter(history_user=user)
-            except AttributeError as e:
-                print(f"AttributeError para el modelo {model}: {e}")
-                continue  # Saltar al siguiente modelo si este no tiene 'historical_date'
+            else:
+                print(f"{model} no tiene un atributo historical_date.")
+                continue
 
             for record in historical_model:
                 # Usar record.instance para acceder a los campos del objeto
@@ -106,48 +106,46 @@ class NotificationViewSet(viewsets.ViewSet):
         # Filtrar proyectos basados en el tipo de usuario
         innovative_projects = filter_user_type_projects(user, InnovativeProjects, HistoricalInnovativeProjects)
 
-        # Juntar ambos QuerySets en una lista
+        # Juntar QuerySets en una lista
         combined = list(innovative_projects)
 
-        # Filtrar y formatear la información
         for project in combined:
             content_type = ContentType.objects.get_for_model(project)
 
-            # Buscar la notificación correspondiente en la base de datos
-            notification = Notification.objects.get_or_create(
+            # Obtener todas las notificaciones relacionadas con este proyecto
+            notifications = Notification.objects.filter(
                 user=user,
                 content_type=content_type,
-                object_id=project.id,
-            )[0]
+                object_id=project.id
+            )
 
-            # Aquí obtienes el campo del título según el modelo
-            field_name = model_to_title_field.get(type(project), "Desconocido")
-            project_name = getattr(project, field_name, "Desconocido")
+            for notification in notifications:
+                field_name = model_to_title_field.get(type(project), "Desconocido")
+                project_name = getattr(project, field_name, "Desconocido")
 
-            if is_any_editor_or_superuser(user):
-                if project.request_sent:
-                    result.append({
-                        'project_name': project_name,
-                        'history_date': project.modified_date,
-                        'action': f'Solicitud de {content_type.name} pendiente',
-                        'read': notification.read
-                    })
-            else:
-                if project.evaluated:
-                    action_text = f"Solicitud de {content_type.name} "
-                    action_text += 'rechazada' if project.application_status == 'Rechazado' else 'aceptada'
+                if is_any_editor_or_superuser(user):
+                    if project.request_sent:
+                        result.append({
+                            'project_name': project_name,
+                            'history_date': project.modified_date,
+                            'action': f'Solicitud de {content_type.name} pendiente',
+                            'read': notification.read,
+                            'notification_id': notification.id
+                        })
+                else:
+                    if project.evaluated:
+                        action_text = f"Solicitud de {content_type.name} "
+                        action_text += 'rechazada' if project.application_status == 'Rechazado' else 'aceptada'
 
-                    result.append({
-                        'project_name': project_name,
-                        'history_date': project.modified_date,
-                        'action': action_text,
-                        'read': notification.read
-                    })
+                        result.append({
+                            'project_name': project_name,
+                            'history_date': project.modified_date,
+                            'action': action_text,
+                            'read': notification.read,
+                            'notification_id': notification.id
+                        })
 
-        # ordenar desde el más reciente
         sorted_result = sorted(result, key=lambda x: x['history_date'], reverse=True)
-
-        # Serializar el resultado
         serializer = ProjectStatusSerializer(sorted_result, many=True)
 
         return Response(serializer.data)

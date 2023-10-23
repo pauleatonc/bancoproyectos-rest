@@ -185,8 +185,6 @@ class InnovativeProjectsUpdateSerializer(serializers.ModelSerializer):
     program = serializers.CharField(required=False)
     innovative_gallery_images = InnovativeGalleryImageSerializerV1(many=True, required=False)
     web_sources = InnovativeWebSourceSerializerV1(many=True, required=False)
-    revision_section_one = RevisionSectionOneSerializer(required=False)
-    revision_section_two = RevisionSectionTwoSerializer(required=False)
 
 
     class Meta:
@@ -198,9 +196,6 @@ class InnovativeProjectsUpdateSerializer(serializers.ModelSerializer):
                   'web_sources',
                   'innovative_gallery_images',
                   'public',
-                  'revision_section_one',
-                  'revision_section_two',
-                  'evaluated',
                   'request_sent'
                   ]
 
@@ -228,67 +223,7 @@ class InnovativeProjectsUpdateSerializer(serializers.ModelSerializer):
         return data
 
     def update(self, instance, validated_data):
-        request = self.context.get('request')
-        user = request.user
 
-        # Lógica para determinar los valores aprobados
-        if is_any_editor_or_superuser(user):
-            revision_section_one_data = {
-                'approved_title': True,
-                'approved_description': True,
-                'approved_program': True,
-                'approved_section_one': True
-            }
-
-            revision_section_two_data = {
-                'approved_portada': True,
-                'approved_gallery': True,
-                'approved_web_source': True,
-                'approved_section_two': True
-            }
-            validated_data['evaluated'] = True
-
-        else:
-            # Usa los valores por defecto del modelo si no es superusuario o editor
-            revision_section_one_data = {
-                'approved_title': RevisionSectionOne._meta.get_field('approved_title').default,
-                'approved_description': RevisionSectionOne._meta.get_field('approved_description').default,
-                'approved_program': RevisionSectionOne._meta.get_field('approved_program').default,
-                'approved_section_one': RevisionSectionOne._meta.get_field('approved_section_one').default,
-            }
-
-            revision_section_two_data = {
-                'approved_portada': RevisionSectionTwo._meta.get_field('approved_portada').default,
-                'approved_gallery': RevisionSectionTwo._meta.get_field('approved_gallery').default,
-                'approved_web_source': RevisionSectionTwo._meta.get_field('approved_web_source').default,
-                'approved_section_two': RevisionSectionTwo._meta.get_field('approved_section_two').default,
-            }
-
-        # Para revision_section_one
-        try:
-            for field, value in revision_section_one_data.items():
-                setattr(instance.revision_section_one, field, value)
-            instance.revision_section_one.save()
-        except ObjectDoesNotExist:
-            # Crea el objeto si no existe
-            RevisionSectionOne.objects.create(project=instance, **revision_section_one_data)
-
-        for field, value in revision_section_one_data.items():
-            setattr(instance.revision_section_one, field, value)
-        instance.revision_section_one.save()
-
-        # Para revision_section_two
-        try:
-            for field, value in revision_section_two_data.items():
-                setattr(instance.revision_section_two, field, value)
-            instance.revision_section_two.save()
-        except ObjectDoesNotExist:
-            # Crea el objeto si no existe
-            RevisionSectionTwo.objects.create(project=instance, **revision_section_two_data)
-
-        for field, value in revision_section_two_data.items():
-            setattr(instance.revision_section_two, field, value)
-        instance.revision_section_two.save()
 
         # Actualiza los campos foráneos del modelo
         program_name = validated_data.get('program')
@@ -336,9 +271,7 @@ class InnovativeProjectsUpdateSerializer(serializers.ModelSerializer):
         instance.portada = validated_data.get('portada', instance.portada)
         instance.request_sent = validated_data.get('request_sent', instance.request_sent)
 
-        print("Before save:", instance.request_sent)
         instance.save()
-        print("After save:", instance.request_sent)
 
         return instance
 
