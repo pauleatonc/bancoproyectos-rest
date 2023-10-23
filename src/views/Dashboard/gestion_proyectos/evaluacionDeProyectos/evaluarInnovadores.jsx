@@ -13,6 +13,8 @@ const EvaluarInnovador = () => {
     imagenes: [],
   });
   const [mostrarResumen, setMostrarResumen] = useState(false);
+  const [allAccepted, setAllAccepted] = useState(false);
+  const [anyNotAccepted, setAnyNotAccepted] = useState(false);
 
   const { getInnovativeProjectById } = useApiInnovativeProjects();
   // Aqui entregar el id del proyecto de manera dinamica.
@@ -53,8 +55,16 @@ const EvaluarInnovador = () => {
 
   // Maneja calificacion "no" en EvaluarSeccion
   const handleReject = () => {
+    setAnyNotAccepted(true);
     setMostrarResumen(true);
   };
+
+  // Actualizar allAccepted cuando el usuario cambia sus selecciones
+  useEffect(() => {
+    const allAccepted = todasLasSelecciones.contenido.every((seleccion) => seleccion === 'Si') &&
+      todasLasSelecciones.imagenes.every((seleccion) => seleccion === 'Si');
+    setAllAccepted(allAccepted);
+  }, [todasLasSelecciones]);
 
   return (
     <div className="container view-container ms-5">
@@ -134,12 +144,14 @@ const EvaluarInnovador = () => {
      {/* Resumen evaluacion */}
      <div className="col-11">
 
-      {mostrarResumen && (
+      {mostrarResumen && (!allAccepted || anyNotAccepted) && (
         <div>
           <h3 className="text-sans-h3-tertiary">Evaluación de la solicitud</h3>
-          <p className="text-sans-p-tertiary">Marcaste que estas secciones tienen problemas:</p>
+          
           <div className="container row mt-4 mb-5">
             {todasLasSelecciones.contenido.length > 0 && (
+            <>
+            <p className="text-sans-p-tertiary">Marcaste que estas secciones tienen problemas:</p>
             <div className="col-4">
               <div>
                 <p className="text-sans-p ms-3">Sección 1</p>
@@ -156,6 +168,7 @@ const EvaluarInnovador = () => {
                 </div>
               </div>
             </div>
+            </>
             )}
             {todasLasSelecciones.imagenes.length > 0 && (
             <div className="col-4">
@@ -178,7 +191,7 @@ const EvaluarInnovador = () => {
             {/* Mensaje si no hay selecciones */}
             {todasLasSelecciones.contenido.length === 0 && todasLasSelecciones.imagenes.length === 0 && (
               <div className="col-8">
-                <p className="text-sans-p ms-3">Aún no has detectado problemas en ninguna de las secciones.</p>
+                <p className="text-sans-p-bold-darkred ms-3">Debes justificar tu evaluacion en cada seccion rechazada.</p>
               </div>
             )}
           </div>
