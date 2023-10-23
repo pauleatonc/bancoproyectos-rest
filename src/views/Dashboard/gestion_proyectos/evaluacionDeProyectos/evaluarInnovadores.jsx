@@ -59,11 +59,14 @@ const EvaluarInnovador = () => {
     setMostrarResumen(true);
   };
 
-  // Actualizar allAccepted cuando el usuario cambia sus selecciones
   useEffect(() => {
-    const allAccepted = todasLasSelecciones.contenido.every((seleccion) => seleccion === 'Si') &&
-      todasLasSelecciones.imagenes.every((seleccion) => seleccion === 'Si');
-    setAllAccepted(allAccepted);
+    const contenidoAccepted = todasLasSelecciones.contenido.every((seleccion) => seleccion === 'Si');
+    const imagenesAccepted = todasLasSelecciones.imagenes.every((seleccion) => seleccion === 'Si');
+    setAllAccepted(contenidoAccepted && imagenesAccepted);
+
+    if (contenidoAccepted && imagenesAccepted) {
+      setMostrarResumen(false);
+    }
   }, [todasLasSelecciones]);
 
   return (
@@ -143,11 +146,9 @@ const EvaluarInnovador = () => {
 
      {/* Resumen evaluacion */}
      <div className="col-11">
-
-      {mostrarResumen && (!allAccepted || anyNotAccepted) && (
+      {mostrarResumen && (anyNotAccepted || !allAccepted) && (
         <div>
           <h3 className="text-sans-h3-tertiary">Evaluación de la solicitud</h3>
-          
           <div className="container row mt-4 mb-5">
             {todasLasSelecciones.contenido.length > 0 && (
             <>
@@ -191,7 +192,7 @@ const EvaluarInnovador = () => {
             {/* Mensaje si no hay selecciones */}
             {todasLasSelecciones.contenido.length === 0 && todasLasSelecciones.imagenes.length === 0 && (
               <div className="col-8">
-                <p className="text-sans-p-bold-darkred ms-3">Debes justificar tu evaluacion en cada seccion rechazada.</p>
+                <p className="text-sans-p-bold-darkred ms-3">Debes justificar tu evaluación en cada sección rechazada.</p>
               </div>
             )}
           </div>
