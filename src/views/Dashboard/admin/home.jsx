@@ -5,15 +5,15 @@ import useApiAdminNotificacions from "../../../hooks/useApiAdminNotificacions";
 const HomeDashboard = () =>{
 
   const { userData } = useAuth();
-  const { dataInnovativeProjectNotificacions, loadingInnovativeProjectNotificacions, errorInnovativeProjectNotificacions, dataRecentActions, loadingRecentActions, errorRecentActions } = useApiAdminNotificacions();
+  const state = useApiAdminNotificacions();
 
-  if (loadingInnovativeProjectNotificacions) {
-    return <p>Cargando...</p>;
-  }
-
-  if (errorInnovativeProjectNotificacions) {
-    return <p>Error: {errorInnovativeProjectNotificacions}</p>;
-  }
+  const { data: dataInnovativeProjectNotificacions, 
+          loading: loadingInnovativeProjectNotificacions, 
+          error: errorInnovativeProjectNotificacions } = state.innovative_projects_notifications;
+    
+  const { data: dataRecentActions,
+          loading: loadingRecentActions,
+          error: errorRecentActions } = state.recent_actions;
 
   return (
     <>

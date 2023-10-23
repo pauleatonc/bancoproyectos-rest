@@ -153,7 +153,7 @@ const CrearProyectoInnovadorP1 = () => {
           <input
             type="text"
             readOnly
-            value={program.name}
+            value="Programa"
             className="custom-selector p-3"
           />
         )}

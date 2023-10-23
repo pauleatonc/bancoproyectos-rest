@@ -72,6 +72,9 @@ const AdministrarProyectosInnovadores = () => {
           <p className="text-sans-b-gray">Proyecto</p>
         </div>
         <div className="col mt-2">
+          <p className="text-sans-b-gray">Autor</p>
+        </div>
+        <div className="col mt-2">
           <button className="sort-estado-btn d-flex align-items-top">
             <p className="text-sans-b-gray mt-1">Estado</p>
             <i className="material-symbols-rounded ms-2 pt-1">filter_alt</i>
@@ -92,6 +95,7 @@ const AdministrarProyectosInnovadores = () => {
           <div key={index} className={`row border-top ${index % 2 === 0 ? 'grey-table-line' : 'white-table-line'}`}>
             <div className="col-1 p-3">{index + 1}</div>
             <div className="col p-3">{project.title}</div>
+            <div className="col p-3">{project.author_email}</div>
             <div className="col p-3">
               <p className={project.application_status ? `px-3 py-1 ${project.application_status.toLowerCase()}` : ''}> {project.application_status} </p>
             </div>
