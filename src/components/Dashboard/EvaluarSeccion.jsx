@@ -1,18 +1,22 @@
 import { useState } from 'react';
 
-const EvaluarSeccion = ({ opciones, onCheckboxSelect }) => {
+const EvaluarSeccion = ({ opciones, onCheckboxSelect, onReject }) => {
   const [mostrarRazones, setMostrarRazones] = useState(false);
   const [respuesta, setRespuesta] = useState(null);
   const [opcionesSeleccionadas, setOpcionesSeleccionadas] = useState([]);
 
   const handleSiClick = () => {
+    console.log("Clic en 'Sí'");
     setRespuesta('Si');
     setMostrarRazones(false);
+    setOpcionesSeleccionadas([]);
+    onCheckboxSelect([]);
   };
 
   const handleNoClick = () => {
     setRespuesta('No');
     setMostrarRazones(true);
+    onReject();
   };
 
   const handleOpcionSeleccionada = (event, value) => {
