@@ -6,8 +6,11 @@ const EvaluarSeccion = ({ opciones, onCheckboxSelect }) => {
   const [opcionesSeleccionadas, setOpcionesSeleccionadas] = useState([]);
 
   const handleSiClick = () => {
+    console.log("Clic en 'Sí'");
     setRespuesta('Si');
     setMostrarRazones(false);
+    setOpcionesSeleccionadas([]);
+    onCheckboxSelect([]);
   };
 
   const handleNoClick = () => {
