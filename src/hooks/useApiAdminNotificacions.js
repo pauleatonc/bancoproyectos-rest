@@ -2,57 +2,56 @@ import { useState, useEffect } from 'react';
 import { apiBancoProyecto } from '../services/bancoproyecto.api.js'; 
 
 const useApiAdminNotificacions = () => {
-  const [dataInnovativeProjectNotificacions, setDataInnovativeProjectNotificacions] = useState([]);
-  const [loadingInnovativeProjectNotificacions, setLoadingInnovativeProjectNotificacions] = useState(true);
-  const [errorInnovativeProjectNotificacions, setErrorInnovativeProjectNotificacions] = useState(null);
-  
-  const [dataRecentActions, setDataRecentActions] = useState([]);
-  const [loadingRecentActions, setLoadingRecentActions] = useState(true);
-  const [errorRecentActions, setErrorRecentActions] = useState(null);
+  const apiEndpoints = [
+    'innovative_projects_notifications',
+    'recent_actions',
+    'unread_count',
+    'notifications',
+  ];
 
+  const apiState = {};
 
-  const fetchInnovativeProjectNotificacions = async (endpoint = 'notifications/v1/innovative_projects_notifications/') => {
-    setLoadingInnovativeProjectNotificacions(true);
+  // Configurar el estado para cada endpoint
+  [...apiEndpoints].forEach(endpoint => {
+    apiState[endpoint] = {
+      data: null,
+      loading: true,
+      error: null,
+    };
+  });
+
+  const [state, setState] = useState(apiState);
+
+  // Función genérica para fetch
+  const fetchData = async (endpoint, method = 'get') => {
+    setState(prevState => ({ ...prevState, [endpoint]: { ...prevState[endpoint], loading: true }}));
+
     try {
-      const response = await apiBancoProyecto.get(endpoint);
-      setDataInnovativeProjectNotificacions(response.data);
-      setErrorInnovativeProjectNotificacions(null);
+      const response = await apiBancoProyecto[method](`notifications/v1/${endpoint}/`);
+      setState(prevState => ({ 
+        ...prevState, 
+        [endpoint]: { data: response.data, loading: false, error: null },
+      }));
     } catch (error) {
-      setErrorInnovativeProjectNotificacions(
-        error.response ? error.response.data : error.message
-      );
-    } finally {
-      setLoadingInnovativeProjectNotificacions(false);
+      setState(prevState => ({ 
+        ...prevState, 
+        [endpoint]: { data: null, loading: false, error: error.response ? error.response.data : error.message },
+      }));
     }
   };
 
-  const fetchRecentActions = async (endpoint = 'notifications/v1/recent_actions/') => {
-    setLoadingRecentActions(true);
-    try {
-      const response = await apiBancoProyecto.get(endpoint);
-      setDataRecentActions(response.data);
-      setErrorRecentActions(null);
-    } catch (error) {
-      setErrorRecentActions(
-        error.response ? error.response.data : error.message
-      );
-    } finally {
-      setLoadingRecentActions(false);
-    }
+  // Función específica para mark_as_read
+  const markAsRead = async () => {
+    await fetchData('mark_as_read', 'post');
   };
 
   useEffect(() => {
-    fetchInnovativeProjectNotificacions();
-    fetchRecentActions();
+    apiEndpoints.forEach(endpoint => fetchData(endpoint));
   }, []);
 
   return {
-    dataInnovativeProjectNotificacions,
-    loadingInnovativeProjectNotificacions,
-    errorInnovativeProjectNotificacions,
-    dataRecentActions,
-    loadingRecentActions,
-    errorRecentActions,
+    ...state,
+    markAsRead  // Devolvemos la función para poder utilizarla en los componentes
   };
 };
 

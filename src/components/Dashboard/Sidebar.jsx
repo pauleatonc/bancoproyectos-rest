@@ -1,21 +1,37 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import useApiAdminNotificacions from '../../hooks/useApiAdminNotificacions';
+import NotificationModal from '../Modals/ModalNotificacion';
 
 export const Sidebar = () =>
 {
 
   const [ openDropdownSidebar, setOpenDropdownSidebar ] = useState(false);
-  const { dataInnovativeProjectNotificacions, loadingInnovativeProjectNotificacions, errorInnovativeProjectNotificacions } = useApiAdminNotificacions();
-  const [count, setCount] = useState(0); // contador para pruebas
+  const state = useApiAdminNotificacions();
 
-  if (loadingInnovativeProjectNotificacions) {
-    return <p>Cargando...</p>;
-  }
+  const { data: dataInnovativeProjectNotificacions, 
+          loading: loadingInnovativeProjectNotificacions, 
+          error: errorInnovativeProjectNotificacions } = state.innovative_projects_notifications;
+    
+  const { data: dataUnreadCount,
+          loading: loadingUnreadCount,
+          error: errorUnreadCount } = state.unread_count;
 
-  if (errorInnovativeProjectNotificacions) {
-    return <p>Error: {errorInnovativeProjectNotificacions}</p>;
-  }
+  const { data: dataNotifications,
+          loading: loadingNotifications,
+          error: errorNotifications } = state.notifications;
+
+  const [showModal, setShowModal] = useState(false);
+
+  const handleNotificationsClick = () => {
+    // Llamar a markAsRead para marcar las notificaciones como leídas
+    state.markAsRead();
+    // Abrir el modal de notificaciones
+    setShowModal(true); 
+  };
+
+  
+  const [count, setCount] = useState(0); // Solo para pruebas
 
   const handleDropdownClick = () =>
   {
@@ -44,10 +60,17 @@ export const Sidebar = () =>
           </NavLink>
         </li>
         <li className="my-1">
-          <NavLink to="#" className="mx-4 btn-link">
+          <NavLink to="#" className="mx-4 btn-link" onClick={handleNotificationsClick}>
             <i className="material-symbols-outlined mx-3">
               mail
-            </i><u>Notificaciones</u><i className="badge rounded-circle badge-notification mx-3">10</i>
+            </i><u>Notificaciones</u>
+            { 
+              dataUnreadCount && dataUnreadCount.unread_count === 0 ?
+              <i className="material-symbols-outlined mx-3"></i> :
+              loadingUnreadCount ? <span>Cargando...</span> : 
+              errorUnreadCount ? <span>Error</span> :
+              <i className="badge badge-notification mx-3"> {dataUnreadCount && dataUnreadCount.unread_count} </i> 
+            }
           </NavLink>
         </li>
         <hr className="w-85 mx-4" />
@@ -72,9 +95,11 @@ export const Sidebar = () =>
         <li className="my-1">
           <NavLink to="administrarproyectosinnovadores" className="mx-4 btn-link" type="button">
             { 
-              dataInnovativeProjectNotificacions.total_count === 0 ?
+              dataInnovativeProjectNotificacions && dataInnovativeProjectNotificacions.total_count === 0 ?
               <i className="material-symbols-outlined mx-3">filter_none</i> :
-              <i className="badge badge-notification mx-3"> {dataInnovativeProjectNotificacions.total_count} </i> 
+              loadingInnovativeProjectNotificacions ? <span>Cargando...</span> : 
+              errorInnovativeProjectNotificacions ? <span>Error</span> :
+              <i className="badge badge-notification mx-3"> {dataInnovativeProjectNotificacions && dataInnovativeProjectNotificacions.total_count} </i> 
             }
             <u>Proyectos Innovadores</u>
           </NavLink>
@@ -153,6 +178,12 @@ export const Sidebar = () =>
           </ul>
         </div>
       </div>
+
+    <NotificationModal 
+      show={showModal} 
+      dataNotifications={dataNotifications} 
+      onClose={() => setShowModal(false)} 
+    /> 
     </div >
   )
 }
