@@ -65,6 +65,9 @@ $black-color: #111111;
 .text-sans-h3{
     @include font-sans(25px, 500, $grey-a-color);
 }
+.text-sans-h3-tertiary{
+    @include font-sans(25px, 500, $tertiary-color);
+}
 .text-sans-h3-lightgrey{
     @include font-sans(25px, 500, $grey-c-color);
 }
@@ -90,7 +93,6 @@ $black-color: #111111;
 .text-sans-h5-red{
     @include font-sans(14px, 400, $dark-red);
 }
-
 .text-sans-h5-grey{
     @include font-sans(14px, 400, $grey-a-color);
 }
@@ -107,6 +109,9 @@ $black-color: #111111;
 .text-sans-p-white{
     @include font-sans(16px, 400, $white-color);
     line-height: 35px;
+}
+.text-sans-p-lightgrey{
+    @include font-sans(16px, 400, $grey-light-color); 
 }
 .text-sans-p-bold-darkred{
     @include font-sans(16px, 700, $dark-red);
@@ -158,22 +163,22 @@ $black-color: #111111;
 }
 
 // Botones
-@mixin btn-principal ($btnSize){
+@mixin btn-principal ($btnSize, $btnColor){
     width: $btnSize;
-    background-color: $blue-color;
+    background-color: $btnColor;
     border: none;
     color: $white-color;
     padding: 13px;
 }
 .btn-principal-s{
-   @include btn-principal(fit-content);
+   @include btn-principal(fit-content, $blue-color);
    height: fit-content; 
 }
 .btn-principal-l{
-    @include btn-principal(90%); 
+    @include btn-principal(90%, $blue-color); 
 }
 .btn-principal-xl{
-    @include btn-principal(100%); 
+    @include btn-principal(100%, $blue-color); 
 }
 
 @mixin btn-secundario ($btnSize, $btnBG, $btnColor){
@@ -269,6 +274,13 @@ $black-color: #111111;
     color: $white-color;
 }
 
+.alert-btn{
+    @include btn-principal(fit-content, $dark-red); 
+}
+.success-btn{
+    @include btn-principal(fit-content, $success-color); 
+}
+
 .custom-pagination-btn{
     border: none;
     background-color: transparent;
@@ -278,7 +290,6 @@ $black-color: #111111;
     background-color:$blue-color;
     color: $white-color;
 }
-
 
 .red-btn{
     width: fit-content;
@@ -321,6 +332,31 @@ $black-color: #111111;
     background-color: transparent;
     color: #0F69C4;
 }
+
+// Containers
+.success-container{
+    border: 1px solid $success-color;
+    border-radius: 4px;
+    box-shadow: 2px 5px 10px $grey-light-color;
+    margin-left: 10%;
+  }
+.tertiary-container{
+    border: 1px solid $tertiary-color;
+    border-radius: 4px;
+    box-shadow: 2px 5px 10px $grey-light-color;
+}
+.dashed-container{
+    border: 3px dashed #6FA5DC;
+}
+.neutral-container{
+    background-color: $neutral-color;
+}
+.blue-sky-container{
+    border-radius: 4px;
+    background-color:$blue-sky;
+}
+
+
 
 
 #btn-icon:hover  #btnIcon {

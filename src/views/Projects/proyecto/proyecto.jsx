@@ -44,7 +44,7 @@ const Proyecto = () =>
       <h1 className="text-sans-h1 my-md-5">{dataProject.name}</h1>
 
       {/* Descripcion del proyecto */}
-      <div className="descripcion-container py-3 px-3">
+      <div className="neutral-container py-3 px-3">
         <h2 className="text-sans-h2 my-2">Descripción del proyecto</h2>
         <p className="text-sans-p" style={{ whiteSpace: 'pre-line' }}>{dataProject.description}</p>
       </div>
