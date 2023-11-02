@@ -11,7 +11,6 @@ export const DocumentsProjects = ({ index, description, fileType }) =>
     const file = event.target.files[ 0 ];
     if (file)
     {
-      console.log(file);
       setFileUploaded(true);
       setFileName(file.name);
     }

@@ -36,6 +36,7 @@ export const useLogin = () => {
             setLoading(false);
         }
     };
+    console.log('user', data)
 
     return { data, loading, error, login };
 };

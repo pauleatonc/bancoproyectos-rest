@@ -1,66 +1,115 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../../../context/AuthContext';
+import { UseApiPrograms } from '../../../../hooks/usePrograms';
 import useApiInnovativeProjects from '../../../../hooks/useApiInnovativeProjects';
 
-const CrearProyectos = () => {
+const CrearProyectos = () =>
+{
+
+  //permisos de usuarios
+  const { userData } = useAuth();
+  const isEditorOrSuperuser = [ 'Superusuario', 'Editor General' ].includes(userData.tipo_de_usuario);
   // Hooks de estado
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [showOptionErrorMessage, setShowOptionErrorMessage] = useState(false);
-  const [inputText, setInputText] = useState('');
-  const [isEditing, setIsEditing] = useState(true);
-  const [showTitleErrorMessage, setShowTitleErrorMessage] = useState(false);
+  const [ selectedOption, setSelectedOption ] = useState(null);
+  const [ showOptionErrorMessage, setShowOptionErrorMessage ] = useState(false);
+  const [ inputText, setInputText ] = useState('');
+  const [ isEditing, setIsEditing ] = useState(true);
+  const [ showTitleErrorMessage, setShowTitleErrorMessage ] = useState(false);
+  const { dataPrograms, loadingPrograms } = UseApiPrograms();
+  const [ selectedProgram, setSelectedProgram ] = useState(null);
   const { createInnovativeProject } = useApiInnovativeProjects();
+  const [ activeButton, setActiveButton ] = useState(null);
+
 
   //Hooks para conteo y manejo de caracteres maximos
-  const [maxTitleChars] = useState(70); // Maximo de caracteres para el titulo
-  const [titleCharsCount, setTitleCharsCount] = useState(0);
-  const [titleCharsExceeded, setTitleCharsExceeded] = useState(false);
+  const [ maxTitleChars ] = useState(70); // Maximo de caracteres para el titulo
+  const [ titleCharsCount, setTitleCharsCount ] = useState(0);
+  const [ titleCharsExceeded, setTitleCharsExceeded ] = useState(false);
 
   // Maneja cambios en la seleccion y la actualiza en el estado.
-  const handleOptionChange = (value) => {
+  const handleOptionChange = (value) =>
+  {
     setSelectedOption(value);
+    setActiveButton(value);
   };
 
   // Maneja cambios en el input y actualiza el estado.
-  const handleInputChange = (event) => {
+  const handleInputChange = (event) =>
+  {
     const text = event.target.value;
-    if (text.length <= maxTitleChars) {
+    if (text.length <= maxTitleChars)
+    {
       setInputText(text);
       setTitleCharsCount(text.length);
       setTitleCharsExceeded(false);
-    } else {
+    } else
+    {
       setTitleCharsExceeded(true);
     }
   };
 
-  const handleEditarClick = () => {
-    // Cambia de nuevo al modo de edicion
+  const handleEditarClick = () =>
+  {
     setIsEditing(true);
   };
 
   // Maneja click en Subir proyecto y redireccion.
   const navigate = useNavigate();
-  const handleSubirProyectoClick = async () => {
-    if (selectedOption) {
-      // Verifica si se ha ingresado un titulo
-      const trimmedTitle = inputText.trim();
-      if (!trimmedTitle) {
-        setShowTitleErrorMessage(true);
-      } else {
-        if (selectedOption === 'bancoProyectos') {
-          navigate('/dashboard/crearproyecto_paso1');
-        } else if (selectedOption === 'proyectosInnovadores') {
-          const newProjectId = await createInnovativeProject(inputText.trim());
-          if (newProjectId) {
-            navigate(`/dashboard/crearinnovador_paso1?id=${newProjectId}`);
-          } else {
-            // Manejar error aqui
-          }
-        }
-      }
-    } else {
-      // Muestra el mensaje de error si no se ha seleccionado una opcion
+
+  const handleSubirProyectoClick = async () =>
+  {
+    // Resetear los mensajes de error
+    setShowTitleErrorMessage(false);
+    setShowOptionErrorMessage(false);
+
+    // Verifica si se ha seleccionado una opción
+    if (!selectedOption)
+    {
       setShowOptionErrorMessage(true);
+      return;
+    }
+
+    // Verifica si se ha ingresado un titulo
+    const trimmedTitle = inputText.trim();
+    if (!trimmedTitle)
+    {
+      setShowTitleErrorMessage(true);
+      return;
+    }
+
+    if (selectedOption === 'bancoProyectos')
+    {
+      navigate('/dashboard/crearproyecto_paso1');
+      return;
+    }
+
+    if (selectedOption === 'proyectosInnovadores')
+    {
+      if (!selectedProgram)
+      {
+        // Aquí deberías manejar o mostrar un mensaje de error si no se ha seleccionado un programa
+        // Usa tu sistema de notificaciones o UI aquí en lugar de alert:
+        // Notificacion.show("Por favor selecciona un programa.");
+        return;
+      }
+
+      const newProjectData = {
+        title: trimmedTitle,
+        program: selectedProgram
+      };
+
+      const result = await createInnovativeProject(newProjectData);
+
+      if (result.success)
+      {
+        navigate(`/dashboard/crearinnovador_paso1?id=${result.id}`);
+      } else
+      {
+        // Manejar error aquí
+        // Usa tu sistema de notificaciones o UI aquí en lugar de alert:
+        // Notificacion.show("Error al crear el proyecto innovador: " + result.error);
+      }
     }
   };
 
@@ -71,13 +120,12 @@ const CrearProyectos = () => {
         <h3 className="text-sans-h3 ms-1">Elige donde quieres mostrar el proyecto:</h3>
 
         <div className="row my-5">
-          <div 
-          className={`col-5 opt-container p-3 mx-3 ${
-            selectedOption === 'bancoProyectos' ? 'opt-container-active' : 'opt-container'
-          }`}
+          <div
+            className={`col-5 opt-container p-3 mx-3 ${activeButton === 'bancoProyectos' ? 'opt-container-active' : 'opt-container'
+              }`}
           >
             <h3 className="text-serif-h3 text-center text-decoration-underline">Banco de Proyectos</h3>
-            <hr/>
+            <hr />
             <div className="d-flex flex-row">
               <i className="material-symbols-rounded me-2">check</i>
               <p className="text-sans-h5">Proyectos que ya han sido ejecutados en alguna comuna de Chile.</p>
@@ -90,27 +138,25 @@ const CrearProyectos = () => {
               <i className="material-symbols-rounded me-2">check</i>
               <p className="text-sans-h5">Comparten documentación como presupuestos, especificaciones técnicas, entre otros.</p>
             </div>
-            <hr/>
+            <hr />
             <div className="d-flex justify-content-center">
               <button
-              className={`btn-secundario-s text-decoration-underline px-4 ${
-                selectedOption === 'bancoProyectos' ? 'btn-secundario-s-active' : 'btn-secundario-s'
-              }`}
-              onClick={() => handleOptionChange('bancoProyectos')}
-              value='bancoProyectos'
+                className={`btn-secundario-s text-decoration-underline px-4 ${activeButton === 'bancoProyectos' ? 'btn-secundario-s-active' : 'btn-secundario-s'
+                  }`}
+                onClick={() => handleOptionChange('bancoProyectos')}
+                value='bancoProyectos'
               >
                 Seleccionar
               </button>
             </div>
           </div>
 
-          <div 
-          className={`col-5 opt-container p-3 mx-3 ${
-            selectedOption === 'proyectosInnovadores' ? 'opt-container-active' : 'opt-container'
-          }`}
+          <div
+            className={`col-5 opt-container p-3 mx-3 ${activeButton === 'proyectosInnovadores' ? 'opt-container-active' : 'opt-container'
+              }`}
           >
             <h3 className="text-serif-h3 text-center text-decoration-underline">Proyectos Innovadores</h3>
-            <hr/>
+            <hr />
             <div className="d-flex flex-row">
               <i className="material-symbols-rounded me-2">check</i>
               <p className="text-sans-h5">Proyectos referenciales que no necesariamente han sido ejecutados.</p>
@@ -127,25 +173,25 @@ const CrearProyectos = () => {
               <i className="material-symbols-rounded me-2">check</i>
               <p className="text-sans-h5">Proyectos novedosos que escapan de lo que normalmente se postula.</p>
             </div>
-            <hr/>
+            <hr />
             <div className="d-flex justify-content-center">
               <button
-              className={`btn-secundario-s text-decoration-underline px-4 ${
-                selectedOption === 'proyectosInnovadores' ? 'btn-secundario-s-active' : 'btn-secundario-s'
-              }`}
-              onClick={() => handleOptionChange('proyectosInnovadores')}
-              value="proyectosInnovadores"
+                className={`btn-secundario-s text-decoration-underline px-4 ${activeButton === 'proyectosInnovadores' ? 'btn-secundario-s-active' : 'btn-secundario-s'
+                  }`}
+                onClick={() => handleOptionChange('proyectosInnovadores')}
+                value="proyectosInnovadores"
               >
                 Seleccionar
               </button>
+
             </div>
           </div>
         </div>
 
-        {showOptionErrorMessage && 
-        <p className="text-sans-h5-red ms-1 ">
-          Debes elegir donde quieres mostrar el proyecto antes de continuar.
-        </p>
+        {showOptionErrorMessage &&
+          <p className="text-sans-h5-red ms-1 ">
+            Debes elegir donde quieres mostrar el proyecto antes de continuar.
+          </p>
         }
 
         <div className="container">
@@ -162,10 +208,10 @@ const CrearProyectos = () => {
                     onChange={handleInputChange}
                   />
                   <p className={`text-sans-h5 ${titleCharsExceeded ? "text-sans-h5-red" : ""}`}> {titleCharsCount} / {maxTitleChars} caracteres </p>
-                </div> 
-                
+                </div>
+
               </div>
-              
+
               {showTitleErrorMessage && (
                 <p className="text-sans-h5-red mt-1">Debes ingresar un título antes de continuar.</p>
               )}
@@ -189,25 +235,37 @@ const CrearProyectos = () => {
 
           <div>
             <p className="text-sans-p">Este proyecto corresponde al programa:</p>
-            <select className="custom-selector p-3">
-              <option className="custom-option p-5 ms-4">Programa Mejoramiento Urbano (PMU)</option>
-              <option className="custom-option">Programa Mejoramiento de Barrios (PMB)</option>
-            </select>
+            {isEditorOrSuperuser && (
+              <div>
+                <select
+                  className="custom-selector p-3"
+                  onChange={(e) => setSelectedProgram(e.target.value)}
+                  disabled={loadingPrograms}
+                >
+                  {/* Aquí irían las opciones del programa, asumiendo que dataPrograms es un array de programas */}
+                  {dataPrograms.map(program => (
+                    <option key={program.id} value={program.id}>
+                      {program.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
           </div>
         </div>
 
         <div className="container d-flex justify-content-end mt-5">
           <button
-          onClick={handleSubirProyectoClick} 
-          className="btn-principal-s d-flex text-sans-h4 pb-0"
+            onClick={handleSubirProyectoClick}
+            className="btn-principal-s d-flex text-sans-h4 pb-0"
           >
             <p className="text-sans-h4-white text-decoration-underline">Subir Proyecto</p>
-            <i className="material-symbols-rounded ms-2">arrow_forward_ios</i> 
+            <i className="material-symbols-rounded ms-2">arrow_forward_ios</i>
           </button>
         </div>
 
-        </div>
       </div>
-    );
-  };
-  export default CrearProyectos; 
+    </div>
+  );
+};
+export default CrearProyectos; 

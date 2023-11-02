@@ -1,4 +1,4 @@
-// Paso 1
+
 .img-section{
   position: relative;
   color: $grey-c-color;
@@ -36,12 +36,13 @@
   object-fit: cover;  
 }
 
-.image-container:hover .upload-image {
-  filter: blur(5px);
-}
 
-.overlay {
-  display: none; 
+.image-container:hover .overlay {
+  display: flex; 
+  width:94%;
+  height: 90%;
+  margin:15px; 
+  padding:15px;
   position: absolute;
   top: 0;
   right: 0;
@@ -49,7 +50,6 @@
   left: 0;
   background:rgba(101, 101, 101, 0.2);
   backdrop-filter: blur(2px); 
-  display:  column;
   justify-content: center;
   align-items: center;
   gap: 20px;
@@ -100,13 +100,14 @@
 }
 
 .grid-container {
-display: flex;
-justify-content: space-between;
-align-items: center;
-align-content: center;
-row-gap: 8px;
-align-self: stretch;
-flex-wrap: wrap;
+  display: flex;
+  justify-content: flex-start; 
+  align-items: center;
+  align-content: center;
+  row-gap: 8px;
+  column-gap: 45px;
+  align-self: stretch;
+  flex-wrap: wrap;
 }
 
 .image-container-fixed {
@@ -131,7 +132,7 @@ flex-wrap: wrap;
   flex-direction: column;
   justify-content: space-between;
   padding: 10px;
-  background: rgba(0, 0, 0, 0.5); /* Semi-transparente */
+  background: rgba(0, 0, 0, 0.5);
   opacity: 0; 
   transition: opacity 0.3s; 
 }

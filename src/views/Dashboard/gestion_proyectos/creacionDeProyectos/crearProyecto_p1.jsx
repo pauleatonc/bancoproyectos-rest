@@ -179,7 +179,7 @@ const CrearProyectoP1 = () =>
             <div>
             {/*galeria imagenes */}
               <div className="mx-1">
-                <UploadImgsm />
+                <UploadImgsm  useGalleryHook=""/>
               </div>
             </div>
             {/* imagenes antes-despues*/}
