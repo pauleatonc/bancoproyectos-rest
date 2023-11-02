@@ -76,22 +76,24 @@ border-radius: 0% !important;
 .title-container-edit {
     /* ajusta este valor según tus necesidades */
     min-height: 60px;
-  }
-  
+}
   .title-input-container-edit {
-    width: 100%;
+    min-width: 75%;
     position: relative;
     min-height: 40px; 
   }
+
+
   .ghost-input-edit{
     border: none;
     outline: none;
+    width: 75%;
 }
 
   input.ghost-input-edit, h3.text-sans-h1 {
     position: absolute;
     top: 0;
-    left: 0;
+    left: 0;    
   }
 
 

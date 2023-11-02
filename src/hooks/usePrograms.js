@@ -24,6 +24,5 @@ export const UseApiPrograms = () =>
     };
     fetchData();
   }, []);
-  console.log(dataPrograms)
   return { dataPrograms, loadingPrograms, errorPrograms }
 }
