@@ -3,11 +3,14 @@ services:
   react_app:
     build: .
     ports:
-      - "8083:8083"
+      - "8082:8082"
     environment:
-      - REACT_APP_BACKEND_URL=http://192.168.6.116:8082  # backend está corriendo en localhost en el puerto 8082 segun docker-compose correspondiente
+      - REACT_APP_BACKEND_URL=http://192.168.6.116:8083  # backend está corriendo en localhost en el puerto 8082 segun docker-compose correspondiente
     networks:
       - development
+
+volumes:
+  react_build:
 
 networks:
   development:

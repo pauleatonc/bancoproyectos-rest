@@ -1,22 +1,15 @@
-FROM node:14
-
-# Establecer el directorio de trabajo
+# Etapa 1: Construir la aplicación React
+FROM node:20 as build
 WORKDIR /app
-
-# Copiar el package.json y el package-lock.json
-COPY package*.json ./
-
-# Instalar las dependencias
+COPY package.json ./
 RUN npm install
-
-# Copiar el resto del código
+RUN npm install -g dotenv-cli
 COPY . .
-
-# Construir el proyecto
 RUN npm run build
+RUN ls -l /app/dist
 
-# Exponer el puerto en el que se ejecutará la aplicación
-EXPOSE 8083
-
-# Comando para iniciar la aplicación
-CMD [ "npm", "run", "serve" ]
+# Etapa 2: Configurar Nginx para servir la aplicación construida
+FROM nginx:stable
+COPY --from=build /app/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
