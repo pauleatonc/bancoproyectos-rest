@@ -1,4 +1,5 @@
 import environ
+import os
 from .base import *
 
 # we load the variables from the .env file to the environment
@@ -12,7 +13,7 @@ SECRET_KEY = env("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env.bool('DEBUG', default=False)
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
+ALLOWED_HOSTS = [ 'qabanco2.subdere.gob.cl', ]
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -24,7 +25,7 @@ DATABASES = {
         'NAME': env("DB_NAME"),
         'USER': env("DB_USER"),
         'PASSWORD': env("DB_PASSWORD"),
-        'HOST': env("DB_HOST"),
+        'HOST': 'banco2back_db',
         'PORT': env("DB_PORT"),
     }
         # Base de datos externa
@@ -35,12 +36,26 @@ DATABASES = {
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
-STATIC_ROOT = 'staticfiles/'
-STATICFILES_DIRS = [BASE_DIR.child('static')]
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'collected_static', 'banco_proyectos')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
-MEDIA_URL = 'media/'
-MEDIA_ROOT = BASE_DIR.child('media')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 RECAPTCHA_PRIVATE_KEY = env("RECAPTCHA_PRIVATE_KEY")
 RECAPTCHA_PUBLIC_KEY = env("RECAPTCHA_PUBLIC_KEY")
+
+# Sendgrid
+SENDGRID_API_KEY = env("SENDGRID_API_KEY")
+ADMIN_EMAIL = env("ADMIN_EMAIL")
+NOREPLY_EMAIL = env("NOREPLY_EMAIL")
+
+
+# Trusted origins for the CSRF validation
+# https://docs.djangoproject.com/en/4.2/ref/settings/#csrf-trusted-origins
+CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=[])
+
+# If we are behind proxy with https we trust the header defined here.
+# https://docs.djangoproject.com/en/4.2/ref/settings/#secure-proxy-ssl-header
+SECURE_PROXY_SSL_HEADER = env.tuple('SECURE_PROXY_SSL_HEADER', default=None)
