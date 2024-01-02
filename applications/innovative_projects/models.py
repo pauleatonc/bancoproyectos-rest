@@ -63,12 +63,8 @@ class InnovativeProjects(BaseModel):
 
     def clean(self):
         # Validación personalizada
-        if self.public and self.application_status != "Aceptado":
-            raise ValidationError('El proyecto debe ser "Aceptado" para poder ser público.')
-
-        """if self.request_sent and not self.fields_completed():
-            raise ValidationError(
-                "Todos los campos (title, description, portada, program) deben estar completos antes de enviar la solicitud.")"""
+        if self.public and not self.fields_completed():
+            raise ValidationError('El proyecto debe estar "Completo" para ser público.')
 
     def save(self, *args, **kwargs):
         self.clean()
@@ -116,10 +112,15 @@ class RevisionSectionOne(models.Model):
     history = HistoricalRecords()
 
     def save(self, *args, **kwargs):
-        if self.approved_section_one:
-            if not (self.approved_title and self.approved_description and self.approved_program):
-                raise ValueError('El campo approved_section_one solo puede ser True si todos los otros campos son True')
+        if all((not self.approved_title, not self.approved_description, not self.approved_program)):
+            if not self.approved_section_one:
+                raise ValueError('El campo approved_section_one debe ser True si todos los otros campos son False')
         super().save(*args, **kwargs)
+
+    def clean(self):
+        if all((not self.approved_title, not self.approved_description, not self.approved_program)):
+            if not self.approved_section_one:
+                raise ValidationError('El campo approved_section_one debe ser True si todos los otros campos son False')
 
 
 class RevisionSectionTwo(models.Model):
@@ -136,7 +137,12 @@ class RevisionSectionTwo(models.Model):
     history = HistoricalRecords()
 
     def save(self, *args, **kwargs):
-        if self.approved_section_two:
-            if not (self.approved_portada and self.approved_gallery and self.approved_web_source):
-                raise ValueError('El campo approved_section_two solo puede ser True si todos los otros campos son True')
+        if all((not self.approved_portada, not self.approved_gallery, not self.approved_web_source)):
+            if not self.approved_section_two:
+                raise ValueError('El campo approved_section_two debe ser True si todos los otros campos son False')
         super().save(*args, **kwargs)
+
+    def clean(self):
+        if all((not self.approved_portada, not self.approved_gallery, not self.approved_web_source)):
+            if not self.approved_section_two:
+                raise ValidationError('El campo approved_section_two debe ser True si todos los otros campos son False')
