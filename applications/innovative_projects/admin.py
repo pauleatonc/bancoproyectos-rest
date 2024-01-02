@@ -2,7 +2,15 @@ from django.contrib import admin
 from import_export.admin import ImportExportMixin
 from import_export.resources import ModelResource
 
-from .models import InnovativeProjects, InnovativeGalleryImage, InnovativeWebSource, HistoricalInnovativeProjects, HistoricalInnovativeWebSource
+from .models import (
+    InnovativeProjects,
+    InnovativeGalleryImage,
+    InnovativeWebSource,
+    RevisionSectionOne,
+    RevisionSectionTwo,
+    HistoricalInnovativeProjects,
+    HistoricalInnovativeWebSource
+)
 
 ''' La clase Model Resource disponibiliza al Model indicado
     para poder usar el ImportExportMixin en el administrador
@@ -25,6 +33,12 @@ class InnovativeGalleryImage(admin.TabularInline):
 class InnovativeWebSource(admin.TabularInline):
     model = InnovativeWebSource
 
+class RevisionSectionOne(admin.TabularInline):
+    model = RevisionSectionOne
+
+class RevisionSectionTwo(admin.TabularInline):
+    model = RevisionSectionTwo
+
 
 # Modelos disponibles para editar en el admin
 @admin.register(InnovativeProjects)
@@ -37,6 +51,8 @@ class InnovativeProjectsAdmin(ImportExportMixin, admin.ModelAdmin):
     inlines = [
         InnovativeGalleryImage,
         InnovativeWebSource,
+        RevisionSectionOne,
+        RevisionSectionTwo
     ]
 
     # Definir una acción personalizada para editar el campo 'public'
