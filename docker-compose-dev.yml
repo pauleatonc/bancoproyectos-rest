@@ -1,30 +1,37 @@
 version: '3.8'
 
 services:
-  db:
+  banco2back_db:
     image: postgres:14
     environment:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASSWORD}
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - postgres_data_bpV2:/var/lib/postgresql/data/
     networks:
-      - default
+      - development
 
-  web:
+  banco2back:
     build: .
-    command: bash -c "python manage.py migrate && gunicorn projectbank.wsgi:application --bind 0.0.0.0:8081"
+    command: bash -c "python manage.py migrate && gunicorn projectbank.wsgi:application --bind 0.0.0.0:8083"
     volumes:
-      - ./staticfiles:/staticfiles
+      - .:/app
+      - ./banco_staticfiles:/staticfiles
     networks:
-      - default
+      - development
     depends_on:
-      - db
+      - banco2back_db
     env_file:
       - .env
     environment:
       - DJANGO_SETTINGS_MODULE=projectbank.settings.dev
+    ports:
+      - "8083:8083"
 
 volumes:
-  postgres_data:
+  postgres_data_bpV2:
+
+networks:
+  development:
+    external: true
