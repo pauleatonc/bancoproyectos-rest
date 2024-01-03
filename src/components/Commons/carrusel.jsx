@@ -1,33 +1,43 @@
 import { useState, useRef, useEffect } from 'react';
 import ImageModal from '../Commons/modal';
 
-const Carrusel = ({ imgPortada, imgGeneral, context }) => {
+const Carrusel = ({ imgPortada, imgGeneral, context }) =>
+{
   const miniContainerRef = useRef(null);
-  const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const [hiddenThumbnailsCount, setHiddenThumbnailsCount] = useState(0);
+  const [ selectedImageIndex, setSelectedImageIndex ] = useState(0);
+  const [ hiddenThumbnailsCount, setHiddenThumbnailsCount ] = useState(0);
+  const baseApiUrl = import.meta.env.VITE_REACT_APP_API_URL;
+
+  console.log(imgPortada)
+  console.log('gen', imgGeneral)
 
   let imgArray = [];
 
-  if (imgPortada) {
+  if (imgPortada)
+  {
     imgArray.push(imgPortada);
   }
 
-  if (Array.isArray(imgGeneral) && imgGeneral.length > 1) {
-    imgArray = [...imgArray, ...imgGeneral.map(img => img.image)];
+  if (Array.isArray(imgGeneral) && imgGeneral.length > 1)
+  {
+    imgArray = [ ...imgArray, ...imgGeneral.map(img => img.image) ];
   }
 
-  useEffect(() => {
+  useEffect(() =>
+  {
     const miniContainer = miniContainerRef.current;
 
-    if (!miniContainer) {
+    if (!miniContainer)
+    {
       return;
     }
 
     const thumbnails = Array.from(miniContainer.querySelectorAll('.miniatura'));
 
-    const updateHiddenThumbnails = () => {
-      const miniaturaStyles = getComputedStyle(thumbnails[0]);
-      const miniaturaWidth = thumbnails[0].offsetWidth + parseFloat(miniaturaStyles.marginLeft) + parseFloat(miniaturaStyles.marginRight);
+    const updateHiddenThumbnails = () =>
+    {
+      const miniaturaStyles = getComputedStyle(thumbnails[ 0 ]);
+      const miniaturaWidth = thumbnails[ 0 ].offsetWidth + parseFloat(miniaturaStyles.marginLeft) + parseFloat(miniaturaStyles.marginRight);
       const containerWidth = miniContainer.offsetWidth;
       const visibleThumbnailsCount = Math.floor(containerWidth / miniaturaWidth);
 
@@ -37,10 +47,11 @@ const Carrusel = ({ imgPortada, imgGeneral, context }) => {
     updateHiddenThumbnails();
     window.addEventListener('resize', updateHiddenThumbnails);
 
-    return () => {
+    return () =>
+    {
       window.removeEventListener('resize', updateHiddenThumbnails);
     };
-  }, [imgArray.length]);
+  }, [ imgArray.length ]);
 
   const isMobile = window.innerWidth <= 768; // Establece el punto de corte para dispositivos moviles
 
@@ -50,7 +61,7 @@ const Carrusel = ({ imgPortada, imgGeneral, context }) => {
         // En vista movil, muestra imgPortada de no haber miniaturas.
         <div className="col-12 d-block d-md-none img-portada my-4 d-flex justify-content-center">
           <a data-bs-toggle="modal" data-bs-target={`#imageModal-${context}`} onClick={() => setSelectedImageIndex(0)}>
-            <img className="img-fluid" src={imgPortada} alt="Portada" />
+            <img className="img-fluid" src={`${baseApiUrl}/${imgPortada}`|| imgPortada} alt="Portada" />
           </a>
         </div>
       ) : (
@@ -60,7 +71,7 @@ const Carrusel = ({ imgPortada, imgGeneral, context }) => {
           {imgPortada && (
             <div className="col-10 d-none d-md-block img-portada my-4 d-flex justify-content-center">
               <a data-bs-toggle="modal" data-bs-target={`#imageModal-${context}`} onClick={() => setSelectedImageIndex(0)}>
-                <img className="img-fluid" src={imgPortada} alt="Portada" />
+                <img className="img-fluid" src={`${baseApiUrl}/${imgPortada}` || imgPortada} alt="Portada" />
               </a>
             </div>
           )}
@@ -69,9 +80,9 @@ const Carrusel = ({ imgPortada, imgGeneral, context }) => {
           {imgGeneral && imgArray.length > 1 && (
             <div className="container-fluid container-md mini-container d-flex flex-wrap justify-content-center" ref={miniContainerRef}>
               {imgArray.map((image, index) => (
-                <div className={`m-1 m-md-2 miniatura`} key={index}>
+                <div className="m-1 m-md-2 miniatura" key={image.id || index}>
                   <a data-bs-toggle="modal" data-bs-target={`#imageModal-${context}`} onClick={() => setSelectedImageIndex(index)}>
-                    <img className="miniatura" src={image} alt={`Thumbnail ${index}`} />
+                    <img className="miniatura" src={`${baseApiUrl}/${image}`|| image} alt={`Thumbnail ${index}`} />
                     {index === imgArray.length - hiddenThumbnailsCount - 1 && hiddenThumbnailsCount > 0 && (
                       <div className="thumbnail-counter-overlay">+{hiddenThumbnailsCount}</div>
                     )}

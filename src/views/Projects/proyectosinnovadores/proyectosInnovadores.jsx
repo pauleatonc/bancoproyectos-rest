@@ -30,47 +30,46 @@ const ProyectosInnovadores = () =>
   } = useApiGoodPractices();
 
   // Funcion para filtrar proyectos segun programa seleccionado
-  const filterProjectsByPrograms = (data, selectedPrograms) =>
+  const filterProjectsByPrograms = (data, selectedProgramsSiglas) =>
   {
-    if (selectedPrograms.length === 0)
+    if (selectedProgramsSiglas.length === 0)
     {
       return data;
     } else
     {
       return data.filter((item) =>
-        selectedPrograms.includes(parseInt(item.program[ 0 ].id, 10))
+        item.program && selectedProgramsSiglas.includes(item.program.sigla)
       );
     }
   };
 
-  // Funcion que filtra practicas segun programa seleccionado
-  const filterPracticesByPrograms = (data, selectedPrograms) =>
+  const filterPracticesByPrograms = (data, selectedProgramSiglas) =>
   {
-    if (selectedPrograms.length === 0)
+    if (selectedProgramSiglas.length === 0)
     {
       return data;
     } else
     {
-      return data.filter((item) =>
-        item.program.some((program) =>
-          selectedPrograms.includes(program.id)
+      return data.filter((practice) =>
+        practice.program.some(program =>
+          selectedProgramSiglas.includes(program.sigla)
         )
       );
     }
   };
 
   // Funcion para cambiar el programa seleccionado
-  const toggleProgram = (id) =>
+  const toggleProgram = (sigla) =>
   {
-    if (selectedProgram.includes(id))
+    if (selectedProgram.includes(sigla))
     {
       setSelectedProgram([]);
       setSelectedPracticesPrograms([]);
       setSelectedPractice(null);
     } else
     {
-      setSelectedProgram([ id ]);
-      setSelectedPracticesPrograms([ id ]);
+      setSelectedProgram([ sigla ]);
+      setSelectedPracticesPrograms([ sigla ]);
       setSelectedPractice(null);
       setSelectedProject(null); // Limpia seleccion del usuario para mostrar primer proyecto del listado al cambiar programa.
     }
@@ -84,18 +83,16 @@ const ProyectosInnovadores = () =>
     localStorage.setItem('selectedPractice', JSON.stringify(practice));
   };
 
-  // Filtra proyectos segun programa seleccionado
   const filteredProjects = useMemo(() =>
   {
     return filterProjectsByPrograms(dataInnovativeProjects, selectedProgram);
   }, [ selectedProgram, dataInnovativeProjects ]);
 
-  // Filtra practicas segun programa seleccionado
+
   const filteredPractices = useMemo(() =>
   {
-    const filtered = filterPracticesByPrograms(dataGoodPractices, selectedPracticesPrograms);
-    return filtered;
-  }, [ dataGoodPractices, selectedPracticesPrograms ]);
+    return filterPracticesByPrograms(dataGoodPractices, selectedProgram);
+  }, [ dataGoodPractices, selectedProgram ]);
 
   // Actualiza proyecto seleccionado al cambiar la lista de proyectos
   useEffect(() =>
@@ -150,16 +147,23 @@ const ProyectosInnovadores = () =>
 
       {/* Tipo de programa */}
       <div className="container d-flex flex-row justify-content-center ">
-        {programs.map((program) => (
-          <div tabIndex="0" className="container-btnCircle col-md-2 d-flex flex-column align-items-center mx-lg-5" key={program.id}>
+        {programs.map(program => (
+          <div
+            key={program.sigla}
+            tabIndex="0"
+            className="container-btnCircle px-4 col-5 d-flex flex-column mx-2 align-items-center"
+          >
             <button
-              className={`categorias-circle d-inline-flex focus-ring py-1 px-2 rounded-2 btn rounded-circle border-2 d-flex align-items-center justify-content-center my-3 ${selectedProgram.includes(program.id) ? 'btn-primary' : 'btn-outline-primary white-text'}`}
-              onClick={() => toggleProgram(program.id)}
+              key={program.sigla}
+              className={`categorias-circle btn rounded-circle border-2 d-flex align-items-center justify-content-center my-2 ${selectedProgram.includes(program.sigla) ? 'btn-primary' : 'btn-outline-primary white-text'
+                }`}
+              onClick={() => toggleProgram(program.sigla)}
             >
-              <img src={program.icon_program} alt={program.sigla} id='btnIcon' className={selectedProgram.includes(program.id) ? 'white-icon' : ''} />
+              <img src={program.icon_program} alt={program.sigla} id='btnIcon' className={selectedProgram.includes(program.sigla) ? 'white-icon' : ''} />
             </button>
-            <p className="text-sans-p text-center">{program.name}</p>
+            <p className="text-sans-h5-bold text-center">{program.name}</p>
           </div>
+
         ))}
       </div>
 
@@ -174,10 +178,10 @@ const ProyectosInnovadores = () =>
       )}
 
       {/* Selector Proyectos */}
-      <div className="container my-3 d-none d-lg-block">
+      <div className="container my-3">
         {filteredProjects.map((project) => (
           <button
-            key={project.id}
+            key={project.id} // Asegúrate de que 'id' sea único
             className="btn-terciario text-decoration-underline px-3 p-2 m-1"
             onClick={() => setSelectedProject(project)}
           >
@@ -191,13 +195,14 @@ const ProyectosInnovadores = () =>
         <DropdownComponent
           data={filteredProjects}
           description='un proyecto'
-          onOptionSelect={(project) => {
+          onOptionSelect={(project) =>
+          {
             setSelectedProject(project);
           }}
           titlePropertyName="title"
           selectedOption={selectedProject}
         />
-        </div>
+      </div>
       {/* Datos del proyecto */}
       <div>
         {selectedProject ? (
@@ -286,6 +291,7 @@ const ProyectosInnovadores = () =>
         </div>
       </div>
     </div>
+
   );
 };
 
