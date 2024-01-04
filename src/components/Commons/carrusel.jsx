@@ -6,6 +6,10 @@ const Carrusel = ({ imgPortada, imgGeneral, context }) =>
   const miniContainerRef = useRef(null);
   const [ selectedImageIndex, setSelectedImageIndex ] = useState(0);
   const [ hiddenThumbnailsCount, setHiddenThumbnailsCount ] = useState(0);
+  const baseApiUrl = import.meta.env.VITE_REACT_APP_API_URL;
+
+  console.log(imgPortada)
+  console.log('gen', imgGeneral)
 
   let imgArray = [];
 
@@ -57,7 +61,7 @@ const Carrusel = ({ imgPortada, imgGeneral, context }) =>
         // En vista movil, muestra imgPortada de no haber miniaturas.
         <div className="col-12 d-block d-md-none img-portada my-4 d-flex justify-content-center">
           <a data-bs-toggle="modal" data-bs-target={`#imageModal-${context}`} onClick={() => setSelectedImageIndex(0)}>
-            <img className="img-fluid" src={imgPortada} alt="Portada" />
+            <img className="img-fluid" src={`${baseApiUrl}/${imgPortada}`|| imgPortada} alt="Portada" />
           </a>
         </div>
       ) : (
@@ -67,7 +71,7 @@ const Carrusel = ({ imgPortada, imgGeneral, context }) =>
           {imgPortada && (
             <div className="col-10 d-none d-md-block img-portada my-4 d-flex justify-content-center">
               <a data-bs-toggle="modal" data-bs-target={`#imageModal-${context}`} onClick={() => setSelectedImageIndex(0)}>
-                <img className="img-fluid" src={imgPortada} alt="Portada" />
+                <img className="img-fluid" src={`${baseApiUrl}/${imgPortada}` || imgPortada} alt="Portada" />
               </a>
             </div>
           )}
@@ -78,7 +82,7 @@ const Carrusel = ({ imgPortada, imgGeneral, context }) =>
               {imgArray.map((image, index) => (
                 <div className="m-1 m-md-2 miniatura" key={image.id || index}>
                   <a data-bs-toggle="modal" data-bs-target={`#imageModal-${context}`} onClick={() => setSelectedImageIndex(index)}>
-                    <img className="miniatura" src={image} alt={`Thumbnail ${index}`} />
+                    <img className="miniatura" src={`${baseApiUrl}/${image}`|| image} alt={`Thumbnail ${index}`} />
                     {index === imgArray.length - hiddenThumbnailsCount - 1 && hiddenThumbnailsCount > 0 && (
                       <div className="thumbnail-counter-overlay">+{hiddenThumbnailsCount}</div>
                     )}
