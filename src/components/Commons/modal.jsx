@@ -4,6 +4,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const ImageModal = ({ img, selectedImageIndex, setSelectedImageIndex, context }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(selectedImageIndex);
+  const baseApiUrl = import.meta.env.VITE_REACT_APP_API_URL;
 
   const handleCarouselSlide = newIndex => {
     setCurrentImageIndex(newIndex);
@@ -35,7 +36,7 @@ const ImageModal = ({ img, selectedImageIndex, setSelectedImageIndex, context })
             <div className="carousel-inner">
               {img.map((image, index) => (
                 <div className={`carousel-item ${index === currentImageIndex ? 'active' : ''}`} key={index}>
-                  <img className="d-block w-100" src={image} alt={`Image ${index}`} />
+                  <img className="d-block w-100" src={`${baseApiUrl}/${image}`} alt={`Image ${index}`} />
                 </div>
               ))}
             </div>
