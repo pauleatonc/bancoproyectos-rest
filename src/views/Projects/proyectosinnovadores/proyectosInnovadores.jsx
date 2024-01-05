@@ -131,7 +131,7 @@ const ProyectosInnovadores = () =>
   }
 
   return (
-    <div className="container col-md-8">
+    <div className="container col-10">
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb ms-3">
           <li className="breadcrumb-item "><a className="breadcrumbs" href="/">Inicio</a></li>
@@ -206,36 +206,38 @@ const ProyectosInnovadores = () =>
       {/* Datos del proyecto */}
       <div>
         {selectedProject ? (
-          <>
+          <div>
             <h4 className="text-sans-h3 text-center text-md-start mt-5">
               {selectedProject.title}
             </h4>
-            <div>
-              <div className="carrusel-container container col-xl-7 float-md-end m-lg-4">
+            <div className="row">
+              <div className="col-3">
+                <p className="text-sans-p ">{selectedProject.description}</p>
+                <div className="d-flex flex-column">
+                  {selectedProject.web_sources.map((source, index) => (
+                    <a key={source.id} href={source.url} target="_blank" rel="noopener noreferrer">
+                      Visitar fuente {index + 1}
+                    </a>
+                  ))}
+                </div>
+              </div>
+              <div className="carrusel-container col-9 float-md-center">
                 <Carrusel
                   imgPortada={selectedProject.portada}
                   imgGeneral={selectedProject.innovative_gallery_images}
                   context="proyectosInnovadores"
                 />
               </div>
-              <p className="text-sans-p mt-3">{selectedProject.description}</p>
             </div>
-            <div className="d-flex flex-column">
-              {selectedProject.web_sources.map((source, index) => (
-                <a key={source.id} href={source.url} target="_blank" rel="noopener noreferrer">
-                  Visitar fuente {index + 1}
-                </a>
-              ))}
-            </div>
-          </>
+          </div>
         ) : (
           filteredProjects.length > 0 ? (
-            <>
+            <div>
               <h4 className="text-sans-h3 text-center text-md-start mt-5">
                 {filteredProjects[ 0 ].title}
               </h4>
               <div>
-                <div className="carrusel-container container col-xl-7 float-md-end m-4">
+                <div className="carrusel-container container col-7 float-md-end">
                   <Carrusel
                     imgPortada={filteredProjects[ 0 ].portada}
                     imgGeneral={filteredProjects[ 0 ].innovative_gallery_images}
@@ -251,12 +253,13 @@ const ProyectosInnovadores = () =>
                   </a>
                 ))}
               </div>
-            </>
+            </div>
           ) : (
             <p className="text-sans-h4 mt-3">Selecciona un proyecto para ver los detalles.</p>
           )
         )}
-
+      </div>
+      <div className="container-fluid vh-100 mt-5 pt-5">
         <hr className="my-5" />
 
         <h2 className="text-sans-h2">Buenas prácticas para el diseño de los espacios públicos</h2>
@@ -289,6 +292,7 @@ const ProyectosInnovadores = () =>
             )}
           </div>
         </div>
+
       </div>
     </div>
 
