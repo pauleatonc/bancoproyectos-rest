@@ -7,6 +7,9 @@ const Carrusel = ({ imgPortada, imgGeneral, context }) =>
   const [ selectedImageIndex, setSelectedImageIndex ] = useState(0);
   const [ hiddenThumbnailsCount, setHiddenThumbnailsCount ] = useState(0);
 
+  console.log(imgPortada)
+  console.log('gen', imgGeneral)
+
   let imgArray = [];
 
   if (imgPortada)

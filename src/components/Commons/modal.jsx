@@ -36,7 +36,7 @@ const ImageModal = ({ img, selectedImageIndex, setSelectedImageIndex, context })
             <div className="carousel-inner">
               {img.map((image, index) => (
                 <div className={`carousel-item ${index === currentImageIndex ? 'active' : ''}`} key={index}>
-                  <img className="d-block w-100" src={`${baseApiUrl}/${image}`} alt={`Image ${index}`} />
+                  <img className="d-block w-100" src={image} alt={`Image ${index}`} />
                 </div>
               ))}
             </div>
