@@ -6,8 +6,7 @@ import Carrusel from '../../../components/Commons/carrusel';
 import DropdownComponent from '../../../components/Commons/Dropdown';
 import SelectorLateral from '../../../components/Commons/selectorLateral';
 
-const ProyectosInnovadores = () =>
-{
+const ProyectosInnovadores = () => {
   // Hooks de estado
   const { programs } = useFilterOptions();
   const [ selectedProject, setSelectedProject ] = useState(null);
@@ -30,26 +29,20 @@ const ProyectosInnovadores = () =>
   } = useApiGoodPractices();
 
   // Funcion para filtrar proyectos segun programa seleccionado
-  const filterProjectsByPrograms = (data, selectedProgramsSiglas) =>
-  {
-    if (selectedProgramsSiglas.length === 0)
-    {
+  const filterProjectsByPrograms = (data, selectedProgramsSiglas) => {
+    if (selectedProgramsSiglas.length === 0) {
       return data;
-    } else
-    {
+    } else {
       return data.filter((item) =>
         item.program && selectedProgramsSiglas.includes(item.program.sigla)
       );
     }
   };
 
-  const filterPracticesByPrograms = (data, selectedProgramSiglas) =>
-  {
-    if (selectedProgramSiglas.length === 0)
-    {
+  const filterPracticesByPrograms = (data, selectedProgramSiglas) => {
+    if (selectedProgramSiglas.length === 0) {
       return data;
-    } else
-    {
+    } else {
       return data.filter((practice) =>
         practice.program.some(program =>
           selectedProgramSiglas.includes(program.sigla)
@@ -59,44 +52,38 @@ const ProyectosInnovadores = () =>
   };
 
   // Funcion para cambiar el programa seleccionado
-  const toggleProgram = (sigla) =>
-  {
-    if (selectedProgram.includes(sigla))
-    {
+  const toggleProgram = (sigla) => {
+    if (selectedProgram.includes(sigla)) {
       setSelectedProgram([]);
       setSelectedPracticesPrograms([]);
       setSelectedPractice(null);
-    } else
-    {
+    } else {
       setSelectedProgram([ sigla ]);
       setSelectedPracticesPrograms([ sigla ]);
       setSelectedPractice(null);
       setSelectedProject(null); // Limpia seleccion del usuario para mostrar primer proyecto del listado al cambiar programa.
     }
   };
+  console.log(selectedPracticesPrograms);
 
   // Funcion para seleccionar una practica
-  const onSelect = (practice) =>
-  {
+  const onSelect = (practice) => {
     setSelectedPractice(practice);
     // Guarda la buena practica seleccionada en el almacenamiento local
     localStorage.setItem('selectedPractice', JSON.stringify(practice));
   };
 
-  const filteredProjects = useMemo(() =>
-  {
+  const filteredProjects = useMemo(() => {
     return filterProjectsByPrograms(dataInnovativeProjects, selectedProgram);
   }, [ selectedProgram, dataInnovativeProjects ]);
 
 
-  const filteredPractices = useMemo(() =>
-  {
+  const filteredPractices = useMemo(() => {
     return filterPracticesByPrograms(dataGoodPractices, selectedProgram);
   }, [ dataGoodPractices, selectedProgram ]);
 
   // Actualiza proyecto seleccionado al cambiar la lista de proyectos
-  useEffect(() =>
-  {
+  useEffect(() => {
     if (filteredProjects.length > 0 && selectedProject === null)
     {
       setSelectedProject(filteredProjects[ 0 ]);
@@ -104,8 +91,7 @@ const ProyectosInnovadores = () =>
   }, [ filteredProjects, selectedProject ]);
 
   // Actualiza la practica seleccionada al cambiar la lista de practicas
-  useEffect(() =>
-  {
+  useEffect(() => {
     if (filteredPractices.length > 0 && selectedPractice === null)
     {
       setSelectedPractice(filteredPractices[ 0 ]);
@@ -113,20 +99,16 @@ const ProyectosInnovadores = () =>
   }, [ filteredPractices, selectedPractice ]);
 
   // Manejo de errores y carga de datos
-  if (loadingInnovativeProjects)
-  {
+  if (loadingInnovativeProjects) {
     return <div>Cargando datos...</div>;
   }
-  if (errorInnovativeProjects)
-  {
+  if (errorInnovativeProjects) {
     return <div>Error: {errorInnovativeProjects}</div>;
   }
-  if (loadingGoodPractices)
-  {
+  if (loadingGoodPractices) {
     return <div>Cargando datos de buenas prácticas...</div>;
   }
-  if (errorGoodPractices)
-  {
+  if (errorGoodPractices) {
     return <div>Error en los datos de buenas prácticas: {errorGoodPractices}</div>;
   }
 
@@ -259,9 +241,10 @@ const ProyectosInnovadores = () =>
           )
         )}
       </div>
-      <div className="container-fluid vh-100 mt-5 pt-5">
+      <div className="container-fluid mt-5 pt-5">
         <hr className="my-5" />
 
+        {/* BUENAS PRACTICAS */}
         <h2 className="text-sans-h2">Buenas prácticas para el diseño de los espacios públicos</h2>
         <p className="text-sans-p mt-3">Con estas prácticas buscamos promover criterios sustentables a considerar en el diseño actual de los espacios públicos.</p>
         <div className="row">
@@ -274,7 +257,7 @@ const ProyectosInnovadores = () =>
               titlePropertyName="title"
             />
           </div>
-          <div className="col">
+          <div className="col-lg-8">
             {selectedPractice ? (
               <>
                 <h2>{selectedPractice.title}</h2>
