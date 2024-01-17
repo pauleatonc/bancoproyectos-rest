@@ -4,7 +4,7 @@ from .base import *
 
 # we load the variables from the .env file to the environment
 env = environ.Env()
-environ.Env.read_env()
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # Your secret key
