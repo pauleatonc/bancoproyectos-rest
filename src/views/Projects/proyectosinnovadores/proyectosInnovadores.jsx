@@ -260,8 +260,8 @@ const ProyectosInnovadores = () => {
           <div className="col-lg-8">
             {selectedPractice ? (
               <>
-                <h2>{selectedPractice.title}</h2>
-                <p>{selectedPractice.description}</p>
+                <h2 className="text-sans-h3">{selectedPractice.title}</h2>
+                <p className="text-sans-p" >{selectedPractice.description}</p>
                 <div className="my-4">
                   <Carrusel
                     imgPortada={selectedPractice.portada}

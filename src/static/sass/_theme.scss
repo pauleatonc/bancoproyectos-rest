@@ -99,6 +99,7 @@ $black-color: #111111;
 .text-sans-p{
     @include font-sans(16px, 400, $grey-a-color);
     line-height: 30px;
+    white-space: pre-wrap;
 }
 .text-sans-p-blue{
     @include font-sans(16px, 400, $blue-color);
