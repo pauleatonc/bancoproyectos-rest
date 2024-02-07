@@ -100,31 +100,34 @@ const FiltroProyectosContainer = () => {
       type__in: selectedTypes,
       year__in: selectedYears,
     };
-
+  
     if (!areObjectsEqual(newFilters, selectedFilters)) {
-      setSelectedFilters(newFilters);
+      setTimeout(() => {
+        setSelectedFilters(newFilters);
+      }, 0);
     }
-
+  
     if (Object.values(newFilters).some(arr => arr.length > 0)) {
-      updateProjects();
+      setTimeout(() => {
+        updateProjects();
+      }, 0);
     }
-  }, [ selectedPrograms, selectedRegiones, selectedComunas, selectedTypes, selectedYears, selectedFilters, setSelectedFilters, updateProjects ]);
-
+  }, [selectedPrograms, selectedRegiones, selectedComunas, selectedTypes, selectedYears, selectedFilters, setSelectedFilters, updateProjects]);
+  
   useEffect(() => {
     updateFilterProjects();
-  }, [ selectedPrograms, selectedRegiones, selectedComunas, selectedTypes, selectedYears, updateFilterProjects ]);
-
-
+  }, [selectedPrograms, selectedRegiones, selectedComunas, selectedTypes, selectedYears, updateFilterProjects]);
+  
   useEffect(() => {
     if (clearFilterCalled.current) {
       clearFilterCalled.current = false;
       return;
     }
-
+  
     if (selectedFilters.program__in && selectedFilters.program__in.length > 0) {
       setSelectedPrograms(selectedFilters.program__in);
     }
-  }, [ selectedFilters ]);
+  }, [selectedFilters, setSelectedPrograms]);  
 
 
   useEffect(() => {
