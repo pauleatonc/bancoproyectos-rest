@@ -185,60 +185,39 @@ const ProyectosInnovadores = () => {
           selectedOption={selectedProject}
         />
       </div>
+
       {/* Datos del proyecto */}
       <div>
-        {selectedProject ? (
+        {(selectedProject || (filteredProjects.length > 0 && filteredProjects[0])) ? (
           <div>
             <h4 className="text-sans-h3 text-center text-md-start mt-5">
-              {selectedProject.title}
+              {(selectedProject || filteredProjects[0]).title}
             </h4>
             <div className="row">
+              <div className="">
+                <div className="carrusel-container col-9">
+                  <Carrusel
+                    imgPortada={(selectedProject || filteredProjects[0]).portada}
+                    imgGeneral={(selectedProject || filteredProjects[0]).innovative_gallery_images}
+                    context="proyectosInnovadores"
+                  />
+                </div>
+                <p className="text-sans-p ">{(selectedProject || filteredProjects[0]).description}</p>
+              </div>
               <div className="col-3">
-                <p className="text-sans-p ">{selectedProject.description}</p>
+                {/* <p className="text-sans-p ">{(selectedProject || filteredProjects[0]).description}</p> */}
                 <div className="d-flex flex-column">
-                  {selectedProject.web_sources.map((source, index) => (
+                  {(selectedProject || filteredProjects[0]).web_sources.map((source, index) => (
                     <a key={source.id} href={source.url} target="_blank" rel="noopener noreferrer">
                       Visitar fuente {index + 1}
                     </a>
                   ))}
                 </div>
               </div>
-              <div className="carrusel-container col-9 float-md-center">
-                <Carrusel
-                  imgPortada={selectedProject.portada}
-                  imgGeneral={selectedProject.innovative_gallery_images}
-                  context="proyectosInnovadores"
-                />
-              </div>
             </div>
           </div>
         ) : (
-          filteredProjects.length > 0 ? (
-            <div>
-              <h4 className="text-sans-h3 text-center text-md-start mt-5">
-                {filteredProjects[ 0 ].title}
-              </h4>
-              <div>
-                <div className="carrusel-container container col-7 float-md-end">
-                  <Carrusel
-                    imgPortada={filteredProjects[ 0 ].portada}
-                    imgGeneral={filteredProjects[ 0 ].innovative_gallery_images}
-                    context="proyectosInnovadores"
-                  />
-                </div>
-                <p className="text-sans-p mt-3">{filteredProjects[ 0 ].description}</p>
-              </div>
-              <div className="d-flex flex-column">
-                {filteredProjects[ 0 ].web_sources.map((source, index) => (
-                  <a key={source.id} href={source.url} target="_blank" rel="noopener noreferrer">
-                    Visitar fuente {index + 1}
-                  </a>
-                ))}
-              </div>
-            </div>
-          ) : (
-            <p className="text-sans-h4 mt-3">Selecciona un proyecto para ver los detalles.</p>
-          )
+          <p className="text-sans-h4 mt-3">Selecciona un proyecto para ver los detalles.</p>
         )}
       </div>
 
