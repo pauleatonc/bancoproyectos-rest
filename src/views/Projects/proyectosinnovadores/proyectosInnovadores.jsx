@@ -84,16 +84,14 @@ const ProyectosInnovadores = () => {
 
   // Actualiza proyecto seleccionado al cambiar la lista de proyectos
   useEffect(() => {
-    if (filteredProjects.length > 0 && selectedProject === null)
-    {
+    if (filteredProjects.length > 0 && selectedProject === null) {
       setSelectedProject(filteredProjects[ 0 ]);
     }
   }, [ filteredProjects, selectedProject ]);
 
   // Actualiza la practica seleccionada al cambiar la lista de practicas
   useEffect(() => {
-    if (filteredPractices.length > 0 && selectedPractice === null)
-    {
+    if (filteredPractices.length > 0 && selectedPractice === null) {
       setSelectedPractice(filteredPractices[ 0 ]);
     }
   }, [ filteredPractices, selectedPractice ]);

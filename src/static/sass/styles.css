@@ -656,13 +656,8 @@
     border-radius: 5px;
   }
 }
-.desc-container {
-  float: left;
-}
-
 .carrusel-container {
   float: right;
-  width: 100px;
   margin: 0px;
 }
 
