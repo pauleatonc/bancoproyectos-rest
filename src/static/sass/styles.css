@@ -656,11 +656,16 @@
     border-radius: 5px;
   }
 }
-.carrusel-container {
-  float: right;
-  margin: 0px;
+/* Estilos para dispositivos de escritorio */
+@media (min-width: 1060px) {
+  .parrafo-container {
+    margin-right: 20px; /* Añade un espacio entre el párrafo y el carrusel */
+  }
+  .carrusel-container {
+    float: right; /* Alinea a la derecha en dispositivos de escritorio */
+    /* Ajusta el ancho según tus necesidades */
+  }
 }
-
 .btn-selector-lateral {
   border: 2px solid #0F69C4;
   width: 90%;

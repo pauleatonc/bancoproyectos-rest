@@ -188,22 +188,27 @@ const ProyectosInnovadores = () => {
       <div>
         {(selectedProject || (filteredProjects.length > 0 && filteredProjects[0])) ? (
           <div>
-            <h4 className="text-sans-h3 text-center text-md-start mt-5">
+            <h4 className="text-sans-h3 text-center text-lg-start mt-5">
               {(selectedProject || filteredProjects[0]).title}
             </h4>
             <div className="row">
-              <div className="">
-                <div className="carrusel-container col-9">
+              <div className="col-lg-4">
+                <div className="parrafo-container">
+                  <p className="text-sans-p ">{(selectedProject || filteredProjects[0]).description}</p>
+                </div>
+              </div>
+              
+              <div className="col-lg-8">
+                <div className="carrusel-container">
                   <Carrusel
                     imgPortada={(selectedProject || filteredProjects[0]).portada}
                     imgGeneral={(selectedProject || filteredProjects[0]).innovative_gallery_images}
                     context="proyectosInnovadores"
                   />
                 </div>
-                <p className="text-sans-p ">{(selectedProject || filteredProjects[0]).description}</p>
               </div>
-              <div className="col-3">
-                {/* <p className="text-sans-p ">{(selectedProject || filteredProjects[0]).description}</p> */}
+
+              <div className="col mt-2">
                 <div className="d-flex flex-column">
                   {(selectedProject || filteredProjects[0]).web_sources.map((source, index) => (
                     <a key={source.id} href={source.url} target="_blank" rel="noopener noreferrer">
@@ -212,6 +217,7 @@ const ProyectosInnovadores = () => {
                   ))}
                 </div>
               </div>
+
             </div>
           </div>
         ) : (
