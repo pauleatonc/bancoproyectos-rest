@@ -1096,15 +1096,19 @@ input[type=radio]:checked {
      object-fit: cover;
 }
 
+.tag-container {
+  display: flex;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+}
+
 .proyect-tag {
   width: -moz-fit-content;
   width: fit-content;
   height: 26px;
   background-color: #001C41;
   color: #CFE1F3;
-  position: absolute;
-  bottom: 10px;
-  left: 10px;
 }
 
 @media (min-width: 362px) and (max-width: 400px) {

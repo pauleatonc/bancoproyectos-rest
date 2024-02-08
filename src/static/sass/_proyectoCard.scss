@@ -22,15 +22,17 @@
     height: 100%;
     object-fit: cover;
 }
-
+.tag-container{
+    display: flex;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
 .proyect-tag{
     width: fit-content;
     height: 26px;
     background-color: $tertiary-color;
     color:$blue-sky;
-    position: absolute;
-    bottom: 10px;
-    left: 10px;
 }
 
 @media (min-width:362px) and (max-width: 400px) {
