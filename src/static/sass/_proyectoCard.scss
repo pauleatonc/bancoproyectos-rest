@@ -12,8 +12,10 @@
     margin: 10px;
 }
 .img-container{
+    position: relative;
     height: 175px;
     width: 100%;
+    padding: 10px;
 }
 .image{
     width: 100%;
@@ -21,6 +23,15 @@
     object-fit: cover;
 }
 
+.proyect-tag{
+    width: fit-content;
+    height: 26px;
+    background-color: $tertiary-color;
+    color:$blue-sky;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+}
 
 @media (min-width:362px) and (max-width: 400px) {
     .proyect-card{

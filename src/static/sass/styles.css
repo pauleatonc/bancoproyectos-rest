@@ -226,6 +226,15 @@
   line-height: 23px;
 }
 
+.text-tag {
+  font-family: "Roboto";
+  color: #CFE1F3;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 18px;
+  white-space: nowrap;
+}
+
 .line {
   width: 80%;
   height: 3px;
@@ -1074,8 +1083,10 @@ input[type=radio]:checked {
 }
 
 .img-container {
+  position: relative;
   height: 175px;
   width: 100%;
+  padding: 10px;
 }
 
 .image {
@@ -1083,6 +1094,17 @@ input[type=radio]:checked {
   height: 100%;
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+.proyect-tag {
+  width: -moz-fit-content;
+  width: fit-content;
+  height: 26px;
+  background-color: #001C41;
+  color: #CFE1F3;
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
 }
 
 @media (min-width: 362px) and (max-width: 400px) {
