@@ -77,7 +77,7 @@ const Carrusel = ({ imgPortada, imgGeneral, context }) =>
 
           {/* Miniaturas */}
           {imgGeneral && imgArray.length > 1 && (
-            <div className="container-fluid container-md mini-container d-flex flex-wrap justify-content-center" ref={miniContainerRef}>
+            <div className="mini-container d-flex flex-wrap justify-content-center" ref={miniContainerRef}>
               {imgArray.map((image, index) => (
                 <div className="m-1 m-md-2 miniatura" key={image.id || index}>
                   <a data-bs-toggle="modal" data-bs-target={`#imageModal-${context}`} onClick={() => setSelectedImageIndex(index)}>
