@@ -205,7 +205,6 @@ const ProyectosInnovadores = () => {
               </div>
 
               <div className="col">
-                {/* <p className="text-sans-p ">{(selectedProject || filteredProjects[0]).description}</p> */}
                 <div className="d-flex flex-column">
                   {(selectedProject || filteredProjects[0]).web_sources.map((source, index) => (
                     <a key={source.id} href={source.url} target="_blank" rel="noopener noreferrer">
@@ -230,8 +229,6 @@ const ProyectosInnovadores = () => {
           <div className="col-lg-4">
             <SelectorLateral
               data={filteredPractices}
-              // selectedPrograms={selectedPracticesPrograms}
-              // toggleProgram={toggleProgram}
               onSelect={onSelect}
               titlePropertyName="title"
             />
@@ -257,7 +254,6 @@ const ProyectosInnovadores = () => {
 
       </div>
     </div>
-
   );
 };
 

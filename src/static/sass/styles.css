@@ -321,10 +321,17 @@
   border: 2px solid #0F69C4;
   border-radius: 32px;
 }
-
 .btn-terciario:hover {
   background-color: #0F69C4;
   color: #FFF;
+  border: none;
+  border: 2px solid #0F69C4;
+}
+.btn-terciario:focus {
+  background-color: #0F69C4;
+  color: #FFF;
+  border: none;
+  border: 2px solid #0F69C4;
 }
 
 .btn-pill-white {
