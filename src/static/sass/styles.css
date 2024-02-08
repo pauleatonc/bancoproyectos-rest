@@ -656,14 +656,20 @@
     border-radius: 5px;
   }
 }
+/* Estilos para dispositivos móviles y tabletas */
+@media (max-width: 1059px) {
+  .desc-container {
+    display: flex !important;
+    flex-direction: column-reverse !important;
+  }
+}
 /* Estilos para dispositivos de escritorio */
 @media (min-width: 1060px) {
-  .parrafo-container {
-    margin-right: 20px; /* Añade un espacio entre el párrafo y el carrusel */
+  .desc-container {
+    border: none;
   }
   .carrusel-container {
-    float: right; /* Alinea a la derecha en dispositivos de escritorio */
-    /* Ajusta el ancho según tus necesidades */
+    float: right;
   }
 }
 .btn-selector-lateral {

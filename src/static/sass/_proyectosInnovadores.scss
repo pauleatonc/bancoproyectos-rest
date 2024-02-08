@@ -1,29 +1,19 @@
-// /* Estilos para dispositivos móviles y tabletas */
-// @media (max-width: 1059px) {
-//   .parrafo-container {
-//     order: 1; /* Cambia el orden en dispositivos móviles y tabletas */
-//     margin-bottom: 20px; /* Añade un espacio entre el párrafo y el carrusel */
-//   }
-
-//   .carrusel-container {
-//     order: 2; /* Cambia el orden en dispositivos móviles y tabletas */
-//   }
-// }
-
-/* Estilos para dispositivos de escritorio */
-@media (min-width: 1060px) {
-  .parrafo-container {
-    //float: left; /* Alinea a la izquierda en dispositivos de escritorio */
-    //width: 60%; /* Ajusta el ancho según tus necesidades */
-    margin-right: 20px; /* Añade un espacio entre el párrafo y el carrusel */
-  }
-
-  .carrusel-container {
-    float: right; /* Alinea a la derecha en dispositivos de escritorio */
-    /* Ajusta el ancho según tus necesidades */
+/* Estilos para dispositivos móviles y tabletas */
+@media (max-width: 1059px) {
+  .desc-container {
+    display: flex !important;
+    flex-direction: column-reverse !important;
   }
 }
-
+/* Estilos para dispositivos de escritorio */
+@media (min-width: 1060px) {
+  .desc-container{
+    border: none;
+  }
+  .carrusel-container {
+    float: right; 
+  }
+}
 
 .btn-selector-lateral {
   border: 2px solid $blue-color;
