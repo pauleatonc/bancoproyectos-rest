@@ -221,7 +221,7 @@ const ProyectosInnovadores = () => {
         )}
       </div>
 
-      <div className="container-fluid mt-5 pt-5">
+      <div className="container mt-5 pt-5">
         <hr className="my-5" />
         {/* BUENAS PRACTICAS */}
         <h2 className="text-sans-h2">Buenas prácticas para el diseño de los espacios públicos</h2>
