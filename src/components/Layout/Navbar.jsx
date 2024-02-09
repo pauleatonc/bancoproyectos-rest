@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+//import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../../context/AuthContext';
 
-const Navbar = () =>{  
+const Navbar = () => {  
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { isLoggedIn, userData, logout } = useAuth();
 
@@ -15,7 +15,7 @@ const Navbar = () =>{
 
   return (
   <>
-    <nav className="container-fluid">
+    <nav className="container">
       <div className="row">
         <div className="col">
           {/* Logo subdere */}
@@ -27,7 +27,7 @@ const Navbar = () =>{
             <p className="logo-subdere mt-3">Subsecretaría de Desarrollo Administrativo y Regional</p>  
           </Link>
         </div>
-
+        {/* boton login */}
         <div className="col d-flex justify-content-end align-items-center">
         { isLoggedIn ? (
           <>
@@ -81,15 +81,6 @@ const Navbar = () =>{
         </div>
 
         <hr id="menu-divider"/>
-
-        {/* Inicio Sesion  */}
-        <div className="d-flex justify-content-center">
-          <button className="btn-principal-l" type="button">
-            <i className="cl cl-claveunica"/> 
-            <span className="text-underline mx-1"> Iniciar sesión </span>
-          </button>
-        </div>
-
       </div>
     )}
 
