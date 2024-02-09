@@ -215,7 +215,7 @@ $black-color: #111111;
     color: $white-color;
 }
 .btn-secundario-l{
-    @include btn-secundario(100%, $white-color, $blue-color);
+    @include btn-secundario(90%, $white-color, $blue-color);
 }
 .btn-secundario-l:hover{
     background-color: $blue-color;
