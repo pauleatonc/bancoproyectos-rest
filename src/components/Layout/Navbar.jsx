@@ -9,14 +9,14 @@ const BtnInicioSesion = ({ btnPrincipalSize, btnSecundarioSize }) => {
   const { isLoggedIn, userData, logout } = useAuth();
 
   return(
-    <div className="col d-flex justify-content-end align-items-center">
+    <div className="lg-col d-flex justify-content-lg-end align-items-center">
       { isLoggedIn ? (
-        <div className="d-flex flex-column flex-lg-row justify-content-center">
-          <span className="d-none d-lg-block text-sans-p align-self-center mt-3">Hola, {userData.full_name || userData.rut}</span>
-          <button className={`mx-3 mt-4 me-md-4 ${btnSecundarioSize}`}> 
+        <div className="container d-flex flex-column flex-lg-row justify-content-center">
+          <span className="d-none d-lg-block text-sans-p align-self-center mt-lg-3">Hola, {userData.full_name || userData.rut}</span>
+          <button className={`mx-lg-3 mt-lg-4 me-md-4 ${btnSecundarioSize}`}> 
             <Link to="/dashboard">ir a Admin</Link>
           </button>
-          <button className={`btn-principal-s mt-4 me-lg-5 py-3 ${btnPrincipalSize}`} type="button" onClick={logout}>
+          <button className={`btn-principal-s mt-2 mt-lg-4 me-0 me-lg-5 py-3 ${btnPrincipalSize}`} type="button" onClick={logout}>
               Cerrar sesión
           </button>
         </div>
@@ -43,17 +43,17 @@ const Navbar = () => {
   <>
     <nav className="container">
       <div className="row">
-        <div className="col">
+        <div className="col-7 col-lg-5">
           {/* Logo subdere */}
           <Link to="/" className="text-decoration-none">
             <div className="line-container row">
               <div id="lineBlue" />
               <div id="lineRed" />
             </div>
-            <p className="logo-subdere mt-3">Subsecretaría de Desarrollo Administrativo y Regional</p>  
+            <p className="logo-subdere mt-3 ms-0">Subsecretaría de Desarrollo Administrativo y Regional</p>  
           </Link>
         </div>
-        <button className="col btn-mobile-menu d-lg-none" onClick={toggleMenu}>
+        <button className="col burger-btn d-lg-none mt-2 text-decoration-underline pe-0" onClick={toggleMenu}>
           Menu 
           <FontAwesomeIcon icon={faBars} className="fa-xl ms-2"/>
         </button>
@@ -96,12 +96,12 @@ const Navbar = () => {
         </div>
         <hr id="menu-divider mx-2"/>
         <BtnInicioSesion 
-          btnPrincipalSize="btn-principal-l"
-          btnSecundarioSize="btn-secundario-l"
+          btnPrincipalSize="btn-principal-xl"
+          btnSecundarioSize="btn-secundario-xl"
         />
       </div>
     )}
-    <hr className="d-lg-none"/>
+    <hr className="d-lg-none my-0"/>
   </>
 );
 };
