@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 
 const ProyectoCard = ({ project = {} }) => {
+  console.log("project en proyecto card", project)
   const {
     name,
     description = "",
@@ -9,10 +10,12 @@ const ProyectoCard = ({ project = {} }) => {
     program = {},
     type = {},
     year = {},
-    slug = ""
+    slug = "",
+    prioritized_tag: prioritizedTag
   } = project;
 
   const { comuna: comunaName, region } = comuna;
+  const isPrioritizedTagPresent = prioritizedTag && prioritizedTag.length > 0;
 
   const truncateText = (text, maxWords) => {
     if (!text) {
@@ -31,7 +34,19 @@ const ProyectoCard = ({ project = {} }) => {
     <div className="proyect-card mx-0 m-md-3 col-6 d-flex flex-column justify-content-between">
       <div>
         <div className="img-container d-flex justify-content-center">
-          <img src={portada} className="image p-1" alt={name} />
+          <img src={portada} className="image" alt={name} />
+
+          {/* ESTE TAG APARECE DE MANERA DINAMICA, CON EL CONTENIDO TAMBIEN DINAMICO */}
+          {isPrioritizedTagPresent && (
+            <div className="tag-container">
+              {prioritizedTag.map((tag, index) => (
+                <div key={index} className="proyect-tag py-1 me-1">
+                  <p className="text-tag mx-2">{tag.prioritized_tag}</p>
+                </div>
+              ))}
+            </div>
+          )}
+
         </div>
         <div className="d-flex flex-row justify-content-between ms-3 my-2">
           <p className="col-6 text-sans-h5 text-muted">Región: {region}</p>
