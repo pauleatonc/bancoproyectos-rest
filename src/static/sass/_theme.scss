@@ -184,7 +184,17 @@ $black-color: #111111;
     @include btn-principal(90%, $blue-color); 
 }
 .btn-principal-xl{
-    @include btn-principal(100%, $blue-color); 
+    @include btn-principal(100%, $blue-color);
+    &:hover {
+        background-color: $white-color;
+        color: $blue-color;
+        border: none;  
+    }
+    &:focus {
+        background-color: $white-color;
+        color: $blue-color;
+        border: none; 
+    } 
 }
 
 @mixin btn-secundario ($btnSize, $btnBG, $btnColor){
@@ -214,12 +224,18 @@ $black-color: #111111;
     background-color: $blue-color;
     color: $white-color;
 }
-.btn-secundario-l{
+.btn-secundario-xl{
     @include btn-secundario(100%, $white-color, $blue-color);
-}
-.btn-secundario-l:hover{
-    background-color: $blue-color;
-    color: $white-color;
+    &:hover {
+        background-color: $blue-color;
+        color: $white-color; 
+        border: 2px solid $blue-color;  
+    }
+    &:focus {
+        background-color: $blue-color;
+        color: $white-color;
+        border: 2px solid $blue-color; 
+    }
 }
 
 
@@ -242,10 +258,6 @@ $black-color: #111111;
         border: 2px solid $blue-color; 
     }
 }
-// .btn-terciario:hover{
-//     background-color:$blue-color;
-//     color: $white-color;
-// }
 
 @mixin button-base {
     text-align: center;
@@ -322,6 +334,14 @@ $black-color: #111111;
     border: none;
     color: $dark-red;
     padding: 13px;
+}
+.burger-btn{
+    width: fit-content;
+    height: fit-content;
+    background-color: transparent;
+    border: none;
+    color: $grey-a-color;
+    padding: 13px;  
 }
 
 // Selectores
