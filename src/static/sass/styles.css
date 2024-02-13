@@ -581,15 +581,6 @@
   color: #001C41;
 }
 
-.line-container {
-  position: absolute;
-  top: 0px;
-  height: -moz-fit-content;
-  height: fit-content;
-  bottom: 0;
-  left: 45px;
-}
-
 #lineBlue {
   width: 58px;
   height: 8px;
@@ -608,7 +599,6 @@
   font-size: 16px;
   font-weight: 700;
   width: 210px;
-  margin-left: 20px;
   text-decoration: none;
 }
 
@@ -653,9 +643,6 @@
     font-weight: 700;
     width: 280px;
     margin-left: 75px;
-  }
-  .line-container {
-    left: 100px;
   }
 }
 .categorias-circle {

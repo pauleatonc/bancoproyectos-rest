@@ -33,7 +33,7 @@ const BtnInicioSesion = ({ btnPrincipalSize, btnSecundarioSize }) => {
 };
 
 const Navbar = () => {  
-  const [isMenuOpen, setIsMenuOpen] = useState(true);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -42,22 +42,25 @@ const Navbar = () => {
   return (
   <>
     <nav className="container">
-      <div className="row">
-        <div className="col-7 col-lg-5">
+      <div className="row d-flez justify-content-between">
+
+        <div className="col-7 col-lg-5 p-0">
           {/* Logo subdere */}
           <Link to="/" className="text-decoration-none">
-            <div className="line-container row">
+            <div className="ms-2 ms-sm-1 row">
               <div id="lineBlue" />
               <div id="lineRed" />
             </div>
-            <p className="logo-subdere mt-3 ms-0">Subsecretaría de Desarrollo Administrativo y Regional</p>  
+            <p className="logo-subdere mt-3 ms-2 ms-sm-1 ps-0">Subsecretaría de Desarrollo Administrativo y Regional</p>  
           </Link>
         </div>
-        <button className="col burger-btn d-lg-none mt-2 text-decoration-underline pe-0" onClick={toggleMenu}>
-          Menu 
+
+        {/* boton hamburguesa vista mobile */}
+        <button className="col burger-btn d-lg-none mt-3 text-decoration-underline pe-0" onClick={toggleMenu}>
+          Menú 
           <FontAwesomeIcon icon={faBars} className="fa-xl ms-2"/>
         </button>
-        {/* boton login */}
+        {/* boton login vista desktop*/}
         <div className="col d-none d-lg-block">
           <BtnInicioSesion 
             btnPrincipalSize="btn-principal-s"
