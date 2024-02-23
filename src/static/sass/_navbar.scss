@@ -1,11 +1,11 @@
 
-.line-container{
-    position:absolute;
-    top: 0px;
-    height: fit-content;
-    bottom: 0;
-    left: 45px;
-}
+// .line-container{
+//     position:absolute;
+//     top: 0px;
+//     height: fit-content;
+//     bottom: 0;
+//     left: 45px;
+// }
 @mixin deco-line ($widthsize, $bgcolor){
     width: $widthsize;
     height: 8px;
@@ -20,7 +20,7 @@
 .logo-subdere{
     @include font-sans(16px, 700, $grey-a-color);
     width: 210px;
-    margin-left: 20px;
+    //margin-left: 20px;
     text-decoration: none;
 }
 
@@ -58,8 +58,5 @@
         @include font-sans(20px, 700, $grey-a-color);
         width: 280px;
         margin-left: 75px;
-    } 
-    .line-container{
-        left: 100px;
-    } 
+    }  
 }
