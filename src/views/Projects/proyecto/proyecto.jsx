@@ -5,9 +5,7 @@ import ProyectosRelacionados from "../../../components/Proyecto/proyectosRelacio
 import { useAuth } from "../../../context/AuthContext";
 import { Link } from 'react-router-dom';
 
-
-const Proyecto = () =>
-{
+const Proyecto = () => {
   const { slug } = useParams();
   const { dataProject, loadingProject, errorProject } = useApiProjectsDetail(slug);
   const navigate = useNavigate();
@@ -17,13 +15,34 @@ const Proyecto = () =>
     ...(dataProject.type && dataProject.type.documents ? dataProject.type.documents : [])
   ];
 
-  if (loadingProject)
-  {
+  if (loadingProject) {
     return <div>CARGANDO DATOS...</div>
   }
-  if (errorProject)
-  {
+  if (errorProject) {
     return <div>Error de conexión: {errorProject}</div>
+  }
+
+  let mensajeDisclaimer;
+  if (dataProject.program.name === 'Programa de Mejoramiento Urbano (PMU)') {
+    mensajeDisclaimer = (
+      <div className="container col-lg-8 p-4 alert-container">
+        <h3 className="text-sans-h3-danger">Condiciones de uso de la información</h3>
+        <p className="text-sans-p-danger">Los proyectos son solo referenciales, siendo responsabilidad de la unidad ejecutora revisar y actualizar sus valores y aspectos normativos. 
+          Verifica precisión y actualidad antes de utilizarlos como base para tus postulaciones.</p>
+        <hr className="text-sans-h3-danger my-4"/>
+        <p className="text-sans-p-danger">Si necesitas detalles adicionales sobre algún proyecto, contáctanos.</p>
+      </div>
+    );
+  } else {
+    mensajeDisclaimer = (
+      <div className="container col-lg-8 p-4 alert-container">
+        <h3 className="text-sans-h3-danger">Condiciones de uso de la información</h3>
+        <p className="text-sans-p-danger">Utiliza la información de proyectos como base para postulaciones. Es crucial verificar su adecuación y cumplimiento con los requisitos.
+          Si necesitas detalles adicionales sobre algún proyecto, contáctanos.</p>
+        <hr className="text-sans-h3-danger my-4"/>
+        <p className="text-sans-p-danger">Si necesitas detalles adicionales sobre algún proyecto, contáctanos.</p>
+      </div>
+    );
   }
 
   return (
@@ -125,9 +144,12 @@ const Proyecto = () =>
         </>
       }
 
-      {/* Tabla documentos del proyecto */}
-
         <h2 className="text-sans-h2 my-4">Documentos del proyecto</h2>
+        {/* Mensaje disclaimer */}
+        <div className="container col-lg-8 p-4 alert-container">
+          {mensajeDisclaimer}
+        </div>
+        {/* Tabla documentos del proyecto */}
         <div className="row my-4 fw-bold border-top">
           <div className="col-1 mt-3">#</div>
           <div className="col mt-3">Documento</div>
@@ -173,7 +195,6 @@ const Proyecto = () =>
             </div>
           ))
         }
-
 
         {/* Normativa por programa y tipo de proyecto */}
             { combinedDocuments.length > 0 &&

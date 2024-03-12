@@ -12,6 +12,8 @@ $grey-light-color:#BBBBBB;
 $white-color: #FFF;
 $neutral-color: #EEEEEE;
 $alert-danger:#F56B0F;
+$alert-border: #FFD4B7;
+$alert-background: #FFF3EB;
 $dark-red:#871a1a;
 $success-color: #006636; 
 $light-blue:#3f87d0;
@@ -71,6 +73,9 @@ $black-color: #111111;
 .text-sans-h3-lightgrey{
     @include font-sans(25px, 500, $grey-c-color);
 }
+.text-sans-h3-danger{
+    @include font-sans(24px, 500, $alert-danger);
+}
 .text-sans-h35{
     @include font-sans(23px, 500, $grey-a-color);
 }
@@ -113,6 +118,9 @@ $black-color: #111111;
 }
 .text-sans-p-lightgrey{
     @include font-sans(16px, 400, $grey-light-color); 
+}
+.text-sans-p-danger{
+    @include font-sans(16px, 400, $alert-danger); 
 }
 .text-sans-p-bold-darkred{
     @include font-sans(16px, 700, $dark-red);
@@ -393,8 +401,11 @@ $black-color: #111111;
     border-radius: 4px;
     background-color:$blue-sky;
 }
-
-
+.alert-container{
+    background-color: $alert-background;
+    border: 1px solid $alert-border;
+    border-radius: 4px;
+}
 
 
 #btn-icon:hover  #btnIcon {
@@ -446,5 +457,5 @@ $black-color: #111111;
     align-self: flex-start;
 }
 .text-alert {
-    color:$tertiary-color;
+    color: $alert-background;
 }
