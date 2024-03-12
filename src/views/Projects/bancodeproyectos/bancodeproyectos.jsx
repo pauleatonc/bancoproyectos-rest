@@ -1,8 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ApiContext } from '../../../context/ProjectContext';
-import
-{
+import {
   ProyectoContainer,
   FiltroProyectosContainer,
   ProyectosSort,
@@ -61,6 +60,7 @@ const BancoProyectos = () =>
         <div className="col-2 col-lg-4 col-sm-6 col-md-4 mt-3">
           <FiltroProyectosContainer filterParams={filterParams} setFilterParams={setFilterParams} selectedFilters={selectedFilters} />
         </div>
+        
         <div className="col-10 col-sm-8 col-md-8 col-lg-8 ">
           <div className="d-flex justify-content-end mb-1">
             <ProyectosSort sortOrder={sortOrder} onSortChange={handleSortChange} />
@@ -81,7 +81,6 @@ const BancoProyectos = () =>
             )
             }
           </div>
-
         </div>
         <div className="col-12 col-sm-6 col-md-12 d-block d-xl-none">
 
