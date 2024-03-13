@@ -22,10 +22,11 @@ const Proyecto = () => {
     return <div>Error de conexión: {errorProject}</div>
   }
 
+  console.log("data project en vista proyecto", dataProject)
   let mensajeDisclaimer;
-  if (dataProject.program.name === 'Programa de Mejoramiento Urbano (PMU)') {
+  if (dataProject.program.id === 1) {
     mensajeDisclaimer = (
-      <div className="container col-lg-8 p-4 alert-container">
+      <div className="">
         <h3 className="text-sans-h3-danger">Condiciones de uso de la información</h3>
         <p className="text-sans-p-danger">Los proyectos son solo referenciales, siendo responsabilidad de la unidad ejecutora revisar y actualizar sus valores y aspectos normativos. 
           Verifica precisión y actualidad antes de utilizarlos como base para tus postulaciones.</p>
@@ -35,7 +36,7 @@ const Proyecto = () => {
     );
   } else {
     mensajeDisclaimer = (
-      <div className="container col-lg-8 p-4 alert-container">
+      <div className="">
         <h3 className="text-sans-h3-danger">Condiciones de uso de la información</h3>
         <p className="text-sans-p-danger">Utiliza la información de proyectos como base para postulaciones. Es crucial verificar su adecuación y cumplimiento con los requisitos.
           Si necesitas detalles adicionales sobre algún proyecto, contáctanos.</p>
@@ -146,7 +147,7 @@ const Proyecto = () => {
 
         <h2 className="text-sans-h2 my-4">Documentos del proyecto</h2>
         {/* Mensaje disclaimer */}
-        <div className="container col-lg-8 p-4 alert-container">
+        <div className="container alert-container p-4">
           {mensajeDisclaimer}
         </div>
         {/* Tabla documentos del proyecto */}
