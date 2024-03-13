@@ -17,9 +17,8 @@ export const FiltroProyectosDesktop = (componentProps) =>
       <div className="container d-flex justify-content-between my-3 p-0">
         <h2 className="text-sans-h3 me-2">Filtrar</h2>
         <button className="text-sans-p btn-limpiar p-2" onClick={handleClearFilter} >
-          Limpiar filtro <i className="material-symbols-outlined">
-            delete
-          </i>
+          Limpiar filtro 
+          <i className="material-symbols-outlined"> delete </i>
         </button>
       </div>
 
