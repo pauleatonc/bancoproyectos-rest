@@ -28,6 +28,9 @@ from .projectSerializer import (
     TypeSerializerV1,
 )
 
+from rest_framework.exceptions import PermissionDenied
+from applications.users.permissions import is_admin, is_editor_general_or_superuser
+
 
 class CustomPagination(PageNumberPagination):
     page_size = 6
@@ -62,6 +65,24 @@ class ProjectViewSet(viewsets.ModelViewSet):
     ordering = ['year']
     pagination_class = CustomPagination
 
+    def check_permissions(self, request):
+        """
+        Verifica si el usuario tiene permiso de administrador o editor general.
+        """
+        if not (is_admin(request.user) or is_editor_general_or_superuser(request.user)):
+            raise PermissionDenied(detail="No tienes permiso para realizar esta acción.")
+
+    def create(self, request, *args, **kwargs):
+        self.check_permissions(request)
+        return super().create(request, *args, **kwargs)
+
+    def update(self, request, *args, **kwargs):
+        self.check_permissions(request)
+        return super().update(request, *args, **kwargs)
+
+    def destroy(self, request, *args, **kwargs):
+        self.check_permissions(request)
+        return super().destroy(request, *args, **kwargs)
 
     @action(detail=False, methods=['GET'])
     def filter_options(self, request):
