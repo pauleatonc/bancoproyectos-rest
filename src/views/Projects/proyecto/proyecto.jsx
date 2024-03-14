@@ -69,6 +69,11 @@ const Proyecto = () => {
         <p className="text-sans-p" style={{ whiteSpace: 'pre-line' }}>{dataProject.description}</p>
       </div>
 
+      {/* Imágenes del proyecto */}
+      <h2 className="text-sans-h2 my-5">Imágenes del proyecto</h2>
+
+      <Carrusel imgPortada={dataProject.portada} imgGeneral={dataProject.images} />
+
       {/* Tabla detalles del proyecto */}
       <div className="detalles-proyecto my-4 mt-5">
         <h2 className="text-sans-h2-white ms-3 ">Detalles del proyecto</h2>
@@ -113,11 +118,6 @@ const Proyecto = () => {
           <p className="text-sans-p">{dataProject.id_subdere}</p>
         </div>
       </div>
-
-      {/* Imágenes del proyecto */}
-      <h2 className="text-sans-h2 my-5">Imágenes del proyecto</h2>
-
-      <Carrusel imgPortada={dataProject.portada} imgGeneral={dataProject.images} />
 
       {/* Imágenes antes y después */}
       {(dataProject.beforeimage && dataProject.afterimage) &&
