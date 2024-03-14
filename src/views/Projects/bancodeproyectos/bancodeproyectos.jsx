@@ -1,8 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ApiContext } from '../../../context/ProjectContext';
-import
-{
+import {
   ProyectoContainer,
   FiltroProyectosContainer,
   ProyectosSort,
@@ -61,6 +60,7 @@ const BancoProyectos = () =>
         <div className="col-2 col-lg-4 col-sm-6 col-md-4 mt-3">
           <FiltroProyectosContainer filterParams={filterParams} setFilterParams={setFilterParams} selectedFilters={selectedFilters} />
         </div>
+        
         <div className="col-10 col-sm-8 col-md-8 col-lg-8 ">
           <div className="d-flex justify-content-end mb-1">
             <ProyectosSort sortOrder={sortOrder} onSortChange={handleSortChange} />
@@ -70,18 +70,17 @@ const BancoProyectos = () =>
             {projects && projects.length > 0 ? (
               <ProyectoContainer data={projects} />
             ) : (
-              <div className="alerta d-flex justify-content-center mt-4 " id='icon-alert'>
+              <div className="alert-container p-3 d-flex justify-content-center mt-4 " id='icon-alert'>
                 <i className="material-symbols-outlined">
                   info
                 </i>
-                <p className="text-alert fs-5 text-left mx-2 my-auto align-self-center">
+                <p className="text-sans-p-danger fs-5 text-left mx-2 my-auto align-self-center">
                   No encontramos proyectos con los filtros que elegiste. Intenta con otros distintos.
                 </p>
               </div>
             )
             }
           </div>
-
         </div>
         <div className="col-12 col-sm-6 col-md-12 d-block d-xl-none">
 

@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import { createContext, useState, useContext, useEffect } from 'react';
 import { apiBancoProyecto } from '../services/bancoproyecto.api';
 
 export const AuthContext = createContext();
