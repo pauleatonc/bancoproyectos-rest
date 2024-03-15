@@ -1,27 +1,31 @@
-
-// .line-container{
-//     position:absolute;
-//     top: 0px;
-//     height: fit-content;
-//     bottom: 0;
-//     left: 45px;
-// }
 @mixin deco-line ($widthsize, $bgcolor){
     width: $widthsize;
     height: 8px;
     background-color: $bgcolor;
 }
+.lineContainer{
+    width: 210px;
+}
 #lineBlue {
-    @include deco-line(58px, #0f69c4);
+    @include deco-line(41%, #0f69c4);
 }
 #lineRed {
-    @include deco-line(82px, $secondary-color);
+    @include deco-line(59%, $secondary-color);
 }
 .logo-subdere{
     @include font-sans(16px, 700, $grey-a-color);
     width: 210px;
-    //margin-left: 20px;
     text-decoration: none;
+}
+@media (min-width: 792px) {
+    .logo-subdere{
+        @include font-sans(20px, 700, $grey-a-color);
+        width: 280px;
+        margin-left: 75px;
+    }  
+    .lineContainer{
+        width: 260px;
+    }
 }
 
 @mixin menu-btns ($color){
@@ -51,12 +55,4 @@
 }
 #menu-divider{
     color: $white-color;
-}
-
-@media (min-width: 792px) {
-    .logo-subdere{
-        @include font-sans(20px, 700, $grey-a-color);
-        width: 280px;
-        margin-left: 75px;
-    }  
 }

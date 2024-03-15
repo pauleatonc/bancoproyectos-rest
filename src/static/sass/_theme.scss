@@ -73,9 +73,6 @@ $black-color: #111111;
 .text-sans-h3-lightgrey{
     @include font-sans(25px, 500, $grey-c-color);
 }
-.text-sans-h3-danger{
-    @include font-sans(24px, 500, $alert-danger);
-}
 .text-sans-h35{
     @include font-sans(23px, 500, $grey-a-color);
 }
@@ -121,6 +118,9 @@ $black-color: #111111;
 }
 .text-sans-p-danger{
     @include font-sans(16px, 400, $alert-danger); 
+}
+.text-sans-p-danger-bold{
+    @include font-sans(16px, 500, $alert-danger); 
 }
 .text-sans-p-bold-darkred{
     @include font-sans(16px, 700, $dark-red);
