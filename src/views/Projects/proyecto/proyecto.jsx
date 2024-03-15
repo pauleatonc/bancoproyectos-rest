@@ -22,25 +22,24 @@ const Proyecto = () => {
     return <div>Error de conexión: {errorProject}</div>
   }
 
-  console.log("data project en vista proyecto", dataProject)
   let mensajeDisclaimer;
   if (dataProject.program.id === 1) {
     mensajeDisclaimer = (
       <div className="">
-        <h3 className="text-sans-h3-danger">Condiciones de uso de la información</h3>
+        <h3 className="text-sans-p-danger-bold">Condiciones de uso de la información</h3>
         <p className="text-sans-p-danger">Los proyectos son solo referenciales, siendo responsabilidad de la unidad ejecutora revisar y actualizar sus valores y aspectos normativos. 
           Verifica precisión y actualidad antes de utilizarlos como base para tus postulaciones.</p>
-        <hr className="text-sans-h3-danger my-4"/>
+        <hr className="text-sans-p-danger my-4"/>
         <p className="text-sans-p-danger">Si necesitas detalles adicionales sobre algún proyecto, contáctanos.</p>
       </div>
     );
   } else {
     mensajeDisclaimer = (
       <div className="">
-        <h3 className="text-sans-h3-danger">Condiciones de uso de la información</h3>
+        <h3 className="ttext-sans-p-danger-bold">Condiciones de uso de la información</h3>
         <p className="text-sans-p-danger">Utiliza la información de proyectos como base para postulaciones. Es crucial verificar su adecuación y cumplimiento con los requisitos.
           Si necesitas detalles adicionales sobre algún proyecto, contáctanos.</p>
-        <hr className="text-sans-h3-danger my-4"/>
+        <hr className="text-sans-p-danger my-4"/>
         <p className="text-sans-p-danger">Si necesitas detalles adicionales sobre algún proyecto, contáctanos.</p>
       </div>
     );
