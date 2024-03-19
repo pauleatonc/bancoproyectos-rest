@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import logoSubdere from '../../static/img/logo_Subdere.png';
 
 const Footer = () => {
   return (
@@ -10,7 +11,7 @@ const Footer = () => {
           <div className="col-md-2 col-8 a11y-fonts-col-12 me-5">
             <div className="aspect-ratio ratio-4x3">
               <div className="logo-container">
-                <img className="mb-3 img-fluid img-sm" src="/img/logo_Subdere.png" />
+                <img className="mb-3 img-fluid img-sm" src={logoSubdere} />
                 <div className="deco-line">
                   <div className="azul"></div>
                   <div className="rojo"></div>
