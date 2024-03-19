@@ -65,23 +65,22 @@ class ProjectViewSet(viewsets.ModelViewSet):
     ordering = ['year']
     pagination_class = CustomPagination
 
-    def check_permissions(self, request):
-        """
-        Verifica si el usuario tiene permiso de administrador o editor general.
-        """
-        if not (is_admin(request.user) or is_editor_general_or_superuser(request.user)):
-            raise PermissionDenied(detail="No tienes permiso para realizar esta acción.")
-
     def create(self, request, *args, **kwargs):
-        self.check_permissions(request)
+        # Verifica si el usuario tiene permiso de administrador o editor general solo para create
+        if not (is_admin(request.user) or is_editor_general_or_superuser(request.user)):
+            raise PermissionDenied(detail="No tienes permiso para crear proyectos.")
         return super().create(request, *args, **kwargs)
 
     def update(self, request, *args, **kwargs):
-        self.check_permissions(request)
+        # Verifica si el usuario tiene permiso de administrador o editor general solo para update
+        if not (is_admin(request.user) or is_editor_general_or_superuser(request.user)):
+            raise PermissionDenied(detail="No tienes permiso para actualizar proyectos.")
         return super().update(request, *args, **kwargs)
 
     def destroy(self, request, *args, **kwargs):
-        self.check_permissions(request)
+        # Verifica si el usuario tiene permiso de administrador o editor general solo para destroy
+        if not (is_admin(request.user) or is_editor_general_or_superuser(request.user)):
+            raise PermissionDenied(detail="No tienes permiso para eliminar proyectos.")
         return super().destroy(request, *args, **kwargs)
 
     @action(detail=False, methods=['GET'])

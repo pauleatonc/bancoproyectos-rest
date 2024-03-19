@@ -216,10 +216,6 @@ class InnovativeProjectsViewSet(viewsets.ModelViewSet):
 
         Solo visible para administradores
         """
-        user = request.user
-        if not is_admin(user):
-            return Response({'detail': 'No tienes permiso para actualizar proyectos.'},
-                            status=status.HTTP_403_FORBIDDEN)
 
         instance = self.get_object()
         serializer = InnovativeProjectsRetrieveSerializer(instance)
