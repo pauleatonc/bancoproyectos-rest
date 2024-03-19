@@ -63,6 +63,7 @@ KEYCLOAK_CONFIG = {
     'confidential-port': 0,
 }
 
+
 # Trusted origins for the CSRF validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#csrf-trusted-origins
 CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=[])
