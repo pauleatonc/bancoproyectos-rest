@@ -62,3 +62,14 @@ SENDGRID_API_KEY = 'SG.Lg9cK1ZiTTat4_ytkJmW_g.Ghq_OlVi_02yanmo3c242WtJBVsMWizKnS
 ADMIN_EMAIL = ['modernizacion@subdere.gov.cl']
 NOREPLY_EMAIL = ['noreply@bancoproyectos.subdere.gob.cl']
 
+KEYCLOAK_CONFIG = {
+    'realm': 'app-qa',
+    'auth-server-url': 'https://oid.subdere.gob.cl/',
+    'ssl-required': 'external',
+    'resource': 'bancoproyectos',
+    'credentials': {
+        'secret': '3v6L9saO17mMVpBYIMGds280iMtyD5To'
+    },
+    'confidential-port': 0,
+}
+

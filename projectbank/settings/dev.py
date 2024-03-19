@@ -51,6 +51,18 @@ SENDGRID_API_KEY = env("SENDGRID_API_KEY")
 ADMIN_EMAIL = env("ADMIN_EMAIL")
 NOREPLY_EMAIL = env("NOREPLY_EMAIL")
 
+# Configuración de Keycloak
+KEYCLOAK_CONFIG = {
+    'realm': 'app-qa',
+    'auth-server-url': 'https://oid.subdere.gob.cl/',
+    'ssl-required': 'external',
+    'resource': 'bancoproyectos',
+    'credentials': {
+        'secret': '3v6L9saO17mMVpBYIMGds280iMtyD5To'
+    },
+    'confidential-port': 0,
+}
+
 
 # Trusted origins for the CSRF validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#csrf-trusted-origins
