@@ -15,6 +15,8 @@ DEBUG = env.bool('DEBUG', default=False)
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS')
 
+API_PATH_PREFIX = env("API_PATH_PREFIX", default="")
+
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
