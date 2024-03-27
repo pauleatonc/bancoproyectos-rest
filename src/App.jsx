@@ -1,6 +1,7 @@
-import React, { Suspense } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import React, { Suspense, useEffect } from 'react';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import { ApiProvider } from './context/ProjectContext';
+import { useLogin } from './hooks/useLogin';
 //import PrivateRoute from './components/Commons/privateRoute';
 const MainLayout = React.lazy(() => import('./layout/mainLayout'));
 const Landing = React.lazy(() => import('./views/Landing/landing'));
@@ -27,7 +28,35 @@ const EvaluarProyecto = React.lazy(() => import('./views/Dashboard/gestion_proye
 const SuccessViews = React.lazy(() => import ('./views/Dashboard/gestion_proyectos/creacionDeProyectos/success'));
 
 function App()
-{
+{  
+  const { handleAuthentication } = useLogin(); // Asume que esta función maneja el intercambio de código
+  const location = useLocation();
+
+  useEffect(() => {
+    // Esta función ayuda a transformar el hash en un objeto similar a URLSearchParams
+    const getHashParams = (hash) => {
+        const params = new URLSearchParams();
+        // Quita el '#' y divide los parámetros
+        const regex = /([^&;=]+)=?([^&;]*)/g;
+        const query = hash.substring(1);
+        let match;
+        while ((match = regex.exec(query))) {
+            params.append(decodeURIComponent(match[1]), decodeURIComponent(match[2]));
+        }
+        return params;
+    };
+
+    const hashParams = getHashParams(window.location.hash);
+    const code = hashParams.get('code');
+
+    if (code) {
+        console.log('Code found in URL:', code); // Verificación
+        handleAuthentication(code);
+    } else {
+        console.log('Code not found in URL hash.');
+    }
+}, [location, handleAuthentication]);
+
   return (
     <ApiProvider>
       <Suspense fallback={<div>Cargando página...</div>}>
