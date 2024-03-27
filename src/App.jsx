@@ -1,7 +1,9 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { ApiProvider } from './context/ProjectContext';
+import { useLogin } from './hooks/useLogin';
 import ReactGA from "react-ga4"; 
+
 //import PrivateRoute from './components/Commons/privateRoute';
 const MainLayout = React.lazy(() => import('./layout/mainLayout'));
 const Landing = React.lazy(() => import('./views/Landing/landing'));
@@ -26,6 +28,7 @@ const Success = React.lazy(() => import ('./views/Dashboard/gestion_proyectos/cr
 const EvaluarInnovadores = React.lazy(() => import ('./views/Dashboard/gestion_proyectos/evaluacionDeProyectos/evaluarInnovadores'))
 const EvaluarProyecto = React.lazy(() => import('./views/Dashboard/gestion_proyectos/evaluacionDeProyectos/evaluarProyecto'));
 const SuccessViews = React.lazy(() => import ('./views/Dashboard/gestion_proyectos/creacionDeProyectos/success'));
+
 const Analytics = () => {
   const location = useLocation();
 
@@ -37,18 +40,44 @@ const Analytics = () => {
   return null;
 };
 
-function App()
-{
-  React.useEffect(() => {
+function App() {  
+  const { handleAuthentication } = useLogin(); // Asume que esta función maneja el intercambio de código
+  const location = useLocation();
+
+  useEffect(() => {
+    // Inicializa Google Analytics solo una vez
     ReactGA.initialize('G-45DT9TXBFN');
-  }, []);
+
+    // Lógica para manejar el hash en la URL
+    // Esta función ayuda a transformar el hash en un objeto similar a URLSearchParams
+    const getHashParams = (hash) => {
+        const params = new URLSearchParams();
+        const regex = /([^&;=]+)=?([^&;]*)/g;
+        const query = hash.substring(1);
+        let match;
+        while ((match = regex.exec(query))) {
+            params.append(decodeURIComponent(match[1]), decodeURIComponent(match[2]));
+        }
+        return params;
+    };
+
+    const hashParams = getHashParams(window.location.hash);
+    const code = hashParams.get('code');
+
+    if (code) {
+        console.log('Code found in URL:', code); // Verificación
+        handleAuthentication(code);
+    } else {
+        console.log('Code not found in URL hash.');
+    }
+  }, [location, handleAuthentication]);
 
   return (
     <ApiProvider>
       <Suspense fallback={<div>Cargando página...</div>}>
+        <Analytics />
         <Routes>
-          <Analytics />
-          <Route path="/" element={<MainLayout />}>
+            <Route path="/" element={<MainLayout />}>
             <Route index element={<Landing />} />
             <Route path="bancodeproyectos" element={<BancoProyectos />} />
             <Route path="bancodeideas" element={<BancoIdeas />} />

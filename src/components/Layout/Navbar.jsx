@@ -59,7 +59,9 @@ const BtnInicioSesion = ({ btnPrincipalSize, btnSecundarioSize }) => {
         <button
           className={`btn-principal-s mt-4 me-lg-5 ${btnPrincipalSize}`}
           type="button"
-          onClick={loginWithKeycloak} // Usa esta función para iniciar la autenticación con Keycloak.
+          onClick={() => {
+            loginWithKeycloak(); // Llama a la función después de registrar el mensaje en la consola.
+          }}
         >
           <span className="text-sans-p-white text-underline mx-md-3">
             Iniciar sesión
