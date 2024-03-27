@@ -1,7 +1,9 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { ApiProvider } from './context/ProjectContext';
+import { useLogin } from './hooks/useLogin';
 import ReactGA from "react-ga4"; 
+
 //import PrivateRoute from './components/Commons/privateRoute';
 const MainLayout = React.lazy(() => import('./layout/mainLayout'));
 const Landing = React.lazy(() => import('./views/Landing/landing'));
@@ -26,6 +28,7 @@ const Success = React.lazy(() => import ('./views/Dashboard/gestion_proyectos/cr
 const EvaluarInnovadores = React.lazy(() => import ('./views/Dashboard/gestion_proyectos/evaluacionDeProyectos/evaluarInnovadores'))
 const EvaluarProyecto = React.lazy(() => import('./views/Dashboard/gestion_proyectos/evaluacionDeProyectos/evaluarProyecto'));
 const SuccessViews = React.lazy(() => import ('./views/Dashboard/gestion_proyectos/creacionDeProyectos/success'));
+
 const Analytics = () => {
   const location = useLocation();
 
@@ -37,18 +40,21 @@ const Analytics = () => {
   return null;
 };
 
-function App()
-{
-  React.useEffect(() => {
+function App() {  
+  const location = useLocation();
+
+  useEffect(() => {
+    // Inicializa Google Analytics solo una vez
     ReactGA.initialize('G-45DT9TXBFN');
-  }, []);
+
+  });
 
   return (
     <ApiProvider>
       <Suspense fallback={<div>Cargando página...</div>}>
+        <Analytics />
         <Routes>
-          <Analytics />
-          <Route path="/" element={<MainLayout />}>
+            <Route path="/" element={<MainLayout />}>
             <Route index element={<Landing />} />
             <Route path="bancodeproyectos" element={<BancoProyectos />} />
             <Route path="bancodeideas" element={<BancoIdeas />} />
