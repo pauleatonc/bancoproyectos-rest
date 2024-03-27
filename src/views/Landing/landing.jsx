@@ -6,6 +6,11 @@ import IconList from '../../static/img/icons/Blueprint.svg';
 import { ApiContext } from '../../context/ProjectContext';
 import useFilterOptions from '../../hooks/useFilterProjects';
 
+import imagenQueEs1 from '../../static/img/que_es_1b.png';
+import imagenQueEs2 from '../../static/img/que_es_2b.png';
+import imagenQueEs3 from '../../static/img/que_es_3b.png';
+import imagenBannerChile from '../../static/img/banner_chile.png';
+
 const Home = () => {
   const {
     setSelectedFilters,
@@ -97,7 +102,7 @@ const Home = () => {
         <div className="container d-lg-flex my-md-5">
           <div className="col-lg-4 d-flex flex-column mx-lg-2 align-items-center">
             <div className="que-es-circle rounded-circle d-flex align-items-center justify-content-center mb-md-4 my-4" >
-              <img src="src/static/img/que_es_1b.png" alt="Imagen" className="que-es-img img-fluid rounded-circle h-100 " />
+              <img src={imagenQueEs1} alt="Imagen" className="que-es-img img-fluid rounded-circle h-100 " />
             </div>
             <strong className="text-sans-h4 text-center">Para personas encargadas de Programas de Mejoramiento Urbano y de Barrios</strong>
             <p className="text-sans-p text-center my-3 my-md-4">Dirigido a todo profesional municipal encargado de la formulación de proyectos que se enmarquen en los programas PMU y PMB.</p>
@@ -105,7 +110,7 @@ const Home = () => {
 
           <div className="col-lg-4 d-flex flex-column mx-lg-2 align-items-center">
             <div className="que-es-circle rounded-circle d-flex align-items-center justify-content-center mb-md-4 my-4" >
-              <img src="src/static/img/que_es_2b.png" alt="Imagen" className="que-es-img img-fluid rounded-circle h-100" />
+              <img src={imagenQueEs2} alt="Imagen" className="que-es-img img-fluid rounded-circle h-100" />
             </div>
             <strong className="text-sans-h4 text-center">Filtra información y encuentra el proyecto que se ajuste a tu comuna</strong>
             <p className="text-sans-p text-center my-3 my-md-4">Podrás filtrar proyectos por tipo de programa, revisar antecedentes y descargar documentación referencial para postular proyectos adecuados a la realidad de tu comuna.</p>
@@ -113,7 +118,7 @@ const Home = () => {
 
           <div className="col-lg-4 d-flex flex-column mx-lg-2 align-items-center">
             <div className="que-es-circle rounded-circle d-flex align-items-center justify-content-center mb-md-4 my-4" >
-              <img src="src/static/img/que_es_3b.png" alt="Imagen" className="que-es-img img-fluid rounded-circle" />
+              <img src={imagenQueEs3} alt="Imagen" className="que-es-img img-fluid rounded-circle" />
             </div>
             <strong className="text-sans-h4 text-center">Entregamos información referencial para la realización de proyectos</strong>
             <p className="text-sans-p text-center my-3 my-md-4">Encontrarás información referencial detallada de proyectos como: planos, especificaciones, presupuestos, e información referencial para su elaboración. </p>
@@ -142,7 +147,7 @@ const Home = () => {
 
       {/* Banner mapa chile */}
       <div className="container col-md-10 mw-75 d-flex flex-column justify-content-center align-items-center">
-        <img src="src/static/img/banner_chile.png" className="w-100 m-5 " alt="mapa de chile" />
+        <img src={imagenBannerChile} className="w-100 m-5 " alt="mapa de chile" />
       </div>
 
     </>

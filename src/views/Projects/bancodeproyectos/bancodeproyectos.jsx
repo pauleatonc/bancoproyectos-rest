@@ -65,12 +65,12 @@ const BancoProyectos = () =>
           <div className="d-flex justify-content-end mb-1">
             <ProyectosSort sortOrder={sortOrder} onSortChange={handleSortChange} />
           </div>
-          <div className="col-12  d-none d-xl-block">
+          <div className="col-12 d-none d-xl-block">
 
             {projects && projects.length > 0 ? (
               <ProyectoContainer data={projects} />
             ) : (
-              <div className="alert-container p-3 d-flex justify-content-center mt-4 " id='icon-alert'>
+              <div className="alert-container p-3 d-flex justify-content-center my-4" id='icon-alert'>
                 <i className="material-symbols-outlined">
                   info
                 </i>
@@ -87,11 +87,11 @@ const BancoProyectos = () =>
           {projects && projects.length > 0 ? (
             <ProyectoContainer data={projects} />
           ) : (
-            <div className="alerta d-flex justify-content-center my-4 " id='icon-alert'>
+            <div className="alert-container p-3 d-flex justify-content-center my-4" id='icon-alert'>
               <i className="material-symbols-outlined">
                 info
               </i>
-              <p className="text-alert fs-5 text-left mx-2 my-auto align-self-center">
+              <p className="text-sans-p-danger fs-5 text-left mx-2 my-auto align-self-center">
                 No encontramos proyectos con los filtros que elegiste. Intenta con otros distintos.
               </p>
             </div>

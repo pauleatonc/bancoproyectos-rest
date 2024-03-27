@@ -87,11 +87,11 @@ const Navbar = () => {
         <div className="col-7 col-lg-5 p-0">
           {/* Logo subdere */}
           <Link to="/" className="text-decoration-none">
-            <div className="ms-2 ms-sm-1 row">
+            <div id="" className="lineContainer ms-2 ms-sm-1 row">
               <div id="lineBlue" />
               <div id="lineRed" />
             </div>
-            <p className="logo-subdere mt-3 ms-2 ms-sm-1 ps-0">Subsecretaría de Desarrollo Administrativo y Regional</p>  
+            <p className="logo-subdere mt-3 ms-2 ms-sm-1 ps-0">Subsecretaría de Desarrollo Regional y Administrativo</p>  
           </Link>
         </div>
 
