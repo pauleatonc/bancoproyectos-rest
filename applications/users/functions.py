@@ -1,6 +1,8 @@
 #Funciones extra de la aplicación users
 
 from django.core.exceptions import ValidationError
+import requests
+from django.conf import settings
 
 import random
 import string
@@ -71,3 +73,35 @@ def validar_rut_form(self):
         raise ValidationError('El RUT no es válido')
     return rut + '-' + dv
 
+
+def exchange_code_for_token(code):
+    print('1. Se ejecuta exchange_code_for_token')
+    # Reemplaza estos valores con tu configuración real de Keycloak
+    client_id = 'localhost-backend'
+    client_secret = 'yLAGL9hWC2jlggqemLoYGGNRL0pUkkPY'  # Omitir si tu cliente es público
+    redirect_uri = 'http://localhost:5173/callback/'
+    keycloak_token_url = 'https://oid.subdere.gob.cl/realms/app-qa/protocol/openid-connect/token'
+
+    payload = {
+        'client_id': client_id,
+        'client_secret': client_secret,  # Omitir si tu cliente es público
+        'code': code,
+        'grant_type': 'authorization_code',
+        'redirect_uri': redirect_uri,
+    }
+
+    print("2. payload = ", payload)
+    headers = {
+        'Content-Type': 'application/x-www-form-urlencoded',
+    }
+
+    print("3. headers = ", headers)
+    response = requests.post(keycloak_token_url, data=payload, headers=headers)
+
+    print("4. response = ", response)
+    if response.status_code == 200:
+        return response.json()  # Esto debería contener el token de acceso y otros tokens
+    else:
+        # Log para depuración
+        print(f'Error intercambiando el código por token: {response.status_code}, {response.text}')
+        return None
