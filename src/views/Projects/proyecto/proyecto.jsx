@@ -36,7 +36,7 @@ const Proyecto = () => {
   } else {
     mensajeDisclaimer = (
       <div className="">
-        <h3 className="ttext-sans-p-danger-bold">Condiciones de uso de la información</h3>
+        <h3 className="text-sans-p-danger-bold">Condiciones de uso de la información</h3>
         <p className="text-sans-p-danger">Utiliza la información de proyectos como base para postulaciones. Es crucial verificar su adecuación y cumplimiento con los requisitos.
           Si necesitas detalles adicionales sobre algún proyecto, contáctanos.</p>
         <hr className="text-sans-p-danger my-4"/>
