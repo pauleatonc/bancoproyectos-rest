@@ -29,18 +29,20 @@ schema_view = get_schema_view(
    permission_classes=(permissions.AllowAny,),
 )
 
+api_path_prefix = settings.API_PATH_PREFIX
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-    re_path('', include('applications.projects.urls')),
-    re_path('', include('applications.home.urls')),
-    re_path('', include('applications.users.urls')),
-    re_path('', include('applications.regioncomuna.urls')),
-    re_path('', include('applications.innovative_projects.urls')),
-    re_path('', include('applications.good_practices.urls')),
-    re_path('', include('applications.documents.urls')),
+    re_path(api_path_prefix, include('applications.projects.urls')),
+    re_path(api_path_prefix, include('applications.home.urls')),
+    re_path(api_path_prefix, include('applications.users.urls')),
+    re_path(api_path_prefix, include('applications.regioncomuna.urls')),
+    re_path(api_path_prefix, include('applications.innovative_projects.urls')),
+    re_path(api_path_prefix, include('applications.good_practices.urls')),
+    re_path(api_path_prefix, include('applications.documents.urls')),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('oidc/', include('oidc_provider.urls', namespace='oidc_provider')),
