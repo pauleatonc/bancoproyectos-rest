@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { ApiProvider } from './context/ProjectContext';
 import { useLogin } from './hooks/useLogin';
@@ -41,14 +41,33 @@ const Analytics = () => {
 };
 
 function App() {  
-
+  const { handleAuthentication } = useLogin();
   const location = useLocation();
+  const [codeProcessed, setCodeProcessed] = useState(false);
 
   useEffect(() => {
     // Inicializa Google Analytics solo una vez
     ReactGA.initialize('G-45DT9TXBFN');
 
-});
+    if (!codeProcessed) {
+      // Directamente usar URLSearchParams con location.search para extraer el código
+      const hashParams = new URLSearchParams(window.location.hash.substring(1)); // Ignora el primer carácter, que es el '#'
+      const code = hashParams.get('code');
+      console.log(code);
+
+      if (code) {
+          console.log('Code found in URL:', code); // Verificación
+          handleAuthentication(code).then(() => {
+            setCodeProcessed(true); // Asegúrate de que handleAuthentication pueda ser una promesa
+            // Considera limpiar el hash de la URL aquí para evitar re-procesamientos
+            window.history.pushState({}, document.title, window.location.pathname + window.location.search);
+          });
+      } else {
+          console.log('Code not found in URL hash.');
+    }
+  }
+}, [location, handleAuthentication, codeProcessed]);
+
 
   return (
     <ApiProvider>
