@@ -15,8 +15,16 @@ from applications.users.api.v1.serializers import CustomTokenObtainPairSerialize
 from applications.users.models import User
 # keycloak configuration
 from django.http import JsonResponse
-from .keycloak_auth import verify_or_create_user
+from .keycloak_auth import verify_user
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
+from django.shortcuts import redirect
+from .functions import exchange_code_for_token  # Asume que has puesto la función aquí
+from django.contrib.auth import login as django_login
+import logging
 
+logger = logging.getLogger(__name__)
 
 class Login(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
@@ -53,11 +61,31 @@ class Logout(APIView):
 
 
 #keycloak configuration
-def keycloak_login(request):
-    token = request.GET.get('token')  # Asumiendo que el token se envía como parte de la solicitud
-    user = verify_or_create_user(token)
-    if user:
-        # Manejar el inicio de sesión del usuario, generar tu propio token para la sesión, etc.
-        return JsonResponse({'message': 'Usuario autenticado con éxito'})
-    else:
-        return JsonResponse({'message': 'Error de autenticación'}, status=401)
+@api_view(['GET'])
+@permission_classes([AllowAny])
+def keycloak_code_exchange_view(request):
+    logger.debug("1")
+    print("1")
+    code = request.GET.get('code', None)
+    if code:
+        print("2")
+        token_info = exchange_code_for_token(code)
+        print("3")
+        if token_info:
+            # Aquí podrías hacer lo que necesites con el token_info, como crear una sesión
+            print("4")
+            user = verify_user(token_info['access_token'])
+            print("5")
+            if user:
+                # Inicia sesión para el usuario en tu app
+                print("6")
+                django_login(request, user)
+                print("7")
+
+            else:
+                # Manejar caso en que el usuario no existe o no pudo ser verificado
+                return JsonResponse({'error': 'User not found or could not be verified'}, status=404)
+        else:
+            return JsonResponse({'error': 'Failed to exchange code for token'}, status=400)
+    # Manejar el caso de error o ausencia de código
+    return JsonResponse({'error': 'Authorization code not provided or token exchange failed'}, status=400) 
