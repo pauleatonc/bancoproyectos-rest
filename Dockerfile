@@ -19,7 +19,6 @@ RUN apt-get update \
 
 # Copiar requirements.txt e instalar dependencias
 COPY requirements.txt /app/
-RUN pip install --upgrade pip
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Copiar el código de la aplicación al contenedor
