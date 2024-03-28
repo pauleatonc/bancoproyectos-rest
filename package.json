@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "dotenv -e .env vite --host",
     "build": "dotenv -e .env.production vite build",
+    "build:production": "dotenv -e .env.production vite build --mode production",
+    "build:staging": "dotenv -e .env.staging vite build --mode staging",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },

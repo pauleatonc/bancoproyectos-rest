@@ -41,36 +41,14 @@ const Analytics = () => {
 };
 
 function App() {  
-  const { handleAuthentication } = useLogin(); // Asume que esta función maneja el intercambio de código
+
   const location = useLocation();
 
   useEffect(() => {
     // Inicializa Google Analytics solo una vez
     ReactGA.initialize('G-45DT9TXBFN');
 
-    // Lógica para manejar el hash en la URL
-    // Esta función ayuda a transformar el hash en un objeto similar a URLSearchParams
-    const getHashParams = (hash) => {
-        const params = new URLSearchParams();
-        const regex = /([^&;=]+)=?([^&;]*)/g;
-        const query = hash.substring(1);
-        let match;
-        while ((match = regex.exec(query))) {
-            params.append(decodeURIComponent(match[1]), decodeURIComponent(match[2]));
-        }
-        return params;
-    };
-
-    const hashParams = getHashParams(window.location.hash);
-    const code = hashParams.get('code');
-
-    if (code) {
-        console.log('Code found in URL:', code); // Verificación
-        handleAuthentication(code);
-    } else {
-        console.log('Code not found in URL hash.');
-    }
-  }, [location, handleAuthentication]);
+});
 
   return (
     <ApiProvider>
