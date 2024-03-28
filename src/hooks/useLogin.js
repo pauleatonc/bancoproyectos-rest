@@ -36,12 +36,14 @@ export const useLogin = () => {
 
     // Nueva función para manejar el código de autorización después de la redirección
     const handleAuthentication = async (code) => {
-        console.log('1');
+        console.log('0');
         setLoading(true);
         try {
-            const response = await apiBancoProyecto.get(`/keycloak/callback/?code=${code}`);
+            const response = await apiBancoProyecto.get(`/callback/`, {
+                params: { code: code }
+            });
             setData(response.data);
-            console.log('2');
+            console.log('00');
             globalLogin(response.data.token, response.data['refresh-token'], response.data.user);
             localStorage.setItem('userToken', response.data.token);
             localStorage.setItem('refreshToken', response.data['refresh-token']);
