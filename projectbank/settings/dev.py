@@ -5,6 +5,7 @@ from .base import *
 # we load the variables from the .env file to the environment
 env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+ENVIRONMENT = os.environ.get('ENVIRONMENT', 'development')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # Your secret key
@@ -53,18 +54,19 @@ SENDGRID_API_KEY = env("SENDGRID_API_KEY")
 ADMIN_EMAIL = env("ADMIN_EMAIL")
 NOREPLY_EMAIL = env("NOREPLY_EMAIL")
 
-# Configuración de Keycloak
+# KEYCLOAK SETTINGS
 KEYCLOAK_CONFIG = {
-    'realm': 'app-qa',
-    'auth-server-url': 'https://oid.subdere.gob.cl/',
-    'ssl-required': 'external',
-    'resource': 'bancoproyectos',
+    'realm': env('DEV_KEYCLOAK_REALM'),
+    'auth-server-url': env('DEV_KEYCLOAK_AUTH_SERVER_URL'),
+    'ssl-required': env('DEV_KEYCLOAK_SSL_REQUIRED'),
+    'resource': env('DEV_KEYCLOAK_RESOURCE'),
     'credentials': {
-        'secret': '3v6L9saO17mMVpBYIMGds280iMtyD5To'
+        'secret': env('DEV_KEYCLOAK_CREDENTIALS_SECRET')
     },
-    'confidential-port': 0,
+    'confidential-port': env.int('DEV_KEYCLOAK_CONFIDENTIAL_PORT'),
+    'redirect_uri': env('DEV_KEYCLOAK_REDIRECT_URI'),
+    'keycloak_token_url': env('DEV_KEYCLOAK_TOKEN_URL'),
 }
-
 
 # Trusted origins for the CSRF validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#csrf-trusted-origins
@@ -73,3 +75,20 @@ CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=[])
 # If we are behind proxy with https we trust the header defined here.
 # https://docs.djangoproject.com/en/4.2/ref/settings/#secure-proxy-ssl-header
 SECURE_PROXY_SSL_HEADER = env.tuple('SECURE_PROXY_SSL_HEADER', default=None)
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        '': {  # 'root' logger
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}

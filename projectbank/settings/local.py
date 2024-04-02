@@ -66,14 +66,16 @@ NOREPLY_EMAIL = ['noreply@bancoproyectos.subdere.gob.cl']
 
 # KEYCLOAK SETTINGS
 KEYCLOAK_CONFIG = {
-    'realm': 'app-qa',
-    'auth-server-url': 'https://oid.subdere.gob.cl/',
-    'ssl-required': 'external',
-    'resource': 'localhost-backend',
+    'realm': env('LOCAL_KEYCLOAK_REALM'),
+    'auth-server-url': env('LOCAL_KEYCLOAK_AUTH_SERVER_URL'),
+    'ssl-required': env('LOCAL_KEYCLOAK_SSL_REQUIRED'),
+    'resource': env('LOCAL_KEYCLOAK_RESOURCE'),
     'credentials': {
-        'secret': 'yLAGL9hWC2jlggqemLoYGGNRL0pUkkPY'
+        'secret': env('LOCAL_KEYCLOAK_CREDENTIALS_SECRET')
     },
-    'confidential-port': 0,
+    'confidential-port': env.int('LOCAL_KEYCLOAK_CONFIDENTIAL_PORT'),
+    'redirect_uri': env('LOCAL_KEYCLOAK_REDIRECT_URI'),
+    'keycloak_token_url': env('LOCAL_KEYCLOAK_TOKEN_URL'),
 }
 
 LOGGING = {

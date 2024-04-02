@@ -2,7 +2,6 @@
 from unipath import Path
 from datetime import timedelta
 
-
 BASE_DIR = Path(__file__).ancestor(3)
 
 # Application definition
@@ -132,6 +131,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
     'http://127.0.0.1:5173',
+    'http://qabanco2.subdere.gob.cl',
 ]
 
 # Configuraciones de Django Rest Framework

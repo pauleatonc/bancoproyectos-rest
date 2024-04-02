@@ -15,16 +15,13 @@ from applications.users.api.v1.serializers import CustomTokenObtainPairSerialize
 from applications.users.models import User
 # keycloak configuration
 from django.http import JsonResponse
-from .keycloak_auth import verify_user
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from django.shortcuts import redirect
-from .functions import exchange_code_for_token  # Asume que has puesto la función aquí
+from .keycloak_auth import exchange_code_for_token, verify_user
 from django.contrib.auth import login as django_login
-import logging
-
-logger = logging.getLogger(__name__)
+from rest_framework.parsers import JSONParser
 
 class Login(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
@@ -61,31 +58,26 @@ class Logout(APIView):
 
 
 #keycloak configuration
-@api_view(['GET'])
+@api_view(['POST'])
 @permission_classes([AllowAny])
 def keycloak_code_exchange_view(request):
-    logger.debug("1")
     print("1")
-    code = request.GET.get('code', None)
-    if code:
-        print("2")
-        token_info = exchange_code_for_token(code)
-        print("3")
-        if token_info:
-            # Aquí podrías hacer lo que necesites con el token_info, como crear una sesión
-            print("4")
-            user = verify_user(token_info['access_token'])
-            print("5")
-            if user:
-                # Inicia sesión para el usuario en tu app
-                print("6")
-                django_login(request, user)
-                print("7")
+    data = JSONParser().parse(request)
+    code = data.get('code', None)
+    code_verifier = data.get('code_verifier', None)
+    print("code: ", code)
+    print("Verifier: ", code_verifier)
 
+    if code and code_verifier:
+        token_info = exchange_code_for_token(code, code_verifier)
+        if token_info:
+            user = verify_user(token_info['access_token'])
+            if user:
+                django_login(request, user)
+                # Retorna información relevante del usuario o una confirmación de inicio de sesión exitoso.
+                return JsonResponse({'message': 'Login successful', 'user': user.username})
             else:
-                # Manejar caso en que el usuario no existe o no pudo ser verificado
                 return JsonResponse({'error': 'User not found or could not be verified'}, status=404)
         else:
             return JsonResponse({'error': 'Failed to exchange code for token'}, status=400)
-    # Manejar el caso de error o ausencia de código
-    return JsonResponse({'error': 'Authorization code not provided or token exchange failed'}, status=400) 
+    return JsonResponse({'error': 'Authorization code or code verifier not provided'}, status=400)

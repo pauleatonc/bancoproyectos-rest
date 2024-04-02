@@ -5,6 +5,7 @@ from .base import *
 # we load the variables from the .env file to the environment
 env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
+ENVIRONMENT = os.environ.get('ENVIRONMENT', 'production')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 # Your secret key
@@ -80,3 +81,17 @@ CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=[])
 # If we are behind proxy with https we trust the header defined here.
 # https://docs.djangoproject.com/en/4.2/ref/settings/#secure-proxy-ssl-header
 SECURE_PROXY_SSL_HEADER = env.tuple('SECURE_PROXY_SSL_HEADER', default=None)
+
+# KEYCLOAK SETTINGS
+KEYCLOAK_CONFIG = {
+    'realm': env('PROD_KEYCLOAK_REALM'),
+    'auth-server-url': env('PROD_KEYCLOAK_AUTH_SERVER_URL'),
+    'ssl-required': env('PROD_KEYCLOAK_SSL_REQUIRED'),
+    'resource': env('PROD_KEYCLOAK_RESOURCE'),
+    'credentials': {
+        'secret': env('PROD_KEYCLOAK_CREDENTIALS_SECRET')
+    },
+    'confidential-port': env.int('PROD_KEYCLOAK_CONFIDENTIAL_PORT'),
+    'redirect_uri': env('PROD_KEYCLOAK_REDIRECT_URI'),
+    'keycloak_token_url': env('PROD_KEYCLOAK_TOKEN_URL'),
+}
