@@ -130,7 +130,7 @@ const Home = () => {
       <div className="container col-md-8 px-4 mb-4 d-flex flex-column flex-lg-row justify-content-between">
         <div className="col p-3 me-lg-5">
           <h2 className="text-sans-h2">Encuentra ideas innovadoras para tu comuna</h2>
-          <h3 className="text-sans-p mt-3 mb-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s.</h3>
+          <h3 className="text-sans-p mt-3 mb-4">En la sección de proyectos innovadores podrás encontrar una variedad de alternativas de proyectos de carácter innovador, que te ayuda a diversificar la oferta de infraestructura, entregándole un nuevo aire a tu comuna.</h3>
 
             <Link to={`/bancodeideas`}  type="button" className="btn-secundario-s mt-3 text-sans-p-blue text-decoration-underline px-3 py-3">
               Ver Proyectos Innovadores &gt;
@@ -138,7 +138,7 @@ const Home = () => {
         </div>
         <div className="col p-3 ms-lg-5">
           <h2 className="text-sans-h2">Revisa la documentación que necesitas para tu postulación</h2>
-          <h3 className="text-sans-p mt-3 mb-4">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s.</h3>
+          <h3 className="text-sans-p mt-3 mb-4">En la sección de Documentación encontrarás toda la documentación asociada a la elaboración de proyectos PMU y PMB, de manera fácil y ordenada para que puedas descargarla según necesites.</h3>
             <Link to={`/documentacion`} type="button" className="btn-secundario-s mt-3 text-sans-p-blue text-decoration-underline px-3 py-3">
               Ver Documentación &gt;
             </Link>
