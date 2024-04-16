@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 
 const ProyectoCard = ({ project = {} }) => {
-  console.log("project en proyecto card", project)
   const {
     name,
     description = "",

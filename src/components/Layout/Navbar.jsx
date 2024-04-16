@@ -6,32 +6,6 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../../context/AuthContext';
 import { useLogin } from '../../hooks/useLogin';
 
-/* const BtnInicioSesion = ({ btnPrincipalSize, btnSecundarioSize }) => {
-  const { isLoggedIn, userData, logout } = useAuth();
-
-  return(
-    <div className="lg-col d-flex justify-content-lg-end align-items-center">
-      { isLoggedIn ? (
-        <div className="container d-flex flex-column flex-lg-row justify-content-center">
-          <span className="d-none d-lg-block text-sans-p align-self-center mt-lg-3">Hola, {userData.full_name || userData.rut}</span>
-          <button className={`mx-lg-3 mt-lg-4 me-md-4 ${btnSecundarioSize}`}> 
-            <Link to="/dashboard">ir a Admin</Link>
-          </button>
-          <button className={`btn-principal-s mt-2 mt-lg-4 me-0 me-lg-5 py-3 ${btnPrincipalSize}`} type="button" onClick={logout}>
-              Cerrar sesión
-          </button>
-        </div>
-        ) : (
-        <button className={`btn-principal-s mt-4 me-lg-5 ${btnPrincipalSize}`} type="button">
-          <i className="cl cl-claveunica" />
-          <Link to="/login" className="text-sans-p-white text-underline mx-md-3">
-            Iniciar sesión
-          </Link>
-        </button>
-      )}
-    </div>
-  )
-}; */
 
 const BtnInicioSesion = ({ btnPrincipalSize, btnSecundarioSize }) => {
   const { isLoggedIn, userData, logout } = useAuth();
@@ -44,9 +18,6 @@ const BtnInicioSesion = ({ btnPrincipalSize, btnSecundarioSize }) => {
           <span className="d-none d-lg-block text-sans-p align-self-center mt-lg-3">
             Hola, {userData.full_name || userData.rut}
           </span>
-          <button className={`mx-lg-3 mt-lg-4 me-md-4 ${btnSecundarioSize}`}>
-            <Link to="/dashboard">ir a Admin</Link>
-          </button>
           <button
             className={`btn-principal-s mt-2 mt-lg-4 me-0 me-lg-5 py-3 ${btnPrincipalSize}`}
             type="button"

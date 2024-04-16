@@ -1,8 +1,6 @@
 import React, { Suspense, useEffect, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import { ApiProvider } from './context/ProjectContext';
-import { useLogin } from './hooks/useLogin';
-import ReactGA from "react-ga4"; 
 
 //import PrivateRoute from './components/Commons/privateRoute';
 const MainLayout = React.lazy(() => import('./layout/mainLayout'));
@@ -29,50 +27,11 @@ const EvaluarInnovadores = React.lazy(() => import ('./views/Dashboard/gestion_p
 const EvaluarProyecto = React.lazy(() => import('./views/Dashboard/gestion_proyectos/evaluacionDeProyectos/evaluarProyecto'));
 const SuccessViews = React.lazy(() => import ('./views/Dashboard/gestion_proyectos/creacionDeProyectos/success'));
 
-const Analytics = () => {
-  const location = useLocation();
-
-  useEffect(() => {
-    const currentPage = location.pathname + location.search;
-    ReactGA.send({ hitType: 'pageview', page: currentPage });
-  }, [location]);
-
-  return null;
-};
-
 function App() {  
-  const { handleAuthentication } = useLogin();
-  const location = useLocation();
-  const [codeProcessed, setCodeProcessed] = useState(false);
-
-  useEffect(() => {
-    // Inicializa Google Analytics solo una vez
-    ReactGA.initialize('G-45DT9TXBFN');
-
-    if (!codeProcessed) {
-      // Directamente usar URLSearchParams con location.search para extraer el código
-      const hashParams = new URLSearchParams(window.location.hash.substring(1)); // Ignora el primer carácter, que es el '#'
-      const code = hashParams.get('code');
-      console.log(code);
-
-      if (code) {
-          console.log('Code found in URL:', code); // Verificación
-          handleAuthentication(code).then(() => {
-            setCodeProcessed(true); // Asegúrate de que handleAuthentication pueda ser una promesa
-            // Considera limpiar el hash de la URL aquí para evitar re-procesamientos
-            window.history.pushState({}, document.title, window.location.pathname + window.location.search);
-          });
-      } else {
-          console.log('Code not found in URL hash.');
-    }
-  }
-}, [location, handleAuthentication, codeProcessed]);
-
-
+  
   return (
     <ApiProvider>
       <Suspense fallback={<div>Cargando página...</div>}>
-        <Analytics />
         <Routes>
             <Route path="/" element={<MainLayout />}>
             <Route index element={<Landing />} />

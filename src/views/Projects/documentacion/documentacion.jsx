@@ -18,8 +18,6 @@ const Documentacion = () => {
     loadingDocuments,
     errorDocuments,
   } = useApiDocuments();
-  console.log('documentTypes desde documentacion', documentTypes)
-  console.log('dataDocuments desde documentacion', dataDocuments)
 
   // Funcion para manejar la busqueda
   const handleSearch = (searchInput) => {

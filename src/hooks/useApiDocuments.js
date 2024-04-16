@@ -48,8 +48,6 @@ const useApiDocuments = () => {
     fetchDocuments();
   }, []);
 
-  console.log("docuemnt types", documentTypes)
-
   return {
     dataDocuments,
     documentTypes,
