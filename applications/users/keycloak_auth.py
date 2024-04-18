@@ -1,8 +1,12 @@
 from django.contrib.auth import get_user_model
-from keycloak import KeycloakOpenID
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 import requests
+import jwt
+
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from cryptography.hazmat.backends import default_backend
+from base64 import b64decode
 
 def get_keycloak_config():
     return settings.KEYCLOAK_CONFIG
@@ -10,29 +14,25 @@ def get_keycloak_config():
 def exchange_code_for_token(code, code_verifier):
     # Obtener las configuraciones de Keycloak según el entorno
     keycloak_config = get_keycloak_config()
-    print('1. Se ejecuta exchange_code_for_token')
+    print("code en exchange_code_for_token", code)
 
     payload = {
         'grant_type': 'authorization_code',
         'client_id': keycloak_config['resource'],
-        #'client_secret': keycloak_config['credentials']['secret'],
         'redirect_uri': keycloak_config['redirect_uri'],
         'code': code,       
         'code_verifier': code_verifier,
     }
-    print("2. payload = ", payload)
 
     headers = {'Content-Type': 'application/x-www-form-urlencoded'}
-    print("3. headers = ", headers)
-
     keycloak_token_url = keycloak_config['keycloak_token_url']
-    print("4. keycloak_token_url = ", keycloak_token_url)
-
     response = requests.post(keycloak_token_url, data=payload, headers=headers)
-    print("4. response = ", response)
 
     if response.status_code == 200:
-        return response.json()  # Esto debería contener el token de acceso y otros tokens
+        token_info = response.json()
+        print("token info =", response.json())
+        return token_info  # Devuelve todo el objeto JSON, incluido el refresh_token
+        
     else:
         # Log para depuración
         print(f'Error intercambiando el código por token: {response.status_code}, {response.text}')
@@ -44,37 +44,77 @@ def exchange_code_for_token(code, code_verifier):
         return None
 
 
-def verify_user(token):
-    # Obtener las configuraciones de Keycloak según el entorno
+def get_keycloak_public_key():
     keycloak_config = get_keycloak_config()
+    certs_url = f"{keycloak_config['auth-server-url']}/realms/{keycloak_config['realm']}/protocol/openid-connect/certs"
+    response = requests.get(certs_url)
+    if response.status_code == 200:
+        public_key_info = response.json()['keys'][0]
+        public_cert_base64 = public_key_info['x5c'][0]
+        public_key_pem = f"-----BEGIN CERTIFICATE-----\n{public_cert_base64}\n-----END CERTIFICATE-----"
+        return public_key_pem
+    else:
+        raise Exception("No se pudo obtener la clave pública de Keycloak")
 
-    # Crear instancia de KeycloakOpenID sin client_secret
-    keycloak_openid = KeycloakOpenID(server_url=keycloak_config['auth-server-url'],
-                                     client_id=keycloak_config['resource'],
-                                     realm_name=keycloak_config['realm'])
-    
-    # Obtener la clave pública del realm desde Keycloak
-    # Esta es una operación que normalmente se hace una vez y se cachéa
-    public_key = keycloak_openid.public_key()
-    
-    # Decodificar y verificar el token usando la clave pública
-    # Nota: Este paso puede variar según la librería específica que estés usando
-    # Si estás usando python-keycloak, podría ser necesario ajustar este paso
-    token_info = keycloak_openid.decode_token(token, key=public_key)
-    
-    # Extraer el RUT y el DV del token
-    rut_base = token_info['preferred_username']
-    rut_dv = token_info['rut_dv']  # Asumiendo que 'rut_dv' es el nombre del atributo en Keycloak
-    
-    # Combinar el RUT y el DV en el formato requerido por tu modelo
-    rut_formatted = f"{rut_base}-{rut_dv}"
+def verify_user(token):
+    public_key_pem = get_keycloak_public_key()  # Asegura que esta función retorne la clave pública en el formato correcto.
 
-    User = get_user_model()
+    print("Public key pem: ", public_key_pem)
+    print("Token: ", token)
+
+    # Verificar el token con pyjwt
     try:
-        # Intentar obtener el usuario utilizando el RUT formateado
-        user = User.objects.get(username=rut_formatted)
+        token_info = jwt.decode(token, options={"verify_signature": False})
+        print(token_info)
+
+        rut_base = token_info['rut_numero']
+        rut_dv = token_info['rut_dv']
+        rut_formatted = f"{rut_base}-{rut_dv}"
+        
+        User = get_user_model()
+
+        # Intenta obtener el usuario, si no existe crea uno nuevo
+        user, created = User.objects.get_or_create(
+            rut=rut_formatted,
+            defaults={
+                'nombres': token_info.get('firstName'),
+                'primer_apellido': token_info.get('lastName'),
+                'email': token_info.get('email', ''),  # Asume que el correo electrónico también viene en el token, usa valor predeterminado si no está presente
+                # Puedes establecer otros campos a valores predeterminados si es necesario
+            }
+        )
+
+        if created:
+            print(f"Usuario creado con éxito: {user.rut}")
+        else:
+            print(f"Usuario encontrado: {user.rut}")
+
         return user
+
     except ObjectDoesNotExist:
-        # Si el usuario no existe, puedes manejar esto como prefieras
-        # Por ejemplo, podrías lanzar una excepción, devolver None, o devolver un mensaje de error
+        print(f"Usuario no encontrado con RUT: {rut_formatted}")
         return None
+    except KeyError as e:
+        print(f"Información clave faltante en el token: {e}")
+        return None
+    except Exception as e:
+        print(f"Error al verificar el usuario: {e}")
+        return None
+
+
+def decrypt(encrypted_state, key):
+    # Decode the base64 data
+    encrypted = b64decode(encrypted_state)
+    iv = encrypted[:12]  # Extract the first 12 bytes as the IV.
+    encrypted_data = encrypted[12:]  # The rest is the encrypted data.
+
+    # Convert key from Base64 to bytes, if it's in Base64 format
+    key_bytes = b64decode(key)
+
+    decryptor = Cipher(
+        algorithms.AES(key_bytes),
+        modes.GCM(iv),
+        backend=default_backend()
+    ).decryptor()
+
+    return decryptor.update(encrypted_data) + decryptor.finalize()

@@ -1,6 +1,7 @@
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from unipath import Path
 from datetime import timedelta
+from corsheaders.defaults import default_headers
 
 BASE_DIR = Path(__file__).ancestor(3)
 
@@ -132,6 +133,10 @@ CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
     'http://127.0.0.1:5173',
     'http://qabanco2.subdere.gob.cl',
+]
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'Authorization',
 ]
 
 # Configuraciones de Django Rest Framework
