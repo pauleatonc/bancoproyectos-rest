@@ -18,10 +18,6 @@ const BtnInicioSesion = ({ btnPrincipalSize, btnSecundarioSize }) => {
           <span className="d-none d-lg-block text-sans-p align-self-center mt-lg-3">
             Hola, {userData}
           </span>
-          <button className={`mx-lg-3 mt-lg-4 me-md-4 ${btnSecundarioSize}`}>
-            <Link to="/dashboard">ir a Admin</Link>
-          </button>
-
           <button
             className={`btn-principal-s mt-2 mt-lg-4 me-0 me-lg-5 py-3 ${btnPrincipalSize}`}
             type="button"
