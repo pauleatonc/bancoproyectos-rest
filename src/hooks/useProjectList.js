@@ -27,8 +27,6 @@ export const useProjectList = () => {
     };
     const fullUrl = `${apiUrl}?${new URLSearchParams(queryParams)}`;
 
-    console.log("URL de la solicitud:", fullUrl);
-
     try {
       const response = await apiBancoProyecto.get(fullUrl, {
         cancelToken: source.token,

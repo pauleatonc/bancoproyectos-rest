@@ -10,7 +10,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
       render={(props) => (
         isLoggedIn
           ? <Component {...props} />
-          : <Navigate to="/login" />
+          : <Navigate to="" />
       )}
     />
   );

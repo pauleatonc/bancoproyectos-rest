@@ -64,7 +64,6 @@ const ProyectosInnovadores = () => {
       setSelectedProject(null); // Limpia seleccion del usuario para mostrar primer proyecto del listado al cambiar programa.
     }
   };
-  console.log(selectedPracticesPrograms);
 
   // Funcion para seleccionar una practica
   const onSelect = (practice) => {

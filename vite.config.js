@@ -12,6 +12,10 @@ if(process.env.BUILD_ENV === 'production') {
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  server: {
+    host: '0.0.0.0',
+    port: 8082, // Configurar el puerto aquí
+  },
   plugins: [ react() ],
   build: {
     outDir: `dist/${outputDirectory}`,

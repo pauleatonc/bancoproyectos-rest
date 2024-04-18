@@ -6,62 +6,45 @@ export const apiBancoProyecto = axios.create({
   baseURL: import.meta.env.VITE_REACT_APP_API_URL,
 });
 
-// Agregar un interceptor para añadir el token a las cabeceras de las solicitudes
-apiBancoProyecto.interceptors.request.use(
-  (config) => {
-    const token = localStorage.getItem('userToken');
-    if (token) {
-      config.headers['Authorization'] = `Bearer ${token}`;
-    }
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
-
 // Interceptor para manejar la expiración del token
 apiBancoProyecto.interceptors.response.use(
-  (response) => {
-    return response;
-  },
+  (response) => response,
   async (error) => {
     const originalRequest = error.config;
 
+    // Verificar si es un error de autenticación y la solicitud no ha sido reintentada
     if (error.response.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
-
-      const refreshToken = localStorage.getItem('refreshToken');
+      originalRequest._retry = true; // Marcar que la solicitud ya ha sido reintentada
 
       try {
-        const response = await axios.post('api/token/refresh/', { refresh: refreshToken });
-        localStorage.setItem('userToken', response.data.access);
+        // Solicitar un nuevo token de acceso usando el refresh token
+        const refreshToken = localStorage.getItem('refreshToken');
+        const tokenResponse = await axios.post(`${apiBancoProyecto.defaults.baseURL}/refresh_token/`, {
+          refresh_token: refreshToken
+        });
 
-        // Actualizar el token en la solicitud y repetirla
-        originalRequest.headers['Authorization'] = 'Bearer ' + response.data.access;
+        const { access_token } = tokenResponse.data;
 
+        // Guardar el nuevo token de acceso y actualizar la solicitud original
+        localStorage.setItem('userToken', access_token);
+        originalRequest.headers['Authorization'] = `Bearer ${access_token}`;
+        // console.log("nuevo access token guardado: ", access_token)
+
+        // Reintentar la solicitud original con el nuevo token
         return apiBancoProyecto(originalRequest);
+      } catch (refreshError) {
+        console.error('Failed to refresh the access token:', refreshError);
 
-      } catch (e) {
-        try {
-          await apiBancoProyecto.post('logout/', {}, {
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          });
-        } catch (error) {
-          console.error('Error en el cierre de sesión:', error);
-        }
-      
-        // Limpia el estado y el localStorage, como ya lo estabas haciendo
+        // Manejar el error de refresco aquí (por ejemplo, redirigir al login)
+        // Asegúrate de limpiar el localStorage y cualquier estado relacionado
         localStorage.removeItem('userToken');
         localStorage.removeItem('refreshToken');
         localStorage.removeItem('userData');
-        setIsLoggedIn(false);
-        setUserData(null);
+
       }
     }
 
+    // Rechazar la promesa si el error no es 401 o la solicitud ya fue reintentada
     return Promise.reject(error);
   }
 );
