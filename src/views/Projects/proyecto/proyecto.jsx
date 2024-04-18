@@ -4,12 +4,14 @@ import Carrusel from "../../../components/Commons/carrusel";
 import ProyectosRelacionados from "../../../components/Proyecto/proyectosRelacionados";
 import { useAuth } from "../../../context/AuthContext";
 import { Link } from 'react-router-dom';
+import { useLogin } from '../../../hooks/useLogin';
 
 const Proyecto = () => {
   const { slug } = useParams();
   const { dataProject, loadingProject, errorProject } = useApiProjectsDetail(slug);
   const navigate = useNavigate();
   const { isLoggedIn } = useAuth();
+  const { loginWithKeycloak } = useLogin(); // Asegúrate de que este método esté definido en tu hook.
   const combinedDocuments = [
     ...(dataProject.program && dataProject.program.documents ? dataProject.program.documents : []),
     ...(dataProject.type && dataProject.type.documents ? dataProject.type.documents : [])
@@ -175,7 +177,9 @@ const Proyecto = () => {
         {isLoggedIn ? (
           <a className="col p-3 text-sans-p-tertiary" href={dataProject.eett} target="_blank" rel="noopener noreferrer">Descargar</a>
         ) : (
-          <Link className="col p-3 text-sans-p-tertiary" to="/login">Iniciar sesión para descargar</Link>
+          <Link className="col p-3 text-sans-p-tertiary" onClick={() => {
+            loginWithKeycloak(); // Llama a la función después de registrar el mensaje en la consola.
+          }}>Iniciar sesión para descargar</Link>
         )}
       </div>
 
@@ -187,7 +191,9 @@ const Proyecto = () => {
         {isLoggedIn ? (
           <a className="col p-3 text-sans-p-tertiary" href={dataProject.eett} target="_blank" rel="noopener noreferrer">Descargar</a>
         ) : (
-          <Link className="col p-3 text-sans-p-tertiary" to="/login">Iniciar sesión para descargar</Link>
+          <Link className="col p-3 text-sans-p-tertiary" onClick={() => {
+            loginWithKeycloak(); // Llama a la función después de registrar el mensaje en la consola.
+          }}>Iniciar sesión para descargar</Link>
         )}
       </div>
 
@@ -200,7 +206,9 @@ const Proyecto = () => {
             {isLoggedIn ? (
               <a className="col p-3 text-sans-p-tertiary" href={dataProject.eett} target="_blank" rel="noopener noreferrer">Descargar</a>
             ) : (
-              <Link className="col p-3 text-sans-p-tertiary" to="/login">Iniciar sesión para descargar</Link>
+              <Link className="col p-3 text-sans-p-tertiary" onClick={() => {
+                loginWithKeycloak(); // Llama a la función después de registrar el mensaje en la consola.
+              }}>Iniciar sesión para descargar</Link>
             )}
           </div>
         ))
