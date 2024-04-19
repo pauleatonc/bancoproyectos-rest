@@ -12,27 +12,31 @@ export const AuthProvider = ({ children }) => {
     const userDataFromLocalStorage = localStorage.getItem('userData');
     if (token && userDataFromLocalStorage) {
       setIsLoggedIn(true);
-      setUserData(userDataFromLocalStorage);
+      setUserData(JSON.parse(userDataFromLocalStorage));
     }
   }, []);
 
   const login = (token, refreshToken, userData) => {
     localStorage.setItem('userToken', token);
     localStorage.setItem('refreshToken', refreshToken);
-    localStorage.setItem('userData', userData);
+    localStorage.setItem('userData', JSON.stringify(userData));
     setIsLoggedIn(true);
     setUserData(userData);
     // console.log("User data: ", userData);
   };
 
   const logout = async () => {
+    console.log("entra al logout del front");
     const token = localStorage.getItem('userToken');
     try {
+      console.log("Intenta enviar al logout del back")
+      console.log('headers: ', `Bearer ${token}`);
       await axios.post('/logout/', {}, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
       });
+      console.log('headers: ', headers);
       console.log('Logout successful');
     } catch (error) {
       console.error('Error en el cierre de sesión:', error);

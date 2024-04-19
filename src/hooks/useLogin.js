@@ -26,9 +26,9 @@ export const useLogin = () => {
             // console.log("Se guarda el code Verifier: ", codeVerifier);
 
             // Construir la URL de redirección manualmente con los parámetros necesarios
-            const redirectUri = 'http://qabanco2.subdere.gob.cl/';
-            const clientId = 'bancoproyectos-back'; // Reemplazar por tu client_id de Keycloak
-            const keycloakAuthUrl = 'https://oid.subdere.gob.cl/realms/app-qa/protocol/openid-connect/auth'; // Modificar con tu URL de Keycloak
+            const redirectUri = import.meta.env.VITE_KEYCLOAK_REDIRECT_URI;
+            const clientId = import.meta.env.VITE_KEYCLOAK_RESOURCE;
+            const keycloakAuthUrl = import.meta.env.VITE_KEYCLOAK_AUTH_URL;
 
 
             const state = encodeURIComponent(encryptedCodeVerifier); // Codificar el hash para la URL
@@ -68,7 +68,7 @@ export const useLogin = () => {
     
             if (response.data && response.data.access_token && response.data.refresh_token) {
                 localStorage.setItem('userToken', response.data.access_token);
-                localStorage.setItem('userData', response.data.user);
+                localStorage.setItem('userData', JSON.stringify(response.data.user));
                 localStorage.setItem('refreshToken', response.data.refresh_token);
                 const expiresAt = new Date().getTime() + (response.data.expires_in * 1000);
                 localStorage.setItem('tokenExpiry', expiresAt.toString());
