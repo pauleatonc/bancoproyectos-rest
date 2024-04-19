@@ -26,9 +26,9 @@ export const useLogin = () => {
             // console.log("Se guarda el code Verifier: ", codeVerifier);
 
             // Construir la URL de redirección manualmente con los parámetros necesarios
-            const redirectUri = 'http://qabanco2.subdere.gob.cl/';
-            const clientId = 'bancoproyectos-back'; // Reemplazar por tu client_id de Keycloak
-            const keycloakAuthUrl = 'https://oid.subdere.gob.cl/realms/app-qa/protocol/openid-connect/auth'; // Modificar con tu URL de Keycloak
+            const redirectUri = import.meta.env.KEYCLOAK_REDIRECT_URI;
+            const clientId = import.meta.env.KEYCLOAK_RESOURCE;
+            const keycloakAuthUrl = import.meta.env.KEYCLOAK_AUTH_URL;
 
 
             const state = encodeURIComponent(encryptedCodeVerifier); // Codificar el hash para la URL
