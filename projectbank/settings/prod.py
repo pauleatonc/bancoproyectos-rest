@@ -94,4 +94,5 @@ KEYCLOAK_CONFIG = {
     'confidential-port': env.int('PROD_KEYCLOAK_CONFIDENTIAL_PORT'),
     'redirect_uri': env('PROD_KEYCLOAK_REDIRECT_URI'),
     'keycloak_token_url': env('PROD_KEYCLOAK_TOKEN_URL'),
+    'keycloak_logout_url': env('PROD_KEYCLOAK_LOGOUT_URL'),
 }

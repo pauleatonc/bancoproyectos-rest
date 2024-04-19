@@ -1,4 +1,4 @@
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, authenticate
 from django.core.exceptions import ObjectDoesNotExist
 from django.conf import settings
 import requests
@@ -7,6 +7,7 @@ import jwt
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
 from base64 import b64decode
+from applications.users.api.v1.serializers import CustomTokenObtainPairSerializer, UserSerializer
 
 def get_keycloak_config():
     return settings.KEYCLOAK_CONFIG
@@ -83,13 +84,14 @@ def verify_user(token):
                 # Puedes establecer otros campos a valores predeterminados si es necesario
             }
         )
+        user_serializer = UserSerializer(user)
 
         if created:
             print(f"Usuario creado con éxito: {user.rut}")
         else:
             print(f"Usuario encontrado: {user.rut}")
 
-        return user
+        return user_serializer.data
 
     except ObjectDoesNotExist:
         print(f"Usuario no encontrado con RUT: {rut_formatted}")

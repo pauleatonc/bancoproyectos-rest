@@ -66,6 +66,7 @@ KEYCLOAK_CONFIG = {
     'confidential-port': env.int('DEV_KEYCLOAK_CONFIDENTIAL_PORT'),
     'redirect_uri': env('DEV_KEYCLOAK_REDIRECT_URI'),
     'keycloak_token_url': env('DEV_KEYCLOAK_TOKEN_URL'),
+    'keycloak_logout_url': env('DEV_KEYCLOAK_LOGOUT_URL'),
 }
 
 # Trusted origins for the CSRF validation

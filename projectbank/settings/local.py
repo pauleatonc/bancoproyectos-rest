@@ -76,6 +76,7 @@ KEYCLOAK_CONFIG = {
     'confidential-port': env.int('LOCAL_KEYCLOAK_CONFIDENTIAL_PORT'),
     'redirect_uri': env('LOCAL_KEYCLOAK_REDIRECT_URI'),
     'keycloak_token_url': env('LOCAL_KEYCLOAK_TOKEN_URL'),
+    'keycloak_logout_url': env('LOCAL_KEYCLOAK_LOGOUT_URL'),
 }
 
 LOGGING = {

@@ -14,7 +14,7 @@ urlpatterns = [
     path(
         'refresh_token/', refresh_token_view, name='refresh_token'
     ),
-        path(
+    path(
         'logout/', logout_view, name='logout'
     ),
 
