@@ -26,9 +26,9 @@ export const useLogin = () => {
             // console.log("Se guarda el code Verifier: ", codeVerifier);
 
             // Construir la URL de redirección manualmente con los parámetros necesarios
-            const redirectUri = import.meta.env.KEYCLOAK_REDIRECT_URI;
-            const clientId = import.meta.env.KEYCLOAK_RESOURCE;
-            const keycloakAuthUrl = import.meta.env.KEYCLOAK_AUTH_URL;
+            const redirectUri = import.meta.env.VITE_KEYCLOAK_REDIRECT_URI;
+            const clientId = import.meta.env.VITE_KEYCLOAK_RESOURCE;
+            const keycloakAuthUrl = import.meta.env.VITE_KEYCLOAK_AUTH_URL;
 
 
             const state = encodeURIComponent(encryptedCodeVerifier); // Codificar el hash para la URL
