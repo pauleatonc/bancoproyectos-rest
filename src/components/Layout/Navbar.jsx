@@ -15,9 +15,8 @@ const BtnInicioSesion = ({ btnPrincipalSize, btnSecundarioSize }) => {
     <div className="lg-col d-flex justify-content-lg-end align-items-center">
       {isLoggedIn ? (
         <div className="container d-flex flex-column flex-lg-row justify-content-center">
-          <span className="d-none d-lg-block text-sans-p align-self-center mt-lg-3">
-            Hola, {userData}
-          </span>
+          <span className="d-none d-lg-block text-sans-p align-self-center mt-lg-3">Hola, {userData.full_name || userData.rut}</span>
+
           <button
             className={`btn-principal-s mt-2 mt-lg-4 me-0 me-lg-5 py-3 ${btnPrincipalSize}`}
             type="button"

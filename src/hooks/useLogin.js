@@ -68,7 +68,7 @@ export const useLogin = () => {
     
             if (response.data && response.data.access_token && response.data.refresh_token) {
                 localStorage.setItem('userToken', response.data.access_token);
-                localStorage.setItem('userData', response.data.user);
+                localStorage.setItem('userData', JSON.stringify(response.data.user));
                 localStorage.setItem('refreshToken', response.data.refresh_token);
                 const expiresAt = new Date().getTime() + (response.data.expires_in * 1000);
                 localStorage.setItem('tokenExpiry', expiresAt.toString());
