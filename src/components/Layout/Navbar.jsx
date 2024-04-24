@@ -39,7 +39,8 @@ const BtnInicioSesion = ({ btnPrincipalSize, btnSecundarioSize }) => {
             loginWithKeycloak(); // Llama a la función después de registrar el mensaje en la consola.
           }}
         >
-          <span className="text-sans-p-white text-underline mx-md-3">
+          <img className="icono-xs" src="../../../public/img/icons/logo_clave_unica.svg" alt="CalveUnica" />
+          <span className="text-decoration-underline mx-md-3">
             Iniciar sesión
           </span>
         </button>
