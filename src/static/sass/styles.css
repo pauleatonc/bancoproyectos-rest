@@ -276,6 +276,23 @@
   padding: 13px;
   height: -moz-fit-content;
   height: fit-content;
+  color: white;
+}
+.btn-principal-s:hover {
+  background-color: #FFF;
+  color: #0F69C4;
+  border: none;
+}
+.btn-principal-s:focus {
+  background-color: #FFF;
+  color: #0F69C4;
+  border: none;
+}
+
+.btn-principal-s:hover {
+  background-color: #FFF;
+  color: #0F69C4;
+  border: 2px solid #0F69C4;
 }
 
 .btn-principal-l {
@@ -547,6 +564,11 @@
   background-color: #FFF3EB;
   border: 1px solid #FFD4B7;
   border-radius: 4px;
+}
+
+.icono-xs {
+  width: 24px;
+  height: 24px;
 }
 
 #btn-icon:hover #btnIcon {
