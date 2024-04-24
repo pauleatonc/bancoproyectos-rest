@@ -4,16 +4,28 @@ import Carrusel from "../../../components/Commons/carrusel";
 import ProyectosRelacionados from "../../../components/Proyecto/proyectosRelacionados";
 import { useAuth } from "../../../context/AuthContext";
 import { Link } from 'react-router-dom';
+import { useLogin } from '../../../hooks/useLogin';
 
 const Proyecto = () => {
   const { slug } = useParams();
   const { dataProject, loadingProject, errorProject } = useApiProjectsDetail(slug);
   const navigate = useNavigate();
   const { isLoggedIn } = useAuth();
+  const { loginWithKeycloak } = useLogin(); // Asegúrate de que este método esté definido en tu hook.
   const combinedDocuments = [
     ...(dataProject.program && dataProject.program.documents ? dataProject.program.documents : []),
     ...(dataProject.type && dataProject.type.documents ? dataProject.type.documents : [])
   ];
+
+  let filteredDocuments = [];
+  let titlesMap = new Map();
+
+  combinedDocuments.forEach(document => {
+    if (!titlesMap.has(document.title)) {
+      filteredDocuments.push(document);
+      titlesMap.set(document.title, true);
+    }
+  });
 
   if (loadingProject) {
     return <div>CARGANDO DATOS...</div>
@@ -27,9 +39,9 @@ const Proyecto = () => {
     mensajeDisclaimer = (
       <div className="">
         <h3 className="text-sans-p-danger-bold">Condiciones de uso de la información</h3>
-        <p className="text-sans-p-danger">Los proyectos son solo referenciales, siendo responsabilidad de la unidad ejecutora revisar y actualizar sus valores y aspectos normativos. 
+        <p className="text-sans-p-danger">Los proyectos son solo referenciales, siendo responsabilidad de la unidad ejecutora revisar y actualizar sus valores y aspectos normativos.
           Verifica precisión y actualidad antes de utilizarlos como base para tus postulaciones.</p>
-        <hr className="text-sans-p-danger my-4"/>
+        <hr className="text-sans-p-danger my-4" />
         <p className="text-sans-p-danger">Si necesitas detalles adicionales sobre algún proyecto, contáctanos.</p>
       </div>
     );
@@ -39,7 +51,7 @@ const Proyecto = () => {
         <h3 className="text-sans-p-danger-bold">Condiciones de uso de la información</h3>
         <p className="text-sans-p-danger">Utiliza la información de proyectos como base para postulaciones. Es crucial verificar su adecuación y cumplimiento con los requisitos.
           Si necesitas detalles adicionales sobre algún proyecto, contáctanos.</p>
-        <hr className="text-sans-p-danger my-4"/>
+        <hr className="text-sans-p-danger my-4" />
         <p className="text-sans-p-danger">Si necesitas detalles adicionales sobre algún proyecto, contáctanos.</p>
       </div>
     );
@@ -67,6 +79,11 @@ const Proyecto = () => {
         <h2 className="text-sans-h2 my-2">Descripción del proyecto</h2>
         <p className="text-sans-p" style={{ whiteSpace: 'pre-line' }}>{dataProject.description}</p>
       </div>
+
+      {/* Imágenes del proyecto */}
+      <h2 className="text-sans-h2 my-5">Imágenes del proyecto</h2>
+
+      <Carrusel imgPortada={dataProject.portada} imgGeneral={dataProject.images} />
 
       {/* Tabla detalles del proyecto */}
       <div className="detalles-proyecto my-4 mt-5">
@@ -113,11 +130,6 @@ const Proyecto = () => {
         </div>
       </div>
 
-      {/* Imágenes del proyecto */}
-      <h2 className="text-sans-h2 my-5">Imágenes del proyecto</h2>
-
-      <Carrusel imgPortada={dataProject.portada} imgGeneral={dataProject.images} />
-
       {/* Imágenes antes y después */}
       {(dataProject.beforeimage && dataProject.afterimage) &&
         <>
@@ -144,81 +156,87 @@ const Proyecto = () => {
         </>
       }
 
-        <h2 className="text-sans-h2 my-4">Documentos del proyecto</h2>
-        {/* Mensaje disclaimer */}
-        <div className="container alert-container p-4">
-          {mensajeDisclaimer}
-        </div>
-        {/* Tabla documentos del proyecto */}
-        <div className="row my-4 fw-bold border-top">
-          <div className="col-1 mt-3">#</div>
-          <div className="col mt-3">Documento</div>
-          <div className="col mt-3">Formato</div>
-          <div className="col mt-3">Acción</div>
-        </div>
+      <h2 className="text-sans-h2 my-4">Documentos del proyecto</h2>
+      {/* Mensaje disclaimer */}
+      <div className="container alert-container p-4">
+        {mensajeDisclaimer}
+      </div>
+      {/* Tabla documentos del proyecto */}
+      <div className="row my-4 fw-bold border-top">
+        <div className="col-1 mt-3">#</div>
+        <div className="col mt-3">Documento</div>
+        <div className="col mt-3">Formato</div>
+        <div className="col mt-3">Acción</div>
+      </div>
 
-        {/* Especificaciones Técnicas */}
-        <div className="row border-top grey-table-line">
-          <div className="col-1 p-3">1</div>
-          <div className="col p-3">Especificaciones Técnicas</div>
-          <div className="col p-3">PDF</div>
-          {isLoggedIn ? (
+      {/* Especificaciones Técnicas */}
+      <div className="row border-top grey-table-line">
+        <div className="col-1 p-3">1</div>
+        <div className="col p-3">Especificaciones Técnicas</div>
+        <div className="col p-3">PDF</div>
+        {isLoggedIn ? (
+          <a className="col p-3 text-sans-p-tertiary" href={dataProject.eett} target="_blank" rel="noopener noreferrer">Descargar</a>
+        ) : (
+          <Link className="col p-3 text-sans-p-tertiary" onClick={() => {
+            loginWithKeycloak(); // Llama a la función después de registrar el mensaje en la consola.
+          }}>Iniciar sesión para descargar</Link>
+        )}
+      </div>
+
+      {/* Presupuesto */}
+      <div className="row border-top">
+        <div className="col-1 p-3">2</div>
+        <div className="col p-3">Presupuesto</div>
+        <div className="col p-3">PDF</div>
+        {isLoggedIn ? (
+          <a className="col p-3 text-sans-p-tertiary" href={dataProject.eett} target="_blank" rel="noopener noreferrer">Descargar</a>
+        ) : (
+          <Link className="col p-3 text-sans-p-tertiary" onClick={() => {
+            loginWithKeycloak(); // Llama a la función después de registrar el mensaje en la consola.
+          }}>Iniciar sesión para descargar</Link>
+        )}
+      </div>
+
+      {
+        dataProject.files.map((file, index) => (
+          <div key={index} className={`row border-top ${index % 2 === 0 ? 'grey-table-line' : 'white-table-line'}`}>
+            <div className="col-1 p-3">{index + 3}</div>  {/* Comenzamos desde el índice 3 porque ya mostramos 2 documentos anteriormente */}
+            <div className="col p-3">{file.name}</div>
+            <div className="col p-3">{file.file_format}</div>
+            {isLoggedIn ? (
               <a className="col p-3 text-sans-p-tertiary" href={dataProject.eett} target="_blank" rel="noopener noreferrer">Descargar</a>
             ) : (
-              <Link className="col p-3 text-sans-p-tertiary" to="/login">Iniciar sesión para descargar</Link>
+              <Link className="col p-3 text-sans-p-tertiary" onClick={() => {
+                loginWithKeycloak(); // Llama a la función después de registrar el mensaje en la consola.
+              }}>Iniciar sesión para descargar</Link>
             )}
-        </div>
+          </div>
+        ))
+      }
 
-        {/* Presupuesto */}
-        <div className="row border-top">
-          <div className="col-1 p-3">2</div>
-          <div className="col p-3">Presupuesto</div>
-          <div className="col p-3">PDF</div>
-          {isLoggedIn ? (
-              <a className="col p-3 text-sans-p-tertiary" href={dataProject.eett} target="_blank" rel="noopener noreferrer">Descargar</a>
-            ) : (
-              <Link className="col p-3 text-sans-p-tertiary" to="/login">Iniciar sesión para descargar</Link>
-            )}
-        </div>
+      {/* Normativa por programa y tipo de proyecto */}
+      {filteredDocuments.length > 0 &&
+        <>
+          <h2 className="text-sans-h2 my-4 mt-5">Documentos</h2>
+          <div className="row my-4 fw-bold border-top">
+            <div className="col-1 mt-3">#</div>
+            <div className="col mt-3">Documento</div>
+            <div className="col mt-3">Formato</div>
+            <div className="col mt-3">Acción</div>
+          </div>
+          {
+            filteredDocuments.map((documents, index) => (
+              <div key={index} className={`row border-top ${index % 2 === 0 ? 'grey-table-line' : 'white-table-line'}`}>
+                <div className="col-1 p-3">{index + 1}</div>
+                <div className="col p-3">{documents.title}</div>
+                <div className="col p-3">{documents.document_format}</div>
+                <a className="col p-3 text-sans-p-tertiary" href={documents.document} target="_blank" rel="noopener noreferrer">Descargar</a>
+              </div>
+            ))
+          }
+        </>
+      }
 
-        {
-          dataProject.files.map((file, index) => (
-            <div key={index} className={`row border-top ${index % 2 === 0 ? 'grey-table-line' : 'white-table-line'}`}>
-              <div className="col-1 p-3">{index + 3}</div>  {/* Comenzamos desde el índice 3 porque ya mostramos 2 documentos anteriormente */}
-              <div className="col p-3">{file.name}</div>
-              <div className="col p-3">{file.file_format}</div>
-              {isLoggedIn ? (
-                  <a className="col p-3 text-sans-p-tertiary" href={dataProject.eett} target="_blank" rel="noopener noreferrer">Descargar</a>
-                ) : (
-                  <Link className="col p-3 text-sans-p-tertiary" to="/login">Iniciar sesión para descargar</Link>
-                )}
-            </div>
-          ))
-        }
-
-        {/* Normativa por programa y tipo de proyecto */}
-            { combinedDocuments.length > 0 &&
-              <>
-                <h2 className="text-sans-h2 my-4 mt-5">Documentos</h2>
-                <div className="row my-4 fw-bold border-top">
-                  <div className="col-1 mt-3">#</div>
-                  <div className="col mt-3">Documento</div>
-                  <div className="col mt-3">Formato</div>
-                  <div className="col mt-3">Acción</div>
-                </div>
-                {
-                  combinedDocuments.map((documents, index) => (
-                    <div key={index} className={`row border-top ${index % 2 === 0 ? 'grey-table-line' : 'white-table-line'}`}>
-                      <div className="col-1 p-3">{index + 1}</div>
-                      <div className="col p-3">{documents.title}</div>
-                      <div className="col p-3">{documents.document_format}</div>
-                      <a className="col p-3 text-sans-p-tertiary" href={documents.document} target="_blank" rel="noopener noreferrer">Descargar</a>
-                    </div>
-                  ))
-                }
-              </>
-            }
-          
 
 
       {/* Proyectos Relacionados */}

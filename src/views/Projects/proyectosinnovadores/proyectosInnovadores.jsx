@@ -64,7 +64,6 @@ const ProyectosInnovadores = () => {
       setSelectedProject(null); // Limpia seleccion del usuario para mostrar primer proyecto del listado al cambiar programa.
     }
   };
-  console.log(selectedPracticesPrograms);
 
   // Funcion para seleccionar una practica
   const onSelect = (practice) => {
@@ -223,8 +222,8 @@ const ProyectosInnovadores = () => {
       <div className="container mt-5 pt-5">
         <hr className="my-5" />
         {/* BUENAS PRACTICAS */}
-        <h2 className="text-sans-h2">Buenas prácticas para el diseño de los espacios públicos</h2>
-        <p className="text-sans-p mt-3">Con estas prácticas buscamos promover criterios sustentables a considerar en el diseño actual de los espacios públicos.</p>
+        <h2 className="text-sans-h2">Buenas prácticas para el diseño</h2>
+        <p className="text-sans-p mt-3">Con estas prácticas buscamos promover criterios sustentables a considerar en el diseño actual de los proyectos.</p>
         <div className="row">
           <div className="col-lg-4">
             <SelectorLateral

@@ -4,40 +4,48 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../../context/AuthContext';
-import icon from "../../static/img/icons/logo_clave_unica.svg"
+import { useLogin } from '../../hooks/useLogin';
 
 const BtnInicioSesion = ({ btnPrincipalSize, btnSecundarioSize }) => {
   const { isLoggedIn, userData, logout } = useAuth();
+  const { loginWithKeycloak } = useLogin(); // Asegúrate de que este método esté definido en tu hook.
+  const userAdmin = userData?.tipo_de_usuario?.includes("Editor");
 
-  return(
+  return (
     <div className="lg-col d-flex justify-content-lg-end align-items-center">
-      { isLoggedIn ? (
+      {isLoggedIn ? (
         <div className="container d-flex flex-column flex-lg-row justify-content-center">
-          <span className="d-none d-lg-block text-sans-p align-self-center mt-lg-3">Hola, {userData.full_name || userData.rut}</span>
+          <span className="d-none d-lg-block text-sans-p align-self-center mt-lg-3 me-3">Hola, {userData.full_name || userData.rut}</span>
+
+          {userAdmin && (
           <button className={`mx-lg-3 mt-lg-4 me-md-4 ${btnSecundarioSize}`}> 
             <Link to="/dashboard">ir a Admin</Link>
           </button>
-          <button className={`btn-principal-s mt-2 mt-lg-4 me-0 me-lg-5 py-3 ${btnPrincipalSize}`} type="button" onClick={logout}>
-              Cerrar sesión
+                  )}
+
+          <button
+            className={`btn-principal-s mt-2 mt-lg-4 me-0 me-lg-5 py-3 ${btnPrincipalSize}`}
+            type="button"
+            onClick={logout}
+          >
+            Cerrar sesión
           </button>
         </div>
-        ) : (
-        // <button className={`btn-principal-s mt-4 me-lg-5 ${btnPrincipalSize}`} type="button">
-         
-        //   <Link to="/login" className=" mx-md-3 d-flex align-items-center justify-content-center">
-        //     <img className="icono-xs" src={icon} />
-        //     <p className="mb-0 ms-2 text-decoration-underline">Iniciar sesión</p>
-        //   </Link>
-        // </button>
-        <div className="container d-flex justify-content-center mt-4"> 
-          <Link to="/login" className="btn-principal-s d-flex align-items-center justify-content-center">
-            <img className="icono-xs" src={icon} />
-            <p className="mb-0 ms-2 text-decoration-underline">Iniciar sesión</p>
-          </Link>
-        </div>
+      ) : (
+        <button
+          className={`btn-principal-s mt-4 me-lg-5 ${btnPrincipalSize}`}
+          type="button"
+          onClick={() => {
+            loginWithKeycloak(); // Llama a la función después de registrar el mensaje en la consola.
+          }}
+        >
+          <span className="text-sans-p-white text-underline mx-md-3">
+            Iniciar sesión
+          </span>
+        </button>
       )}
     </div>
-  )
+  );
 };
 
 const Navbar = () => {  
