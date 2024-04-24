@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
 import { useAuth } from '../../context/AuthContext';
+import icon from "../../static/img/icons/logo_clave_unica.svg"
 
 const BtnInicioSesion = ({ btnPrincipalSize, btnSecundarioSize }) => {
   const { isLoggedIn, userData, logout } = useAuth();
@@ -21,12 +22,19 @@ const BtnInicioSesion = ({ btnPrincipalSize, btnSecundarioSize }) => {
           </button>
         </div>
         ) : (
-        <button className={`btn-principal-s mt-4 me-lg-5 ${btnPrincipalSize}`} type="button">
-          <i className="cl cl-claveunica" />
-          <Link to="/login" className="text-sans-p-white text-underline mx-md-3">
-            Iniciar sesión
+        // <button className={`btn-principal-s mt-4 me-lg-5 ${btnPrincipalSize}`} type="button">
+         
+        //   <Link to="/login" className=" mx-md-3 d-flex align-items-center justify-content-center">
+        //     <img className="icono-xs" src={icon} />
+        //     <p className="mb-0 ms-2 text-decoration-underline">Iniciar sesión</p>
+        //   </Link>
+        // </button>
+        <div className="container d-flex justify-content-center mt-4"> 
+          <Link to="/login" className="btn-principal-s d-flex align-items-center justify-content-center">
+            <img className="icono-xs" src={icon} />
+            <p className="mb-0 ms-2 text-decoration-underline">Iniciar sesión</p>
           </Link>
-        </button>
+        </div>
       )}
     </div>
   )
