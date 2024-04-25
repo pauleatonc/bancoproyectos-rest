@@ -26,13 +26,10 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = async () => {
-    console.log("entra al logout del front");
     const token = localStorage.getItem('userToken');
     const refreshToken = localStorage.getItem('refreshToken'); // Asegúrate de obtener el refreshToken
 
     try {
-      console.log("Intenta enviar al logout del back")
-      console.log('headers: ', `Bearer ${token}`);
       const response = await axios.post('/api/logout/', {
         refresh_token: refreshToken  // Incluye el refresh token aquí
       });
