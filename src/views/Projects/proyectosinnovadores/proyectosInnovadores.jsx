@@ -118,8 +118,8 @@ const ProyectosInnovadores = () => {
         </ol>
       </nav>
       <h1 className="text-sans-h1">Proyectos Innovadores</h1>
-      <p className="text-sans-p my-md-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+      <p className="text-sans-p my-md-4"> En la sección de proyectos innovadores podrás encontrar una variedad de alternativas de proyectos de carácter innovador, 
+        que te ayuda a diversificar la oferta de infraestructura, entregándole un nuevo aire a tu comuna.
       </p>
       <h2 className="text-sans-h2 mt-5">Listado de proyectos innovadores</h2>
       <h3 className="text-sans-h3 mt-3">Primero, elige un programa:</h3>

@@ -75,7 +75,8 @@ const Documentacion = () => {
         </ol>
       </nav>
       <h1 className="text-sans-h1 mt-5">Documentación</h1>
-      <p className="text-sans-p my-md-4">Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. </p>
+      <p className="text-sans-p my-md-4"> En la sección de Documentación encontrarás toda la documentación asociada a la elaboración de proyectos PMU y PMB, 
+        de manera fácil y ordenada para que puedas descargarla según necesites. </p>
 
       <div className="d-flex justify-content-center my-5">
         <Buscador 
