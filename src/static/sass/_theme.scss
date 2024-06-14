@@ -22,7 +22,8 @@ $dark-blue:#093F75;
 $blue-sky:#CFE1F3;  
 $accent-color: #A8B7c7;
 $black-color: #111111;
-
+$hover-claveunica-color: #0C549C;
+$border-claveunica-color: #000000;
 
 // Estilos texto con serifa
 @mixin font-serif ($fontSize, $fontColor) {
@@ -221,6 +222,40 @@ $black-color: #111111;
         background-color: $white-color;
         color: $blue-color;
         border: none; 
+    } 
+}
+
+.btn-clave-unica {
+    @include btn-principal(fit-content, $blue-color);
+   height: fit-content;
+   color: $white-color;
+
+   &:hover {
+    background-color: $hover-claveunica-color;
+    color: $white-color;
+     
+    }
+    &:focus {
+        background-color: $blue-color;
+        color: $white-color;
+        outline: $border-claveunica-color solid 1px;
+        outline-offset: 5px;
+    } 
+}
+.btn-clave-unica-l {
+    @include btn-principal(100%, $blue-color);
+   height: fit-content;
+   color: $white-color;
+
+   &:hover {
+    background-color: $hover-claveunica-color;
+    color: $white-color;
+     
+    }
+    &:focus {
+        background-color: $blue-color;
+        color: $white-color;
+        border: 1px dashed $border-claveunica-color; 
     } 
 }
 
