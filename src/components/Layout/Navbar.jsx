@@ -24,7 +24,7 @@ const BtnInicioSesion = ({ btnPrincipalSize, btnSecundarioSize }) => {
                   )}
 
           <button
-            className={`btn-principal-s mt-2 mt-lg-4 me-0 me-lg-5 py-3 ${btnPrincipalSize}`}
+            className={`btn-clave-unica mt-2 mt-lg-4 me-0 me-lg-5 py-3 ${btnPrincipalSize}`}
             type="button"
             onClick={logout}
           >
@@ -32,18 +32,20 @@ const BtnInicioSesion = ({ btnPrincipalSize, btnSecundarioSize }) => {
           </button>
         </div>
       ) : (
-        <button
-          className={`btn-principal-s mt-4 me-lg-5 ${btnPrincipalSize}`}
-          type="button"
-          onClick={() => {
-            loginWithKeycloak(); // Llama a la función después de registrar el mensaje en la consola.
-          }}
-        >
-          <img className="icono-xs" src="/img/icons/logo_clave_unica.svg" alt="CalveUnica" />
-          <span className="text-decoration-underline mx-md-3">
-            Iniciar sesión
-          </span>
-        </button>
+        <div className="mt-4 me-lg-5 border-clave-unica">
+          <button
+            className={`btn-clave-unica m-1 ${btnPrincipalSize}`} //mt-4 me-lg-5
+            type="button"
+            onClick={() => {
+              loginWithKeycloak(); // Llama a la función después de registrar el mensaje en la consola.
+            }}
+          >
+            <img className="icono-xs " src="/img/icons/logo_clave_unica.svg" alt="CalveUnica" />
+            <span className="text-decoration-underline mx-md-3">
+              Iniciar sesión
+            </span>
+          </button>
+        </div>
       )}
     </div>
   );
@@ -80,7 +82,7 @@ const Navbar = () => {
         {/* boton login vista desktop*/}
         <div className="col d-none d-lg-block">
           <BtnInicioSesion 
-            btnPrincipalSize="btn-principal-s"
+            btnPrincipalSize="btn-clave-unica"
             btnSecundarioSize="btn-secundario-s"
           />
         </div>
@@ -116,7 +118,7 @@ const Navbar = () => {
         </div>
         <hr id="menu-divider mx-2"/>
         <BtnInicioSesion 
-          btnPrincipalSize="btn-principal-xl"
+          btnPrincipalSize="btn-clave-unica-l"
           btnSecundarioSize="btn-secundario-xl"
         />
       </div>
