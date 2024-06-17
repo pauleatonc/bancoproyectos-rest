@@ -225,6 +225,7 @@ $border-claveunica-color: #000000;
     } 
 }
 
+//BOTON CLAVE UNICA
 .btn-clave-unica {
     @include btn-principal(fit-content, $blue-color);
    height: fit-content;
@@ -238,8 +239,6 @@ $border-claveunica-color: #000000;
     &:focus {
         background-color: $blue-color;
         color: $white-color;
-        outline: $border-claveunica-color solid 1px;
-        outline-offset: 5px;
     } 
 }
 .btn-clave-unica-l {
@@ -255,8 +254,22 @@ $border-claveunica-color: #000000;
     &:focus {
         background-color: $blue-color;
         color: $white-color;
-        border: 1px dashed $border-claveunica-color; 
     } 
+}
+.border-clave-unica{
+    border: 1px solid transparent;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:active {
+        border: 1px dashed $border-claveunica-color;
+    }
+}
+@media (min-width: 900px) {
+    .border-clave-unica {
+        width: 187px;
+    }
 }
 
 @mixin btn-secundario ($btnSize, $btnBG, $btnColor){

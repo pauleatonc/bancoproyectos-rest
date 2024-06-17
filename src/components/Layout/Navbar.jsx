@@ -32,18 +32,20 @@ const BtnInicioSesion = ({ btnPrincipalSize, btnSecundarioSize }) => {
           </button>
         </div>
       ) : (
-        <button
-          className={`btn-clave-unica mt-4 me-lg-5 ${btnPrincipalSize}`}
-          type="button"
-          onClick={() => {
-            loginWithKeycloak(); // Llama a la función después de registrar el mensaje en la consola.
-          }}
-        >
-          <img className="icono-xs" src="/img/icons/logo_clave_unica.svg" alt="CalveUnica" />
-          <span className="text-decoration-underline mx-md-3">
-            Iniciar sesión
-          </span>
-        </button>
+        <div className="mt-4 me-lg-5 border-clave-unica">
+          <button
+            className={`btn-clave-unica m-1 ${btnPrincipalSize}`} //mt-4 me-lg-5
+            type="button"
+            onClick={() => {
+              loginWithKeycloak(); // Llama a la función después de registrar el mensaje en la consola.
+            }}
+          >
+            <img className="icono-xs " src="/img/icons/logo_clave_unica.svg" alt="CalveUnica" />
+            <span className="text-decoration-underline mx-md-3">
+              Iniciar sesión
+            </span>
+          </button>
+        </div>
       )}
     </div>
   );
