@@ -321,6 +321,61 @@
   border: none;
 }
 
+.btn-clave-unica {
+  width: -moz-fit-content;
+  width: fit-content;
+  background-color: #0F69C4;
+  border: none;
+  color: #FFF;
+  padding: 13px;
+  height: -moz-fit-content;
+  height: fit-content;
+  color: #FFF;
+}
+.btn-clave-unica:hover {
+  background-color: #0C549C;
+  color: #FFF;
+}
+.btn-clave-unica:focus {
+  background-color: #0F69C4;
+  color: #FFF;
+}
+
+.btn-clave-unica-l {
+  width: 100%;
+  background-color: #0F69C4;
+  border: none;
+  color: #FFF;
+  padding: 13px;
+  height: -moz-fit-content;
+  height: fit-content;
+  color: #FFF;
+}
+.btn-clave-unica-l:hover {
+  background-color: #0C549C;
+  color: #FFF;
+}
+.btn-clave-unica-l:focus {
+  background-color: #0F69C4;
+  color: #FFF;
+}
+
+.border-clave-unica {
+  border: 1px solid transparent;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.border-clave-unica:active {
+  border: 1px dashed #000000;
+}
+
+@media (min-width: 900px) {
+  .border-clave-unica {
+    width: 187px;
+  }
+}
 .btn-secundario-s {
   width: -moz-fit-content;
   width: fit-content;
