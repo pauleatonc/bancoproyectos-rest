@@ -7,6 +7,8 @@ import { AuthProvider } from './context/AuthContext';
 import { useLogin } from './hooks/useLogin';
 import ReactGA from "react-ga4";
 
+//============================================ INIT KEYCLOAK CONFIGURATION ============================================
+
 const Main = () => {
   const { handleAuthentication } = useLogin();
   const location = useLocation();
@@ -56,6 +58,8 @@ const Main = () => {
 };
 
 export default Main;
+
+//============================================ END KEYCLOAK CONFIGURATION ============================================
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
