@@ -189,7 +189,7 @@ const Proyecto = () => {
         <div className="col p-3">Presupuesto</div>
         <div className="col p-3">PDF</div>
         {isLoggedIn ? (
-          <a className="col p-3 text-sans-p-tertiary" href={dataProject.eett} target="_blank" rel="noopener noreferrer">Descargar</a>
+          <a className="col p-3 text-sans-p-tertiary" href={dataProject.presupuesto} target="_blank" rel="noopener noreferrer">Descargar</a>
         ) : (
           <Link className="col p-3 text-sans-p-tertiary" onClick={() => {
             loginWithKeycloak(); // Llama a la función después de registrar el mensaje en la consola.
@@ -204,7 +204,7 @@ const Proyecto = () => {
             <div className="col p-3">{file.name}</div>
             <div className="col p-3">{file.file_format}</div>
             {isLoggedIn ? (
-              <a className="col p-3 text-sans-p-tertiary" href={dataProject.eett} target="_blank" rel="noopener noreferrer">Descargar</a>
+              <a className="col p-3 text-sans-p-tertiary" href={file.file} target="_blank" rel="noopener noreferrer">Descargar</a>
             ) : (
               <Link className="col p-3 text-sans-p-tertiary" onClick={() => {
                 loginWithKeycloak(); // Llama a la función después de registrar el mensaje en la consola.
