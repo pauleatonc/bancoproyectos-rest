@@ -24,7 +24,7 @@ def keycloak_code_exchange_view(request):
         token_info = exchange_code_for_token(code, code_verifier)
         if token_info:
             user = verify_user(token_info['access_token'])
-            print("user: ", user)
+            #print("user: ", user)
             if user:
                 # Retorna información relevante del usuario o una confirmación de inicio de sesión exitoso.
                 return JsonResponse({
@@ -46,7 +46,7 @@ def keycloak_code_exchange_view(request):
 def refresh_token_view(request):
     keycloak_config = get_keycloak_config()
     refresh_token = request.data.get('refresh_token')
-    print("entró a refresh_token_view")
+    #print("entró a refresh_token_view")
 
     if not refresh_token:
         return Response({'error': 'Refresh token is required'}, status=status.HTTP_400_BAD_REQUEST)
@@ -60,12 +60,12 @@ def refresh_token_view(request):
             'grant_type': 'refresh_token',
         }
         
-        print(payload)
+        #print(payload)
         response = requests.post(refresh_token_url, data=payload)
         if response.status_code == 200:
             # Convertir la respuesta a JSON
             token_data = response.json()
-            print("Token Data: ", token_data)
+            #print("Token Data: ", token_data)
             # Asegurarse de devolver el nuevo access_token, refresh_token (si está disponible), y expires_in
             return Response({
                 'access_token': token_data.get('access_token'),
@@ -83,11 +83,9 @@ def refresh_token_view(request):
 @api_view(['POST'])
 @permission_classes([AllowAny])
 def logout_view(request):
-    print("entra al método logout")
     keycloak_config = get_keycloak_config()
     # Obtener el refresh token del cuerpo de la solicitud
     refresh_token = request.data.get('refresh_token')
-    print("Solicita refresh token: ", refresh_token)
 
     client_id = keycloak_config['resource']
     logout_url = keycloak_config['keycloak_logout_url']
@@ -103,7 +101,6 @@ def logout_view(request):
 
     # Hacer la solicitud de cierre de sesión a Keycloak
     response = requests.post(logout_url, headers=headers, data=payload)
-    print("response", response)
 
     if response.status_code in [200, 204]:  # Verifica si la respuesta es exitosa
         return JsonResponse({'message': 'Logout successful'}, status=200)

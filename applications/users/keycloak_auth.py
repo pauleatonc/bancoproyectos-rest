@@ -15,7 +15,7 @@ def get_keycloak_config():
 def exchange_code_for_token(code, code_verifier):
     # Obtener las configuraciones de Keycloak según el entorno
     keycloak_config = get_keycloak_config()
-    print("code en exchange_code_for_token", code)
+    #print("code en exchange_code_for_token", code)
 
     payload = {
         'grant_type': 'authorization_code',
@@ -31,7 +31,7 @@ def exchange_code_for_token(code, code_verifier):
 
     if response.status_code == 200:
         token_info = response.json()
-        print("token info =", response.json())
+        #print("token info =", response.json())
         return token_info  # Devuelve todo el objeto JSON, incluido el refresh_token
         
     else:
@@ -60,13 +60,13 @@ def get_keycloak_public_key():
 def verify_user(token):
     public_key_pem = get_keycloak_public_key()  # Asegura que esta función retorne la clave pública en el formato correcto.
 
-    print("Public key pem: ", public_key_pem)
-    print("Token: ", token)
+    #print("Public key pem: ", public_key_pem)
+    #print("Token: ", token)
 
     # Verificar el token con pyjwt
     try:
         token_info = jwt.decode(token, options={"verify_signature": False})
-        print(token_info)
+        #print(token_info)
 
         rut_base = token_info['rut_numero']
         rut_dv = token_info['rut_dv']
