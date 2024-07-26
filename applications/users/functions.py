@@ -1,6 +1,6 @@
 #Funciones extra de la aplicación users
-
 from django.core.exceptions import ValidationError
+from django.conf import settings
 
 import random
 import string
@@ -70,4 +70,3 @@ def validar_rut_form(self):
     if str(dv_calculated) != dv:
         raise ValidationError('El RUT no es válido')
     return rut + '-' + dv
-

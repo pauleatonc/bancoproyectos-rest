@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:14
+    environment:
+      - POSTGRES_DB=database
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    networks:
+      - default
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.single-container
+    volumes:
+      - .env:/home/app/.env
+      # - ruta-al-frontend:/home/frontend
+    networks:
+      - default
+    depends_on:
+      - db
+    environment:
+      - DJANGO_SETTINGS_MODULE=projectbank.settings.prod
+    ports:
+      - "80:80"
+
+
+volumes:
+  postgres_data:

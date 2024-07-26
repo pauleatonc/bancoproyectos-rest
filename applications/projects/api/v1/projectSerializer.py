@@ -2,7 +2,6 @@ from rest_framework import serializers
 #
 from applications.projects.models import (
     Program,
-    Guide,
     Type,
     Year,
     PrioritizedTag,
@@ -11,17 +10,21 @@ from applications.projects.models import (
     Projectfile    
 )
 #
-from applications.regioncomuna.serializer import ComunaRegionSerializer
+from applications.regioncomuna.api.v1.serializer import ComunaRegionSerializer
+from applications.documents.api.v1.documentsSerializer import DocumentsSerializerV1
 
 
 class ProgramSerializerV1(serializers.ModelSerializer):
+    documents = DocumentsSerializerV1(many=True, read_only=True, source='documents.all')
+
     class Meta:
         model = Program
         fields = (
             'id',
             'name',
             'sigla',
-            'icon_program'
+            'icon_program',
+            'documents'
         )
 
 
@@ -34,17 +37,6 @@ class YearSerializerV1(serializers.ModelSerializer):
         )
 
 
-class GuideSerializerV1(serializers.ModelSerializer):
-    guide_format = serializers.SerializerMethodField()
-
-    class Meta:
-        model = Guide
-        fields = (
-            'id',
-            'name',
-            'guide',
-            'guide_format'
-        )
 
     def get_guide_format(self, obj):
         # Retorna la extensión del archivo sin el punto
@@ -53,7 +45,7 @@ class GuideSerializerV1(serializers.ModelSerializer):
 
 class TypeSerializerV1(serializers.ModelSerializer):
 
-    guides = GuideSerializerV1(many=True)
+    documents = serializers.SerializerMethodField()
 
     class Meta:
         model = Type
@@ -61,8 +53,12 @@ class TypeSerializerV1(serializers.ModelSerializer):
             'id',
             'name',
             'icon_type',
-            'guides'
+            'documents'
         )
+
+    def get_documents(self, obj):
+        public_documents = obj.documents.filter(public=True)  # Esto devuelve un QuerySet
+        return DocumentsSerializerV1(public_documents, many=True).data
 
 
 class PrioritizedTagSerializerV1(serializers.ModelSerializer):
@@ -79,7 +75,7 @@ class ProjectImageSerializerV1(serializers.ModelSerializer):
         model = Projectimage
         fields = (
             'id',
-            'image_carousel',
+            'image',
         )
 
 

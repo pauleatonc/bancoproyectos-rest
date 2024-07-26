@@ -14,6 +14,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+API_PATH_PREFIX = ''
+
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 DATABASES = {
@@ -62,3 +64,34 @@ SENDGRID_API_KEY = ''
 ADMIN_EMAIL = ['']
 NOREPLY_EMAIL = ['noreply@bancoproyectos.subdere.gob.cl']
 
+# KEYCLOAK SETTINGS
+KEYCLOAK_CONFIG = {
+    'realm': 'app-qa',
+    'auth-server-url': 'https://oid.subdere.gob.cl/',
+    'ssl-required': 'external',
+    'resource': 'bancoproyectos',
+    'credentials': {
+        'secret': ''
+    },
+    'confidential-port': 0,
+    'redirect_uri': 'http://localhost:5173/callback/',
+    'keycloak_token_url': 'https://oid.subdere.gob.cl/realms/app-qa/protocol/openid-connect/token',
+    'keycloak_logout_url': 'https://oid.subdere.gob.cl/realms/app-qa/protocol/openid-connect/logout',
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        '': {  # 'root' logger
+            'handlers': ['console'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+    },
+}

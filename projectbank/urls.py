@@ -1,18 +1,3 @@
-"""projectbank URL Configuration
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
 from django.contrib import admin
 from django.urls import path, re_path, include
 from rest_framework.documentation import include_docs_urls
@@ -20,26 +5,46 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 #urls errores 
-from django.conf.urls import handler404 , handler500 
-from applications.home.views import Error404 , Error500 , Error503
+from django.conf.urls import handler404 , handler500
+
+# Swagger para documentación de la API
+from rest_framework import permissions
+from drf_yasg import openapi
+from drf_yasg.views import get_schema_view
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+
+schema_view = get_schema_view(
+   openapi.Info(
+      title="Proyectos API",
+      default_version='v1',
+      description="Documentación de API de Proyectos de Banco de Proyectos",
+      terms_of_service="https://www.google.com/policies/terms/",
+      contact=openapi.Contact(email="contact@snippets.local"),
+      license=openapi.License(name="BSD License"),
+   ),
+   public=True,
+   permission_classes=(permissions.AllowAny,),
+)
+
+api_path_prefix = settings.API_PATH_PREFIX
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('docs/', include_docs_urls(title='Banco de Proyectos API')),
-    re_path('', include('applications.projects.urls')),
-    re_path('', include('applications.home.urls')),
-    re_path('', include('applications.users.urls')),
-    re_path('', include('applications.regioncomuna.urls')),
-    
-    
+    path('swagger<format>/', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    re_path(api_path_prefix, include('applications.projects.urls')),
+    re_path(api_path_prefix, include('applications.home.urls')),
+    re_path(api_path_prefix, include('applications.users.urls')),
+    re_path(api_path_prefix, include('applications.regioncomuna.urls')),
+    re_path(api_path_prefix, include('applications.innovative_projects.urls')),
+    re_path(api_path_prefix, include('applications.good_practices.urls')),
+    re_path(api_path_prefix, include('applications.documents.urls')),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('oidc/', include('oidc_provider.urls', namespace='oidc_provider')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
-handler404 = Error404.as_view()
-
-handler500 = Error500.as_error_view()
-
-urlpatterns += [
-path('503/', Error503.as_error_view(), name='error_503'), 
-
-]

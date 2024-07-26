@@ -1,5 +1,8 @@
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 from unipath import Path
+from datetime import timedelta
+from corsheaders.defaults import default_headers
+
 BASE_DIR = Path(__file__).ancestor(3)
 
 # Application definition
@@ -15,10 +18,14 @@ DJANGO_APPS = [
 
 LOCAL_APPS = [
 
+    'applications.base',
     'applications.projects',
-    'applications.home',
+    'applications.home.apps.HomeConfig',
     'applications.users',
     'applications.regioncomuna',
+    'applications.innovative_projects',
+    'applications.good_practices',
+    'applications.documents'
 
 ]
 
@@ -33,6 +40,13 @@ THIRD_PARTY_APPS = [
     'rest_framework',
     'coreapi',
     'corsheaders',
+    'simple_history',
+    'drf_yasg',
+    'rest_framework.authtoken',
+    'rest_framework_simplejwt',
+    'rest_framework_simplejwt.token_blacklist',
+    'oidc_provider',
+
 ]
 
 INSTALLED_APPS = DJANGO_APPS + LOCAL_APPS + THIRD_PARTY_APPS
@@ -46,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'corsheaders.middleware.CorsMiddleware',
+    'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'projectbank.urls'
@@ -102,7 +117,7 @@ PASSWORD_HASHERS = [
 
 LANGUAGE_CODE = 'es-CL'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Santiago'
 
 USE_I18N = True
 
@@ -117,10 +132,34 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:5173',
     'http://127.0.0.1:5173',
+    'http://qabanco2.subdere.gob.cl',
 ]
 
-#Auto documentation for API's
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'Authorization',
+]
+
+# Configuraciones de Django Rest Framework
 REST_FRAMEWORK = {
-    'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
-    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ],
 }
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ROTATE_REFRESH_TOKENS': True,
+    'BLACKLIST_AFTER_ROTATION': True
+}
+
+# Configuraciones de documentación en Swagger
+SWAGGER_SETTINGS = {
+    'DOC_EXPANSION': 'none',
+}
+
+SIMPLE_HISTORY_FILEFIELD_TO_CHARFIELD = True
